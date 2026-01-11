@@ -1,0 +1,142 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/di/dependency_injection.dart';
+import 'package:falcon/core/widget/showSuccesSnackBar.dart';
+import 'package:falcon/feature/pinput/ui/screens/pin_put_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falcon/core/widget/button_utils.dart';
+import 'package:falcon/core/widget/loading_button_utils.dart';
+import 'package:falcon/core/widget/show_error_snack_bar.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/thems/thems.dart';
+import '../../../../core/widget/padding_nav_bar.dart';
+import '../../../../core/widget/slide_enimation_widget.dart';
+import '../../../login/cubit/login_cubit.dart';
+import '../../../login/cubit/login_state.dart';
+
+class SignupButtonWidget extends StatelessWidget {
+  const SignupButtonWidget({super.key, required this.update});
+
+  final bool update;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: paddingNavBar(),
+      height: 130.w,
+      child: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is registerSuccess) {
+            showCupertinoModalBottomSheet(
+              expand: true,
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (c) => BlocProvider(
+                create: (context) => getIt<LoginCubit>(),
+                child: PinputScreen(
+                  phoneNumber: context.read<LoginCubit>().controller.email.text,
+                ),
+              ),
+            );
+            showSuccesSnackBar(
+              context: context,
+              title: 'تم ارسال الرمز الي بريدك الاكتروني'.tr(),
+            );
+          }
+          if (state is updateProfileSuccess) {
+            showSuccesSnackBar(
+              context: context,
+              title: 'تم تعديل الملف الشخصي بنجاح'.tr(),
+            );
+            context.pushNamedAndRemoveUntil(
+              AppRoute.mainScreen,
+              predicate: (route) => false,
+            );
+          }
+          if (state is registerError) {
+            showErrorSnackBar(context: context, title: state.error);
+          }
+        },
+        builder: (context, state) {
+          return SlideEnimationWidget(
+            index: 0,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1000),
+              child: state is registerLoading || state is updateProfileLoading
+                  ? LoadButtonUtils()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ButtonUtils(
+                          text: update ? 'تعديل'.tr() : 'انشاء حساب'.tr(),
+                          onPressed: () {
+                            if (context
+                                .read<LoginCubit>()
+                                .formKey
+                                .currentState!
+                                .validate()) {
+                              if (update) {
+                                context
+                                    .read<LoginCubit>()
+                                    .emitupdateProfileStates();
+                              } else {
+                                context.read<LoginCubit>().emitregisterStates();
+                              }
+                            } else {
+                              showErrorSnackBar(
+                                context: context,
+                                title: 'من فضلك ادخل بيناتك',
+                              );
+                            }
+                          },
+                          colorstext: Colors.white,
+                          background: mainColor,
+                        ),
+                        Visibility(
+                          visible: !update,
+                          child: InkWell(
+                            onTap: () {
+                              // to login screen
+                              context.pushNamed(AppRoute.loginScreen);
+                            },
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'لديك حساب ب الفعل؟'.tr(),
+                                    style: GoogleFonts.cairo(
+                                      color: blackclr,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: -0.30,
+                                    ),
+                                  ),
+                                  TextSpan(text: ' '),
+                                  TextSpan(
+                                    text: 'تسجيل الدخول'.tr(),
+                                    style: GoogleFonts.cairo(
+                                      color: mainColor,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: -0.30,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
