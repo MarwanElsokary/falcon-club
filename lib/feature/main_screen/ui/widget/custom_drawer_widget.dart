@@ -171,6 +171,7 @@ class CustomDrawer extends StatelessWidget {
                           return InkWell(
                             onTap: () {
                               context.pushNamed(
+
                                 AppRoute.playerProfile,
                                 arguments: {
                                   'isMyProfile': true,

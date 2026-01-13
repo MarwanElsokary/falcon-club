@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:falcon/core/networking/api_result.dart';
 import 'package:falcon/feature/main_screen/data/model/my_profile_model.dart';
 
 import '../../../../core/networking/api_error_handler.dart';
 import '../../../../core/networking/api_service.dart';
+import '../../../training_details/data/model/exercise_details_model.dart';
 import '../model/categories_model.dart';
 
 class MainRepo {
@@ -38,6 +41,21 @@ class MainRepo {
       final response = await _apiService.profileById(userId);
       return ApiResult.success(response);
     } catch (errro) {
+      return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
+  Future<ApiResult<List<Skill>>> getSkills({required String userId}) async {
+    try {
+      log('📡 Calling getSkills API with userId: $userId');
+
+      final response = await _apiService.getSkills(userId);
+      log(
+        '📦 SkillsResponse: message=${response.message}, data count=${response.data.length}',
+      );
+
+      return ApiResult.success(response.data);
+    } catch (errro) {
+      log('❌ API Error: $errro');
       return ApiResult.failure(ErrorHandler.handle(errro));
     }
   }

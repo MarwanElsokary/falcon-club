@@ -41,9 +41,9 @@ class PlayerRadarChart extends StatelessWidget {
               dataEntries: [
                 RadarEntry(value: speed),
                 RadarEntry(value: strength),
+                RadarEntry(value: dribbling),
                 RadarEntry(value: ballControl),
                 RadarEntry(value: tackling),
-                RadarEntry(value: dribbling),
               ],
             ),
           ],
@@ -61,7 +61,7 @@ class PlayerRadarChart extends StatelessWidget {
               case 1:
                 return RadarChartTitle(text: "القوة\n$strength", angle: 0);
               case 2:
-                return RadarChartTitle(text: "المراوغة\n$dribbling", angle: 0);
+                return RadarChartTitle(text: "المرونة\n$dribbling", angle: 0);
               case 3:
                 return RadarChartTitle(text: "التدخل\n$tackling", angle: 0);
               case 4:

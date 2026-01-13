@@ -21,44 +21,44 @@ mixin _$SkillsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Skill skillsModel) success,
-    required TResult Function(String error) error,
+    required TResult Function(List<Skill> skills) success,
+    required TResult Function(String message) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Skill skillsModel)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(List<Skill> skills)? success,
+    TResult? Function(String message)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Skill skillsModel)? success,
-    TResult Function(String error)? error,
+    TResult Function(List<Skill> skills)? success,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(SkillsLoading value) loading,
-    required TResult Function(SkillsSuccess value) success,
-    required TResult Function(SkillsError value) error,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(SkillsLoading value)? loading,
-    TResult? Function(SkillsSuccess value)? success,
-    TResult? Function(SkillsError value)? error,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Success value)? success,
+    TResult? Function(Error value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(SkillsLoading value)? loading,
-    TResult Function(SkillsSuccess value)? success,
-    TResult Function(SkillsError value)? error,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -130,8 +130,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Skill skillsModel) success,
-    required TResult Function(String error) error,
+    required TResult Function(List<Skill> skills) success,
+    required TResult Function(String message) error,
   }) {
     return initial();
   }
@@ -141,8 +141,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Skill skillsModel)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(List<Skill> skills)? success,
+    TResult? Function(String message)? error,
   }) {
     return initial?.call();
   }
@@ -152,8 +152,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Skill skillsModel)? success,
-    TResult Function(String error)? error,
+    TResult Function(List<Skill> skills)? success,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -166,9 +166,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(SkillsLoading value) loading,
-    required TResult Function(SkillsSuccess value) success,
-    required TResult Function(SkillsError value) error,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return initial(this);
   }
@@ -177,9 +177,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(SkillsLoading value)? loading,
-    TResult? Function(SkillsSuccess value)? success,
-    TResult? Function(SkillsError value)? error,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Success value)? success,
+    TResult? Function(Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -188,9 +188,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(SkillsLoading value)? loading,
-    TResult Function(SkillsSuccess value)? success,
-    TResult Function(SkillsError value)? error,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -205,20 +205,20 @@ abstract class _Initial implements SkillsState {
 }
 
 /// @nodoc
-abstract class _$$SkillsLoadingImplCopyWith<$Res> {
-  factory _$$SkillsLoadingImplCopyWith(
-    _$SkillsLoadingImpl value,
-    $Res Function(_$SkillsLoadingImpl) then,
-  ) = __$$SkillsLoadingImplCopyWithImpl<$Res>;
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+    _$LoadingImpl value,
+    $Res Function(_$LoadingImpl) then,
+  ) = __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SkillsLoadingImplCopyWithImpl<$Res>
-    extends _$SkillsStateCopyWithImpl<$Res, _$SkillsLoadingImpl>
-    implements _$$SkillsLoadingImplCopyWith<$Res> {
-  __$$SkillsLoadingImplCopyWithImpl(
-    _$SkillsLoadingImpl _value,
-    $Res Function(_$SkillsLoadingImpl) _then,
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$SkillsStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+    _$LoadingImpl _value,
+    $Res Function(_$LoadingImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of SkillsState
@@ -227,8 +227,8 @@ class __$$SkillsLoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SkillsLoadingImpl implements SkillsLoading {
-  const _$SkillsLoadingImpl();
+class _$LoadingImpl implements Loading {
+  const _$LoadingImpl();
 
   @override
   String toString() {
@@ -238,7 +238,7 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SkillsLoadingImpl);
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -249,8 +249,8 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Skill skillsModel) success,
-    required TResult Function(String error) error,
+    required TResult Function(List<Skill> skills) success,
+    required TResult Function(String message) error,
   }) {
     return loading();
   }
@@ -260,8 +260,8 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Skill skillsModel)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(List<Skill> skills)? success,
+    TResult? Function(String message)? error,
   }) {
     return loading?.call();
   }
@@ -271,8 +271,8 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Skill skillsModel)? success,
-    TResult Function(String error)? error,
+    TResult Function(List<Skill> skills)? success,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -285,9 +285,9 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(SkillsLoading value) loading,
-    required TResult Function(SkillsSuccess value) success,
-    required TResult Function(SkillsError value) error,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return loading(this);
   }
@@ -296,9 +296,9 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(SkillsLoading value)? loading,
-    TResult? Function(SkillsSuccess value)? success,
-    TResult? Function(SkillsError value)? error,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Success value)? success,
+    TResult? Function(Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -307,9 +307,9 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(SkillsLoading value)? loading,
-    TResult Function(SkillsSuccess value)? success,
-    TResult Function(SkillsError value)? error,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -319,40 +319,40 @@ class _$SkillsLoadingImpl implements SkillsLoading {
   }
 }
 
-abstract class SkillsLoading implements SkillsState {
-  const factory SkillsLoading() = _$SkillsLoadingImpl;
+abstract class Loading implements SkillsState {
+  const factory Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SkillsSuccessImplCopyWith<$Res> {
-  factory _$$SkillsSuccessImplCopyWith(
-    _$SkillsSuccessImpl value,
-    $Res Function(_$SkillsSuccessImpl) then,
-  ) = __$$SkillsSuccessImplCopyWithImpl<$Res>;
+abstract class _$$SuccessImplCopyWith<$Res> {
+  factory _$$SuccessImplCopyWith(
+    _$SuccessImpl value,
+    $Res Function(_$SuccessImpl) then,
+  ) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Skill skillsModel});
+  $Res call({List<Skill> skills});
 }
 
 /// @nodoc
-class __$$SkillsSuccessImplCopyWithImpl<$Res>
-    extends _$SkillsStateCopyWithImpl<$Res, _$SkillsSuccessImpl>
-    implements _$$SkillsSuccessImplCopyWith<$Res> {
-  __$$SkillsSuccessImplCopyWithImpl(
-    _$SkillsSuccessImpl _value,
-    $Res Function(_$SkillsSuccessImpl) _then,
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$SkillsStateCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+    _$SuccessImpl _value,
+    $Res Function(_$SuccessImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of SkillsState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? skillsModel = null}) {
+  $Res call({Object? skills = null}) {
     return _then(
-      _$SkillsSuccessImpl(
-        null == skillsModel
-            ? _value.skillsModel
-            : skillsModel // ignore: cast_nullable_to_non_nullable
-                  as Skill,
+      _$SuccessImpl(
+        null == skills
+            ? _value._skills
+            : skills // ignore: cast_nullable_to_non_nullable
+                  as List<Skill>,
       ),
     );
   }
@@ -360,46 +360,51 @@ class __$$SkillsSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SkillsSuccessImpl implements SkillsSuccess {
-  const _$SkillsSuccessImpl(this.skillsModel);
+class _$SuccessImpl implements Success {
+  const _$SuccessImpl(final List<Skill> skills) : _skills = skills;
 
+  final List<Skill> _skills;
   @override
-  final Skill skillsModel;
+  List<Skill> get skills {
+    if (_skills is EqualUnmodifiableListView) return _skills;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_skills);
+  }
 
   @override
   String toString() {
-    return 'SkillsState.success(skillsModel: $skillsModel)';
+    return 'SkillsState.success(skills: $skills)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SkillsSuccessImpl &&
-            (identical(other.skillsModel, skillsModel) ||
-                other.skillsModel == skillsModel));
+            other is _$SuccessImpl &&
+            const DeepCollectionEquality().equals(other._skills, _skills));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, skillsModel);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_skills));
 
   /// Create a copy of SkillsState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SkillsSuccessImplCopyWith<_$SkillsSuccessImpl> get copyWith =>
-      __$$SkillsSuccessImplCopyWithImpl<_$SkillsSuccessImpl>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Skill skillsModel) success,
-    required TResult Function(String error) error,
+    required TResult Function(List<Skill> skills) success,
+    required TResult Function(String message) error,
   }) {
-    return success(skillsModel);
+    return success(skills);
   }
 
   @override
@@ -407,10 +412,10 @@ class _$SkillsSuccessImpl implements SkillsSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Skill skillsModel)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(List<Skill> skills)? success,
+    TResult? Function(String message)? error,
   }) {
-    return success?.call(skillsModel);
+    return success?.call(skills);
   }
 
   @override
@@ -418,12 +423,12 @@ class _$SkillsSuccessImpl implements SkillsSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Skill skillsModel)? success,
-    TResult Function(String error)? error,
+    TResult Function(List<Skill> skills)? success,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(skillsModel);
+      return success(skills);
     }
     return orElse();
   }
@@ -432,9 +437,9 @@ class _$SkillsSuccessImpl implements SkillsSuccess {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(SkillsLoading value) loading,
-    required TResult Function(SkillsSuccess value) success,
-    required TResult Function(SkillsError value) error,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return success(this);
   }
@@ -443,9 +448,9 @@ class _$SkillsSuccessImpl implements SkillsSuccess {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(SkillsLoading value)? loading,
-    TResult? Function(SkillsSuccess value)? success,
-    TResult? Function(SkillsError value)? error,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Success value)? success,
+    TResult? Function(Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -454,9 +459,9 @@ class _$SkillsSuccessImpl implements SkillsSuccess {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(SkillsLoading value)? loading,
-    TResult Function(SkillsSuccess value)? success,
-    TResult Function(SkillsError value)? error,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -466,47 +471,47 @@ class _$SkillsSuccessImpl implements SkillsSuccess {
   }
 }
 
-abstract class SkillsSuccess implements SkillsState {
-  const factory SkillsSuccess(final Skill skillsModel) = _$SkillsSuccessImpl;
+abstract class Success implements SkillsState {
+  const factory Success(final List<Skill> skills) = _$SuccessImpl;
 
-  Skill get skillsModel;
+  List<Skill> get skills;
 
   /// Create a copy of SkillsState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SkillsSuccessImplCopyWith<_$SkillsSuccessImpl> get copyWith =>
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SkillsErrorImplCopyWith<$Res> {
-  factory _$$SkillsErrorImplCopyWith(
-    _$SkillsErrorImpl value,
-    $Res Function(_$SkillsErrorImpl) then,
-  ) = __$$SkillsErrorImplCopyWithImpl<$Res>;
+abstract class _$$ErrorImplCopyWith<$Res> {
+  factory _$$ErrorImplCopyWith(
+    _$ErrorImpl value,
+    $Res Function(_$ErrorImpl) then,
+  ) = __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error});
+  $Res call({String message});
 }
 
 /// @nodoc
-class __$$SkillsErrorImplCopyWithImpl<$Res>
-    extends _$SkillsStateCopyWithImpl<$Res, _$SkillsErrorImpl>
-    implements _$$SkillsErrorImplCopyWith<$Res> {
-  __$$SkillsErrorImplCopyWithImpl(
-    _$SkillsErrorImpl _value,
-    $Res Function(_$SkillsErrorImpl) _then,
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$SkillsStateCopyWithImpl<$Res, _$ErrorImpl>
+    implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(
+    _$ErrorImpl _value,
+    $Res Function(_$ErrorImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of SkillsState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? error = null}) {
+  $Res call({Object? message = null}) {
     return _then(
-      _$SkillsErrorImpl(
-        error: null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
+      _$ErrorImpl(
+        null == message
+            ? _value.message
+            : message // ignore: cast_nullable_to_non_nullable
                   as String,
       ),
     );
@@ -515,45 +520,45 @@ class __$$SkillsErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SkillsErrorImpl implements SkillsError {
-  const _$SkillsErrorImpl({required this.error});
+class _$ErrorImpl implements Error {
+  const _$ErrorImpl(this.message);
 
   @override
-  final String error;
+  final String message;
 
   @override
   String toString() {
-    return 'SkillsState.error(error: $error)';
+    return 'SkillsState.error(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SkillsErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+            other is _$ErrorImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, message);
 
   /// Create a copy of SkillsState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SkillsErrorImplCopyWith<_$SkillsErrorImpl> get copyWith =>
-      __$$SkillsErrorImplCopyWithImpl<_$SkillsErrorImpl>(this, _$identity);
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Skill skillsModel) success,
-    required TResult Function(String error) error,
+    required TResult Function(List<Skill> skills) success,
+    required TResult Function(String message) error,
   }) {
-    return error(this.error);
+    return error(message);
   }
 
   @override
@@ -561,10 +566,10 @@ class _$SkillsErrorImpl implements SkillsError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Skill skillsModel)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(List<Skill> skills)? success,
+    TResult? Function(String message)? error,
   }) {
-    return error?.call(this.error);
+    return error?.call(message);
   }
 
   @override
@@ -572,12 +577,12 @@ class _$SkillsErrorImpl implements SkillsError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Skill skillsModel)? success,
-    TResult Function(String error)? error,
+    TResult Function(List<Skill> skills)? success,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(message);
     }
     return orElse();
   }
@@ -586,9 +591,9 @@ class _$SkillsErrorImpl implements SkillsError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(SkillsLoading value) loading,
-    required TResult Function(SkillsSuccess value) success,
-    required TResult Function(SkillsError value) error,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return error(this);
   }
@@ -597,9 +602,9 @@ class _$SkillsErrorImpl implements SkillsError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(SkillsLoading value)? loading,
-    TResult? Function(SkillsSuccess value)? success,
-    TResult? Function(SkillsError value)? error,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Success value)? success,
+    TResult? Function(Error value)? error,
   }) {
     return error?.call(this);
   }
@@ -608,9 +613,9 @@ class _$SkillsErrorImpl implements SkillsError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(SkillsLoading value)? loading,
-    TResult Function(SkillsSuccess value)? success,
-    TResult Function(SkillsError value)? error,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -620,14 +625,14 @@ class _$SkillsErrorImpl implements SkillsError {
   }
 }
 
-abstract class SkillsError implements SkillsState {
-  const factory SkillsError({required final String error}) = _$SkillsErrorImpl;
+abstract class Error implements SkillsState {
+  const factory Error(final String message) = _$ErrorImpl;
 
-  String get error;
+  String get message;
 
   /// Create a copy of SkillsState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SkillsErrorImplCopyWith<_$SkillsErrorImpl> get copyWith =>
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

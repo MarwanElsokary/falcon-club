@@ -69,7 +69,7 @@ class _AiScoreWidgetState extends State<AiScoreWidget> {
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: mainColor,
-                            text: widget.skill[index].skill,
+                            text: widget.skill[index].skillName ?? '',
                           ),
                         ),
                       ),
@@ -101,7 +101,7 @@ class _AiScoreWidgetState extends State<AiScoreWidget> {
                 columnCount: 3,
                 position: i,
                 child: AiPercentWidget(
-                  skill: widget.skill[i].skill ?? '',
+                  skill: widget.skill[i].skillName ?? '',
                   percent: widget.skill[i].score,
                 ),
               );

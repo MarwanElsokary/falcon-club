@@ -8,6 +8,7 @@ import 'package:falcon/feature/training_details/data/model/exercise_details_mode
 
 import 'package:retrofit/retrofit.dart';
 
+import '../../feature/forget_password/data/model/forget_password_model.dart';
 import '../../feature/main_screen/data/model/my_profile_model.dart';
 import '../../feature/player_profile/data/model/profile_feat.dart';
 import '../../feature/rank/data/model/rank_model.dart';
@@ -124,6 +125,24 @@ abstract class ApiService {
   Future deleteAccount();
 
   //ProfileFeature
+  // ProfileFeature
   @GET(ApiConstants.profileFeature)
-  Future<Skill> getSkills();
+  Future<SkillsResponse> getSkills(@Query('UserId') String userId);
+
+  // // Forget Password Endpoints
+  // @POST(ApiConstants.forgetPasswordByPhone)
+  // Future<HttpResponse<ForgetPasswordResponse>> forgetPasswordByPhone(
+  //     @Body() Map<String, dynamic> body,
+  //     );
+  //
+  // @POST(ApiConstants.checkOtp)
+  // Future<HttpResponse<CheckOtpResponse>> checkOtp(
+  //     @Body() Map<String, dynamic> body,
+  //     );
+  //
+  // @POST(ApiConstants.resetPassword)
+  // Future<HttpResponse<ResetPasswordResponse>> resetPassword(
+  //     @Body() Map<String, dynamic> body,
+  //     );
+
 }

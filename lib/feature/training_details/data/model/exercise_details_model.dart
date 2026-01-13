@@ -149,16 +149,40 @@ class Attempt {
   };
 }
 
+class SkillsResponse {
+  final String message;
+  final List<Skill> data;
+
+  SkillsResponse({required this.message, required this.data});
+
+  factory SkillsResponse.fromJson(Map<String, dynamic> json) => SkillsResponse(
+    message: json["message"] ?? '',
+    data: List<Skill>.from(
+      (json["data"] as List?)?.map((x) => Skill.fromJson(x)) ?? [],
+    ),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "message": message,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+  };
+}
+
 class Skill {
-  dynamic skill;
-  dynamic score;
+  final String skillName;
+  final double score;
 
-  Skill({required this.skill, required this.score});
+  Skill({required this.skillName, required this.score});
 
-  factory Skill.fromJson(Map<String, dynamic> json) =>
-      Skill(skill: json["skill"], score: json["score"]?.toDouble());
+  factory Skill.fromJson(Map<String, dynamic> json) => Skill(
+    skillName: json["skillName"] ?? '',
+    score: json["score"]?.toDouble() ?? 0.0,
+  );
 
-  Map<String, dynamic> toJson() => {"skill": skill, "score": score};
+  Map<String, dynamic> toJson() => {"skillName": skillName, "score": score};
+
+  @override
+  String toString() => 'Skill(skillName: "$skillName", score: $score)';
 }
 
 class Equipment {

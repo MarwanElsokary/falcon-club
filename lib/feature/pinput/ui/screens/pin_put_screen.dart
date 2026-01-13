@@ -17,6 +17,7 @@ import '../widget/timer_widget.dart';
 
 class PinputScreen extends StatelessWidget {
   const PinputScreen({super.key, required this.phoneNumber});
+
   final String phoneNumber;
 
   @override

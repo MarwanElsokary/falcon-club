@@ -27,6 +27,9 @@ mixin _$MainState {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -43,6 +46,9 @@ mixin _$MainState {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -58,6 +64,9 @@ mixin _$MainState {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -74,6 +83,9 @@ mixin _$MainState {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -89,6 +101,9 @@ mixin _$MainState {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -104,6 +119,9 @@ mixin _$MainState {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -184,6 +202,9 @@ class _$InitialImpl implements _Initial {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -204,6 +225,9 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -223,6 +247,9 @@ class _$InitialImpl implements _Initial {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -246,6 +273,9 @@ class _$InitialImpl implements _Initial {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -265,6 +295,9 @@ class _$InitialImpl implements _Initial {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -284,6 +317,9 @@ class _$InitialImpl implements _Initial {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -353,6 +389,9 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -373,6 +412,9 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -392,6 +434,9 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -415,6 +460,9 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -434,6 +482,9 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -453,6 +504,9 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -553,6 +607,9 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -573,6 +630,9 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -592,6 +652,9 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -615,6 +678,9 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -634,6 +700,9 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -653,6 +722,9 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -761,6 +833,9 @@ class _$myProfileErrorImpl implements myProfileError {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -781,6 +856,9 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -800,6 +878,9 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -823,6 +904,9 @@ class _$myProfileErrorImpl implements myProfileError {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -842,6 +926,9 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -861,6 +948,9 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -940,6 +1030,9 @@ class _$playerProfileLoadingImpl implements playerProfileLoading {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -960,6 +1053,9 @@ class _$playerProfileLoadingImpl implements playerProfileLoading {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -979,6 +1075,9 @@ class _$playerProfileLoadingImpl implements playerProfileLoading {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -1002,6 +1101,9 @@ class _$playerProfileLoadingImpl implements playerProfileLoading {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -1021,6 +1123,9 @@ class _$playerProfileLoadingImpl implements playerProfileLoading {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -1040,6 +1145,9 @@ class _$playerProfileLoadingImpl implements playerProfileLoading {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -1141,6 +1249,9 @@ class _$playerProfileSuccessImpl implements playerProfileSuccess {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -1161,6 +1272,9 @@ class _$playerProfileSuccessImpl implements playerProfileSuccess {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -1180,6 +1294,9 @@ class _$playerProfileSuccessImpl implements playerProfileSuccess {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -1203,6 +1320,9 @@ class _$playerProfileSuccessImpl implements playerProfileSuccess {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -1222,6 +1342,9 @@ class _$playerProfileSuccessImpl implements playerProfileSuccess {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -1241,6 +1364,9 @@ class _$playerProfileSuccessImpl implements playerProfileSuccess {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -1349,6 +1475,9 @@ class _$playerProfileErrorImpl implements playerProfileError {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -1369,6 +1498,9 @@ class _$playerProfileErrorImpl implements playerProfileError {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -1388,6 +1520,9 @@ class _$playerProfileErrorImpl implements playerProfileError {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -1411,6 +1546,9 @@ class _$playerProfileErrorImpl implements playerProfileError {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -1430,6 +1568,9 @@ class _$playerProfileErrorImpl implements playerProfileError {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -1449,6 +1590,9 @@ class _$playerProfileErrorImpl implements playerProfileError {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -1473,6 +1617,652 @@ abstract class playerProfileError implements MainState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$playerProfileErrorImplCopyWith<_$playerProfileErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$playerSkillsLoadingImplCopyWith<$Res> {
+  factory _$$playerSkillsLoadingImplCopyWith(
+    _$playerSkillsLoadingImpl value,
+    $Res Function(_$playerSkillsLoadingImpl) then,
+  ) = __$$playerSkillsLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$playerSkillsLoadingImplCopyWithImpl<$Res>
+    extends _$MainStateCopyWithImpl<$Res, _$playerSkillsLoadingImpl>
+    implements _$$playerSkillsLoadingImplCopyWith<$Res> {
+  __$$playerSkillsLoadingImplCopyWithImpl(
+    _$playerSkillsLoadingImpl _value,
+    $Res Function(_$playerSkillsLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$playerSkillsLoadingImpl implements playerSkillsLoading {
+  const _$playerSkillsLoadingImpl();
+
+  @override
+  String toString() {
+    return 'MainState.playerSkillsloading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$playerSkillsLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() playerProfileloading,
+    required TResult Function(MyProfileModel playerProfileModel)
+    playerProfilesuccess,
+    required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
+    required TResult Function() categoriesloading,
+    required TResult Function(CategoriesModel categoriesModel)
+    categoriessuccess,
+    required TResult Function(String error) categorieserror,
+    required TResult Function() playVideoloading,
+    required TResult Function() playVideosuccess,
+  }) {
+    return playerSkillsloading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? myProfileloading,
+    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult? Function(String error)? myProfileerror,
+    TResult? Function()? playerProfileloading,
+    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
+    TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
+    TResult? Function()? categoriesloading,
+    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
+    TResult? Function(String error)? categorieserror,
+    TResult? Function()? playVideoloading,
+    TResult? Function()? playVideosuccess,
+  }) {
+    return playerSkillsloading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? playerProfileloading,
+    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
+    TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
+    TResult Function()? categoriesloading,
+    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
+    TResult Function(String error)? categorieserror,
+    TResult Function()? playVideoloading,
+    TResult Function()? playVideosuccess,
+    required TResult orElse(),
+  }) {
+    if (playerSkillsloading != null) {
+      return playerSkillsloading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(myProfileLoading value) myProfileloading,
+    required TResult Function(myProfileSuccess value) myProfilesuccess,
+    required TResult Function(myProfileError value) myProfileerror,
+    required TResult Function(playerProfileLoading value) playerProfileloading,
+    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
+    required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
+    required TResult Function(categoriesLoading value) categoriesloading,
+    required TResult Function(categoriesSuccess value) categoriessuccess,
+    required TResult Function(categoriesError value) categorieserror,
+    required TResult Function(playVideoLoading value) playVideoloading,
+    required TResult Function(playVideoSuccess value) playVideosuccess,
+  }) {
+    return playerSkillsloading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(myProfileLoading value)? myProfileloading,
+    TResult? Function(myProfileSuccess value)? myProfilesuccess,
+    TResult? Function(myProfileError value)? myProfileerror,
+    TResult? Function(playerProfileLoading value)? playerProfileloading,
+    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
+    TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
+    TResult? Function(categoriesLoading value)? categoriesloading,
+    TResult? Function(categoriesSuccess value)? categoriessuccess,
+    TResult? Function(categoriesError value)? categorieserror,
+    TResult? Function(playVideoLoading value)? playVideoloading,
+    TResult? Function(playVideoSuccess value)? playVideosuccess,
+  }) {
+    return playerSkillsloading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(myProfileLoading value)? myProfileloading,
+    TResult Function(myProfileSuccess value)? myProfilesuccess,
+    TResult Function(myProfileError value)? myProfileerror,
+    TResult Function(playerProfileLoading value)? playerProfileloading,
+    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
+    TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
+    TResult Function(categoriesLoading value)? categoriesloading,
+    TResult Function(categoriesSuccess value)? categoriessuccess,
+    TResult Function(categoriesError value)? categorieserror,
+    TResult Function(playVideoLoading value)? playVideoloading,
+    TResult Function(playVideoSuccess value)? playVideosuccess,
+    required TResult orElse(),
+  }) {
+    if (playerSkillsloading != null) {
+      return playerSkillsloading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class playerSkillsLoading implements MainState {
+  const factory playerSkillsLoading() = _$playerSkillsLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$playerSkillsSuccessImplCopyWith<$Res> {
+  factory _$$playerSkillsSuccessImplCopyWith(
+    _$playerSkillsSuccessImpl value,
+    $Res Function(_$playerSkillsSuccessImpl) then,
+  ) = __$$playerSkillsSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Skill> skills});
+}
+
+/// @nodoc
+class __$$playerSkillsSuccessImplCopyWithImpl<$Res>
+    extends _$MainStateCopyWithImpl<$Res, _$playerSkillsSuccessImpl>
+    implements _$$playerSkillsSuccessImplCopyWith<$Res> {
+  __$$playerSkillsSuccessImplCopyWithImpl(
+    _$playerSkillsSuccessImpl _value,
+    $Res Function(_$playerSkillsSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? skills = null}) {
+    return _then(
+      _$playerSkillsSuccessImpl(
+        null == skills
+            ? _value._skills
+            : skills // ignore: cast_nullable_to_non_nullable
+                  as List<Skill>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
+  const _$playerSkillsSuccessImpl(final List<Skill> skills) : _skills = skills;
+
+  final List<Skill> _skills;
+  @override
+  List<Skill> get skills {
+    if (_skills is EqualUnmodifiableListView) return _skills;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_skills);
+  }
+
+  @override
+  String toString() {
+    return 'MainState.playerSkillssuccess(skills: $skills)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$playerSkillsSuccessImpl &&
+            const DeepCollectionEquality().equals(other._skills, _skills));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_skills));
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$playerSkillsSuccessImplCopyWith<_$playerSkillsSuccessImpl> get copyWith =>
+      __$$playerSkillsSuccessImplCopyWithImpl<_$playerSkillsSuccessImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() playerProfileloading,
+    required TResult Function(MyProfileModel playerProfileModel)
+    playerProfilesuccess,
+    required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
+    required TResult Function() categoriesloading,
+    required TResult Function(CategoriesModel categoriesModel)
+    categoriessuccess,
+    required TResult Function(String error) categorieserror,
+    required TResult Function() playVideoloading,
+    required TResult Function() playVideosuccess,
+  }) {
+    return playerSkillssuccess(skills);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? myProfileloading,
+    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult? Function(String error)? myProfileerror,
+    TResult? Function()? playerProfileloading,
+    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
+    TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
+    TResult? Function()? categoriesloading,
+    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
+    TResult? Function(String error)? categorieserror,
+    TResult? Function()? playVideoloading,
+    TResult? Function()? playVideosuccess,
+  }) {
+    return playerSkillssuccess?.call(skills);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? playerProfileloading,
+    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
+    TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
+    TResult Function()? categoriesloading,
+    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
+    TResult Function(String error)? categorieserror,
+    TResult Function()? playVideoloading,
+    TResult Function()? playVideosuccess,
+    required TResult orElse(),
+  }) {
+    if (playerSkillssuccess != null) {
+      return playerSkillssuccess(skills);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(myProfileLoading value) myProfileloading,
+    required TResult Function(myProfileSuccess value) myProfilesuccess,
+    required TResult Function(myProfileError value) myProfileerror,
+    required TResult Function(playerProfileLoading value) playerProfileloading,
+    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
+    required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
+    required TResult Function(categoriesLoading value) categoriesloading,
+    required TResult Function(categoriesSuccess value) categoriessuccess,
+    required TResult Function(categoriesError value) categorieserror,
+    required TResult Function(playVideoLoading value) playVideoloading,
+    required TResult Function(playVideoSuccess value) playVideosuccess,
+  }) {
+    return playerSkillssuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(myProfileLoading value)? myProfileloading,
+    TResult? Function(myProfileSuccess value)? myProfilesuccess,
+    TResult? Function(myProfileError value)? myProfileerror,
+    TResult? Function(playerProfileLoading value)? playerProfileloading,
+    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
+    TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
+    TResult? Function(categoriesLoading value)? categoriesloading,
+    TResult? Function(categoriesSuccess value)? categoriessuccess,
+    TResult? Function(categoriesError value)? categorieserror,
+    TResult? Function(playVideoLoading value)? playVideoloading,
+    TResult? Function(playVideoSuccess value)? playVideosuccess,
+  }) {
+    return playerSkillssuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(myProfileLoading value)? myProfileloading,
+    TResult Function(myProfileSuccess value)? myProfilesuccess,
+    TResult Function(myProfileError value)? myProfileerror,
+    TResult Function(playerProfileLoading value)? playerProfileloading,
+    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
+    TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
+    TResult Function(categoriesLoading value)? categoriesloading,
+    TResult Function(categoriesSuccess value)? categoriessuccess,
+    TResult Function(categoriesError value)? categorieserror,
+    TResult Function(playVideoLoading value)? playVideoloading,
+    TResult Function(playVideoSuccess value)? playVideosuccess,
+    required TResult orElse(),
+  }) {
+    if (playerSkillssuccess != null) {
+      return playerSkillssuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class playerSkillsSuccess implements MainState {
+  const factory playerSkillsSuccess(final List<Skill> skills) =
+      _$playerSkillsSuccessImpl;
+
+  List<Skill> get skills;
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$playerSkillsSuccessImplCopyWith<_$playerSkillsSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$playerSkillsErrorImplCopyWith<$Res> {
+  factory _$$playerSkillsErrorImplCopyWith(
+    _$playerSkillsErrorImpl value,
+    $Res Function(_$playerSkillsErrorImpl) then,
+  ) = __$$playerSkillsErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$playerSkillsErrorImplCopyWithImpl<$Res>
+    extends _$MainStateCopyWithImpl<$Res, _$playerSkillsErrorImpl>
+    implements _$$playerSkillsErrorImplCopyWith<$Res> {
+  __$$playerSkillsErrorImplCopyWithImpl(
+    _$playerSkillsErrorImpl _value,
+    $Res Function(_$playerSkillsErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? error = null}) {
+    return _then(
+      _$playerSkillsErrorImpl(
+        error: null == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$playerSkillsErrorImpl implements playerSkillsError {
+  const _$playerSkillsErrorImpl({required this.error});
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'MainState.playerSkillserror(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$playerSkillsErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$playerSkillsErrorImplCopyWith<_$playerSkillsErrorImpl> get copyWith =>
+      __$$playerSkillsErrorImplCopyWithImpl<_$playerSkillsErrorImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() playerProfileloading,
+    required TResult Function(MyProfileModel playerProfileModel)
+    playerProfilesuccess,
+    required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
+    required TResult Function() categoriesloading,
+    required TResult Function(CategoriesModel categoriesModel)
+    categoriessuccess,
+    required TResult Function(String error) categorieserror,
+    required TResult Function() playVideoloading,
+    required TResult Function() playVideosuccess,
+  }) {
+    return playerSkillserror(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? myProfileloading,
+    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult? Function(String error)? myProfileerror,
+    TResult? Function()? playerProfileloading,
+    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
+    TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
+    TResult? Function()? categoriesloading,
+    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
+    TResult? Function(String error)? categorieserror,
+    TResult? Function()? playVideoloading,
+    TResult? Function()? playVideosuccess,
+  }) {
+    return playerSkillserror?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? playerProfileloading,
+    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
+    TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
+    TResult Function()? categoriesloading,
+    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
+    TResult Function(String error)? categorieserror,
+    TResult Function()? playVideoloading,
+    TResult Function()? playVideosuccess,
+    required TResult orElse(),
+  }) {
+    if (playerSkillserror != null) {
+      return playerSkillserror(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(myProfileLoading value) myProfileloading,
+    required TResult Function(myProfileSuccess value) myProfilesuccess,
+    required TResult Function(myProfileError value) myProfileerror,
+    required TResult Function(playerProfileLoading value) playerProfileloading,
+    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
+    required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
+    required TResult Function(categoriesLoading value) categoriesloading,
+    required TResult Function(categoriesSuccess value) categoriessuccess,
+    required TResult Function(categoriesError value) categorieserror,
+    required TResult Function(playVideoLoading value) playVideoloading,
+    required TResult Function(playVideoSuccess value) playVideosuccess,
+  }) {
+    return playerSkillserror(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(myProfileLoading value)? myProfileloading,
+    TResult? Function(myProfileSuccess value)? myProfilesuccess,
+    TResult? Function(myProfileError value)? myProfileerror,
+    TResult? Function(playerProfileLoading value)? playerProfileloading,
+    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
+    TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
+    TResult? Function(categoriesLoading value)? categoriesloading,
+    TResult? Function(categoriesSuccess value)? categoriessuccess,
+    TResult? Function(categoriesError value)? categorieserror,
+    TResult? Function(playVideoLoading value)? playVideoloading,
+    TResult? Function(playVideoSuccess value)? playVideosuccess,
+  }) {
+    return playerSkillserror?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(myProfileLoading value)? myProfileloading,
+    TResult Function(myProfileSuccess value)? myProfilesuccess,
+    TResult Function(myProfileError value)? myProfileerror,
+    TResult Function(playerProfileLoading value)? playerProfileloading,
+    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
+    TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
+    TResult Function(categoriesLoading value)? categoriesloading,
+    TResult Function(categoriesSuccess value)? categoriessuccess,
+    TResult Function(categoriesError value)? categorieserror,
+    TResult Function(playVideoLoading value)? playVideoloading,
+    TResult Function(playVideoSuccess value)? playVideosuccess,
+    required TResult orElse(),
+  }) {
+    if (playerSkillserror != null) {
+      return playerSkillserror(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class playerSkillsError implements MainState {
+  const factory playerSkillsError({required final String error}) =
+      _$playerSkillsErrorImpl;
+
+  String get error;
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$playerSkillsErrorImplCopyWith<_$playerSkillsErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1527,6 +2317,9 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -1547,6 +2340,9 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -1566,6 +2362,9 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -1589,6 +2388,9 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -1608,6 +2410,9 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -1627,6 +2432,9 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -1727,6 +2535,9 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -1747,6 +2558,9 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -1766,6 +2580,9 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -1789,6 +2606,9 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -1808,6 +2628,9 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -1827,6 +2650,9 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -1935,6 +2761,9 @@ class _$categoriesErrorImpl implements categoriesError {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -1955,6 +2784,9 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -1974,6 +2806,9 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -1997,6 +2832,9 @@ class _$categoriesErrorImpl implements categoriesError {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -2016,6 +2854,9 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -2035,6 +2876,9 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -2113,6 +2957,9 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -2133,6 +2980,9 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -2152,6 +3002,9 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -2175,6 +3028,9 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -2194,6 +3050,9 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -2213,6 +3072,9 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,
@@ -2282,6 +3144,9 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     required TResult Function(MyProfileModel playerProfileModel)
     playerProfilesuccess,
     required TResult Function(String error) playerProfileerror,
+    required TResult Function() playerSkillsloading,
+    required TResult Function(List<Skill> skills) playerSkillssuccess,
+    required TResult Function(String error) playerSkillserror,
     required TResult Function() categoriesloading,
     required TResult Function(CategoriesModel categoriesModel)
     categoriessuccess,
@@ -2302,6 +3167,9 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult? Function()? playerProfileloading,
     TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult? Function(String error)? playerProfileerror,
+    TResult? Function()? playerSkillsloading,
+    TResult? Function(List<Skill> skills)? playerSkillssuccess,
+    TResult? Function(String error)? playerSkillserror,
     TResult? Function()? categoriesloading,
     TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult? Function(String error)? categorieserror,
@@ -2321,6 +3189,9 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult Function()? playerProfileloading,
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
     TResult Function(String error)? playerProfileerror,
+    TResult Function()? playerSkillsloading,
+    TResult Function(List<Skill> skills)? playerSkillssuccess,
+    TResult Function(String error)? playerSkillserror,
     TResult Function()? categoriesloading,
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
     TResult Function(String error)? categorieserror,
@@ -2344,6 +3215,9 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     required TResult Function(playerProfileLoading value) playerProfileloading,
     required TResult Function(playerProfileSuccess value) playerProfilesuccess,
     required TResult Function(playerProfileError value) playerProfileerror,
+    required TResult Function(playerSkillsLoading value) playerSkillsloading,
+    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
+    required TResult Function(playerSkillsError value) playerSkillserror,
     required TResult Function(categoriesLoading value) categoriesloading,
     required TResult Function(categoriesSuccess value) categoriessuccess,
     required TResult Function(categoriesError value) categorieserror,
@@ -2363,6 +3237,9 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult? Function(playerProfileLoading value)? playerProfileloading,
     TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult? Function(playerProfileError value)? playerProfileerror,
+    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult? Function(playerSkillsError value)? playerSkillserror,
     TResult? Function(categoriesLoading value)? categoriesloading,
     TResult? Function(categoriesSuccess value)? categoriessuccess,
     TResult? Function(categoriesError value)? categorieserror,
@@ -2382,6 +3259,9 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult Function(playerProfileLoading value)? playerProfileloading,
     TResult Function(playerProfileSuccess value)? playerProfilesuccess,
     TResult Function(playerProfileError value)? playerProfileerror,
+    TResult Function(playerSkillsLoading value)? playerSkillsloading,
+    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
+    TResult Function(playerSkillsError value)? playerSkillserror,
     TResult Function(categoriesLoading value)? categoriesloading,
     TResult Function(categoriesSuccess value)? categoriessuccess,
     TResult Function(categoriesError value)? categorieserror,

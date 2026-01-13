@@ -12,18 +12,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../main_screen/data/model/my_profile_model.dart';
 import '../../../player_profile/ui/widget/player_about_me_widget.dart';
 import '../../../player_profile/ui/widget/player_chart_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
 import '../../../player_profile/ui/widget/player_image_widget.dart';
-import '../../../player_profile/ui/widget/player_information_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
-import '../../../player_profile/ui/widget/player_videos_widget.dart';
+import '../../../training_details/data/model/exercise_details_model.dart';
+import '../widget/player_videos_widget.dart';
 
-class PlayerProfileScreen extends StatelessWidget {
-  const PlayerProfileScreen({super.key, required this.ismyProfile});
+class PlayerProfileScreen extends StatefulWidget {
+  const PlayerProfileScreen({
+    super.key,
+    required this.ismyProfile,
+    required this.playerId,
+  });
 
   final bool ismyProfile;
+  final String playerId;
+
+  @override
+  State<PlayerProfileScreen> createState() => _PlayerProfileScreenState();
+}
+
+class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
+  bool _skillsLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    log('🎬 PlayerProfileScreen initialized for playerId: ${widget.playerId}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,78 +64,303 @@ class PlayerProfileScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: BlocBuilder<MainCubit, MainState>(
-            buildWhen: (previous, current) =>
-                current is playerProfileLoading ||
-                current is playerProfileSuccess ||
-                current is playerProfileError,
-            builder: (context, state) {
-              log(state.toString());
-              return state.maybeWhen(
-                playerProfilesuccess: (playerProfile) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        verticalSpace(20),
-                        //user Information
-                        // PlayerInformationWidget(playerProfile: playerProfile),
-                        // verticalSpace(20),
-                        //userImage
-                        PlayerImageWidget(playerProfile: playerProfile),
-                        verticalSpace(5),
-                        //player chart
-                        Align(
-                          alignment: AlignmentGeometry.center,
-                          child: SizedBox(
-                            width: 300.w,
-                            height: 350.w,
-                            child: PlayerRadarChart(
-                              speed: 24.56,
-                              strength: 10.3,
-                              ballControl: 0.0,
-                              tackling: 12.0,
-                              dribbling: 50.0,
-                            ),
-                          ),
-                        ),
-                        //  player moer info
-                        SlideEnimationWidget(
-                          index: 0,
-                          child: PlayerMoreInfoWidget(
-                            playerProfile: playerProfile,
-                          ),
-                        ),
+          child: _buildMainContent(),
+        ),
+      ),
+    );
+  }
 
-                        //about me
-                        verticalSpace(10),
-                        PlayerAboutMeWidget(playerProfile: playerProfile),
-                        verticalSpace(10),
-                        //player Videos
-                        PlayerVideosWidget(),
-                        verticalSpace(10),
-                        PlayerExperianceWidget(playerProfile: playerProfile),
+  Widget _buildMainContent() {
+    return BlocBuilder<MainCubit, MainState>(
+      buildWhen: (previous, current) =>
+          current is playerProfileLoading ||
+          current is playerProfileSuccess ||
+          current is playerProfileError,
+      builder: (context, state) {
+        log('🎯 Main Content State: ${state.runtimeType}');
 
-                        verticalSpace(20),
-                      ],
-                    ),
-                  );
-                },
-                orElse: () {
-                  return SizedBox(
-                    width: context.displayWidth / 1,
-                    height: 190.h,
-                    child: Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 20.w,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
+        return state.maybeWhen(
+          playerProfileloading: () =>
+              _buildFullScreenLoading('جاري تحميل البروفايل...'),
+          playerProfileerror: (error) => _buildFullScreenError(error),
+          playerProfilesuccess: (playerProfile) {
+            return _buildProfileWithSkills(playerProfile);
+          },
+          orElse: () => _buildFullScreenLoading('جاري التحميل...'),
+        );
+      },
+    );
+  }
+
+  Widget _buildProfileWithSkills(MyProfileModel playerProfile) {
+    // جلب المهارات مرة واحدة فقط
+    if (!_skillsLoaded) {
+      _skillsLoaded = true;
+      Future.microtask(() {
+        log('🔄 Fetching skills for player: ${widget.playerId}');
+        context.read<MainCubit>().emitSkills(userId: widget.playerId);
+      });
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                verticalSpace(20),
+                //user Image
+                PlayerImageWidget(playerProfile: playerProfile),
+                verticalSpace(5),
+                //player chart (منفصل تماماً)
+                _buildSkillsChartSection(),
+                // player more info
+                SlideEnimationWidget(
+                  index: 0,
+                  child: PlayerMoreInfoWidget(playerProfile: playerProfile),
+                ),
+                //about me
+                verticalSpace(10),
+                PlayerAboutMeWidget(playerProfile: playerProfile),
+                verticalSpace(10),
+                //player Videos
+                PlayerVideosWidget(),
+                verticalSpace(10),
+                PlayerExperianceWidget(playerProfile: playerProfile),
+                verticalSpace(20),
+              ],
+            ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSkillsChartSection() {
+    return BlocBuilder<MainCubit, MainState>(
+      buildWhen: (previous, current) =>
+          current is playerSkillsLoading ||
+          current is playerSkillsSuccess ||
+          current is playerSkillsError,
+      builder: (context, state) {
+        log('📊 Skills Section State: ${state.runtimeType}');
+
+        return state.maybeWhen(
+          playerSkillsloading: () => _buildChartLoading(),
+          playerSkillserror: (error) => _buildChartError(error),
+          playerSkillssuccess: (skills) {
+            log('📊 Skills loaded: ${skills.length} items');
+            return _buildRadarChartWithData(skills);
+          },
+          orElse: () {
+            // إذا لم تبدأ بعد، نعرض رسالة انتظار
+            return _buildChartWaiting();
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildRadarChartWithData(List<Skill> skills) {
+    // استخراج القيم من المهارات
+    Map<String, double> skillValues = {
+      'السرعة': 0.0, // قيمة افتراضية
+      'القوة': 0.0, // قيمة افتراضية
+      'التحكم': 0.0, // قيمة افتراضية
+      'الالتحام': 0.0, // قيمة افتراضية
+      'المراوغة': 0.0, // قيمة افتراضية
+    };
+
+    // تحديث القيم من البيانات الفعلية
+    for (var skill in skills) {
+      if (skillValues.containsKey(skill.skillName)) {
+        skillValues[skill.skillName] = skill.score;
+        log('📊 Updated ${skill.skillName}: ${skill.score}');
+      } else {
+        log('⚠️ Unknown skill: ${skill.skillName}');
+      }
+    }
+
+    // عرض البيانات على الرادار تشارت مع أسماء المهارات
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        verticalSpace(20),
+        SizedBox(
+          width: 300.w,
+          height: 350.w,
+          child: Align(
+            alignment: AlignmentGeometry.center,
+
+            child: SizedBox(
+              width: 300.w,
+              height: 350.w,
+              child: PlayerRadarChart(
+                speed: skillValues['السرعة']!,
+                strength: skillValues['القوة']!,
+                ballControl: skillValues['التحكم']!,
+                tackling: skillValues['الالتحام']!,
+                dribbling: skillValues['المراوغة']!,
+              ),
+            ),
+          ),
+        ),
+        verticalSpace(10),
+        // عرض أسماء المهارات والقيم
+      ],
+    );
+  }
+
+  Widget _buildSkillLegend(Map<String, double> skills) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Wrap(
+        spacing: 10.w,
+        runSpacing: 5.h,
+        children: skills.entries.map((entry) {
+          return Chip(
+            backgroundColor: mainColor.withOpacity(0.3),
+            label: Text(
+              '${entry.key}: ${entry.value.toStringAsFixed(1)}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildChartLoading() {
+    return Container(
+      height: 350.w,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CupertinoActivityIndicator(color: Colors.white, radius: 15.w),
+            verticalSpace(10),
+            Text(
+              'جاري تحميل المهارات...',
+              style: TextStyle(color: Colors.white, fontSize: 14.sp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChartWaiting() {
+    return Container(
+      height: 350.w,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.bar_chart,
+              color: Colors.white.withOpacity(0.5),
+              size: 40.w,
+            ),
+            verticalSpace(10),
+            Text(
+              'انتظار تحميل المهارات...',
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
+                fontSize: 14.sp,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChartError(String error) {
+    return Container(
+      height: 350.w,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error_outline, color: Colors.red, size: 40.w),
+            verticalSpace(10),
+            Text(
+              'خطأ في تحميل المهارات',
+              style: TextStyle(color: Colors.white, fontSize: 14.sp),
+            ),
+            verticalSpace(5),
+            Text(
+              'سيتم استخدام بيانات افتراضية',
+              style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFullScreenLoading(String message) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CupertinoActivityIndicator(radius: 20.w, color: Colors.white),
+          verticalSpace(20),
+          Text(
+            message,
+            style: TextStyle(color: Colors.white, fontSize: 16.sp),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFullScreenError(String error) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error, color: Colors.red, size: 60.w),
+            verticalSpace(20),
+            Text(
+              'حدث خطأ في تحميل البروفايل',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            verticalSpace(10),
+            Text(
+              error,
+              style: TextStyle(color: Colors.white70, fontSize: 14.sp),
+              textAlign: TextAlign.center,
+            ),
+            verticalSpace(20),
+            ElevatedButton(
+              onPressed: () {
+                _skillsLoaded = false;
+                context.read<MainCubit>().emitProfileById(
+                  userId: widget.playerId,
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: mainColor,
+                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.h),
+              ),
+              child: Text(
+                'إعادة المحاولة',
+                style: TextStyle(color: Colors.white, fontSize: 16.sp),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -16,6 +16,7 @@ import '../widget/signup_iput_data_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key, required this.update});
+
   final bool update;
 
   @override

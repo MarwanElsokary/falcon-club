@@ -1,5 +1,6 @@
 import 'package:falcon/feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import 'package:falcon/feature/creat_real/cubit/creat_real_cubit.dart';
+import 'package:falcon/feature/forget_password/ui/forget_password_screen.dart';
 import 'package:falcon/feature/login/cubit/login_cubit.dart';
 import 'package:falcon/feature/login/ui/screen/login_screen.dart';
 import 'package:falcon/feature/package/cubit/package_cubit.dart';
@@ -22,6 +23,7 @@ import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.d
 import '../../feature/experiance_details_screen/ui/screen/experiance_details_screen.dart';
 import '../../feature/experiments/cubit/experiments_cubit.dart';
 
+import '../../feature/forget_password/ui/send_otp.dart';
 import '../../feature/last_attempt/ui/screen/last_attempt_screen.dart';
 import '../../feature/main_screen/cubit/main_cubit.dart';
 import '../../feature/main_screen/ui/screen/main_screen.dart';
@@ -70,6 +72,20 @@ class AppRouter {
             return FadeTransition(opacity: animation, child: child);
           },
         );
+      case AppRoute.forgetPasswordScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child: ForgetPasswordScreen(),
+          ),
+        );
+      case AppRoute.sendOtp:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child: SendOtpScreen(phoneNumber: ''),
+          ),
+        );
       case AppRoute.signUpScreen:
         var args = arguments as Map<String, dynamic>;
 
@@ -116,7 +132,6 @@ class AppRouter {
 
       case AppRoute.playerProfile:
         var args = arguments as Map<String, dynamic>;
-
         bool isMyProfile = args['isMyProfile'];
         String playerId = args['playerId'];
 
@@ -124,7 +139,7 @@ class AppRouter {
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<RealsCubit>()
+                create: (_) => getIt<RealsCubit>()
                   ..emitreals(
                     pageNumber: '1',
                     pageSize: '10',
@@ -132,11 +147,14 @@ class AppRouter {
                   ),
               ),
               BlocProvider(
-                create: (context) =>
+                create: (_) =>
                     getIt<MainCubit>()..emitProfileById(userId: playerId),
               ),
             ],
-            child: PlayerProfileScreen(ismyProfile: isMyProfile),
+            child: PlayerProfileScreen(
+              ismyProfile: isMyProfile,
+              playerId: playerId,
+            ),
           ),
         );
 

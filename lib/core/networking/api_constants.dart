@@ -110,6 +110,11 @@ class ApiConstants {
 
   //deletAccount
   static const String deleteAccount = "delete-account";
+
+  static const String forgetPasswordByPhone =
+      '/Account/ForgetPasswordByOtpPhone';
+  static const String checkOtp = '/Account/CheckOtp';
+  static const String resetPassword = '/Account/ResetPassword';
 }
 
 class ApiErrors {

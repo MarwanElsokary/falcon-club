@@ -547,12 +547,12 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<Skill> getSkills() async {
+  Future<SkillsResponse> getSkills(String userId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'UserId': userId};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<Skill>(
+    final _options = _setStreamType<SkillsResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -563,9 +563,9 @@ class _ApiService implements ApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Skill _value;
+    late SkillsResponse _value;
     try {
-      _value = Skill.fromJson(_result.data!);
+      _value = SkillsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
