@@ -1,13 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/feature/forget_password/data/widgets/pin_put.dart';
+import 'package:falcon/feature/forget_password/data/widgets/time_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:falcon/core/routing/routes.dart';
+import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/button_utils.dart';
 import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-
+import 'package:falcon/core/widget/show_error_snack_bar.dart';
+import '../../../core/routing/routes.dart';
 import '../../pinput/ui/widget/pin_put_widget.dart';
+import '../cubit/forget_password_cubit.dart';
+import '../data/repo/forget_password_repo.dart';
+import '../../../../core/di/dependency_injection.dart';
 
 class SendOtpScreen extends StatefulWidget {
   final String phoneNumber;
@@ -19,148 +26,164 @@ class SendOtpScreen extends StatefulWidget {
 }
 
 class _SendOtpScreenState extends State<SendOtpScreen> {
-  final List<TextEditingController> _controllers = List.generate(
-    4,
-    (_) => TextEditingController(),
-  );
-  final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
-
-  @override
-  void initState() {
-    super.initState();
-    // إضافة استماع للتحرك بين الخانات
-    for (int i = 0; i < 3; i++) {
-      _controllers[i].addListener(() {
-        if (_controllers[i].text.length == 1) {
-          FocusScope.of(context).requestFocus(_focusNodes[i + 1]);
-        }
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    for (var controller in _controllers) {
-      controller.dispose();
-    }
-    for (var focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
-    super.dispose();
-  }
-
-  void _verifyOtp() {
-    String otp = '';
-    for (var controller in _controllers) {
-      otp += controller.text;
-    }
-
-    if (otp.length == 4) {
-      // TODO: التحقق من صحة الـ OTP
-      print('OTP: $otp');
-      Navigator.pushNamed(
-        context,
-        AppRoute.resetPassword,
-      ); // الانتقال لشاشة إعادة تعيين كلمة المرور
-    }
-  }
+  final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: mainColor),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'الرجوع'.tr(),
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: mainColor,
-          ),
-        ),
-      ),
+    return BlocProvider(
+      create: (context) {
+        final cubit = ForgetPasswordCubit(getIt<ForgetPasswordRepo>());
+        cubit.phoneController.text = widget.phoneNumber; // هنا نعين رقم الهاتف
+        return cubit;
+      },
+      child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            otpVerified: (token) {
+              context.pushNamed(
+                AppRoute.resetPasswordScreen,
+                arguments: {'token': token},
+              );
+            },
+            error: (message) {
+              showErrorSnackBar(context: context, title: message);
+            },
+          );
+        },
+        builder: (context, state) {
+          final cubit = context.read<ForgetPasswordCubit>();
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 40),
+          bool isButtonEnabled = cubit.otpController.text.length == 6;
 
-              Image.asset(
-                'assets/images/Frame 1059 (1).png',
-                height: 180.h,
-                cacheWidth: (180 * 2).toInt(),
-                cacheHeight: (180 * 2).toInt(),
+          bool isVerifying = state.maybeWhen(
+            verifying: () => true,
+            orElse: () => false,
+          );
+
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, color: mainColor),
+                onPressed: () => context.pop(),
               ),
-
-              verticalSpace(24),
-
-              TextUtils(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: mainColor.withAlpha(150),
-                text: 'أدخل الرمز المكون من 4 أرقام المرسل إلى'.tr(),
+              title: Text(
+                'الرجوع'.tr(),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: mainColor,
+                ),
               ),
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 40.h),
 
-              TextUtils(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: mainColor.withAlpha(150),
-                text: '+966 ${widget.phoneNumber}',
-              ),
-
-              verticalSpace(32),
-
-              // OTP Input Fields
-              PinPutWidget(),
-
-              verticalSpace(24),
-
-              // Resend Code Button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextUtils(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey,
-                    text: 'لم يصلك الرمز؟'.tr(),
-                  ),
-                  SizedBox(width: 4.w),
-                  GestureDetector(
-                    onTap: () {
-                      // TODO: إعادة إرسال الرمز
-                      print('إعادة إرسال الرمز إلى ${widget.phoneNumber}');
-                    },
-                    child: TextUtils(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: mainColor,
-                      text: 'إعادة الإرسال'.tr(),
+                    Image.asset(
+                      'assets/images/Frame 1059 (1).png',
+                      height: 180.h,
+                      cacheWidth:
+                          (180 * MediaQuery.of(context).devicePixelRatio)
+                              .round(),
+                      cacheHeight:
+                          (180 * MediaQuery.of(context).devicePixelRatio)
+                              .round(),
+                      filterQuality: FilterQuality.medium,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        height: 180.h,
+                        color: Colors.grey[200],
+                        child: Icon(
+                          Icons.verified_user,
+                          size: 60.w,
+                          color: mainColor,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
 
-              verticalSpace(32),
+                    verticalSpace(24),
 
-              // Verify Button
-              ButtonUtils(
-                text: 'تحقق'.tr(),
-                onPressed: _verifyOtp,
-                colorstext: Colors.white,
-                background: mainColor,
+                    Align(
+                      alignment: AlignmentGeometry.center,
+                      child: TextUtils(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                        color: mainColor.withAlpha(150),
+                        text:
+                            'نرجو ادخال الكود المكون من اربع ارقام الذي ارسل الي رقمك +966 ${widget.phoneNumber}'
+                                .tr(),
+                      ),
+                    ),
+
+                    verticalSpace(32),
+
+                    // Form و PinPutWidget
+                    Form(key: _otpFormKey, child: PinPutWidgetForget()),
+
+                    verticalSpace(24),
+
+                    // TimerWidget
+                    TimerWidget(phoneNumber: widget.phoneNumber),
+
+                    verticalSpace(24),
+
+                    // زر التحقق مع تحسين
+                    if (isVerifying)
+                      Center(
+                        child: CircularProgressIndicator(
+                          color: mainColor,
+                          strokeWidth: 2.0,
+                        ),
+                      )
+                    else
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: isButtonEnabled
+                              ? () {
+                                  if (_otpFormKey.currentState!.validate()) {
+                                    cubit.verifyOtp();
+                                  } else {
+                                    showErrorSnackBar(
+                                      context: context,
+                                      title: 'من فضلك ادخل الرمز بشكل صحيح'
+                                          .tr(),
+                                    );
+                                  }
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: isButtonEnabled
+                                ? mainColor
+                                : Colors.grey[400],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 14.h),
+                          ),
+                          child: Text(
+                            'تحقق'.tr(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    // رسالة إذا لم يكتمل الرمز
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

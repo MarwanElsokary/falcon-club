@@ -1,193 +1,202 @@
-// // forget_password_cubit.dart
-// import 'package:bloc/bloc.dart';
-// import 'package:flutter/cupertino.dart';
-//
-// import '../data/repo/forget_password_repo.dart';
-//
-// import '../../../core/cache/cach_Helper.dart';
-//
-// part 'forget_password_state.dart';
-//
-// class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
-//   final ForgetPasswordRepo _repo;
-//
-//   ForgetPasswordCubit(this._repo) : super(ForgetPasswordInitial());
-//
-//   // Controllers
-//   final TextEditingController phoneController = TextEditingController();
-//   final TextEditingController otpController = TextEditingController();
-//   final TextEditingController newPasswordController = TextEditingController();
-//   final TextEditingController confirmPasswordController = TextEditingController();
-//
-//   // States
-//   bool isNewPasswordVisible = false;
-//   bool isConfirmPasswordVisible = false;
-//   bool isVerifyButtonEnabled = false;
-//   bool isResetButtonEnabled = false;
-//   String? resetToken;
-//   String? userPhone;
-//
-//   // 1. إرسال OTP
-//   Future<void> sendOtp() async {
-//     if (phoneController.text.isEmpty || phoneController.text.length != 9) {
-//       emit(ForgetPasswordError('من فضلك أدخل رقم هاتف صحيح'));
-//       return;
-//     }
-//
-//     emit(ForgetPasswordLoading('جاري إرسال الرمز...'));
-//
-//     final result = await _repo.sendOtpToPhone(
-//       phoneNumber: phoneController.text,
-//     );
-//
-//     result.fold(
-//           (failure) => emit(ForgetPasswordError(failure.message)),
-//           (response) {
-//         userPhone = phoneController.text;
-//         emit(OtpSentSuccessfully(
-//           phone: phoneController.text,
-//           expiresIn: response.data?.expiresIn ?? 60,
-//         ));
-//       },
-//     );
-//   }
-//
-//   // 2. التحقق من OTP
-//   Future<void> verifyOtp() async {
-//     if (otpController.text.length != 6) {
-//       emit(ForgetPasswordError('الرمز يجب أن يكون 6 أرقام'));
-//       return;
-//     }
-//
-//     emit(ForgetPasswordLoading('جاري التحقق...'));
-//
-//     final result = await _repo.verifyOtp(
-//       phoneNumber: userPhone ?? phoneController.text,
-//       otp: otpController.text,
-//     );
-//
-//     result.fold(
-//           (failure) => emit(ForgetPasswordError(failure.message)),
-//           (response) {
-//         resetToken = response.data?.token;
-//         await CacheHelper.saveData(key: 'resetToken', value: resetToken);
-//         emit(OtpVerifiedSuccessfully(token: resetToken!));
-//       },
-//     );
-//   }
-//
-//   // 3. إعادة تعيين كلمة المرور
-//   Future<void> resetPassword() async {
-//     if (newPasswordController.text.isEmpty || confirmPasswordController.text.isEmpty) {
-//       emit(ForgetPasswordError('من فضلك أدخل كلمة المرور'));
-//       return;
-//     }
-//
-//     if (newPasswordController.text != confirmPasswordController.text) {
-//       emit(ForgetPasswordError('كلمة المرور غير متطابقة'));
-//       return;
-//     }
-//
-//     if (newPasswordController.text.length < 8) {
-//       emit(ForgetPasswordError('كلمة المرور يجب أن تكون 8 أحرف على الأقل'));
-//       return;
-//     }
-//
-//     if (resetToken == null) {
-//       final token = await CacheHelper.getData(key: 'resetToken');
-//       if (token == null) {
-//         emit(ForgetPasswordError('انتهت صلاحية الجلسة'));
-//         return;
-//       }
-//       resetToken = token;
-//     }
-//
-//     emit(ForgetPasswordLoading('جاري تغيير كلمة المرور...'));
-//
-//     final result = await _repo.resetPassword(
-//       token: resetToken!,
-//       password: newPasswordController.text,
-//       confirmPassword: confirmPasswordController.text,
-//     );
-//
-//     result.fold(
-//           (failure) => emit(ForgetPasswordError(failure.message)),
-//           (response) {
-//         // تنظيف البيانات
-//         phoneController.clear();
-//         otpController.clear();
-//         newPasswordController.clear();
-//         confirmPasswordController.clear();
-//         resetToken = null;
-//         CacheHelper.removeData(key: 'resetToken');
-//
-//         emit(ResetPasswordSuccess());
-//       },
-//     );
-//   }
-//
-//   // 4. إعادة إرسال OTP
-//   Future<void> resendOtp() async {
-//     emit(ForgetPasswordLoading('جاري إعادة الإرسال...'));
-//
-//     final result = await _repo.resendOtp(
-//       phoneNumber: userPhone ?? phoneController.text,
-//     );
-//
-//     result.fold(
-//           (failure) => emit(ForgetPasswordError(failure.message)),
-//           (response) {
-//         emit(OtpResentSuccessfully(
-//           expiresIn: response.data?.expiresIn ?? 60,
-//         ));
-//       },
-//     );
-//   }
-//
-//   // 5. تحديث حالة الأزرار
-//   void updateVerifyButtonStatus(int otpLength) {
-//     isVerifyButtonEnabled = otpLength == 6;
-//     emit(ForgetPasswordInitial());
-//   }
-//
-//   void updateResetButtonStatus() {
-//     isResetButtonEnabled = newPasswordController.text.isNotEmpty &&
-//         confirmPasswordController.text.isNotEmpty;
-//     emit(ForgetPasswordInitial());
-//   }
-//
-//   // 6. تبديل رؤية كلمة المرور
-//   void toggleNewPasswordVisibility() {
-//     isNewPasswordVisible = !isNewPasswordVisible;
-//     emit(ForgetPasswordInitial());
-//   }
-//
-//   void toggleConfirmPasswordVisibility() {
-//     isConfirmPasswordVisible = !isConfirmPasswordVisible;
-//     emit(ForgetPasswordInitial());
-//   }
-//
-//   // 7. تنظيف البيانات
-//   void clearData() {
-//     phoneController.clear();
-//     otpController.clear();
-//     newPasswordController.clear();
-//     confirmPasswordController.clear();
-//     isNewPasswordVisible = false;
-//     isConfirmPasswordVisible = false;
-//     isVerifyButtonEnabled = false;
-//     isResetButtonEnabled = false;
-//     resetToken = null;
-//     userPhone = null;
-//     emit(ForgetPasswordInitial());
-//   }
-//
-//   @override
-//   Future<void> close() {
-//     phoneController.dispose();
-//     otpController.dispose();
-//     newPasswordController.dispose();
-//     confirmPasswordController.dispose();
-//     return super.close();
-//   }
-// }
+import 'dart:async';
+import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../data/model/forget_password_model.dart';
+import '../data/repo/forget_password_repo.dart';
+
+part 'forget_password_state.dart';
+
+part 'forget_password_cubit.freezed.dart';
+
+class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
+  final ForgetPasswordRepo _repo;
+  Timer? _timer;
+  int _remainingSeconds = 60;
+
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  ForgetPasswordCubit(this._repo) : super(const ForgetPasswordState.initial());
+
+  // 1. Send OTP
+  Future<void> sendOtp() async {
+    if (phoneController.text.isEmpty) {
+      emit(const ForgetPasswordState.error('يرجى إدخال رقم الهاتف'));
+      return;
+    }
+
+    emit(const ForgetPasswordState.loading());
+
+    final result = await _repo.sendOtp(phoneController.text);
+
+    result.when(
+      success: (response) {
+        startTimer();
+        emit(ForgetPasswordState.otpSent(response.message));
+      },
+      failure: (error) {
+        emit(
+          ForgetPasswordState.error(
+            error.apiErrorModel.message ?? 'فشل إرسال الرمز',
+          ),
+        );
+      },
+    );
+  }
+
+  // أضف هذه ValueNotifiers في بداية الـ Cubit class:
+  ValueNotifier<bool> showPassword = ValueNotifier(true);
+  ValueNotifier<bool> showConfirmPassword = ValueNotifier(true);
+
+  // أضف هذه الدالة في الـ Cubit:
+  void updatePasswordValidation(String password) {
+    // يمكنك إضافة منطق للتحقق من قوة كلمة المرور هنا
+    // وإرسال state إذا أردت
+  }
+
+  // تأكد من تعطيل الـ controllers في dispose:
+
+  // 2. Verify OTP
+  // MARK: - Verify OTP
+  Future<void> verifyOtp() async {
+    // التحقق من أن الحقول غير فارغة
+    if (otpController.text.isEmpty) {
+      emit(ForgetPasswordState.error('من فضلك أدخل الرمز'));
+      return;
+    }
+
+    if (phoneController.text.isEmpty) {
+      emit(ForgetPasswordState.error('رقم الهاتف غير متوفر'));
+      return;
+    }
+
+    emit(const ForgetPasswordState.verifying());
+
+    final result = await _repo.verifyOtp(
+      otp: otpController.text.trim(),
+      phoneNumber: phoneController.text.trim(),
+    );
+
+    result.when(
+      success: (response) {
+        log('OTP verified successfully, token: ${response.resetToken}');
+        emit(ForgetPasswordState.otpVerified(response.resetToken));
+      },
+      failure: (error) {
+        log('OTP verification failed: ${error.apiErrorModel.message}');
+        emit(
+          ForgetPasswordState.error(
+            error.apiErrorModel.message ?? 'فشل التحقق من الرمز',
+          ),
+        );
+      },
+    );
+  }
+
+  // 3. Reset Password
+  Future<void> resetPassword(String token) async {
+    if (passwordController.text != confirmPasswordController.text) {
+      emit(const ForgetPasswordState.error('كلمات المرور غير متطابقة'));
+      return;
+    }
+
+    if (passwordController.text.length < 6) {
+      emit(
+        const ForgetPasswordState.error(
+          'كلمة المرور يجب أن تكون 6 أحرف على الأقل',
+        ),
+      );
+      return;
+    }
+
+    emit(const ForgetPasswordState.resetting());
+
+    final result = await _repo.resetPassword(
+      token: token,
+      password: passwordController.text,
+      confirmPassword: confirmPasswordController.text,
+    );
+
+    result.when(
+      success: (response) {
+        emit(ForgetPasswordState.passwordReset(response.message));
+      },
+      failure: (error) {
+        emit(
+          ForgetPasswordState.error(
+            error.apiErrorModel.message ?? 'فشل إعادة تعيين كلمة المرور',
+          ),
+        );
+      },
+    );
+  }
+
+  // Timer Functions
+  void startTimer() {
+    _remainingSeconds = 60;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingSeconds > 0) {
+        _remainingSeconds--;
+        emit(ForgetPasswordState.timerTick(_remainingSeconds));
+      } else {
+        timer.cancel();
+        emit(const ForgetPasswordState.timerComplete());
+      }
+    });
+  }
+
+  // دالة لتحديث حالة الزر
+  void changeButtonStatus(bool isEnabled) {
+    emit(ForgetPasswordState.buttonStatusChanged(isEnabled));
+  }
+
+  // دالة لتحديث حالة زر التحقق
+  void updateVerifyButtonState(int length) {
+    if (length == 6) {
+      emit(ForgetPasswordState.buttonStatusChanged(true));
+    } else {
+      emit(ForgetPasswordState.buttonStatusChanged(false));
+    }
+  }
+
+  // دالة لتفعيل الزر
+  void enableVerifyButton() {
+    emit(ForgetPasswordState.buttonStatusChanged(true));
+  }
+
+  // دالة لتعطيل الزر
+  void disableVerifyButton() {
+    emit(ForgetPasswordState.buttonStatusChanged(false));
+  }
+
+  // دالة للإدخال السريع في OTP (للتجربة فقط)
+  void fillTestOtp() {
+    otpController.text = '1234';
+    emit(ForgetPasswordState.otpFilled('1234'));
+  }
+
+  void resendOtp() {
+    if (_remainingSeconds == 0) {
+      sendOtp();
+    }
+  }
+
+  @override
+  Future<void> close() {
+    showPassword.dispose();
+    showConfirmPassword.dispose();
+    _timer?.cancel();
+    phoneController.dispose();
+    otpController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    return super.close();
+  }
+}

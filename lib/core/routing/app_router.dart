@@ -23,6 +23,8 @@ import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.d
 import '../../feature/experiance_details_screen/ui/screen/experiance_details_screen.dart';
 import '../../feature/experiments/cubit/experiments_cubit.dart';
 
+import '../../feature/forget_password/cubit/forget_password_cubit.dart';
+import '../../feature/forget_password/ui/reset_password_screen.dart';
 import '../../feature/forget_password/ui/send_otp.dart';
 import '../../feature/last_attempt/ui/screen/last_attempt_screen.dart';
 import '../../feature/main_screen/cubit/main_cubit.dart';
@@ -79,13 +81,7 @@ class AppRouter {
             child: ForgetPasswordScreen(),
           ),
         );
-      case AppRoute.sendOtp:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child: SendOtpScreen(phoneNumber: ''),
-          ),
-        );
+
       case AppRoute.signUpScreen:
         var args = arguments as Map<String, dynamic>;
 
@@ -107,6 +103,31 @@ class AppRouter {
           ),
         );
       //
+      case AppRoute.forgetPasswordScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<ForgetPasswordCubit>(),
+            child: const ForgetPasswordScreen(),
+          ),
+        );
+
+      case AppRoute.sendOtp:
+        var args = arguments as Map<String, dynamic>;
+        String phoneNumber = args['phoneNumber'] ?? '';
+        return MaterialPageRoute(
+          builder: (_) => SendOtpScreen(phoneNumber: phoneNumber),
+        );
+
+      // Add new route
+      case AppRoute.resetPasswordScreen:
+        var args = arguments as Map<String, dynamic>;
+        String token = args['token'];
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<ForgetPasswordCubit>(),
+            child: ResetPasswordScreen(token: token),
+          ),
+        );
 
       case AppRoute.mainScreen:
         return PageRouteBuilder(

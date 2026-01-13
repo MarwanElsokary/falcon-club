@@ -93,16 +93,12 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<PackageRepo>(() => PackageRepo(getIt()));
   getIt.registerFactory<PackageCubit>(() => PackageCubit(getIt()));
 
-  // // MARK: - Forget Password
-  // getIt.registerLazySingleton<ForgetPasswordApiService>(
-  //   () => ForgetPasswordApiService(getIt<Dio>()),
-  // );
-  //
-  // getIt.registerLazySingleton<ForgetPasswordRepo>(
-  //   () => ForgetPasswordRepo(getIt<ForgetPasswordApiService>()),
-  // );
-  //
-  // getIt.registerFactory<ForgetPasswordCubit>(
-  //   () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
-  // );
+  // MARK: - Forget Password
+  getIt.registerLazySingleton<ForgetPasswordRepo>(
+    () => ForgetPasswordRepo(getIt<ApiService>()),
+  );
+
+  getIt.registerFactory<ForgetPasswordCubit>(
+    () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
+  );
 }

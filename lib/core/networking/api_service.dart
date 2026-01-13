@@ -129,20 +129,24 @@ abstract class ApiService {
   @GET(ApiConstants.profileFeature)
   Future<SkillsResponse> getSkills(@Query('UserId') String userId);
 
-  // // Forget Password Endpoints
-  // @POST(ApiConstants.forgetPasswordByPhone)
-  // Future<HttpResponse<ForgetPasswordResponse>> forgetPasswordByPhone(
-  //     @Body() Map<String, dynamic> body,
-  //     );
-  //
-  // @POST(ApiConstants.checkOtp)
-  // Future<HttpResponse<CheckOtpResponse>> checkOtp(
-  //     @Body() Map<String, dynamic> body,
-  //     );
-  //
-  // @POST(ApiConstants.resetPassword)
-  // Future<HttpResponse<ResetPasswordResponse>> resetPassword(
-  //     @Body() Map<String, dynamic> body,
-  //     );
+  // Forget Password Endpoints
+  @POST(ApiConstants.forgetPasswordByPhone)
+  Future<ForgetPasswordResponse> forgetPasswordByPhone(
+    @Query('phoneNumber') String phoneNumber,
+  );
 
+  @POST(ApiConstants.checkOtp)
+  @FormUrlEncoded()
+  Future<CheckOtpResponse> checkOtp(
+    @Field('otp') String otp,
+    @Field('phoneNumber') String phoneNumber,
+  );
+
+  @POST(ApiConstants.resetPassword)
+  @FormUrlEncoded()
+  Future<ResetPasswordResponse> resetPassword(
+    @Field('Token') String token,
+    @Field('Password') String password,
+    @Field('ConfirmPassword') String confirmPassword,
+  );
 }

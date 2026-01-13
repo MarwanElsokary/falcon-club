@@ -5,7 +5,7 @@ class AppRoute {
   static const String welcomeScreen = '/welcomeScreen';
 
   //welcomeScreen
-  static const String resetPassword = '/resetPassword';
+  static const String resetPasswordScreen = '/resetPassword';
 
   //forgetPasswordScreen
   static const String forgetPasswordScreen = '/forgotPasswordScreen';
