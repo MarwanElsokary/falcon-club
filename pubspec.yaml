@@ -112,6 +112,7 @@ dependencies:
   video_player: ^2.10.1
   video_compress: ^3.1.4
   appinio_video_player: ^1.2.2
+  flutter_ruler_picker: ^1.0.6
 
 dev_dependencies:
   flutter_test:

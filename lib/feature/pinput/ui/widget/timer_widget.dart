@@ -56,6 +56,7 @@ class _TimerWidgetState extends State<TimerWidget> {
                   );
                   _restartCountdown;
                 }
+
                 if (state is Error) {
                   showErrorSnackBar(
                     context: context,

@@ -20,6 +20,7 @@ class EditGenderWidget extends StatefulWidget {
 
 class _EditGenderWidgetState extends State<EditGenderWidget> {
   String gender = '';
+
   @override
   void initState() {
     super.initState();

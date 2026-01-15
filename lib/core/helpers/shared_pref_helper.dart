@@ -13,6 +13,16 @@ class SharedPrefHelper {
     await sharedPreferences.remove(key);
   }
 
+  static Future<void> setBool(String key, bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, value);
+  }
+
+  static Future<bool?> getBoool(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key);
+  }
+
   /// Removes all keys and values in the SharedPreferences
   static clearAllData() async {
     debugPrint('SharedPrefHelper : all data has been cleared');

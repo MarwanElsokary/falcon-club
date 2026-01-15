@@ -2,7 +2,8 @@ class AppRoute {
   static const String splashScreen = '/';
 
   //welcomeScreen
-  static const String welcomeScreen = '/welcomeScreen';
+  static const String welcomeScreen = '/welcomeScreen'; //welcomeScreen
+  static const String completeProfileScreen = '/completeProfileScreen';
 
   //welcomeScreen
   static const String resetPasswordScreen = '/resetPassword';

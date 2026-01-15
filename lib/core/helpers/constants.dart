@@ -5,4 +5,8 @@ class SharedPrefKeys {
   static const String userType = 'userType';
   static const String refreshToken = 'refreshToken';
   static const String lang = 'lang';
+  static const String isCompleted = 'isCompleted'; // 👈
+  static const String userId = 'userId';
+
+
 }

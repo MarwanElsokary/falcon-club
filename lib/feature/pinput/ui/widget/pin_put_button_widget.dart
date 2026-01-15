@@ -27,7 +27,7 @@ class PinPutButtonWidget extends StatelessWidget {
             title: "اهلا تم تسجيل دخولك بنجاح".tr(),
           );
           context.pushNamedAndRemoveUntil(
-            AppRoute.mainScreen,
+            AppRoute.completeProfileScreen,
             predicate: (route) => false,
           );
         }

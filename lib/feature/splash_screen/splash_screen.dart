@@ -211,6 +211,7 @@ class _SplashScreenState extends State<SplashScreen>
                           predicate: (route) => false,
                         );
                       }
+
                     },
                     width: showText ? 140.w : 0,
                     child: SingleChildScrollView(

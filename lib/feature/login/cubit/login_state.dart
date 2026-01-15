@@ -22,7 +22,7 @@ class LoginState<T> with _$LoginState<T> {
       registerError;
 
   //update profile
-  const factory LoginState.updateProfileloading() = updateProfileLoading;
+  const factory LoginState.updateProfileLoading() = updateProfileLoading;
 
   const factory LoginState.updateProfilesuccess(T data) =
       updateProfileSuccess<T>;

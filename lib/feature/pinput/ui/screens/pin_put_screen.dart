@@ -50,7 +50,7 @@ class PinputScreen extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       color: blackclr,
                       text:
-                          '${'أرسلنا رمزًا إلى الاميل الخاص بك'.tr()} $phoneNumber',
+                          '${'أرسلنا رمزًا إلى رقم الهاتف الخاص بك'.tr()} $phoneNumber',
                     ),
                     verticalSpace(25),
 

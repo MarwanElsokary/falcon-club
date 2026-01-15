@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../../core/networking/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/networking/api_service.dart';
@@ -26,6 +28,15 @@ class LoginRepo {
       return ApiResult.success(response);
     } catch (errro) {
       return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
+
+  Future<ApiResult> completeRegistration(FormData body) async {
+    try {
+      final response = await _apiService.completeRegistration(body);
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
 

@@ -1,7 +1,8 @@
+// في نفس الملف signup_button_widget.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/di/dependency_injection.dart';
 import 'package:falcon/core/widget/showSuccesSnackBar.dart';
-import 'package:falcon/feature/pinput/ui/screens/pin_put_screen.dart';
+import 'package:falcon/feature/signup/ui/widget/pinput_screen_with_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +20,8 @@ import '../../../../core/widget/slide_enimation_widget.dart';
 import '../../../login/cubit/login_cubit.dart';
 import '../../../login/cubit/login_state.dart';
 
+// استيراد الشاشة المعدلة مع التنقل
+
 class SignupButtonWidget extends StatelessWidget {
   const SignupButtonWidget({super.key, required this.update});
 
@@ -32,13 +35,15 @@ class SignupButtonWidget extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is registerSuccess) {
+            // عرض شاشة التحقق بالكود
             showCupertinoModalBottomSheet(
               expand: true,
               context: context,
               backgroundColor: Colors.transparent,
               builder: (c) => BlocProvider(
                 create: (context) => getIt<LoginCubit>(),
-                child: PinputScreen(
+                // استخدم الشاشة المعدلة التي تنتقل تلقائياً عند نجاح التحقق
+                child: PinputScreenWithNavigation(
                   phoneNumber: context.read<LoginCubit>().controller.email.text,
                 ),
               ),
@@ -70,69 +75,69 @@ class SignupButtonWidget extends StatelessWidget {
               child: state is registerLoading || state is updateProfileLoading
                   ? LoadButtonUtils()
                   : Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ButtonUtils(
-                          text: update ? 'تعديل'.tr() : 'انشاء حساب'.tr(),
-                          onPressed: () {
-                            if (context
-                                .read<LoginCubit>()
-                                .formKey
-                                .currentState!
-                                .validate()) {
-                              if (update) {
-                                context
-                                    .read<LoginCubit>()
-                                    .emitupdateProfileStates();
-                              } else {
-                                context.read<LoginCubit>().emitregisterStates();
-                              }
-                            } else {
-                              showErrorSnackBar(
-                                context: context,
-                                title: 'من فضلك ادخل بيناتك',
-                              );
-                            }
-                          },
-                          colorstext: Colors.white,
-                          background: mainColor,
-                        ),
-                        Visibility(
-                          visible: !update,
-                          child: InkWell(
-                            onTap: () {
-                              // to login screen
-                              context.pushNamed(AppRoute.loginScreen);
-                            },
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'لديك حساب ب الفعل؟'.tr(),
-                                    style: GoogleFonts.cairo(
-                                      color: blackclr,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      letterSpacing: -0.30,
-                                    ),
-                                  ),
-                                  TextSpan(text: ' '),
-                                  TextSpan(
-                                    text: 'تسجيل الدخول'.tr(),
-                                    style: GoogleFonts.cairo(
-                                      color: mainColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: -0.30,
-                                    ),
-                                  ),
-                                ],
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ButtonUtils(
+                    text: update ? 'تعديل'.tr() : 'انشاء حساب'.tr(),
+                    onPressed: () {
+                      if (context
+                          .read<LoginCubit>()
+                          .formKey
+                          .currentState!
+                          .validate()) {
+                        if (update) {
+                          context
+                              .read<LoginCubit>()
+                              .emitupdateProfileStates();
+                        } else {
+                          context.read<LoginCubit>().emitregisterStates();
+                        }
+                      } else {
+                        showErrorSnackBar(
+                          context: context,
+                          title: 'من فضلك ادخل بيناتك'.tr(),
+                        );
+                      }
+                    },
+                    colorstext: Colors.white,
+                    background: mainColor,
+                  ),
+                  Visibility(
+                    visible: !update,
+                    child: InkWell(
+                      onTap: () {
+                        // to login screen
+                        context.pushNamed(AppRoute.loginScreen);
+                      },
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'لديك حساب ب الفعل؟'.tr(),
+                              style: GoogleFonts.cairo(
+                                color: blackclr,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: -0.30,
                               ),
                             ),
-                          ),
+                            TextSpan(text: ' '),
+                            TextSpan(
+                              text: 'تسجيل الدخول'.tr(),
+                              style: GoogleFonts.cairo(
+                                color: mainColor,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.30,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
+                  ),
+                ],
+              ),
             ),
           );
         },

@@ -30,6 +30,10 @@ abstract class ApiService {
   @POST(ApiConstants.register)
   Future register(@Body() registerBody);
 
+  //register step 2
+  @POST(ApiConstants.registerStep2)
+  Future completeRegistration(@Body() FormData body);
+
   //update
   @PUT(ApiConstants.updateProfile)
   Future updateProfile(@Body() updateProfileBody);

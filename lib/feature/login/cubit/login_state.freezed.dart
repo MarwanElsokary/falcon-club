@@ -26,7 +26,7 @@ mixin _$LoginState<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -61,7 +61,7 @@ mixin _$LoginState<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -96,7 +96,7 @@ mixin _$LoginState<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -133,7 +133,7 @@ mixin _$LoginState<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -182,7 +182,7 @@ mixin _$LoginState<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -224,7 +224,7 @@ mixin _$LoginState<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -330,7 +330,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -369,7 +369,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -408,7 +408,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -452,7 +452,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -505,7 +505,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -551,7 +551,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -644,7 +644,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -683,7 +683,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -722,7 +722,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -766,7 +766,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -819,7 +819,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -865,7 +865,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -986,7 +986,7 @@ class _$SuccessImpl<T> implements Success<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -1025,7 +1025,7 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -1064,7 +1064,7 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -1108,7 +1108,7 @@ class _$SuccessImpl<T> implements Success<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -1161,7 +1161,7 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -1207,7 +1207,7 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -1335,7 +1335,7 @@ class _$ErrorImpl<T> implements Error<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -1374,7 +1374,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -1413,7 +1413,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -1457,7 +1457,7 @@ class _$ErrorImpl<T> implements Error<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -1510,7 +1510,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -1556,7 +1556,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -1657,7 +1657,7 @@ class _$registerLoadingImpl<T> implements registerLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -1696,7 +1696,7 @@ class _$registerLoadingImpl<T> implements registerLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -1735,7 +1735,7 @@ class _$registerLoadingImpl<T> implements registerLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -1779,7 +1779,7 @@ class _$registerLoadingImpl<T> implements registerLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -1832,7 +1832,7 @@ class _$registerLoadingImpl<T> implements registerLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -1878,7 +1878,7 @@ class _$registerLoadingImpl<T> implements registerLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -2002,7 +2002,7 @@ class _$registerSuccessImpl<T> implements registerSuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -2041,7 +2041,7 @@ class _$registerSuccessImpl<T> implements registerSuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -2080,7 +2080,7 @@ class _$registerSuccessImpl<T> implements registerSuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -2124,7 +2124,7 @@ class _$registerSuccessImpl<T> implements registerSuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -2177,7 +2177,7 @@ class _$registerSuccessImpl<T> implements registerSuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -2223,7 +2223,7 @@ class _$registerSuccessImpl<T> implements registerSuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -2354,7 +2354,7 @@ class _$registerErrorImpl<T> implements registerError<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -2393,7 +2393,7 @@ class _$registerErrorImpl<T> implements registerError<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -2432,7 +2432,7 @@ class _$registerErrorImpl<T> implements registerError<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -2476,7 +2476,7 @@ class _$registerErrorImpl<T> implements registerError<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -2529,7 +2529,7 @@ class _$registerErrorImpl<T> implements registerError<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -2575,7 +2575,7 @@ class _$registerErrorImpl<T> implements registerError<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -2655,7 +2655,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
 
   @override
   String toString() {
-    return 'LoginState<$T>.updateProfileloading()';
+    return 'LoginState<$T>.updateProfileLoading()';
   }
 
   @override
@@ -2678,7 +2678,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -2704,7 +2704,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     required TResult Function() departmentssuccess,
     required TResult Function(String error) departmentserror,
   }) {
-    return updateProfileloading();
+    return updateProfileLoading();
   }
 
   @override
@@ -2717,7 +2717,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -2743,7 +2743,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult? Function()? departmentssuccess,
     TResult? Function(String error)? departmentserror,
   }) {
-    return updateProfileloading?.call();
+    return updateProfileLoading?.call();
   }
 
   @override
@@ -2756,7 +2756,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -2783,8 +2783,8 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult Function(String error)? departmentserror,
     required TResult orElse(),
   }) {
-    if (updateProfileloading != null) {
-      return updateProfileloading();
+    if (updateProfileLoading != null) {
+      return updateProfileLoading();
     }
     return orElse();
   }
@@ -2800,7 +2800,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -2840,7 +2840,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     required TResult Function(departmentsSuccess<T> value) departmentssuccess,
     required TResult Function(departmentsError<T> value) departmentserror,
   }) {
-    return updateProfileloading(this);
+    return updateProfileLoading(this);
   }
 
   @override
@@ -2853,7 +2853,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -2886,7 +2886,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult? Function(departmentsSuccess<T> value)? departmentssuccess,
     TResult? Function(departmentsError<T> value)? departmentserror,
   }) {
-    return updateProfileloading?.call(this);
+    return updateProfileLoading?.call(this);
   }
 
   @override
@@ -2899,7 +2899,7 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -2931,8 +2931,8 @@ class _$updateProfileLoadingImpl<T> implements updateProfileLoading<T> {
     TResult Function(departmentsError<T> value)? departmentserror,
     required TResult orElse(),
   }) {
-    if (updateProfileloading != null) {
-      return updateProfileloading(this);
+    if (updateProfileLoading != null) {
+      return updateProfileLoading(this);
     }
     return orElse();
   }
@@ -3024,7 +3024,7 @@ class _$updateProfileSuccessImpl<T> implements updateProfileSuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -3063,7 +3063,7 @@ class _$updateProfileSuccessImpl<T> implements updateProfileSuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -3102,7 +3102,7 @@ class _$updateProfileSuccessImpl<T> implements updateProfileSuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -3146,7 +3146,7 @@ class _$updateProfileSuccessImpl<T> implements updateProfileSuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -3199,7 +3199,7 @@ class _$updateProfileSuccessImpl<T> implements updateProfileSuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -3245,7 +3245,7 @@ class _$updateProfileSuccessImpl<T> implements updateProfileSuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -3378,7 +3378,7 @@ class _$updateProfileErrorImpl<T> implements updateProfileError<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -3417,7 +3417,7 @@ class _$updateProfileErrorImpl<T> implements updateProfileError<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -3456,7 +3456,7 @@ class _$updateProfileErrorImpl<T> implements updateProfileError<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -3500,7 +3500,7 @@ class _$updateProfileErrorImpl<T> implements updateProfileError<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -3553,7 +3553,7 @@ class _$updateProfileErrorImpl<T> implements updateProfileError<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -3599,7 +3599,7 @@ class _$updateProfileErrorImpl<T> implements updateProfileError<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -3704,7 +3704,7 @@ class _$SendVerificationCodeLoadingImpl<T>
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -3743,7 +3743,7 @@ class _$SendVerificationCodeLoadingImpl<T>
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -3782,7 +3782,7 @@ class _$SendVerificationCodeLoadingImpl<T>
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -3826,7 +3826,7 @@ class _$SendVerificationCodeLoadingImpl<T>
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -3879,7 +3879,7 @@ class _$SendVerificationCodeLoadingImpl<T>
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -3925,7 +3925,7 @@ class _$SendVerificationCodeLoadingImpl<T>
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -4056,7 +4056,7 @@ class _$SendVerificationCodeSuccessImpl<T>
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -4095,7 +4095,7 @@ class _$SendVerificationCodeSuccessImpl<T>
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -4134,7 +4134,7 @@ class _$SendVerificationCodeSuccessImpl<T>
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -4178,7 +4178,7 @@ class _$SendVerificationCodeSuccessImpl<T>
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -4231,7 +4231,7 @@ class _$SendVerificationCodeSuccessImpl<T>
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -4277,7 +4277,7 @@ class _$SendVerificationCodeSuccessImpl<T>
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -4418,7 +4418,7 @@ class _$SendVerificationCodeErrorImpl<T>
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -4457,7 +4457,7 @@ class _$SendVerificationCodeErrorImpl<T>
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -4496,7 +4496,7 @@ class _$SendVerificationCodeErrorImpl<T>
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -4540,7 +4540,7 @@ class _$SendVerificationCodeErrorImpl<T>
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -4593,7 +4593,7 @@ class _$SendVerificationCodeErrorImpl<T>
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -4639,7 +4639,7 @@ class _$SendVerificationCodeErrorImpl<T>
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -4745,7 +4745,7 @@ class _$VerificationCodeLoadingImpl<T> implements VerificationCodeLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -4784,7 +4784,7 @@ class _$VerificationCodeLoadingImpl<T> implements VerificationCodeLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -4823,7 +4823,7 @@ class _$VerificationCodeLoadingImpl<T> implements VerificationCodeLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -4867,7 +4867,7 @@ class _$VerificationCodeLoadingImpl<T> implements VerificationCodeLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -4920,7 +4920,7 @@ class _$VerificationCodeLoadingImpl<T> implements VerificationCodeLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -4966,7 +4966,7 @@ class _$VerificationCodeLoadingImpl<T> implements VerificationCodeLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -5093,7 +5093,7 @@ class _$VerificationCodeSuccessImpl<T> implements VerificationCodeSuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -5132,7 +5132,7 @@ class _$VerificationCodeSuccessImpl<T> implements VerificationCodeSuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -5171,7 +5171,7 @@ class _$VerificationCodeSuccessImpl<T> implements VerificationCodeSuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -5215,7 +5215,7 @@ class _$VerificationCodeSuccessImpl<T> implements VerificationCodeSuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -5268,7 +5268,7 @@ class _$VerificationCodeSuccessImpl<T> implements VerificationCodeSuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -5314,7 +5314,7 @@ class _$VerificationCodeSuccessImpl<T> implements VerificationCodeSuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -5447,7 +5447,7 @@ class _$VerificationCodeErrorImpl<T> implements VerificationCodeError<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -5486,7 +5486,7 @@ class _$VerificationCodeErrorImpl<T> implements VerificationCodeError<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -5525,7 +5525,7 @@ class _$VerificationCodeErrorImpl<T> implements VerificationCodeError<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -5569,7 +5569,7 @@ class _$VerificationCodeErrorImpl<T> implements VerificationCodeError<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -5622,7 +5622,7 @@ class _$VerificationCodeErrorImpl<T> implements VerificationCodeError<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -5668,7 +5668,7 @@ class _$VerificationCodeErrorImpl<T> implements VerificationCodeError<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -5771,7 +5771,7 @@ class _$ProfileCompleteLoadingImpl<T> implements ProfileCompleteLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -5810,7 +5810,7 @@ class _$ProfileCompleteLoadingImpl<T> implements ProfileCompleteLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -5849,7 +5849,7 @@ class _$ProfileCompleteLoadingImpl<T> implements ProfileCompleteLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -5893,7 +5893,7 @@ class _$ProfileCompleteLoadingImpl<T> implements ProfileCompleteLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -5946,7 +5946,7 @@ class _$ProfileCompleteLoadingImpl<T> implements ProfileCompleteLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -5992,7 +5992,7 @@ class _$ProfileCompleteLoadingImpl<T> implements ProfileCompleteLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -6117,7 +6117,7 @@ class _$ProfileCompleteSuccessImpl<T> implements ProfileCompleteSuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -6156,7 +6156,7 @@ class _$ProfileCompleteSuccessImpl<T> implements ProfileCompleteSuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -6195,7 +6195,7 @@ class _$ProfileCompleteSuccessImpl<T> implements ProfileCompleteSuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -6239,7 +6239,7 @@ class _$ProfileCompleteSuccessImpl<T> implements ProfileCompleteSuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -6292,7 +6292,7 @@ class _$ProfileCompleteSuccessImpl<T> implements ProfileCompleteSuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -6338,7 +6338,7 @@ class _$ProfileCompleteSuccessImpl<T> implements ProfileCompleteSuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -6471,7 +6471,7 @@ class _$ProfileCompleteErrorImpl<T> implements ProfileCompleteError<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -6510,7 +6510,7 @@ class _$ProfileCompleteErrorImpl<T> implements ProfileCompleteError<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -6549,7 +6549,7 @@ class _$ProfileCompleteErrorImpl<T> implements ProfileCompleteError<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -6593,7 +6593,7 @@ class _$ProfileCompleteErrorImpl<T> implements ProfileCompleteError<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -6646,7 +6646,7 @@ class _$ProfileCompleteErrorImpl<T> implements ProfileCompleteError<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -6692,7 +6692,7 @@ class _$ProfileCompleteErrorImpl<T> implements ProfileCompleteError<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -6795,7 +6795,7 @@ class _$ChangeCountryLoadingImpl<T> implements ChangeCountryLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -6834,7 +6834,7 @@ class _$ChangeCountryLoadingImpl<T> implements ChangeCountryLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -6873,7 +6873,7 @@ class _$ChangeCountryLoadingImpl<T> implements ChangeCountryLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -6917,7 +6917,7 @@ class _$ChangeCountryLoadingImpl<T> implements ChangeCountryLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -6970,7 +6970,7 @@ class _$ChangeCountryLoadingImpl<T> implements ChangeCountryLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -7016,7 +7016,7 @@ class _$ChangeCountryLoadingImpl<T> implements ChangeCountryLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -7110,7 +7110,7 @@ class _$ChangeCountrySuccessImpl<T> implements ChangeCountrySuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -7149,7 +7149,7 @@ class _$ChangeCountrySuccessImpl<T> implements ChangeCountrySuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -7188,7 +7188,7 @@ class _$ChangeCountrySuccessImpl<T> implements ChangeCountrySuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -7232,7 +7232,7 @@ class _$ChangeCountrySuccessImpl<T> implements ChangeCountrySuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -7285,7 +7285,7 @@ class _$ChangeCountrySuccessImpl<T> implements ChangeCountrySuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -7331,7 +7331,7 @@ class _$ChangeCountrySuccessImpl<T> implements ChangeCountrySuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -7427,7 +7427,7 @@ class _$ChangeAvailableButtonLoadingImpl<T>
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -7466,7 +7466,7 @@ class _$ChangeAvailableButtonLoadingImpl<T>
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -7505,7 +7505,7 @@ class _$ChangeAvailableButtonLoadingImpl<T>
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -7549,7 +7549,7 @@ class _$ChangeAvailableButtonLoadingImpl<T>
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -7602,7 +7602,7 @@ class _$ChangeAvailableButtonLoadingImpl<T>
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -7648,7 +7648,7 @@ class _$ChangeAvailableButtonLoadingImpl<T>
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -7745,7 +7745,7 @@ class _$ChangeAvailableButtonSuccessImpl<T>
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -7784,7 +7784,7 @@ class _$ChangeAvailableButtonSuccessImpl<T>
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -7823,7 +7823,7 @@ class _$ChangeAvailableButtonSuccessImpl<T>
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -7867,7 +7867,7 @@ class _$ChangeAvailableButtonSuccessImpl<T>
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -7920,7 +7920,7 @@ class _$ChangeAvailableButtonSuccessImpl<T>
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -7966,7 +7966,7 @@ class _$ChangeAvailableButtonSuccessImpl<T>
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -8061,7 +8061,7 @@ class _$universityLoadingImpl<T> implements universityLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -8100,7 +8100,7 @@ class _$universityLoadingImpl<T> implements universityLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -8139,7 +8139,7 @@ class _$universityLoadingImpl<T> implements universityLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -8183,7 +8183,7 @@ class _$universityLoadingImpl<T> implements universityLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -8236,7 +8236,7 @@ class _$universityLoadingImpl<T> implements universityLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -8282,7 +8282,7 @@ class _$universityLoadingImpl<T> implements universityLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -8376,7 +8376,7 @@ class _$universitySuccessImpl<T> implements universitySuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -8415,7 +8415,7 @@ class _$universitySuccessImpl<T> implements universitySuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -8454,7 +8454,7 @@ class _$universitySuccessImpl<T> implements universitySuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -8498,7 +8498,7 @@ class _$universitySuccessImpl<T> implements universitySuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -8551,7 +8551,7 @@ class _$universitySuccessImpl<T> implements universitySuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -8597,7 +8597,7 @@ class _$universitySuccessImpl<T> implements universitySuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -8720,7 +8720,7 @@ class _$universityErrorImpl<T> implements universityError<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -8759,7 +8759,7 @@ class _$universityErrorImpl<T> implements universityError<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -8798,7 +8798,7 @@ class _$universityErrorImpl<T> implements universityError<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -8842,7 +8842,7 @@ class _$universityErrorImpl<T> implements universityError<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -8895,7 +8895,7 @@ class _$universityErrorImpl<T> implements universityError<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -8941,7 +8941,7 @@ class _$universityErrorImpl<T> implements universityError<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -9043,7 +9043,7 @@ class _$collegesLoadingImpl<T> implements collegesLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -9082,7 +9082,7 @@ class _$collegesLoadingImpl<T> implements collegesLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -9121,7 +9121,7 @@ class _$collegesLoadingImpl<T> implements collegesLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -9165,7 +9165,7 @@ class _$collegesLoadingImpl<T> implements collegesLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -9218,7 +9218,7 @@ class _$collegesLoadingImpl<T> implements collegesLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -9264,7 +9264,7 @@ class _$collegesLoadingImpl<T> implements collegesLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -9357,7 +9357,7 @@ class _$collegesSuccessImpl<T> implements collegesSuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -9396,7 +9396,7 @@ class _$collegesSuccessImpl<T> implements collegesSuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -9435,7 +9435,7 @@ class _$collegesSuccessImpl<T> implements collegesSuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -9479,7 +9479,7 @@ class _$collegesSuccessImpl<T> implements collegesSuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -9532,7 +9532,7 @@ class _$collegesSuccessImpl<T> implements collegesSuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -9578,7 +9578,7 @@ class _$collegesSuccessImpl<T> implements collegesSuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -9701,7 +9701,7 @@ class _$collegesErrorImpl<T> implements collegesError<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -9740,7 +9740,7 @@ class _$collegesErrorImpl<T> implements collegesError<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -9779,7 +9779,7 @@ class _$collegesErrorImpl<T> implements collegesError<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -9823,7 +9823,7 @@ class _$collegesErrorImpl<T> implements collegesError<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -9876,7 +9876,7 @@ class _$collegesErrorImpl<T> implements collegesError<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -9922,7 +9922,7 @@ class _$collegesErrorImpl<T> implements collegesError<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -10025,7 +10025,7 @@ class _$departmentsLoadingImpl<T> implements departmentsLoading<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -10064,7 +10064,7 @@ class _$departmentsLoadingImpl<T> implements departmentsLoading<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -10103,7 +10103,7 @@ class _$departmentsLoadingImpl<T> implements departmentsLoading<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -10147,7 +10147,7 @@ class _$departmentsLoadingImpl<T> implements departmentsLoading<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -10200,7 +10200,7 @@ class _$departmentsLoadingImpl<T> implements departmentsLoading<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -10246,7 +10246,7 @@ class _$departmentsLoadingImpl<T> implements departmentsLoading<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -10340,7 +10340,7 @@ class _$departmentsSuccessImpl<T> implements departmentsSuccess<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -10379,7 +10379,7 @@ class _$departmentsSuccessImpl<T> implements departmentsSuccess<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -10418,7 +10418,7 @@ class _$departmentsSuccessImpl<T> implements departmentsSuccess<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -10462,7 +10462,7 @@ class _$departmentsSuccessImpl<T> implements departmentsSuccess<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -10515,7 +10515,7 @@ class _$departmentsSuccessImpl<T> implements departmentsSuccess<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -10561,7 +10561,7 @@ class _$departmentsSuccessImpl<T> implements departmentsSuccess<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?
@@ -10684,7 +10684,7 @@ class _$departmentsErrorImpl<T> implements departmentsError<T> {
     required TResult Function() registerloading,
     required TResult Function(T data) registersuccess,
     required TResult Function(String error) registererror,
-    required TResult Function() updateProfileloading,
+    required TResult Function() updateProfileLoading,
     required TResult Function(T data) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() sendVerificationCodeloading,
@@ -10723,7 +10723,7 @@ class _$departmentsErrorImpl<T> implements departmentsError<T> {
     TResult? Function()? registerloading,
     TResult? Function(T data)? registersuccess,
     TResult? Function(String error)? registererror,
-    TResult? Function()? updateProfileloading,
+    TResult? Function()? updateProfileLoading,
     TResult? Function(T data)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? sendVerificationCodeloading,
@@ -10762,7 +10762,7 @@ class _$departmentsErrorImpl<T> implements departmentsError<T> {
     TResult Function()? registerloading,
     TResult Function(T data)? registersuccess,
     TResult Function(String error)? registererror,
-    TResult Function()? updateProfileloading,
+    TResult Function()? updateProfileLoading,
     TResult Function(T data)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? sendVerificationCodeloading,
@@ -10806,7 +10806,7 @@ class _$departmentsErrorImpl<T> implements departmentsError<T> {
     required TResult Function(registerSuccess<T> value) registersuccess,
     required TResult Function(registerError<T> value) registererror,
     required TResult Function(updateProfileLoading<T> value)
-    updateProfileloading,
+    updateProfileLoading,
     required TResult Function(updateProfileSuccess<T> value)
     updateProfilesuccess,
     required TResult Function(updateProfileError<T> value) updateProfileerror,
@@ -10859,7 +10859,7 @@ class _$departmentsErrorImpl<T> implements departmentsError<T> {
     TResult? Function(registerLoading<T> value)? registerloading,
     TResult? Function(registerSuccess<T> value)? registersuccess,
     TResult? Function(registerError<T> value)? registererror,
-    TResult? Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult? Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult? Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult? Function(updateProfileError<T> value)? updateProfileerror,
     TResult? Function(SendVerificationCodeLoading<T> value)?
@@ -10905,7 +10905,7 @@ class _$departmentsErrorImpl<T> implements departmentsError<T> {
     TResult Function(registerLoading<T> value)? registerloading,
     TResult Function(registerSuccess<T> value)? registersuccess,
     TResult Function(registerError<T> value)? registererror,
-    TResult Function(updateProfileLoading<T> value)? updateProfileloading,
+    TResult Function(updateProfileLoading<T> value)? updateProfileLoading,
     TResult Function(updateProfileSuccess<T> value)? updateProfilesuccess,
     TResult Function(updateProfileError<T> value)? updateProfileerror,
     TResult Function(SendVerificationCodeLoading<T> value)?

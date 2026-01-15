@@ -33,6 +33,7 @@ import '../../feature/on-boarding/screen/on_boarding_screen.dart';
 
 import '../../feature/package/data/model/pakcage_model.dart';
 import '../../feature/reals/ui/screen/main_reals_screen.dart';
+import '../../feature/signup/ui/screen/complete_profile_screen.dart';
 import '../../feature/signup/ui/screen/sign_up_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
 import '../../feature/training/cubit/training_cubit.dart';
@@ -79,6 +80,15 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (context) => getIt<LoginCubit>(),
             child: ForgetPasswordScreen(),
+          ),
+        );
+
+      // في generateRoute:
+      case AppRoute.completeProfileScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<LoginCubit>()..emitcountries(),
+            child: const CompleteProfileScreen(),
           ),
         );
 

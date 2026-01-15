@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -62,12 +65,16 @@ class LoginCubit extends Cubit<LoginState> {
     );
     response.when(
       success: (loginResponse) async {
-        //sabajid131@dropeso.com
-        // ignore: prefer_interpolation_to_compose_strings
         await saveUserToken(token: loginResponse['token']);
+
+        await SharedPrefHelper.setSecuredString(
+          SharedPrefKeys.userId,
+          loginResponse['userId'].toString(),
+        );
 
         emit(LoginState.success(loginResponse));
       },
+
       failure: (error) {
         emit(LoginState.error(error: error.apiErrorModel.message ?? ''));
       },
@@ -108,20 +115,24 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void emitupdateProfileStates() async {
-    emit(const LoginState.updateProfileloading());
+    emit(const LoginState.updateProfileLoading());
     final response = await _loginRepo.updateProfile(
       FormData.fromMap({
-        "FirstName": controller.name.text,
-        "LastName": controller.lastName.text,
-        "PhoneNumber": codeCountry + controller.phone.text,
-        "Email": controller.email.text,
         if (controller.height.text.isNotEmpty) "Height": controller.height.text,
+
         if (controller.weight.text.isNotEmpty) "Weight": controller.weight.text,
-        "PositionId": '${positionID.value}',
-        "Direction": "$direction",
+
+        "PositionId": positionID.value.toString(),
+        "Direction": direction.toString(),
         "BirthDate": birthDate,
+
         if (gender != -1) "Gender": gender.toString(),
+
         if (selectedCollegesId != null) "ClubId": selectedCollegesId.toString(),
+
+        if (selectedUniversityId != null)
+          "UniversityId": selectedUniversityId.toString(),
+
         if (imagePath.isNotEmpty) 'Photo': await createImageFromFile(imagePath),
       }),
     );
@@ -140,6 +151,8 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   // MARK: - verificationCode
+  // في login_cubit.dart، ابحث عن دالة emitverifyCodeStates وتأكد أنها:
+
   void emitverifyCodeStates() async {
     emit(const LoginState.verificationCodeloading());
     final response = await _loginRepo.otp(
@@ -147,6 +160,8 @@ class LoginCubit extends Cubit<LoginState> {
     );
     response.when(
       success: (loginResponse) async {
+        await saveUserToken(token: loginResponse['token'] ?? '');
+
         emit(LoginState.verificationCodesuccess(loginResponse));
       },
       failure: (error) {
@@ -159,9 +174,62 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
+  void emitCompleteRegistration() async {
+    emit(const LoginState.updateProfileLoading());
+
+    final parts = birthDate.split('-'); // ["2003","3","4"]
+    final formattedBirthDate =
+        '${parts[0].padLeft(4, '0')}-${parts[1].padLeft(2, '0')}-${parts[2].padLeft(2, '0')}';
+    final dateTimeValue = DateTime.parse(formattedBirthDate);
+
+    final userId = await SharedPrefHelper.getSecuredString(
+      SharedPrefKeys.userId,
+    );
+
+    final formData = FormData.fromMap({
+      'UserId': userId,
+      'Height': controller.height.text,
+      'Weight': controller.weight.text,
+      'PositionId': positionID.value,
+      'Direction': direction,
+      'BirthDate': dateTimeValue.toIso8601String(),
+      'Gender': gender,
+      'BranchId': selectedUniversityId, // بدل UniversityId
+      'ClubId': selectedCollegesId,
+      'ClubJoin': DateTime.now().toIso8601String(), // تاريخ الانضمام للنادي
+      if (imagePath.isNotEmpty) 'Photo': await createImageFromFile(imagePath),
+    });
+
+    final response = await _loginRepo.completeRegistration(formData);
+
+    response.when(
+      success: (data) async {
+        await SharedPrefHelper.setBool(SharedPrefKeys.isCompleted, true);
+        emit(LoginState.updateProfilesuccess(data));
+      },
+      failure: (error) {
+        emit(
+          LoginState.updateProfileerror(
+            error: error.apiErrorModel.message ?? '',
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> saveUserToken({required String token}) async {
-    DioFactory.setTokenIntoHeaderAfterLogin(token);
-    await SharedPrefHelper.setSecuredString(SharedPrefKeys.userToken, token);
+    if (token.isNotEmpty) {
+      DioFactory.setTokenIntoHeaderAfterLogin(token);
+      await SharedPrefHelper.setSecuredString(SharedPrefKeys.userToken, token);
+
+      // تحقق من أن الـ token تم حفظه
+      final savedToken = await SharedPrefHelper.getSecuredString(
+        SharedPrefKeys.userToken,
+      );
+      log('Token saved successfully: ${savedToken?.isNotEmpty ?? false}');
+    } else {
+      log('Warning: Empty token received');
+    }
   }
 
   // // MARK: -change Button Status
