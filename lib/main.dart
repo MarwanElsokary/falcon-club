@@ -20,6 +20,8 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
 
+  WidgetsFlutterBinding.ensureInitialized();
+
   await setupGetIt();
 
   await Future.wait([CacheHelper.init()]);
@@ -49,6 +51,7 @@ class MyApp extends StatelessWidget {
           statusBarBrightness: Brightness.light,
           statusBarColor: Colors.transparent,
         ),
+
         child: MaterialApp(
           title: 'Winner',
           debugShowCheckedModeBanner: false,

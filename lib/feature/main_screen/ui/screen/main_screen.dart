@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/spacing.dart';
+import 'package:falcon/core/routing/routes.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/feature/experiments/cubit/experiments_cubit.dart';
 import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
@@ -18,6 +19,8 @@ import '../../../creat_real/ui/screen/creat_real_screen.dart';
 import '../../../experiments/ui/screen/experiment_screen.dart';
 import '../../../home/ui/screen/home_screen.dart';
 import '../../../reals/ui/screen/main_reals_screen.dart';
+import '../../../signup/ui/widget/profile_completion_middleware.dart';
+import '../../../signup/ui/widget/profile_completion_progress.dart';
 import '../../../training/cubit/training_cubit.dart';
 import '../../../training/ui/screen/training_screen.dart';
 import '../../cubit/main_cubit.dart';
@@ -211,6 +214,10 @@ class _MainScreenState extends State<MainScreen> {
                                         ),
                                       ),
                                     ],
+                                  ),
+                                  ProfileCheckWrapper(
+                                    showInHome: true, // النسخة المصغرة للـ drawer
+                                    child: const SizedBox.shrink(),
                                   ),
                                   PositionedDirectional(
                                     start: 0,

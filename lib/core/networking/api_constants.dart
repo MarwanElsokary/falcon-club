@@ -118,6 +118,10 @@ class ApiConstants {
       '/Account/ForgetPasswordByOtpPhone';
   static const String checkOtp = '/Account/CheckOtp';
   static const String resetPassword = '/Account/ResetPassword';
+  static const String allMeasurements = '/Account/ResetPassword';
+  static const String measurementDetails = '/Account/ResetPassword';
+  static const String addMeasurementAttempt = '/Account/ResetPassword';
+
 }
 
 class ApiErrors {

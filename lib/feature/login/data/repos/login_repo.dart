@@ -13,6 +13,14 @@ class LoginRepo {
 
   //login
 
+  Future<ApiResult> getCurrentUser() async {
+    try {
+      final response = await _apiService.getCurrentUser();
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
   Future<ApiResult> login(loginRequestBody) async {
     try {
       final response = await _apiService.login(loginRequestBody);

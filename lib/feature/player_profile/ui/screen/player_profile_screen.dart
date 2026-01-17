@@ -18,6 +18,7 @@ import '../../../player_profile/ui/widget/player_chart_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
 import '../../../player_profile/ui/widget/player_image_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
+import '../../../signup/ui/widget/profile_completion_middleware.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
 import '../widget/player_videos_widget.dart';
 

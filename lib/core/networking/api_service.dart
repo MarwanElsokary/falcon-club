@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:falcon/feature/experiance_details_screen/data/model/trial_details_model.dart';
 import 'package:falcon/feature/experiments/data/model/all_trials_model.dart';
@@ -10,7 +12,6 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../feature/forget_password/data/model/forget_password_model.dart';
 import '../../feature/main_screen/data/model/my_profile_model.dart';
-import '../../feature/player_profile/data/model/profile_feat.dart';
 import '../../feature/rank/data/model/rank_model.dart';
 import '../../feature/training/data/model/all_exercises_model.dart';
 import 'api_constants.dart';
@@ -22,6 +23,11 @@ abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
 
   //login
+
+  @POST(ApiConstants.registerStep2)
+  Future<dynamic> getCurrentUser();
+
+
 
   @POST(ApiConstants.login)
   Future login(@Body() loginBody);

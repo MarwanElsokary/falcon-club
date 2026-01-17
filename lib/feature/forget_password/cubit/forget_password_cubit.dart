@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../data/model/forget_password_model.dart';
 import '../data/repo/forget_password_repo.dart';
 
 part 'forget_password_state.dart';

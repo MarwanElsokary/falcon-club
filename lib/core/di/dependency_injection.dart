@@ -12,6 +12,8 @@ import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
 import 'package:falcon/feature/reals/data/repo/reals_repo.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../feature/Measurement/cubit/MeasurementCubit.dart';
+import '../../feature/Measurement/data/repo/MeasurementRepo.dart';
 import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
 import '../../feature/experiance_details_screen/data/repo/experiance_details_repo.dart';
 import '../../feature/experiments/data/repo/experiments_repo.dart';
@@ -34,6 +36,16 @@ Future<void> setupGetIt() async {
   // MARK: - Dio & ApiService
   Dio dio = DioFactory.getDio();
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
+
+
+  // MARK: - Forget Password
+
+
+
+  // MARK: - Measurement
+  getIt.registerLazySingleton<MeasurementRepo>(() => MeasurementRepo());
+  getIt.registerFactory<MeasurementCubit>(() => MeasurementCubit(getIt()));
+
 
   // MARK: - Main
   getIt.registerLazySingleton<MainRepo>(() => MainRepo(getIt()));

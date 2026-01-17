@@ -15,6 +15,7 @@ import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/widget/show_photo_widget.dart';
 import '../../../../core/widget/text_utils.dart';
+import '../../../signup/ui/widget/profile_completion_middleware.dart';
 import '../../cubit/main_cubit.dart';
 import '../../cubit/main_state.dart';
 
@@ -23,6 +24,9 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // في ملف custom_drawer.dart
+// ابحث عن List itemData واضف العنصر ده بعد التدريبات وقبل سياسة الخصوصية:
+
     List itemData = [
       {
         'width': 20.w,
@@ -59,8 +63,6 @@ class CustomDrawer extends StatelessWidget {
         'icon': 'assets/svgs/rank_icon.svg',
         'title': 'الترتيب'.tr(),
         'ontap': () {
-          //
-
           context.pushNamed(
             AppRoute.rankScreen,
             arguments: {'context': context},
@@ -83,7 +85,15 @@ class CustomDrawer extends StatelessWidget {
           context.pushNamed(AppRoute.trainingScreen);
         },
       },
-      //
+      // ✅ أضف هذا العنصر الجديد هنا
+      {
+        'width': 20.w,
+        'icon': 'assets/svgs/measurement_icon.svg', // أو استخدم أيقونة موجودة
+        'title': 'القياسات'.tr(),
+        'ontap': () {
+          context.pushNamed(AppRoute.measurementScreen);
+        },
+      },
       {
         'width': 20.w,
         'icon': 'assets/svgs/lock-svgrepo-com.svg',
@@ -93,10 +103,8 @@ class CustomDrawer extends StatelessWidget {
             context: context,
             url: 'https://falconai.net/api/Website/GetPrivacy',
           );
-          // context.pushNamed(AppRoute.packageScreen);
         },
       },
-      //الباقات
       {
         'width': 20.w,
         'icon': 'assets/svgs/pckage-card.svg',
@@ -105,8 +113,6 @@ class CustomDrawer extends StatelessWidget {
           context.pushNamed(AppRoute.packageScreen);
         },
       },
-
-      //تسجيل الخروج
       {
         'width': 15.w,
         'icon': 'assets/svgs/logout_icon.svg',
@@ -115,7 +121,7 @@ class CustomDrawer extends StatelessWidget {
           context.pop();
           showLogoutDialog(
             context,
-            () {
+                () {
               context.pushNamedAndRemoveUntil(
                 AppRoute.loginScreen,
                 predicate: (route) => false,
@@ -126,7 +132,6 @@ class CustomDrawer extends StatelessWidget {
           );
         },
       },
-      //حذف الحساب
       {
         'width': 20.w,
         'icon': 'assets/svgs/delete-02.svg',
@@ -135,7 +140,7 @@ class CustomDrawer extends StatelessWidget {
           context.pop();
           showLogoutDialog(
             context,
-            () {
+                () {
               context.pushNamedAndRemoveUntil(
                 AppRoute.loginScreen,
                 predicate: (route) => false,
@@ -165,6 +170,10 @@ class CustomDrawer extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      ProfileCheckWrapper(
+                        showInHome: false, // النسخة المصغرة للـ drawer
+                        child: const SizedBox.shrink(),
+                      ),
                       //user data
                       BlocBuilder<MainCubit, MainState>(
                         builder: (context, state) {

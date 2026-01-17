@@ -5,6 +5,12 @@ class AppRoute {
   static const String welcomeScreen = '/welcomeScreen'; //welcomeScreen
   static const String completeProfileScreen = '/completeProfileScreen';
 
+  static const String measurementsScreen = '/measurementsScreen';
+  static const String measurementDetailsScreen = '/measurementDetailsScreen';
+  static const String measurementResultScreen = '/measurementResultScreen';
+  static const String lastMeasurementAttemptScreen = '/lastMeasurementAttemptScreen';
+  static const String measurementScreen = '/measurementScreen';
+
   //welcomeScreen
   static const String resetPasswordScreen = '/resetPassword';
 

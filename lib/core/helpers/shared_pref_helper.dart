@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'constants.dart';
 
 class SharedPrefHelper {
   // private constructor as I don't want to allow creating an instance of this class itself.
@@ -11,6 +15,16 @@ class SharedPrefHelper {
     debugPrint('SharedPrefHelper : data with key : $key has been removed');
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove(key);
+  }
+  // أضف هذه الدالة في LoginCubit
+  Future<void> debugPrintSharedPrefs() async {
+    final userId = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userId);
+    final token = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
+
+    log('🔍 Debug SharedPreferences:');
+    log('userId: $userId');
+    log('userToken: $token');
+    log('isCompleted: ${await SharedPrefHelper.getBool(SharedPrefKeys.isCompleted)}');
   }
 
   static Future<void> setBool(String key, bool value) async {
