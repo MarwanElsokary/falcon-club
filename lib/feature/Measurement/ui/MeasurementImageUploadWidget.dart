@@ -1,227 +1,303 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falcon/core/thems/thems.dart';
+import 'package:falcon/core/widget/text_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:ui' as ui;
+
+import 'package:slider_button/slider_button.dart';
+
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 import '../../../core/helpers/spacing.dart';
-import '../../../core/thems/thems.dart';
-import '../../../core/widget/button_utils.dart';
-import '../../../core/widget/padding_utils.dart';
+import '../../../core/widget/block_animation.dart';
+import '../../training_details/ui/widget/choose_image_bottom_sheet_widget.dart';
 import '../cubit/MeasurementCubit.dart';
 import '../cubit/measurement_state.dart';
 
-class MeasurementImageUploadWidget extends StatelessWidget {
+class MeasurementImageUploadWidget extends StatefulWidget {
   const MeasurementImageUploadWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<MeasurementCubit>();
+  State<MeasurementImageUploadWidget> createState() =>
+      _MeasurementImageUploadWidgetState();
+}
 
-    return Padding(
-      padding: paddingUtils(),
-      child: Column(
-        children: [
-          // Image preview or placeholder
-          BlocBuilder<MeasurementCubit, MeasurementState>(
-            builder: (context, state) {
-              return GestureDetector(
-                onTap: () => _pickImage(context, cubit),
+class _MeasurementImageUploadWidgetState
+    extends State<MeasurementImageUploadWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MeasurementCubit, MeasurementState>(
+      builder: (context, state) {
+        final cubit = context.read<MeasurementCubit>();
+        final hasImage = cubit.imagePath.isNotEmpty;
+
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              // Image preview area
+              GestureDetector(
+                onTap: hasImage
+                    ? null
+                    : () => _showImagePickerSheet(context, cubit),
                 child: Container(
-                  height: 400.h,
-                  width: double.infinity,
+                  width: context.displayWidth,
+                  height: context.displayHeight / 1.22,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(
-                      color: cubit.imagePath.isEmpty
-                          ? Colors.grey.shade300
-                          : mainColor,
-                      width: 2,
+                    color: Colors.black,
+                    borderRadius: BorderRadiusDirectional.only(
+                      bottomStart: Radius.circular(30.r),
+                      bottomEnd: Radius.circular(30.r),
                     ),
                   ),
-                  child: cubit.imagePath.isEmpty
-                      ? _buildPlaceholder()
-                      : _buildImagePreview(cubit.imagePath),
+                  child: hasImage
+                      ? ClipRRect(
+                          borderRadius: BorderRadiusDirectional.only(
+                            bottomStart: Radius.circular(30.r),
+                            bottomEnd: Radius.circular(30.r),
+                          ),
+                          child: Image.file(
+                            File(cubit.imagePath),
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              BlockAnimation(
+                                lottiePath: 'assets/lottie/Notification.json',
+                                width: 200.w,
+                              ),
+                              verticalSpace(20),
+                              TextUtils(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                text: 'القياسات بالذكاء الاصطناعي'.tr(),
+                              ),
+                              verticalSpace(10),
+                              TextUtils(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white.withOpacity(0.7),
+                                text: 'اضغط لالتقاط صورة'.tr(),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
+              ),
+
+              verticalSpace(10),
+
+              // Info section
+              Container(
+                width: context.displayWidth,
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.w),
+                decoration: BoxDecoration(
+                  color: whiteclr,
+                  borderRadius: BorderRadiusDirectional.only(
+                    topStart: Radius.circular(25.r),
+                    topEnd: Radius.circular(25.r),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 80.w,
+                        height: 5.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100.r),
+                          color: greyClr.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+
+                    verticalSpace(20),
+
+                    TextUtils(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                      text: 'قياس الجسم بالذكاء الاصطناعي'.tr(),
+                    ),
+
+                    verticalSpace(15),
+
+                    _buildInstructionsExpansion(),
+
+                    verticalSpace(20),
+
+                    _buildStartButton(context, hasImage, cubit),
+
+                    verticalSpace(30),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildInstructionsExpansion() {
+    List<Color> catColor = [mainColor, greenClr, kCOlor5, Color(0xFF0C4F45)];
+    List<Map<String, dynamic>> instructions = [
+      {'text': 'تأكد من وضوح الصورة'.tr(), 'icon': Icons.high_quality},
+      {'text': 'الوقوف بشكل مستقيم'.tr(), 'icon': Icons.accessibility_new},
+      {'text': 'خلفية فاتحة ومتناقضة'.tr(), 'icon': Icons.palette_outlined},
+      {'text': 'عدم وجود أشياء أخرى'.tr(), 'icon': Icons.person_remove},
+    ];
+
+    return Theme(
+      data: ThemeData(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        tilePadding: EdgeInsets.zero,
+        childrenPadding: EdgeInsets.zero,
+        title: TextUtils(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+          text: 'تعليمات التصوير'.tr(),
+        ),
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: instructions.length,
+            itemBuilder: (context, i) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.h),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 8.w,
+                      width: 8.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: catColor[i % catColor.length],
+                      ),
+                    ),
+                    horizontalSpace(10),
+                    Expanded(
+                      child: TextUtils(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: blackclr,
+                        text: instructions[i]['text'],
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
           ),
-
-          verticalSpace(20),
-
-          // Buttons
-          BlocBuilder<MeasurementCubit, MeasurementState>(
-            builder: (context, state) {
-              final isLoading = state is UploadLoading || state is UploadProgress;
-              final hasImage = cubit.imagePath.isNotEmpty;
-
-              return Row(
-                children: [
-                  if (hasImage) ...[
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: isLoading ? null : () => cubit.clearImage(),
-                        icon: Icon(Icons.delete_outline, size: 20.sp),
-                        label: Text('حذف'.tr()),
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 14.h),
-                          side: BorderSide(color: Colors.red.shade300),
-                          foregroundColor: Colors.red.shade700,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                        ),
-                      ),
-                    ),
-                    horizontalSpace(12),
-                  ],
-                  Expanded(
-                    flex: 2,
-                    child: ButtonUtils(
-                      text: hasImage
-                          ? 'رفع وتحليل الصورة'.tr()
-                          : 'اختيار صورة'.tr(),
-                      onPressed: isLoading
-                          ? () {}
-                          : () {
-                        if (hasImage) {
-                          cubit.uploadMeasurementImage();
-                        } else {
-                          _pickImage(context, cubit);
-                        }
-                      },
-                      colorstext: Colors.white,
-                      background: hasImage ? mainColor : Colors.grey.shade400,
-                      border: 12.r,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildPlaceholder() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.add_photo_alternate_outlined,
-          size: 80.sp,
-          color: Colors.grey.shade400,
-        ),
-        verticalSpace(16),
-        Text(
-          'اضغط لاختيار صورة'.tr(),
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w500,
-            color: Colors.grey.shade600,
-          ),
-        ),
-        verticalSpace(8),
-        Text(
-          'قم بتصوير اللاعب في وضعية الوقوف'.tr(),
-          style: TextStyle(
-            fontSize: 13.sp,
-            color: Colors.grey.shade500,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildImagePreview(String imagePath) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(14.r),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.file(
-            File(imagePath),
-            fit: BoxFit.cover,
-          ),
-          Positioned(
-            top: 12.h,
-            right: 12.w,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(20.r),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.check_circle, color: Colors.white, size: 16.sp),
-                  horizontalSpace(4),
-                  Text(
-                    'تم الاختيار'.tr(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _pickImage(BuildContext context, MeasurementCubit cubit) async {
-    final ImagePicker picker = ImagePicker();
-
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-      ),
-      builder: (context) => Container(
-        padding: EdgeInsets.all(20.w),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.camera_alt, color: mainColor),
-              title: Text('التقاط صورة'.tr()),
-              onTap: () async {
-                Navigator.pop(context);
-                final XFile? image = await picker.pickImage(
-                  source: ImageSource.camera,
-                  imageQuality: 85,
-                );
-                if (image != null) {
-                  cubit.setImagePath(image.path);
-                }
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library, color: mainColor),
-              title: Text('اختيار من المعرض'.tr()),
-              onTap: () async {
-                Navigator.pop(context);
-                final XFile? image = await picker.pickImage(
-                  source: ImageSource.gallery,
-                  imageQuality: 85,
-                );
-                if (image != null) {
-                  cubit.setImagePath(image.path);
-                }
-              },
-            ),
+  Widget _buildStartButton(
+    BuildContext context,
+    bool hasImage,
+    MeasurementCubit cubit,
+  ) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(1000.r),
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF5D2BF4),
+            Color(0xFFF4BE2B),
+            Color(0xFF5D2BF4),
+            Color(0xFF2BB8F4),
           ],
+          stops: [0.0, 0.2596, 0.6916, 1.0],
         ),
       ),
+      padding: EdgeInsets.all(3),
+      child: Container(
+        decoration: BoxDecoration(
+          color: whiteclr,
+          borderRadius: BorderRadius.circular(1000.r),
+        ),
+        child: Directionality(
+          textDirection: ui.TextDirection.ltr,
+          child: SliderButton(
+            width: context.displayWidth - 40.w,
+            radius: 1000.r,
+            action: () async {
+              if (hasImage) {
+                cubit.uploadMeasurementImage();
+              } else {
+                _showImagePickerSheet(context, cubit);
+              }
+              return false;
+            },
+            label: TextUtils(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              text: hasImage
+                  ? 'قم بالسحب لبدء القياس'.tr()
+                  : 'قم بالسحب لالتقاط صورة'.tr(),
+            ),
+            icon: Container(
+              width: 100.w,
+              height: 100.w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [Color(0xFFEBCD38), Color(0xFF5D2BF4)],
+                ),
+              ),
+              padding: EdgeInsets.all(12.w),
+              child: Icon(
+                hasImage ? Icons.upload : Icons.camera_alt,
+                color: Colors.white,
+                size: 24.w,
+              ),
+            ),
+            buttonColor: Colors.transparent,
+            backgroundColor: whiteclr,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showImagePickerSheet(BuildContext context, MeasurementCubit cubit) {
+    chooseImageBootomShet(
+      title: '',
+      context: context,
+      cameratab: () async {
+        context.pop();
+        final picker = ImagePicker();
+        final image = await picker.pickImage(source: ImageSource.camera);
+        if (image != null) {
+          cubit.setImagePath(image.path);
+        }
+      },
+      galleryatab: () async {
+        context.pop();
+        final picker = ImagePicker();
+        final image = await picker.pickImage(source: ImageSource.gallery);
+        if (image != null) {
+          cubit.setImagePath(image.path);
+        }
+      },
     );
   }
 }

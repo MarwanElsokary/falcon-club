@@ -1,11 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../../../core/helpers/constants.dart';
 import '../../../core/helpers/shared_pref_helper.dart';
 import '../data/repo/MeasurementRepo.dart';
@@ -14,53 +12,57 @@ import 'measurement_state.dart';
 class MeasurementCubit extends Cubit<MeasurementState> {
   final MeasurementRepo _repo;
 
-  MeasurementCubit(this._repo) : super(const MeasurementInitial());
+  MeasurementCubit(this._repo) : super(const MeasurementState.initial());
 
   String imagePath = '';
 
-  // Upload measurement image
+  void setImagePath(String path) {
+    imagePath = path;
+    emit(const MeasurementState.initial());
+  }
+
+  void clearImage() {
+    imagePath = '';
+    emit(const MeasurementState.initial());
+  }
+
   Future<void> uploadMeasurementImage() async {
     if (imagePath.isEmpty) {
-      emit(const UploadError('يرجى اختيار صورة أولاً'));
+      emit(const MeasurementState.uploadError('يرجى اختيار صورة أولاً'));
       return;
     }
 
-    emit(const UploadLoading());
+    emit(const MeasurementState.uploadLoading());
 
     try {
-      // Get userId
       final userId = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userId);
       if (userId == null || userId.isEmpty) {
-        emit(const UploadError('لم يتم العثور على معرف المستخدم'));
+        emit(const MeasurementState.uploadError('لم يتم العثور على معرف المستخدم'));
         return;
       }
 
-      // Create form data
       final formData = FormData.fromMap({
-        'image': await _createMultipartFile(imagePath),
+        'image': await _createImageMultipart(imagePath),
       });
 
-      // Upload with progress
       final response = await _repo.uploadMeasurementImage(
         formData: formData,
         userId: userId,
         onSendProgress: (sent, total) {
-          if (total != 0) {
+          if (total > 0) {
             final progress = ((sent / total) * 100).toInt();
-            emit(UploadProgress(progress));
+            emit(MeasurementState.uploadProgress(progress));
           }
         },
       );
 
       response.when(
         success: (measurement) {
-          // Check if any critical field is null
-          if (measurement.image == null ||
-              measurement.heightCm == null ||
+          if (measurement.heightCm == null ||
               measurement.shoulderWidthCm == null ||
               measurement.avgLegAngle == null) {
             log('⚠️ Warning: Some measurement data is null');
-            emit(const UploadError(
+            emit(const MeasurementState.uploadError(
               'حدثت مشكلة في تحليل الصورة. يرجى التأكد من:\n'
                   '• وضوح الصورة وجودتها\n'
                   '• وقوف اللاعب بشكل مستقيم\n'
@@ -70,29 +72,28 @@ class MeasurementCubit extends Cubit<MeasurementState> {
           }
 
           log('✅ Measurement uploaded successfully');
-          emit(UploadSuccess(measurement));
+          emit(MeasurementState.uploadSuccess(measurement));
         },
         failure: (error) {
           log('❌ Upload error: ${error.apiErrorModel.message}');
-          emit(UploadError(
+          emit(MeasurementState.uploadError(
             error.apiErrorModel.message ?? 'فشل رفع الصورة',
           ));
         },
       );
     } catch (e) {
       log('❌ Exception in uploadMeasurementImage: $e');
-      emit(UploadError('حدث خطأ أثناء رفع الصورة: $e'));
+      emit(MeasurementState.uploadError('حدث خطأ أثناء رفع الصورة: $e'));
     }
   }
 
-  Future<MultipartFile> _createMultipartFile(String imagePath) async {
+  Future<MultipartFile> _createImageMultipart(String imagePath) async {
     final file = File(imagePath);
     if (!await file.exists()) {
       throw Exception('File does not exist at $imagePath');
     }
 
     try {
-      // Compress image
       final compressedBytes = await _compressImage(file);
       final tempDir = await getTemporaryDirectory();
       final tempFile = File(
@@ -122,15 +123,5 @@ class MeasurementCubit extends Cubit<MeasurementState> {
     }
 
     return result;
-  }
-
-  void setImagePath(String path) {
-    imagePath = path;
-    emit(const MeasurementInitial());
-  }
-
-  void clearImage() {
-    imagePath = '';
-    emit(const MeasurementInitial());
   }
 }

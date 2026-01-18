@@ -44,14 +44,7 @@ class LoginScreen extends StatelessWidget {
               );
             }
           },
-          error: (error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(error),
-                backgroundColor: Colors.red,
-              ),
-            );
-          },
+
         );
       },
       child: Scaffold(

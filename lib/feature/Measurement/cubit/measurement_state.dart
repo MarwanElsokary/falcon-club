@@ -1,28 +1,13 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import '../data/model/MeasurementModel.dart';
 
-abstract class MeasurementState {
-  const MeasurementState();
-}
+part 'measurement_state.freezed.dart';
 
-class MeasurementInitial extends MeasurementState {
-  const MeasurementInitial();
-}
-
-class UploadLoading extends MeasurementState {
-  const UploadLoading();
-}
-
-class UploadProgress extends MeasurementState {
-  final int progress;
-  const UploadProgress(this.progress);
-}
-
-class UploadSuccess extends MeasurementState {
-  final MeasurementModel measurement;
-  const UploadSuccess(this.measurement);
-}
-
-class UploadError extends MeasurementState {
-  final String error;
-  const UploadError(this.error);
+@freezed
+class MeasurementState with _$MeasurementState {
+  const factory MeasurementState.initial() = MeasurementInitial;
+  const factory MeasurementState.uploadLoading() = UploadLoading;
+  const factory MeasurementState.uploadProgress(int progress) = UploadProgress;
+  const factory MeasurementState.uploadSuccess(MeasurementModel measurement) = UploadSuccess;
+  const factory MeasurementState.uploadError(String error) = UploadError;
 }

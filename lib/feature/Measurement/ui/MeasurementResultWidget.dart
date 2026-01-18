@@ -2,8 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
-
+import '../../../core/helpers/extensions.dart';
 import '../../../core/helpers/spacing.dart';
 import '../../../core/thems/thems.dart';
 import '../../../core/widget/padding_utils.dart';
@@ -23,53 +22,10 @@ class MeasurementResultWidget extends StatelessWidget {
       padding: paddingUtils(),
       child: Column(
         children: [
-          // Success animation
-          Lottie.asset(
-            'assets/lottie/success.json',
-            width: 150.w,
-            height: 150.h,
-            repeat: false,
-          ),
 
-          verticalSpace(10),
-
-          // Success message
-          Container(
-            padding: EdgeInsets.all(16.w),
-            decoration: BoxDecoration(
-              color: Colors.green.shade50,
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: Colors.green.shade200),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.check_circle, color: Colors.green, size: 24.sp),
-                horizontalSpace(12),
-                Expanded(
-                  child: Text(
-                    'تم حفظ جميع البيانات في قاعدة البيانات بنجاح'.tr(),
-                    style: TextStyle(
-                      color: Colors.green.shade900,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          verticalSpace(20),
 
           // Analyzed image
-          Text(
-            'الصورة بعد التحليل'.tr(),
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-              color: mainColor,
-            ),
-          ),
+
 
           verticalSpace(12),
 
@@ -77,7 +33,7 @@ class MeasurementResultWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             child: CachedNetworkImage(
               imageUrl: measurement.image ?? '',
-              height: 300.h,
+              height: 600.h,
               width: double.infinity,
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
@@ -153,42 +109,42 @@ class MeasurementResultWidget extends StatelessWidget {
           verticalSpace(20),
 
           // Important note
-          Container(
-            padding: EdgeInsets.all(16.w),
-            decoration: BoxDecoration(
-              color: Colors.orange.shade50,
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: Colors.orange.shade200),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.lightbulb_outline, color: Colors.orange.shade700, size: 20.sp),
-                    horizontalSpace(8),
-                    Text(
-                      'ملاحظة هامة'.tr(),
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange.shade900,
-                      ),
-                    ),
-                  ],
-                ),
-                verticalSpace(8),
-                Text(
-                  'يرجى مراجعة هذه القياسات مع المدرب الخاص بك لوضع خطة تدريبية مناسبة لتطوير أدائك البدني.'.tr(),
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    color: Colors.orange.shade800,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.all(16.w),
+          //   decoration: BoxDecoration(
+          //     color: Colors.orange.shade50,
+          //     borderRadius: BorderRadius.circular(12.r),
+          //     border: Border.all(color: Colors.orange.shade200),
+          //   ),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Row(
+          //         children: [
+          //           Icon(Icons.lightbulb_outline, color: Colors.orange.shade700, size: 20.sp),
+          //           horizontalSpace(8),
+          //           Text(
+          //             'ملاحظة هامة'.tr(),
+          //             style: TextStyle(
+          //               fontSize: 16.sp,
+          //               fontWeight: FontWeight.bold,
+          //               color: Colors.orange.shade900,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //       verticalSpace(8),
+          //       Text(
+          //         'بعض القياسات لم يتم استخراجها من الصورة. يرجى التأكد من جودة الصورة ووضعية اللاعب وإعادة المحاولة إذا لزم الأمر.'.tr(),
+          //         style: TextStyle(
+          //           fontSize: 13.sp,
+          //           color: Colors.orange.shade800,
+          //           height: 1.5,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
 
           verticalSpace(30),
         ],

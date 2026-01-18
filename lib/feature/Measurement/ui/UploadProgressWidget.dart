@@ -1,99 +1,109 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falcon/core/thems/thems.dart';
+import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
+import '../../last_attempt/ui/widget/ai_loading_widget.dart';
+import '../cubit/MeasurementCubit.dart';
+import '../cubit/measurement_state.dart';
 
-import '../../../core/helpers/spacing.dart';
-import '../../../core/thems/thems.dart';
-import '../../../core/widget/padding_utils.dart';
-
-class UploadProgressWidget extends StatelessWidget {
-  final int? progress;
-
-  const UploadProgressWidget({super.key, this.progress});
+class UploadProgressWidgets extends StatelessWidget {
+  const UploadProgressWidgets({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: paddingUtils(),
-      child: Container(
-        padding: EdgeInsets.all(24.w),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            // Animation
-            Lottie.asset(
-              'assets/lottie/load.json',
-              width: 150.w,
-              height: 150.h,
-            ),
+    return BlocBuilder<MeasurementCubit, MeasurementState>(
+      builder: (context, state) {
+        int percent = 0;
 
-            verticalSpace(20),
+        state.maybeWhen(
+          uploadProgress: (progress) {
+            percent = progress.clamp(0, 100);
+          },
+          orElse: () {},
+        );
 
-            // Progress text
-            Text(
-              progress != null
-                  ? 'جاري رفع الصورة... $progress%'
-                  : 'جاري تحليل الصورة بالذكاء الاصطناعي...',
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
+        return Container(
+          color: offWhiteClr.withOpacity(0.3),
+          child: Center(
+            child: Container(
+              width: context.displayWidth / 1.2,
+              height: context.displayHeight / 2,
+              decoration: BoxDecoration(
                 color: mainColor,
+                borderRadius: BorderRadius.circular(30.r),
               ),
-              textAlign: TextAlign.center,
-            ),
-
-            verticalSpace(16),
-
-            // Progress bar
-            if (progress != null)
-              Column(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.r),
-                    child: LinearProgressIndicator(
-                      value: progress! / 100,
-                      minHeight: 10.h,
-                      backgroundColor: Colors.grey.shade200,
-                      valueColor: AlwaysStoppedAnimation<Color>(mainColor),
+                  Container(
+                    height: 250.w,
+                    width: 250.w,
+                    margin: EdgeInsets.symmetric(vertical: 25.w),
+                    padding: EdgeInsets.all(7.w),
+                    decoration: BoxDecoration(
+                      color: offWhiteClr.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: offWhiteClr.withOpacity(0.2),
+                        width: 5.w,
+                      ),
                     ),
-                  ),
-                  verticalSpace(8),
-                  Text(
-                    '$progress%',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade600,
+                    child: CustomPaint(
+                      painter: GradientCirclePainter(
+                        percent: percent / 100,
+                        strokeWidth: 15.w,
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(8.w),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: offWhiteClr.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: offWhiteClr.withOpacity(0.2),
+                              width: 5.w,
+                            ),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(10.w),
+                            decoration: const BoxDecoration(
+                              color: mainColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CenterTextUtils(
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                  text: '$percent%',
+                                ),
+                                const SizedBox(height: 5),
+                                CenterTextUtils(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: percent >= 70 ? greenClr : Colors.white,
+                                  text: percent >= 70
+                                      ? 'باقي شوي ويخلص...'.tr()
+                                      : 'الحين ننزله لك...'.tr(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
-              )
-            else
-              CircularProgressIndicator(color: mainColor),
-
-            verticalSpace(16),
-
-            Text(
-              'يرجى الانتظار، هذا قد يستغرق بضع ثوانٍ...',
-              style: TextStyle(
-                fontSize: 13.sp,
-                color: Colors.grey.shade600,
               ),
-              textAlign: TextAlign.center,
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

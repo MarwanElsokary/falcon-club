@@ -191,11 +191,7 @@ class _PublishMyVideoState extends State<PublishMyVideo> {
                               isCompressing: isCompressing,
                               uploadedBytes: uploaded,
                               totalBytes: total,
-                              onCancel: () {
-                                context
-                                    .read<CreatRealCubit>()
-                                    .cancelCompression();
-                              },
+                              onCancel: null,
                             );
                           },
                       creatRealLoading: () {
