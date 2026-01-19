@@ -85,10 +85,10 @@ class CustomDrawer extends StatelessWidget {
           context.pushNamed(AppRoute.trainingScreen);
         },
       },
-      // ✅ أضف هذا العنصر الجديد هنا
+
       {
         'width': 20.w,
-        'icon': 'assets/svgs/measurement_icon.svg', // أو استخدم أيقونة موجودة
+        'icon': 'assets/svgs/ruler-angular-svgrepo-com.svg',
         'title': 'القياسات'.tr(),
         'ontap': () {
           context.pushNamed(AppRoute.measurementScreen);

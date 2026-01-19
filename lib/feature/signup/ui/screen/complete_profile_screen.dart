@@ -150,24 +150,28 @@ class CompleteProfileScreen extends StatelessWidget {
 
         verticalSpace(20),
 
-        OutlinedButton(
-          onPressed: isLoading ? null : () => _skipToMain(context),
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(color: mainColor),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100.r),
+        SizedBox(
+          width: double.infinity, // عشان يكون نفس طول زرار الحفظ
+          child: OutlinedButton(
+            onPressed: isLoading ? null : () => _skipToMain(context),
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: mainColor),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100.r),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 16.h),
             ),
-            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
-          ),
-          child: Text(
-            'تخطي وإكمال لاحقاً'.tr(),
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
-              color: mainColor,
+            child: Text(
+              'تخطي وإكمال لاحقاً'.tr(),
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                color: mainColor,
+              ),
             ),
           ),
         ),
+
       ],
     );
   }
