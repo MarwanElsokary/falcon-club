@@ -37,6 +37,7 @@ class AllExerciseList {
   dynamic description;
   dynamic categoryId;
   dynamic categoryName;
+  dynamic isPaid;
   dynamic categoryIcon;
   dynamic bookings;
   List<dynamic> skills;
@@ -49,6 +50,7 @@ class AllExerciseList {
     required this.categoryId,
     required this.categoryName,
     required this.categoryIcon,
+    required this.isPaid,
     required this.bookings,
     required this.skills,
   });
@@ -56,6 +58,7 @@ class AllExerciseList {
   factory AllExerciseList.fromJson(Map<String, dynamic> json) =>
       AllExerciseList(
         id: json["id"],
+        isPaid: json["isPaid"],
         photoPath: json["photoPath"],
         title: json["title"],
         description: json["description"],
@@ -71,6 +74,7 @@ class AllExerciseList {
     "photoPath": photoPath,
     "title": title,
     "description": description,
+    "isPaid": isPaid,
     "categoryId": categoryId,
     "categoryName": categoryName,
     "categoryIcon": categoryIcon,
