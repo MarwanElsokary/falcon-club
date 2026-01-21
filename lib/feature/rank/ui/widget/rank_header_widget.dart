@@ -16,6 +16,7 @@ class RankHeaderWidget extends StatefulWidget {
 
 class _RankHeaderWidgetState extends State<RankHeaderWidget> {
   bool isExpand = false;
+
   @override
   void initState() {
     wait();
@@ -23,7 +24,7 @@ class _RankHeaderWidgetState extends State<RankHeaderWidget> {
   }
 
   wait() async {
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 100));
     setState(() {
       isExpand = true;
     });
@@ -32,7 +33,7 @@ class _RankHeaderWidgetState extends State<RankHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       height: isExpand ? 60.h : 0,
       width: context.displayWidth / 1,
@@ -47,19 +48,39 @@ class _RankHeaderWidgetState extends State<RankHeaderWidget> {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: 38.w,
+                // الرتبة
+                Container(
+                  width: 50.w, // ✅ زيادة العرض قليلاً
                   child: header(
                     icon: 'assets/svgs/stash_trophy-solid.svg',
                     title: 'رتبة'.tr(),
                   ),
                 ),
-                horizontalSpace(20),
-                header(icon: 'assets/svgs/wpf_name.svg', title: 'الاسم'.tr()),
+                horizontalSpace(15.w), // ✅ تقليل المسافة
+
+                // الاسم
                 Expanded(
-                  child: header(
-                    icon: 'assets/svgs/solar_star-bold-duotone.svg',
-                    title: 'النقاط'.tr(),
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 10.w),
+                    child: header(
+                      icon: 'assets/svgs/wpf_name.svg',
+                      title: 'الاسم'.tr(),
+                      alignRight: true, // ✅ محاذاة للبداية
+                    ),
+                  ),
+                ),
+
+                // النقاط
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10.w),
+                    child: header(
+                      icon: 'assets/svgs/solar_star-bold-duotone.svg',
+                      title: 'النقاط'.tr(),
+                      alignCenter: true, // ✅ محاذاة للوسط
+                    ),
                   ),
                 ),
               ],
@@ -70,16 +91,31 @@ class _RankHeaderWidgetState extends State<RankHeaderWidget> {
     );
   }
 
-  Widget header({required String icon, required String title}) {
+  Widget header({
+    required String icon,
+    required String title,
+    bool alignRight = false,
+    bool alignCenter = false,
+  }) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: alignCenter
+          ? MainAxisAlignment.center
+          : (alignRight ? MainAxisAlignment.start : MainAxisAlignment.end),
+      mainAxisSize: MainAxisSize.min, // ✅ تغيير إلى min لتجنب التجاوز
       children: [
-        SvgPicture.asset(icon),
-        TextUtils(
-          fontSize: 13,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          text: title,
+        SizedBox(
+          width: 16.w, // ✅ تحديد عرض ثابت للأيقونة
+          child: SvgPicture.asset(icon),
+        ),
+        horizontalSpace(4.w), // ✅ تقليل المسافة
+        Flexible( // ✅ استخدام Flexible بدلاً من Expanded
+          child: TextUtils(
+            fontSize: 12.sp, // ✅ تقليل حجم الخط قليلاً
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            text: title,
+            maxlines: 1,
+          ),
         ),
       ],
     );

@@ -8,6 +8,7 @@ class RankCubit extends Cubit<RankState> {
   final RankRepo _repo;
 
   RankCubit(this._repo) : super(RankState.initial());
+
   bool isSubscribed = false; // ✅ إضافة متغير الاشتراك
   List<RankList> rankList = [];
 
@@ -21,7 +22,6 @@ class RankCubit extends Cubit<RankState> {
       success: (rankResponse) async {
         rankList.clear();
         rankList.addAll(rankResponse.data);
-
         emit(RankState.ranksuccess());
       },
       failure: (error) {
@@ -38,6 +38,4 @@ class RankCubit extends Cubit<RankState> {
       return rankList.length > 3 ? 3 : rankList.length; // عرض 3 فقط
     }
   }
-
-  // MARK: - rank
 }
