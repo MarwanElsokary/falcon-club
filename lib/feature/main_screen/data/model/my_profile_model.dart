@@ -50,6 +50,7 @@ class Data {
   dynamic positionName;
   dynamic clubJoinDate;
   dynamic joinDate;
+  dynamic isCompleted;
   dynamic position;
   dynamic tps;
 
@@ -59,6 +60,7 @@ class Data {
     required this.firstName,
     required this.lastName,
     required this.email,
+    required this.isCompleted,
     required this.isSubscribed,
     required this.clubImage,
     required this.bioHeight,
@@ -86,6 +88,7 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     userId: json["userId"],
+    isCompleted: json["isCompleted"],
     accountNumber: json["accountNumber"],
     firstName: json["firstName"],
     isSubscribed: json["isSubscribed"] ?? false,
@@ -121,6 +124,7 @@ class Data {
     "firstName": firstName,
     "lastName": lastName,
     "email": email,
+    "isCompleted": isCompleted,
     "isSubscribed": isSubscribed,
     "phoneNumber": phoneNumber,
     "birthDate": birthDate,
