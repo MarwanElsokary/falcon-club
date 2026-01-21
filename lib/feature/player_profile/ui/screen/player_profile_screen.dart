@@ -18,8 +18,8 @@ import '../../../player_profile/ui/widget/player_chart_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
 import '../../../player_profile/ui/widget/player_image_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
-import '../../../signup/ui/widget/profile_completion_middleware.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
+import '../widget/player_measurements_widget.dart'; // تأكد من الاستيراد
 import '../widget/player_videos_widget.dart';
 
 class PlayerProfileScreen extends StatefulWidget {
@@ -74,7 +74,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   Widget _buildMainContent() {
     return BlocBuilder<MainCubit, MainState>(
       buildWhen: (previous, current) =>
-          current is playerProfileLoading ||
+      current is playerProfileLoading ||
           current is playerProfileSuccess ||
           current is playerProfileError,
       builder: (context, state) {
@@ -94,11 +94,10 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   }
 
   Widget _buildProfileWithSkills(MyProfileModel playerProfile) {
-    // جلب المهارات مرة واحدة فقط
     if (!_skillsLoaded) {
       _skillsLoaded = true;
       Future.microtask(() {
-        log('🔄 Fetching skills for player: ${widget.playerId}');
+        log('📄 Fetching skills for player: ${widget.playerId}');
         context.read<MainCubit>().emitSkills(userId: widget.playerId);
       });
     }
@@ -114,7 +113,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
                 //user Image
                 PlayerImageWidget(playerProfile: playerProfile),
                 verticalSpace(5),
-                //player chart (منفصل تماماً)
+                //player chart
                 _buildSkillsChartSection(),
                 // player more info
                 SlideEnimationWidget(
@@ -124,6 +123,9 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
                 //about me
                 verticalSpace(10),
                 PlayerAboutMeWidget(playerProfile: playerProfile),
+                verticalSpace(10),
+                // 🆕 Measurements - مباشر من البيانات
+                PlayerMeasurementsWidget(playerProfile: playerProfile), // هنا!
                 verticalSpace(10),
                 //player Videos
                 PlayerVideosWidget(),
@@ -141,7 +143,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   Widget _buildSkillsChartSection() {
     return BlocBuilder<MainCubit, MainState>(
       buildWhen: (previous, current) =>
-          current is playerSkillsLoading ||
+      current is playerSkillsLoading ||
           current is playerSkillsSuccess ||
           current is playerSkillsError,
       builder: (context, state) {
@@ -155,7 +157,6 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
             return _buildRadarChartWithData(skills);
           },
           orElse: () {
-            // إذا لم تبدأ بعد، نعرض رسالة انتظار
             return _buildChartWaiting();
           },
         );
@@ -164,16 +165,14 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   }
 
   Widget _buildRadarChartWithData(List<Skill> skills) {
-    // استخراج القيم من المهارات
     Map<String, double> skillValues = {
-      'السرعة': 0.0, // قيمة افتراضية
-      'القوة': 0.0, // قيمة افتراضية
-      'التحكم': 0.0, // قيمة افتراضية
-      'الالتحام': 0.0, // قيمة افتراضية
-      'المراوغة': 0.0, // قيمة افتراضية
+      'السرعة': 0.0,
+      'القوة': 0.0,
+      'التحكم': 0.0,
+      'الالتحام': 0.0,
+      'المراوغة': 0.0,
     };
 
-    // تحديث القيم من البيانات الفعلية
     for (var skill in skills) {
       if (skillValues.containsKey(skill.skillName)) {
         skillValues[skill.skillName] = skill.score;
@@ -183,7 +182,6 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
       }
     }
 
-    // عرض البيانات على الرادار تشارت مع أسماء المهارات
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -193,7 +191,6 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
           height: 350.w,
           child: Align(
             alignment: AlignmentGeometry.center,
-
             child: SizedBox(
               width: 300.w,
               height: 350.w,
@@ -208,31 +205,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
           ),
         ),
         verticalSpace(10),
-        // عرض أسماء المهارات والقيم
       ],
-    );
-  }
-
-  Widget _buildSkillLegend(Map<String, double> skills) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Wrap(
-        spacing: 10.w,
-        runSpacing: 5.h,
-        children: skills.entries.map((entry) {
-          return Chip(
-            backgroundColor: mainColor.withOpacity(0.3),
-            label: Text(
-              '${entry.key}: ${entry.value.toStringAsFixed(1)}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        }).toList(),
-      ),
     );
   }
 

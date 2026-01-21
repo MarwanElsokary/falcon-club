@@ -35,7 +35,6 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
       duration: const Duration(milliseconds: 1200),
     );
 
-    /// 🔥 Delay 500ms before animation starts
     Future.delayed(const Duration(milliseconds: 300), () {
       if (mounted) _controller.forward();
     });
@@ -57,7 +56,6 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
     });
   }
 
-  /// 🔥 Stagger animation per item
   Animation<double> _buildStagger(int index, int total) {
     final start = (index / total) * 0.6;
     final end = start + 0.4;
@@ -70,191 +68,231 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
 
   @override
   Widget build(BuildContext context) {
-    final items = context.read<RankCubit>().rankList;
+    final cubit = context.read<RankCubit>();
+    final items = cubit.rankList;
+    final isSubscribed = cubit.isSubscribed; // ✅ جلب حالة الاشتراك
 
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: showAllData
-          ? items.length
-          : items.length > 15
-          ? 15
-          : items.length,
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      itemBuilder: (context, index) {
-        final anim = _buildStagger(
-          index,
-          showAllData
-              ? items.length
-              : items.length > 15
-              ? 15
-              : items.length,
-        );
+    // ✅ تحديد عدد العناصر المعروضة
+    final displayCount = showAllData
+        ? cubit.displayedItemsCount
+        : (items.length > 15 ? 15 : items.length);
 
-        return AnimatedBuilder(
-          animation: anim,
-          builder: (context, child) {
-            final v = anim.value.clamp(0.0, 1.0);
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: displayCount,
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            itemBuilder: (context, index) {
+              final anim = _buildStagger(index, displayCount);
 
-            return Opacity(
-              opacity: v,
-              child: Transform.translate(
-                offset: Offset(0, (1 - v) * -40),
-                child: child,
-              ),
-            );
-          },
+              return AnimatedBuilder(
+                animation: anim,
+                builder: (context, child) {
+                  final v = anim.value.clamp(0.0, 1.0);
 
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 36.w,
-                    child: Center(
-                      child: index == 0
-                          ? SvgPicture.asset(
+                  return Opacity(
+                    opacity: v,
+                    child: Transform.translate(
+                      offset: Offset(0, (1 - v) * -40),
+                      child: child,
+                    ),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 36.w,
+                          child: Center(
+                            child: index == 0
+                                ? SvgPicture.asset(
                               'assets/svgs/Group 432.svg',
                               width: 30.w,
                             )
-                          : index == 1
-                          ? SvgPicture.asset(
+                                : index == 1
+                                ? SvgPicture.asset(
                               'assets/svgs/Group 430.svg',
                               width: 30.w,
                             )
-                          : index == 2
-                          ? SvgPicture.asset(
+                                : index == 2
+                                ? SvgPicture.asset(
                               'assets/svgs/Group 431.svg',
                               width: 30.w,
                             )
-                          : TextUtils(
+                                : TextUtils(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                               text: '${index + 1}',
                             ),
-                    ),
-                  ),
-
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        context.pushNamed(
-                          AppRoute.playerProfile,
-                          arguments: {
-                            'isMyProfile': true,
-                            'playerId':
-                                '${context.read<RankCubit>().rankList[index].id}',
-                          },
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          horizontalSpace(20),
-
-                          /// 🔥 Profile photo with gradient ring
-                          InkWell(
-                            borderRadius: BorderRadius.circular(100),
+                          ),
+                        ),
+                        Expanded(
+                          child: InkWell(
                             onTap: () {
-                              showPhotoDialog(
-                                context: context,
-                                image: items[index].photoPath ?? '',
-                                name: items[index].name ?? '',
+                              context.pushNamed(
+                                AppRoute.playerProfile,
+                                arguments: {
+                                  'isMyProfile': true,
+                                  'playerId': '${items[index].id}',
+                                },
                               );
                             },
-                            child: Stack(
-                              alignment: Alignment.center,
+                            child: Row(
                               children: [
-                                Container(
-                                  width: 32.w,
-                                  height: 32.w,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Color(0xFFA5731D),
-                                        Color(0xFFA5731D),
-                                        Color(0xFFE4D48E),
-                                      ],
-                                      stops: [0.0, 0.476, 1.0],
-                                    ),
-                                  ),
-                                ),
-
-                                Container(
-                                  width: 28.w,
-                                  height: 28.w,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                  ),
-                                ),
-
-                                ClipOval(
-                                  child: SizedBox(
-                                    width: 26.w,
-                                    height: 26.w,
-                                    child: CachedNetworkImage(
-                                      imageUrl: items[index].photoPath ?? '',
-                                      fit: BoxFit.cover,
-                                      placeholder: (_, __) => Skeletonizer(
-                                        enabled: true,
-                                        child: Container(
-                                          width: 26.w,
-                                          height: 26.w,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
+                                horizontalSpace(20),
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(100),
+                                  onTap: () {
+                                    showPhotoDialog(
+                                      context: context,
+                                      image: items[index].photoPath ?? '',
+                                      name: items[index].name ?? '',
+                                    );
+                                  },
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 32.w,
+                                        height: 32.w,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Color(0xFFA5731D),
+                                              Color(0xFFA5731D),
+                                              Color(0xFFE4D48E),
+                                            ],
+                                            stops: [0.0, 0.476, 1.0],
                                           ),
                                         ),
                                       ),
-                                      errorWidget: (_, __, ___) => Container(
-                                        padding: EdgeInsets.all(4.w),
+                                      Container(
+                                        width: 28.w,
+                                        height: 28.w,
                                         decoration: const BoxDecoration(
-                                          color: offWhiteClr,
                                           shape: BoxShape.circle,
-                                        ),
-                                        child: Image.asset(
-                                          'assets/images/Mask group.png',
-                                          width: 26.w,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                    ),
+                                      ClipOval(
+                                        child: SizedBox(
+                                          width: 26.w,
+                                          height: 26.w,
+                                          child: CachedNetworkImage(
+                                            imageUrl: items[index].photoPath ?? '',
+                                            fit: BoxFit.cover,
+                                            placeholder: (_, __) => Skeletonizer(
+                                              enabled: true,
+                                              child: Container(
+                                                width: 26.w,
+                                                height: 26.w,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            ),
+                                            errorWidget: (_, __, ___) => Container(
+                                              padding: EdgeInsets.all(4.w),
+                                              decoration: const BoxDecoration(
+                                                color: offWhiteClr,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Image.asset(
+                                                'assets/images/Mask group.png',
+                                                width: 26.w,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                horizontalSpace(10),
+                                Expanded(
+                                  child: TextUtils(
+                                    maxlines: 1,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                    text: items[index].name ?? '',
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                        ),
+                        TextUtils(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          text: '${items[index].tps ?? '0'}',
+                        ),
+                      ],
+                    ),
+                    verticalSpace(10),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
 
-                          horizontalSpace(10),
-
-                          Expanded(
-                            child: TextUtils(
-                              maxlines: 1,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              text: items[index].name ?? '',
-                            ),
-                          ),
-                        ],
-                      ),
+        // ✅ رسالة الاشتراك (تظهر فقط لو مش مشترك وفيه أكتر من 3)
+        if (!isSubscribed && items.length > 3)
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(color: const Color(0xFFA5731D), width: 1.5),
+            ),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.lock_outline,
+                  color: const Color(0xFFE4D48E),
+                  size: 32.w,
+                ),
+                verticalSpace(8),
+                TextUtils(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  text: 'اشترك لعرض الترتيب الكامل',
+                ),
+                verticalSpace(8),
+                ElevatedButton(
+                  onPressed: () {
+                    // ✅ الانتقال لصفحة الاشتراكات
+                    context.pushNamed(AppRoute.packagePayMentScreen); // غير الـ route حسب التطبيق
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFA5731D),
+                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
-
-                  TextUtils(
-                    fontSize: 10,
+                  child: TextUtils(
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
-                    text: '${items[index].tps ?? '0'}',
+                    text: 'اشترك الآن',
                   ),
-                ],
-              ),
-              verticalSpace(10),
-            ],
+                ),
+              ],
+            ),
           ),
-        );
-      },
+      ],
     );
   }
 }

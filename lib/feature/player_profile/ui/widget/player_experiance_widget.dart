@@ -50,8 +50,8 @@ class PlayerExperianceWidget extends StatelessWidget {
                       child: Container(
                         color: offWhiteClr,
                         padding: EdgeInsets.all(20.w),
-                        child: SvgPicture.asset(
-                          'assets/svgs/unavailabeImage.svg',
+                        child: Image.network(
+                          '${playerProfile.data.clubImage ?? ' '}',
                         ),
                       ),
                     ),

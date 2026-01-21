@@ -34,6 +34,12 @@ class Data {
   dynamic direction;
   dynamic height;
   dynamic weight;
+  dynamic clubImage;
+  dynamic bioHeight;
+  dynamic bioShoulderWidth;
+  dynamic bioArmLength;
+  dynamic bioAvgLegAngle;
+  dynamic isSubscribed;
   dynamic photo;
   dynamic gender;
   dynamic branchName;
@@ -53,6 +59,12 @@ class Data {
     required this.firstName,
     required this.lastName,
     required this.email,
+    required this.isSubscribed,
+    required this.clubImage,
+    required this.bioHeight,
+    required this.bioShoulderWidth,
+    required this.bioArmLength,
+    required this.bioAvgLegAngle,
     required this.phoneNumber,
     required this.birthDate,
     required this.direction,
@@ -76,6 +88,7 @@ class Data {
     userId: json["userId"],
     accountNumber: json["accountNumber"],
     firstName: json["firstName"],
+    isSubscribed: json["isSubscribed"] ?? false,
     lastName: json["lastName"],
     email: json["email"],
     phoneNumber: json["phoneNumber"],
@@ -85,6 +98,7 @@ class Data {
     weight: json["weight"],
     photo: json["photo"],
     gender: json["gender"],
+    clubImage: json["clubImage"],
     branchName: json["branchName"],
     branchId: json["branchId"],
     clubId: json["clubId"],
@@ -95,6 +109,10 @@ class Data {
     joinDate: json["joinDate"],
     position: json["position"],
     tps: json["tps"],
+    bioHeight: json["bioHeight"],
+    bioShoulderWidth: json["bioShoulderWidth"],
+    bioArmLength: json["bioArmLength"],
+    bioAvgLegAngle: json["bioAvgLegAngle"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -103,6 +121,7 @@ class Data {
     "firstName": firstName,
     "lastName": lastName,
     "email": email,
+    "isSubscribed": isSubscribed,
     "phoneNumber": phoneNumber,
     "birthDate": birthDate,
     "direction": direction,
@@ -115,6 +134,11 @@ class Data {
     "clubId": clubId,
     "clubName": clubName,
     "positionId": positionId,
+    "clubImage": clubImage,
+    "bioAvgLegAngle": bioAvgLegAngle,
+    "bioHeight": bioHeight,
+    "bioShoulderWidth": bioShoulderWidth,
+    "bioArmLength" : bioArmLength,
     "positionName": positionName,
     "clubJoinDate": clubJoinDate,
     "joinDate": joinDate,

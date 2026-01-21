@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../core/helpers/extensions.dart';
 import '../../../core/helpers/spacing.dart';
 import '../../../core/thems/thems.dart';
@@ -22,13 +23,7 @@ class MeasurementResultWidget extends StatelessWidget {
       padding: paddingUtils(),
       child: Column(
         children: [
-
-
-          // Analyzed image
-
-
-          verticalSpace(12),
-
+          /// ================= Image =================
           ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
             child: CachedNetworkImage(
@@ -51,100 +46,74 @@ class MeasurementResultWidget extends StatelessWidget {
 
           verticalSpace(20),
 
-          // Measurements card
+          /// ================= Measurements (Profile Style) =================
           Container(
+            width: context.displayWidth,
             padding: EdgeInsets.all(20.w),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  mainColor.withOpacity(0.1),
-                  mainColor.withOpacity(0.05),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(color: mainColor.withOpacity(0.3)),
+              color: whiteclr,
+              borderRadius: BorderRadius.circular(30.r),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'نتائج القياسات'.tr(),
+                  'قياسات اللاعب'.tr(),
                   style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: mainColor,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
                   ),
                 ),
-                verticalSpace(20),
-                _buildMeasurementRow(
-                  icon: Icons.height,
-                  label: 'الطول'.tr(),
-                  value: '${_formatValue(measurement.heightCm)} سم',
+
+                verticalSpace(15),
+
+                /// Row 1
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildMeasurementCard(
+                        label: 'الطول',
+                        value: _formatValue(measurement.heightCm),
+                        unit: 'سم',
+                      ),
+                    ),
+                    horizontalSpace(12),
+                    Expanded(
+                      child: _buildMeasurementCard(
+                        label: 'عرض الكتفين',
+                        value: _formatValue(measurement.shoulderWidthCm),
+                        unit: 'سم',
+                      ),
+                    ),
+                  ],
                 ),
+
                 verticalSpace(12),
-                _buildMeasurementRow(
-                  icon: Icons.accessibility,
-                  label: 'عرض الكتفين'.tr(),
-                  value: '${_formatValue(measurement.shoulderWidthCm)} سم',
-                ),
-                verticalSpace(12),
-                if (measurement.armLengthCm != null) ...[
-                  _buildMeasurementRow(
-                    icon: Icons.back_hand,
-                    label: 'طول الذراع'.tr(),
-                    value: '${_formatValue(measurement.armLengthCm)} سم',
-                  ),
-                  verticalSpace(12),
-                ],
-                _buildMeasurementRow(
-                  icon: Icons.compare_arrows,
-                  label: 'متوسط زاوية الساق'.tr(),
-                  value: '${_formatValue(measurement.avgLegAngle)}°',
+
+                /// Row 2
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildMeasurementCard(
+                        label: 'طول الذراع',
+                        value: _formatValue(measurement.armLengthCm),
+                        unit: 'سم',
+                      ),
+                    ),
+                    horizontalSpace(12),
+                    Expanded(
+                      child: _buildMeasurementCard(
+                        label: 'زاوية الساق',
+                        value: _formatValue(measurement.avgLegAngle),
+                        unit: '°',
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-
-          verticalSpace(20),
-
-          // Important note
-          // Container(
-          //   padding: EdgeInsets.all(16.w),
-          //   decoration: BoxDecoration(
-          //     color: Colors.orange.shade50,
-          //     borderRadius: BorderRadius.circular(12.r),
-          //     border: Border.all(color: Colors.orange.shade200),
-          //   ),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Row(
-          //         children: [
-          //           Icon(Icons.lightbulb_outline, color: Colors.orange.shade700, size: 20.sp),
-          //           horizontalSpace(8),
-          //           Text(
-          //             'ملاحظة هامة'.tr(),
-          //             style: TextStyle(
-          //               fontSize: 16.sp,
-          //               fontWeight: FontWeight.bold,
-          //               color: Colors.orange.shade900,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //       verticalSpace(8),
-          //       Text(
-          //         'بعض القياسات لم يتم استخراجها من الصورة. يرجى التأكد من جودة الصورة ووضعية اللاعب وإعادة المحاولة إذا لزم الأمر.'.tr(),
-          //         style: TextStyle(
-          //           fontSize: 13.sp,
-          //           color: Colors.orange.shade800,
-          //           height: 1.5,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
 
           verticalSpace(30),
         ],
@@ -152,57 +121,76 @@ class MeasurementResultWidget extends StatelessWidget {
     );
   }
 
-  String _formatValue(dynamic value) {
-    if (value == null) return '--';
-    if (value is num) {
-      return value.toStringAsFixed(1);
-    }
-    return value.toString();
-  }
-
-  Widget _buildMeasurementRow({
-    required IconData icon,
+  /// ================= Card (نفس البروفايل) =================
+  Widget _buildMeasurementCard({
     required String label,
     required String value,
+    required String unit,
   }) {
     return Container(
-      padding: EdgeInsets.all(14.w),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: mainColor.withOpacity(0.2)),
+        borderRadius: BorderRadius.circular(20.r),
+        gradient: LinearGradient(
+          colors: [
+            mainColor.withOpacity(0.05),
+            Colors.white,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
-      child: Row(
+      child: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(10.w),
-            decoration: BoxDecoration(
-              color: mainColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Icon(icon, color: mainColor, size: 24.sp),
-          ),
-          horizontalSpace(16),
-          Expanded(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade800,
-              ),
-            ),
-          ),
           Text(
-            value,
+            label.tr(),
             style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
-              color: mainColor,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
             ),
+          ),
+          verticalSpace(12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w800,
+                  color: mainColor,
+                ),
+              ),
+              horizontalSpace(4),
+              Padding(
+                padding: EdgeInsets.only(bottom: 3.h),
+                child: Text(
+                  unit,
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
+  }
+
+  /// ================= Formatter =================
+  String _formatValue(dynamic value) {
+    if (value == null || value.toString() == 'null') {
+      return '--';
+    }
+    if (value is num) {
+      return value.toStringAsFixed(2);
+    }
+    return value.toString();
   }
 }
