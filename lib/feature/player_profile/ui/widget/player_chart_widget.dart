@@ -4,23 +4,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PlayerRadarChart extends StatelessWidget {
-  final double speed;
-  final double strength;
-  final double ballControl;
-  final double tackling;
-  final double dribbling;
+  final Map<String, double> incomingSkills; // المهارات القادمة من الباك إند
+  final bool isSubscribed;
 
   const PlayerRadarChart({
     super.key,
-    required this.speed,
-    required this.strength,
-    required this.ballControl,
-    required this.tackling,
-    required this.dribbling,
+    required this.incomingSkills,
+    required this.isSubscribed,
   });
 
   @override
   Widget build(BuildContext context) {
+    // ترتيب المهارات في الرادار (5 مهارات)
+    List<Map<String, dynamic>> radarSkills = [
+      {'name': 'السرعة', 'value': 0.0, 'key': 'السرعة'},
+      {'name': 'المرونة', 'value': 0.0, 'key': 'المرونة'},
+      {'name': 'القوة', 'value': 0.0, 'key': 'القوة'}, // الباك إند يرسل "المرونة"
+      {'name': 'المراوغة', 'value': 0.0, 'key': 'المراوغة '}, // الباك إند يرسل "التحكم بالكرة"
+      {'name': 'التحكم بالكرة', 'value': 0.0, 'key': 'التحكم بالكرة'},
+    ];
+
+    // تعبئة القيم من المهارات القادمة
+    for (var radarSkill in radarSkills) {
+      String backendKey = radarSkill['key'];
+
+      // البحث عن القيمة في incomingSkills
+      if (incomingSkills.containsKey(backendKey)) {
+        double value = incomingSkills[backendKey]!;
+        // تحويل القيمة إلى مقياس 0-10
+        radarSkill['value'] = _normalizeValue(value);
+      }
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: RadarChart(
@@ -38,13 +53,9 @@ class PlayerRadarChart extends StatelessWidget {
               borderColor: Colors.white,
               borderWidth: 2,
               entryRadius: 4,
-              dataEntries: [
-                RadarEntry(value: speed),
-                RadarEntry(value: strength),
-                RadarEntry(value: dribbling),
-                RadarEntry(value: ballControl),
-                RadarEntry(value: tackling),
-              ],
+              dataEntries: radarSkills
+                  .map((skill) => RadarEntry(value: skill['value']))
+                  .toList(),
             ),
           ],
 
@@ -55,26 +66,41 @@ class PlayerRadarChart extends StatelessWidget {
             letterSpacing: -0.30,
           ),
           getTitle: (index, angle) {
-            switch (index) {
-              case 0:
-                return RadarChartTitle(text: "السرعة\n$speed", angle: 0);
-              case 1:
-                return RadarChartTitle(text: "القوة\n$strength", angle: 0);
-              case 2:
-                return RadarChartTitle(text: "المرونة\n$dribbling", angle: 0);
-              case 3:
-                return RadarChartTitle(text: "التدخل\n$tackling", angle: 0);
-              case 4:
-                return RadarChartTitle(
-                  text: "التحكم بالكرة\n$ballControl",
-                  angle: 0,
-                );
-              default:
-                return const RadarChartTitle(text: "");
+            if (index >= radarSkills.length) {
+              return const RadarChartTitle(text: "");
+            }
+
+            var skill = radarSkills[index];
+            String skillName = skill['name'];
+            double value = skill['value'];
+            String backendKey = skill['key'];
+
+            // التحقق إذا كانت المهارة موجودة في البيانات القادمة
+            bool skillExists = incomingSkills.containsKey(backendKey);
+
+            // إذا كان المستخدم غير مشترك والمهارة غير موجودة → قفل
+            // إذا كانت المهارة موجودة → عرض القيمة حتى لو 0
+            if (!isSubscribed && !skillExists) {
+              return RadarChartTitle(text: "$skillName\n🔒", angle: 0);
+            } else {
+              return RadarChartTitle(
+                text: "$skillName\n${value.toStringAsFixed(1)}",
+                angle: 0,
+              );
             }
           },
         ),
       ),
     );
+  }
+
+  // تحويل القيمة إلى مقياس 0-10
+  double _normalizeValue(double value) {
+    if (value >= 0 && value <= 1) {
+      value = value * 10;
+    }
+    if (value > 10) return 10.0;
+    if (value < 0) return 0.0;
+    return value;
   }
 }

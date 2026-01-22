@@ -11,7 +11,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../../../core/routing/routes.dart';
 import '../../../main_screen/data/model/my_profile_model.dart';
 import '../../../player_profile/ui/widget/player_about_me_widget.dart';
 import '../../../player_profile/ui/widget/player_chart_widget.dart';
@@ -21,6 +23,7 @@ import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
 import '../widget/player_measurements_widget.dart'; // تأكد من الاستيراد
 import '../widget/player_videos_widget.dart';
+import '../widget/simple_radar_chart.dart';
 
 class PlayerProfileScreen extends StatefulWidget {
   const PlayerProfileScreen({
@@ -74,7 +77,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   Widget _buildMainContent() {
     return BlocBuilder<MainCubit, MainState>(
       buildWhen: (previous, current) =>
-      current is playerProfileLoading ||
+          current is playerProfileLoading ||
           current is playerProfileSuccess ||
           current is playerProfileError,
       builder: (context, state) {
@@ -143,7 +146,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   Widget _buildSkillsChartSection() {
     return BlocBuilder<MainCubit, MainState>(
       buildWhen: (previous, current) =>
-      current is playerSkillsLoading ||
+          current is playerSkillsLoading ||
           current is playerSkillsSuccess ||
           current is playerSkillsError,
       builder: (context, state) {
@@ -165,47 +168,112 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   }
 
   Widget _buildRadarChartWithData(List<Skill> skills) {
-    Map<String, double> skillValues = {
-      'السرعة': 0.0,
-      'القوة': 0.0,
-      'التحكم': 0.0,
-      'الالتحام': 0.0,
-      'المراوغة': 0.0,
-    };
+    log('📊 عدد المهارات المستلمة: ${skills.length}');
 
+    // خريطة المهارات القادمة من الباك إند
+    Map<String, double> incomingSkills = {};
     for (var skill in skills) {
-      if (skillValues.containsKey(skill.skillName)) {
-        skillValues[skill.skillName] = skill.score;
-        log('📊 Updated ${skill.skillName}: ${skill.score}');
-      } else {
-        log('⚠️ Unknown skill: ${skill.skillName}');
-      }
+      incomingSkills[skill.skillName] = skill.score;
     }
 
+    log('🎯 المهارات القادمة: $incomingSkills');
+
+    // تحديد حالة الاشتراك (بناءً على عدد المهارات)
+    bool isSubscribed = skills.length >= 5;
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center, // تغيير إلى center
       children: [
-        verticalSpace(20),
-        SizedBox(
-          width: 300.w,
-          height: 350.w,
-          child: Align(
-            alignment: AlignmentGeometry.center,
-            child: SizedBox(
-              width: 300.w,
-              height: 350.w,
-              child: PlayerRadarChart(
-                speed: skillValues['السرعة']!,
-                strength: skillValues['القوة']!,
-                ballControl: skillValues['التحكم']!,
-                tackling: skillValues['الالتحام']!,
-                dribbling: skillValues['المراوغة']!,
-              ),
+        verticalSpace(10),
+        // الرادار في النصف
+        Center(
+          child: SizedBox(
+            width: 220.w, // حجم مناسب للنصف
+            height: 220.w,
+            child: PlayerRadarChart(
+              incomingSkills: incomingSkills,
+              isSubscribed: isSubscribed,
             ),
           ),
         ),
         verticalSpace(10),
+        // رسالة الترقي مبسطة
+
+        
       ],
+    );
+  }
+
+  // Widget _buildSimpleSubscribeMessage(BuildContext context, int skillsCount) {
+  //   return Container(
+  //     margin: EdgeInsets.symmetric(horizontal: 40.w),
+  //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+  //     decoration: BoxDecoration(
+  //       color: Colors.white.withOpacity(0.08),
+  //       borderRadius: BorderRadius.circular(20.r),
+  //       border: Border.all(color: Colors.white.withOpacity(0.3)),
+  //     ),
+  //     child: Row(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: [
+  //         Icon(Icons.lock_outline, color: Colors.white, size: 16.w),
+  //         horizontalSpace(8),
+  //         Flexible(
+  //           child: Text(
+  //             '${skillsCount}/5 مهارات متاحة - اشترك الآن',
+  //             style: TextStyle(
+  //               color: Colors.white,
+  //               fontSize: 12.sp,
+  //               fontWeight: FontWeight.w600,
+  //             ),
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ),
+  //         horizontalSpace(8),
+  //         GestureDetector(
+  //           onTap: () {
+  //             context.pushNamed(AppRoute.packageScreen);
+  //           },
+  //           child: Container(
+  //             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+  //             decoration: BoxDecoration(
+  //               color: mainColor,
+  //               borderRadius: BorderRadius.circular(8.r),
+  //             ),
+  //             child: Text(
+  //               'اشترك',
+  //               style: TextStyle(
+  //                 color: Colors.white,
+  //                 fontSize: 11.sp,
+  //                 fontWeight: FontWeight.w700,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget _buildFeatureItem(String text) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 6.h),
+      child: Row(
+        children: [
+          Icon(Icons.check_circle, color: mainColor, size: 18.w),
+          horizontalSpace(10),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

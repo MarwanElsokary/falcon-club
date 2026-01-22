@@ -10,6 +10,7 @@ class ExperianceDataWidget extends StatelessWidget {
     required this.title,
     required this.cat,
   });
+
   final String title;
   final String cat;
 
@@ -18,7 +19,7 @@ class ExperianceDataWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset('assets/svgs/cil_balance-scale.svg'),
+        SvgPicture.asset('assets/svgs/Training_un_select.svg',color: Colors.white,),
         verticalSpace(10),
         TextUtils(
           fontSize: 16,

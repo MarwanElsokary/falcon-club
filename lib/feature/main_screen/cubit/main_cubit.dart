@@ -62,13 +62,7 @@ class MainCubit extends Cubit<MainState> {
   }
 
   Future<void> emitSkills({required String userId}) async {
-    log('🚀 emitSkills called');
-
-    // إذا كنا بالفعل في حالة نجاح، لا نحتاج لإعادة جلب البيانات
-    if (state is playerSkillsSuccess) {
-      log('⚠️ Skills already loaded, skipping');
-      return;
-    }
+    log('🚀 جلب المهارات للمستخدم: $userId');
 
     emit(const MainState.playerSkillsloading());
 
@@ -76,75 +70,24 @@ class MainCubit extends Cubit<MainState> {
 
     response.when(
       success: (apiSkills) {
-        log('🎉 Raw skills from API: ${apiSkills.length}');
+        log('🎉 المهارات الخام من API: ${apiSkills.length}');
 
-        // تحويل مهارات API إلى المهارات المطلوبة للرادار تشارت
-        final skillsForChart = _convertApiSkillsToChartSkills(apiSkills);
-
-        log('🎉 Converted skills for chart: ${skillsForChart.length}');
-        for (var skill in skillsForChart) {
-          log('   - ${skill.skillName}: ${skill.score}');
-        }
-
-        emit(MainState.playerSkillssuccess(skillsForChart));
+        // فقط استخدم البيانات كما هي بدون أي تحويل
+        emit(MainState.playerSkillssuccess(apiSkills));
       },
       failure: (error) {
-        log('💥 Skills error: ${error.apiErrorModel.message}');
+        log('💥 خطأ في جلب المهارات: ${error.apiErrorModel.message}');
 
-        // في حالة الخطأ، استخدم مهارات افتراضية
-        final defaultSkills = _getDefaultSkills();
-        log('🔄 Using default skills due to error');
-        emit(MainState.playerSkillssuccess(defaultSkills));
+        // في حالة الخطأ، استخدم قائمة فارغة
+        emit(MainState.playerSkillssuccess([]));
       },
     );
   }
 
-  // دالة لتحويل مهارات API إلى المهارات المطلوبة
-  List<Skill> _convertApiSkillsToChartSkills(List<Skill> apiSkills) {
-    // قيم افتراضية لجميع المهارات (ليست صفراً لتظهر بشكل أفضل)
-    final skillsMap = {
-      'السرعة': 0.0,
-      'القوة': 0.0,
-      'المرونه': 0.0,
-      'التحكم': 0.0,
-      'الالتحام': 0.0,
-    };
-
-    // تحديث القيم من API
-    for (var apiSkill in apiSkills) {
-      if (apiSkill.skillName == 'القوة') {
-        skillsMap['القوة'] = apiSkill.score;
-        log('🎯 Found القوة: ${apiSkill.score}');
-      } else if (apiSkill.skillName == 'المرونة') {
-        skillsMap['المراوغة'] = apiSkill.score;
-        log('🎯 Found المرونة : ${apiSkill.score}');
-      } else if (skillsMap.containsKey(apiSkill.skillName)) {
-        skillsMap[apiSkill.skillName] = apiSkill.score;
-        log('🎯 Updated ${apiSkill.skillName}: ${apiSkill.score}');
-      }
-    }
-
-    final skillsList = skillsMap.entries.map((entry) {
-      return Skill(skillName: entry.key, score: entry.value);
-    }).toList();
-
-    for (var skill in skillsList) {
-      log('   - ${skill.skillName}: ${skill.score}');
-    }
-
-    return skillsList;
-  }
-
-  // دالة للحصول على مهارات افتراضية
-  List<Skill> _getDefaultSkills() {
-    return [
-      Skill(skillName: 'السرعة', score: 0.0),
-      Skill(skillName: 'القوة', score: 0.0),
-      Skill(skillName: 'المرونه', score: 0.0),
-      Skill(skillName: 'التحكم', score: 0.0),
-      Skill(skillName: 'الالتحام', score: 0.0),
-    ];
-  }
+// احذف الدوال التالية تماماً:
+// 1. _convertApiSkillsToChartSkills
+// 2. _getDefaultSkills
+// 3. أي كود آخر يضيف مهارات إضافية
 
   // MARK: - categories
   void emitCategories() async {

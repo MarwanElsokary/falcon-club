@@ -207,7 +207,7 @@ class AllTrainingWidget extends StatelessWidget {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.black54,
-                                                text: '${exercise.bookings} حجز',
+                                                text: '${exercise.bookings} اشتراك',
                                               ),
                                             ],
                                           ),

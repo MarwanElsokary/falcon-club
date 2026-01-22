@@ -42,7 +42,7 @@ class HomeAppBarWidget extends StatelessWidget {
                             fontSize: 10,
                             fontWeight: FontWeight.w700,
                             color: blackclr,
-                            text: 'صباح الخير'.tr(),
+                            text: 'حياك الله'.tr(),
                           ),
                           verticalSpace(1),
                           BlocBuilder<MainCubit, MainState>(

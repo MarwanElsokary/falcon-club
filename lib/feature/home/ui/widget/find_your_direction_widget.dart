@@ -45,7 +45,7 @@ class FindYourDirectionWidget extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       color: Colors.black,
-                      text: 'أهم تجارب الأنديةالرياضية'.tr(),
+                      text: 'أهم تجارب الأندية الرياضية'.tr(),
                     ),
                   ),
                 ],

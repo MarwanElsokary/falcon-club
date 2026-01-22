@@ -28,6 +28,7 @@ class Data {
   dynamic accountNumber;
   dynamic firstName;
   dynamic lastName;
+  dynamic remainingSubscriptionDays;
   dynamic email;
   dynamic phoneNumber;
   dynamic birthDate;
@@ -79,6 +80,7 @@ class Data {
     required this.clubId,
     required this.clubName,
     required this.positionId,
+    required this.remainingSubscriptionDays,
     required this.positionName,
     required this.clubJoinDate,
     required this.joinDate,
@@ -109,6 +111,7 @@ class Data {
     positionId: json["positionId"],
     positionName: json["positionName"],
     clubJoinDate: json["clubJoinDate"],
+    remainingSubscriptionDays: json["remainingSubscriptionDays"],
     joinDate: json["joinDate"],
     position: json["position"],
     tps: json["tps"],
@@ -123,6 +126,7 @@ class Data {
     "accountNumber": accountNumber,
     "firstName": firstName,
     "lastName": lastName,
+    "remainingSubscriptionDays": remainingSubscriptionDays,
     "email": email,
     "isCompleted": isCompleted,
     "isSubscribed": isSubscribed,
