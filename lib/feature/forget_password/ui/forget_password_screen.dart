@@ -118,8 +118,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         validator: (v) {
                           if (v == null || v.isEmpty) {
                             return 'من فضلك تأكد من ادخال رقم الهاتف'.tr();
-                          } else if (v.length != 11) {
-                            return 'رقم الهاتف يجب أن يكون 11 أرقام'.tr();
+                          } else if (v.length != 9) {
+                            return 'رقم الهاتف يجب أن يكون 9 أرقام'.tr();
                           } else if (!v.startsWith('')) {
                             return 'رقم الهاتف يجب أن يبدأ بـ 5'.tr();
                           }
@@ -127,9 +127,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         },
                         textInputType: TextInputType.phone,
                         hintText: "",
-                        maxLength: 11,
+                        maxLength: 9,
                         onChanged: (value) {
-                          if (value.length == 11) {
+                          if (value.length == 9) {
                             cubit.changeButtonStatus(true);
                           } else {
                             cubit.changeButtonStatus(false);
@@ -169,7 +169,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               }
                             },
                             colorstext: Colors.white,
-                            background: cubit.phoneController.text.length == 11
+                            background: cubit.phoneController.text.length == 9
                                 ? mainColor
                                 : Colors.grey[400]!,
                           ),

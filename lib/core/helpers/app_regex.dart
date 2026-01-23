@@ -6,12 +6,16 @@ class AppRegex {
 
   static bool isPasswordValid(String password) {
     return RegExp(
-            r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
+        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
         .hasMatch(password);
   }
 
-    static bool isPhoneNumberValid(String phoneNumber) {
-    return RegExp(r'^(010|011|012|015)[0-9]{8}$').hasMatch(phoneNumber);
+  static bool isPhoneNumberValid(String phoneNumber) {
+    // ✅ قبول الأرقام السعودية فقط
+    // الصيغ المقبولة:
+    // 1. 05XXXXXXXX (10 أرقام)
+    // 2. 5XXXXXXXX (9 أرقام)
+    return RegExp(r'^(05|5)[0-9]{8}$').hasMatch(phoneNumber);
   }
 
   static bool hasLowerCase(String password) {

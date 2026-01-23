@@ -1,4 +1,3 @@
-// في نفس الملف signup_button_widget.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/di/dependency_injection.dart';
 import 'package:falcon/core/widget/showSuccesSnackBar.dart';
@@ -19,8 +18,6 @@ import '../../../../core/widget/padding_nav_bar.dart';
 import '../../../../core/widget/slide_enimation_widget.dart';
 import '../../../login/cubit/login_cubit.dart';
 import '../../../login/cubit/login_state.dart';
-
-// استيراد الشاشة المعدلة مع التنقل
 
 class SignupButtonWidget extends StatelessWidget {
   const SignupButtonWidget({super.key, required this.update});
@@ -106,7 +103,6 @@ class SignupButtonWidget extends StatelessWidget {
                     visible: !update,
                     child: InkWell(
                       onTap: () {
-                        // to login screen
                         context.pushNamed(AppRoute.loginScreen);
                       },
                       child: Text.rich(

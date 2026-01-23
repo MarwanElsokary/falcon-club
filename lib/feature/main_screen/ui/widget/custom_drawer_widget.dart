@@ -46,7 +46,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // في ملف custom_drawer.dart
-// ابحث عن List itemData واضف العنصر ده بعد التدريبات وقبل سياسة الخصوصية:
+    // ابحث عن List itemData واضف العنصر ده بعد التدريبات وقبل سياسة الخصوصية:
 
     List itemData = [
       {
@@ -142,7 +142,7 @@ class CustomDrawer extends StatelessWidget {
           context.pop();
           showLogoutDialog(
             context,
-                () {
+            () {
               context.pushNamedAndRemoveUntil(
                 AppRoute.loginScreen,
                 predicate: (route) => false,
@@ -161,7 +161,7 @@ class CustomDrawer extends StatelessWidget {
           context.pop();
           showLogoutDialog(
             context,
-                () {
+            () {
               context.pushNamedAndRemoveUntil(
                 AppRoute.loginScreen,
                 predicate: (route) => false,
@@ -201,21 +201,20 @@ class CustomDrawer extends StatelessWidget {
                       BlocBuilder<MainCubit, MainState>(
                         builder: (context, state) {
                           final profile = CacheHelper.getmyProfile();
-                          final isSubscribed = profile?.data.isSubscribed == true;
-                          final remainingDays = profile?.data.remainingSubscriptionDays;
-                          final subscriptionText = _getSubscriptionStatusText(isSubscribed, remainingDays);
+                          final isSubscribed =
+                              profile?.data.isSubscribed == true;
+                          final remainingDays =
+                              profile?.data.remainingSubscriptionDays;
+                          final subscriptionText = _getSubscriptionStatusText(
+                            isSubscribed,
+                            remainingDays,
+                          );
 
                           return InkWell(
                             onTap: () {
                               context.pushNamed(
+                                AppRoute.packageScreen,
 
-                                AppRoute.playerProfile,
-                                arguments: {
-                                  'isMyProfile': true,
-                                  'playerId': CacheHelper.getmyProfile() == null
-                                      ? ''
-                                      : CacheHelper.getmyProfile()!.data.userId,
-                                },
                               );
                             },
                             child: Padding(
@@ -227,18 +226,19 @@ class CustomDrawer extends StatelessWidget {
                                     onTap: () {
                                       showPhotoDialog(
                                         context: context,
-                                        image: CacheHelper.getmyProfile() == null
+                                        image:
+                                            CacheHelper.getmyProfile() == null
                                             ? ''
                                             : CacheHelper.getmyProfile()!
-                                            .data
-                                            .photo ??
-                                            '',
+                                                      .data
+                                                      .photo ??
+                                                  '',
                                         name: CacheHelper.getmyProfile() == null
                                             ? ''
                                             : CacheHelper.getmyProfile()!
-                                            .data
-                                            .firstName ??
-                                            '',
+                                                      .data
+                                                      .firstName ??
+                                                  '',
                                       );
                                     },
                                     child: Container(
@@ -255,12 +255,13 @@ class CustomDrawer extends StatelessWidget {
                                           height: 48.w,
                                           child: CachedNetworkImage(
                                             imageUrl:
-                                            CacheHelper.getmyProfile() == null
+                                                CacheHelper.getmyProfile() ==
+                                                    null
                                                 ? ''
                                                 : CacheHelper.getmyProfile()!
-                                                .data
-                                                .photo ??
-                                                '',
+                                                          .data
+                                                          .photo ??
+                                                      '',
                                             fit: BoxFit.cover,
                                             placeholder: (context, url) =>
                                                 Skeletonizer(
@@ -269,17 +270,23 @@ class CustomDrawer extends StatelessWidget {
                                                     height: 48.w,
                                                     width: 48.w,
                                                     decoration:
-                                                    const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
+                                                        const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
                                                   ),
                                                 ),
-                                            errorWidget: (context, url, error) =>
-                                                Container(
+                                            errorWidget:
+                                                (
+                                                  context,
+                                                  url,
+                                                  error,
+                                                ) => Container(
                                                   padding: EdgeInsets.all(12.w),
-                                                  decoration: const BoxDecoration(
-                                                    color: offWhiteClr,
-                                                  ),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                        color: offWhiteClr,
+                                                      ),
                                                   child: Image.asset(
                                                     'assets/images/Mask group.png',
                                                     width: 48.w,
@@ -294,8 +301,9 @@ class CustomDrawer extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         TextUtils(
                                           maxlines: 1,
@@ -303,7 +311,7 @@ class CustomDrawer extends StatelessWidget {
                                           fontWeight: FontWeight.w700,
                                           color: Colors.white,
                                           text:
-                                          'هلا ${CacheHelper.getmyProfile() == null ? '' : CacheHelper.getmyProfile()!.data.firstName ?? ''}!',
+                                              'هلا ${CacheHelper.getmyProfile() == null ? '' : CacheHelper.getmyProfile()!.data.firstName ?? ''}!',
                                         ),
                                         verticalSpace(3),
                                         TextUtils(
@@ -311,12 +319,13 @@ class CustomDrawer extends StatelessWidget {
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.white,
-                                          text: CacheHelper.getmyProfile() == null
+                                          text:
+                                              CacheHelper.getmyProfile() == null
                                               ? ''
                                               : CacheHelper.getmyProfile()!
-                                              .data
-                                              .positionName ??
-                                              '',
+                                                        .data
+                                                        .positionName ??
+                                                    '',
                                         ),
                                         verticalSpace(3),
 
@@ -329,7 +338,8 @@ class CustomDrawer extends StatelessWidget {
                                             ),
                                             decoration: BoxDecoration(
                                               color: redClr.withOpacity(0.1),
-                                              borderRadius: BorderRadius.circular(8.r),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
                                               border: Border.all(
                                                 color: redClr.withOpacity(0.3),
                                                 width: 1.w,
@@ -363,10 +373,15 @@ class CustomDrawer extends StatelessWidget {
                                               vertical: 4.h,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: Colors.green.withOpacity(0.1),
-                                              borderRadius: BorderRadius.circular(8.r),
+                                              color: Colors.green.withOpacity(
+                                                0.1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
                                               border: Border.all(
-                                                color: Colors.green.withOpacity(0.3),
+                                                color: Colors.green.withOpacity(
+                                                  0.3,
+                                                ),
                                                 width: 1.w,
                                               ),
                                             ),
@@ -461,8 +476,8 @@ class CustomDrawer extends StatelessWidget {
                                       width: itemData[index]['width'],
 
                                       color:
-                                      itemData[index]['title'] ==
-                                          'حذف الحساب'.tr()
+                                          itemData[index]['title'] ==
+                                              'حذف الحساب'.tr()
                                           ? redClr
                                           : Colors.white,
                                     ),
@@ -472,8 +487,8 @@ class CustomDrawer extends StatelessWidget {
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
                                         color:
-                                        itemData[index]['title'] ==
-                                            'حذف الحساب'.tr()
+                                            itemData[index]['title'] ==
+                                                'حذف الحساب'.tr()
                                             ? redClr
                                             : Colors.white,
                                         text: itemData[index]['title'],

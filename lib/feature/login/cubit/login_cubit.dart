@@ -32,8 +32,8 @@ class LoginCubit extends Cubit<LoginState> {
   ValueNotifier<String> positionName = ValueNotifier('');
 
   // Auth state
-  int maxLength = 11;
-  String codeCountry = '+2';
+  int maxLength = 9;
+  String codeCountry = '+966';
   bool isAvailable = false;
 
   // Profile data
