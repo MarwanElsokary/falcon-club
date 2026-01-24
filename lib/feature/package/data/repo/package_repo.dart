@@ -27,4 +27,15 @@ class PackageRepo {
       return ApiResult.failure(ErrorHandler.handle(errro));
     }
   }
+
+  // دالة جديدة للتحقق من حالة الدفع بعد الـ verification
+  Future<ApiResult> verifyPaymentStatus({required int packageId}) async {
+    try {
+      // استبدل هذا بالـ endpoint الصحيح من الباك اند
+      final response = await _apiService.verifyPayment(packageId);
+      return ApiResult.success(response);
+    } catch (errro) {
+      return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
 }

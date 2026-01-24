@@ -8,6 +8,7 @@ class ApiConstants {
   //auth
   //login
   static const String login = "Account/Login";
+  static const String verifypay = "'Payment/VerifyPayment'";
 
   //Payment/CreatePayment
   static const String payPackage = "Payment/CreatePayment";

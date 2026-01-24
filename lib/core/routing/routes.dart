@@ -10,6 +10,8 @@ class AppRoute {
   static const String measurementResultScreen = '/measurementResultScreen';
   static const String lastMeasurementAttemptScreen = '/lastMeasurementAttemptScreen';
   static const String measurementScreen = '/measurementScreen';
+  static const String paymentVerificationScreen = '/paymentVerificationScreen';
+
 
   //welcomeScreen
   static const String resetPasswordScreen = '/resetPassword';

@@ -16,6 +16,7 @@ class PackageCubit extends Cubit<PackageState> {
   List<PackageModel> packageList = [];
   //
 
+
   // MARK: -allPackagesState
   void emitAllPackagesState() async {
     emit(const PackageState.packageloading());
@@ -37,30 +38,50 @@ class PackageCubit extends Cubit<PackageState> {
     );
   }
 
-  // MARK: -allPackagesState
-  void emitpayPackageStates({required int packageId}) async {
+  Future<void> emitpayPackageStates({required int packageId}) async {
     emit(const PackageState.payPackageloading());
-    final response = await _repo.payPackage(
+
+    final result = await _repo.payPackage(
       payPackageBody: {
-        "packageId": packageId,
-        "cardName": controller.cardName.text,
-        "cardNumber": controller.cardNumber.text,
-        "expiryMonth": controller.expireData.text.toString().substring(0, 2),
-        "expiryYear": controller.expireData.text.toString().substring(3),
-        "cvv": controller.cvv.text,
+        'packageId': packageId,
+        'cardName': controller.cardName.text,
+        'cardNumber': controller.cardNumber.text,
+        'expiryMonth': controller.expireData.text.split('/')[0],
+        'expiryYear': controller.expireData.text.split('/')[1],
+        'cvv': controller.cvv.text,
       },
     );
-    response.when(
-      success: (loginResponse) async {
-        emit(PackageState.payPackagesuccess());
+
+    result.when(
+      success: (data) {
+        // أرسل الـ response كامل
+        emit(PackageState.payPackagesuccess(response: data));
       },
       failure: (error) {
-        emit(
-          PackageState.payPackageerror(
-            error: error.apiErrorModel.message ?? '',
-          ),
-        );
+        emit(PackageState.payPackageerror(error: error.apiErrorModel.message ?? 'حدث خطأ'));
       },
     );
   }
+
+// دالة جديدة للتحقق من الدفع بعد الـ verification
+  Future<void> verifyPayment({required int packageId}) async {
+    // اعمل API call للتحقق من نجاح الدفع
+    final result = await _repo.verifyPaymentStatus(packageId: packageId);
+
+    result.when(
+      success: (data) {
+        if (data['success'] == true) {
+          // الدفع نجح
+          return;
+        } else {
+          throw Exception('Payment verification failed');
+        }
+      },
+      failure: (error) {
+        throw Exception(error.apiErrorModel.message ?? 'فشل التحقق من الدفع');
+      },
+    );
+  }
+
+
 }

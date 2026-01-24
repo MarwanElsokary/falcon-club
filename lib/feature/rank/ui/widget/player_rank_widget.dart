@@ -93,28 +93,22 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
               },
             ),
           ),
-
           // رسالة الاشتراك في المنتصف
           SingleChildScrollView(
-            child: Expanded(
-              flex: 1,
-              child: _buildSubscribeMessage(context),
-            ),
+            child: _buildSubscribeMessage(context),
           ),
         ],
       );
     }
 
     // ✅ إذا كان المستخدم مشتركاً، نعرض كل العناصر
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: displayCount,
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        itemBuilder: (context, index) {
-          return _buildPlayerItem(items, index);
-        },
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: displayCount,
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      itemBuilder: (context, index) {
+        return _buildPlayerItem(items, index);
+      },
     );
   }
 

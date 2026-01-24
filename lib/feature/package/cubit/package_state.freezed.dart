@@ -24,7 +24,7 @@ mixin _$PackageState {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -34,7 +34,7 @@ mixin _$PackageState {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,7 +44,7 @@ mixin _$PackageState {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -151,7 +151,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) {
     return initial();
@@ -165,7 +165,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) {
     return initial?.call();
@@ -179,7 +179,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) {
@@ -288,7 +288,7 @@ class _$packageLoadingImpl implements packageLoading {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) {
     return packageloading();
@@ -302,7 +302,7 @@ class _$packageLoadingImpl implements packageLoading {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) {
     return packageloading?.call();
@@ -316,7 +316,7 @@ class _$packageLoadingImpl implements packageLoading {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) {
@@ -425,7 +425,7 @@ class _$packageSuccessImpl implements packageSuccess {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) {
     return packagesuccess();
@@ -439,7 +439,7 @@ class _$packageSuccessImpl implements packageSuccess {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) {
     return packagesuccess?.call();
@@ -453,7 +453,7 @@ class _$packageSuccessImpl implements packageSuccess {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) {
@@ -589,7 +589,7 @@ class _$packageErrorImpl implements packageError {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) {
     return packageerror(error);
@@ -603,7 +603,7 @@ class _$packageErrorImpl implements packageError {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) {
     return packageerror?.call(error);
@@ -617,7 +617,7 @@ class _$packageErrorImpl implements packageError {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) {
@@ -735,7 +735,7 @@ class _$payPackageLoadingImpl implements payPackageLoading {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) {
     return payPackageloading();
@@ -749,7 +749,7 @@ class _$payPackageLoadingImpl implements payPackageLoading {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) {
     return payPackageloading?.call();
@@ -763,7 +763,7 @@ class _$payPackageLoadingImpl implements payPackageLoading {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) {
@@ -830,6 +830,8 @@ abstract class _$$payPackageSuccessImplCopyWith<$Res> {
     _$payPackageSuccessImpl value,
     $Res Function(_$payPackageSuccessImpl) then,
   ) = __$$payPackageSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Map<String, dynamic> response});
 }
 
 /// @nodoc
@@ -843,26 +845,61 @@ class __$$payPackageSuccessImplCopyWithImpl<$Res>
 
   /// Create a copy of PackageState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? response = null}) {
+    return _then(
+      _$payPackageSuccessImpl(
+        response: null == response
+            ? _value._response
+            : response // ignore: cast_nullable_to_non_nullable
+                  as Map<String, dynamic>,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
 class _$payPackageSuccessImpl implements payPackageSuccess {
-  const _$payPackageSuccessImpl();
+  const _$payPackageSuccessImpl({required final Map<String, dynamic> response})
+    : _response = response;
+
+  final Map<String, dynamic> _response;
+  @override
+  Map<String, dynamic> get response {
+    if (_response is EqualUnmodifiableMapView) return _response;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_response);
+  }
 
   @override
   String toString() {
-    return 'PackageState.payPackagesuccess()';
+    return 'PackageState.payPackagesuccess(response: $response)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$payPackageSuccessImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$payPackageSuccessImpl &&
+            const DeepCollectionEquality().equals(other._response, _response));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_response));
+
+  /// Create a copy of PackageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$payPackageSuccessImplCopyWith<_$payPackageSuccessImpl> get copyWith =>
+      __$$payPackageSuccessImplCopyWithImpl<_$payPackageSuccessImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -872,10 +909,10 @@ class _$payPackageSuccessImpl implements payPackageSuccess {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) {
-    return payPackagesuccess();
+    return payPackagesuccess(response);
   }
 
   @override
@@ -886,10 +923,10 @@ class _$payPackageSuccessImpl implements payPackageSuccess {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) {
-    return payPackagesuccess?.call();
+    return payPackagesuccess?.call(response);
   }
 
   @override
@@ -900,12 +937,12 @@ class _$payPackageSuccessImpl implements payPackageSuccess {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) {
     if (payPackagesuccess != null) {
-      return payPackagesuccess();
+      return payPackagesuccess(response);
     }
     return orElse();
   }
@@ -958,7 +995,17 @@ class _$payPackageSuccessImpl implements payPackageSuccess {
 }
 
 abstract class payPackageSuccess implements PackageState {
-  const factory payPackageSuccess() = _$payPackageSuccessImpl;
+  const factory payPackageSuccess({
+    required final Map<String, dynamic> response,
+  }) = _$payPackageSuccessImpl;
+
+  Map<String, dynamic> get response;
+
+  /// Create a copy of PackageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$payPackageSuccessImplCopyWith<_$payPackageSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1039,7 +1086,7 @@ class _$payPackageErrorImpl implements payPackageError {
     required TResult Function() packagesuccess,
     required TResult Function(String error) packageerror,
     required TResult Function() payPackageloading,
-    required TResult Function() payPackagesuccess,
+    required TResult Function(Map<String, dynamic> response) payPackagesuccess,
     required TResult Function(String error) payPackageerror,
   }) {
     return payPackageerror(error);
@@ -1053,7 +1100,7 @@ class _$payPackageErrorImpl implements payPackageError {
     TResult? Function()? packagesuccess,
     TResult? Function(String error)? packageerror,
     TResult? Function()? payPackageloading,
-    TResult? Function()? payPackagesuccess,
+    TResult? Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult? Function(String error)? payPackageerror,
   }) {
     return payPackageerror?.call(error);
@@ -1067,7 +1114,7 @@ class _$payPackageErrorImpl implements payPackageError {
     TResult Function()? packagesuccess,
     TResult Function(String error)? packageerror,
     TResult Function()? payPackageloading,
-    TResult Function()? payPackagesuccess,
+    TResult Function(Map<String, dynamic> response)? payPackagesuccess,
     TResult Function(String error)? payPackageerror,
     required TResult orElse(),
   }) {

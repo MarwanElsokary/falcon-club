@@ -26,31 +26,68 @@ class PayButtonWidget extends StatelessWidget {
         index: 0,
         child: BlocConsumer<PackageCubit, PackageState>(
           listener: (context, state) {
-            if (state is payPackageSuccess) {
-              showSuccesSnackBar(
-                context: context,
-                title: 'مبروك تم الاشتراك في الباقه بنجاح'.tr(),
-              );
-              context.pushNamedAndRemoveUntil(
-                AppRoute.mainScreen,
-                predicate: (route) => false,
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is payPackageLoading) {
-              return LoadButtonUtils();
-            }
-            return ButtonUtils(
-              text:
-                  '${'قم بالدفع : '.tr()}${packageModel.price.toString()}${'ر.س'.tr()}',
-              onPressed: () {
-                context.read<PackageCubit>().emitpayPackageStates(
-                  packageId: packageModel.id,
+            state.whenOrNull(
+              payPackagesuccess: (response) {
+                print('Payment Response: $response');
+
+                // تحقق من الـ response
+                if (response['requiresVerification'] == true &&
+                    response['verificationUrl'] != null) {
+                  // افتح صفحة الـ verification
+                  context.pushNamed(
+                    AppRoute.paymentVerificationScreen,
+                    arguments: {
+                      'verificationUrl': response['verificationUrl'],
+                      'packageId': packageModel.id,
+                    },
+                  );
+                } else if (response['success'] == true) {
+                  // الدفع نجح مباشرة بدون verification
+                  showSuccesSnackBar(
+                    context: context,
+                    title: 'مبروك تم الاشتراك في الباقه بنجاح',
+                  );
+                  context.pushNamedAndRemoveUntil(
+                    AppRoute.mainScreen,
+                    predicate: (route) => false,
+                  );
+                } else {
+                  // الدفع فشل
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(response['message'] ?? 'فشلت عملية الدفع'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              payPackageerror: (error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(error),
+                    backgroundColor: Colors.red,
+                  ),
                 );
               },
-              colorstext: Colors.white,
-              background: mainColor,
+            );
+          },
+          builder: (context, state) {
+            return state.maybeWhen(
+              payPackageloading: () => LoadButtonUtils(),
+              orElse: () => ButtonUtils(
+                text:
+                '${'قم بالدفع : '.tr()}${packageModel.price.toString()}${'ر.س'.tr()}',
+                onPressed: () {
+                  final formKey = context.read<PackageCubit>().formKey;
+                  if (formKey.currentState?.validate() ?? false) {
+                    context.read<PackageCubit>().emitpayPackageStates(
+                      packageId: packageModel.id,
+                    );
+                  }
+                },
+                colorstext: Colors.white,
+                background: mainColor,
+              ),
             );
           },
         ),

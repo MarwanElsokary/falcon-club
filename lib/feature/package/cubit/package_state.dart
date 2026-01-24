@@ -7,12 +7,10 @@ class PackageState with _$PackageState {
 
   const factory PackageState.packageloading() = packageLoading;
   const factory PackageState.packagesuccess() = packageSuccess;
-  const factory PackageState.packageerror({required String error}) =
-      packageError;
+  const factory PackageState.packageerror({required String error}) = packageError;
 
-  //
+  // ⭐ عدلنا السطر ده
   const factory PackageState.payPackageloading() = payPackageLoading;
-  const factory PackageState.payPackagesuccess() = payPackageSuccess;
-  const factory PackageState.payPackageerror({required String error}) =
-      payPackageError;
+  const factory PackageState.payPackagesuccess({required Map<String, dynamic> response}) = payPackageSuccess;
+  const factory PackageState.payPackageerror({required String error}) = payPackageError;
 }

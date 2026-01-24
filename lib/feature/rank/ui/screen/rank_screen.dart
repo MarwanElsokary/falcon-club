@@ -1,4 +1,5 @@
 import 'package:falcon/core/cache/cach_Helper.dart';
+import 'package:falcon/core/thems/thems.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,27 +31,30 @@ class _RankScreenState extends State<RankScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainColor,
       appBar: rankAppBar(context),
-      body: Container(
-        width: context.displayWidth / 1,
-        height: context.displayHeight / 1,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/Frame 1011 1.png'),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Container(
+          width: context.displayWidth / 1,
+          height: context.displayHeight / 1,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/Frame 1011 1.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              const RankHeaderWidget(),
-              SizedBox(
-                width: context.displayWidth / 1,
-                height: context.displayHeight / 1.2,
-                child: const PlayerRankWidget(),
-              ),
-            ],
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                const RankHeaderWidget(),
+                SizedBox(
+                  width: context.displayWidth / 1,
+                  height: context.displayHeight / 1.2,
+                  child: const PlayerRankWidget(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

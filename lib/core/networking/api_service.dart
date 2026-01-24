@@ -27,7 +27,9 @@ abstract class ApiService {
   @POST(ApiConstants.registerStep2)
   Future<dynamic> getCurrentUser();
 
-
+  // أضف هذه الدالة للتحقق من الدفع بعد 3DS
+  @POST(ApiConstants.verifypay) // تأكد من المسار الصحيح
+  Future<dynamic> verifyPayment(@Body() int packageId);
 
   @POST(ApiConstants.login)
   Future login(@Body() loginBody);

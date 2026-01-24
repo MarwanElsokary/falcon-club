@@ -25,6 +25,7 @@ import '../../feature/package/cubit/package_cubit.dart';
 import '../../feature/package/data/model/pakcage_model.dart';
 import '../../feature/package/ui/screen/package_pay_ment_screen.dart';
 import '../../feature/package/ui/screen/package_screen.dart';
+import '../../feature/package/ui/widget/verification_webview_screen.dart';
 import '../../feature/rank/cubit/rank_cubit.dart';
 import '../../feature/rank/ui/screen/rank_screen.dart';
 import '../../feature/reals/cubit/reals_cubit.dart';
@@ -66,6 +67,17 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<LoginCubit>(),
             child: const LoginScreen(),
+          ),
+        );
+      case AppRoute.paymentVerificationScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: getIt<PackageCubit>(),
+            child: PaymentVerificationScreen(
+              verificationUrl: args['verificationUrl'],
+              packageId: args['packageId'],
+            ),
           ),
         );
 
