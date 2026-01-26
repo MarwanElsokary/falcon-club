@@ -14,6 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/cache/cach_Helper.dart';
+import '../../../../core/widget/show_error_snack_bar.dart';
 import '../../cubit/package_state.dart';
 
 class PackageScreen extends StatelessWidget {
@@ -135,11 +137,22 @@ class PackageScreen extends StatelessWidget {
                           },
                         ),
                         verticalSpace(30),
+// في package_screen.dart - داخل ListView.builder
                         ButtonUtils(
                           border: 30.r,
                           text: 'اشتراك',
                           onPressed: () {
-                            //
+                            // التحقق من حالة الاشتراك
+                            final profile = CacheHelper.getmyProfile();
+                            if (profile?.data.isSubscribed == true) {
+                              // استخدام showErrorSnackBar مباشرة
+                              showErrorSnackBar(
+                                context: context,
+                                title: 'أنت مشترك بالفعل'.tr(),
+                              );
+                              return;
+                            }
+                            // إذا لم يكن مشتركاً، ننتقل إلى شاشة الدفع
                             context.pushNamed(
                               AppRoute.packagePayMentScreen,
                               arguments: {'packageModel': packageList[index]},
@@ -147,8 +160,7 @@ class PackageScreen extends StatelessWidget {
                           },
                           colorstext: mainColor,
                           background: Colors.white,
-                        ),
-                      ],
+                        ),                      ],
                     ),
                   ),
                   verticalSpace(15),

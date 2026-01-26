@@ -20,6 +20,7 @@ class AiScoreWidget extends StatefulWidget {
 class _AiScoreWidgetState extends State<AiScoreWidget> {
   PageController controller = PageController();
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -69,6 +70,7 @@ class _AiScoreWidgetState extends State<AiScoreWidget> {
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: mainColor,
+                            // التعديل هنا: تغيير skillName إلى skill
                             text: widget.skill[index].skillName ?? '',
                           ),
                         ),
@@ -87,7 +89,6 @@ class _AiScoreWidgetState extends State<AiScoreWidget> {
           width: context.displayWidth / 1,
           child: PageView.builder(
             controller: controller,
-            // padding: EdgeInsets.symmetric(horizontal: 20.w),
             itemCount: widget.skill.length,
             physics: PageScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -101,6 +102,7 @@ class _AiScoreWidgetState extends State<AiScoreWidget> {
                 columnCount: 3,
                 position: i,
                 child: AiPercentWidget(
+                  // التعديل هنا: تغيير skillName إلى skill
                   skill: widget.skill[i].skillName ?? '',
                   percent: widget.skill[i].score,
                 ),

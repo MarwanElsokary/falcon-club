@@ -190,7 +190,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
           child: SizedBox(
             width: 220.w, // حجم مناسب للنصف
             height: 220.w,
-            child: PlayerRadarChart(
+            child: CustomRadarChart(
               incomingSkills: incomingSkills,
               isSubscribed: isSubscribed,
             ),

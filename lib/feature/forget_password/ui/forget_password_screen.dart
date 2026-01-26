@@ -117,11 +117,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         obscureText: false,
                         validator: (v) {
                           if (v == null || v.isEmpty) {
-                            return 'من فضلك تأكد من ادخال رقم الهاتف'.tr();
+                            return 'من فضلك تأكد من ادخال رقم الجوال'.tr();
                           } else if (v.length != 9) {
-                            return 'رقم الهاتف يجب أن يكون 9 أرقام'.tr();
+                            return 'رقم الجوال يجب أن يكون 9 أرقام'.tr();
                           } else if (!v.startsWith('')) {
-                            return 'رقم الهاتف يجب أن يبدأ بـ 5'.tr();
+                            return 'رقم الجوال يجب أن يبدأ بـ 5'.tr();
                           }
                           return null;
                         },

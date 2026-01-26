@@ -625,15 +625,15 @@ class _SignupIputDataWidgetState extends State<SignupIputDataWidget> {
       obscureText: false,
       validator: (validator) {
         if (validator.toString().length != _cubit.maxLength) {
-          return 'من فضلك ادخل رقم الهاتف صحيح'.tr();
+          return 'من فضلك ادخل رقم الجوال صحيح'.tr();
         }
         if (!AppRegex.isPhoneNumberValid(validator.toString())) {
-          return 'رقم الهاتف غير صالح'.tr();
+          return 'رقم الجوال غير صالح'.tr();
         }
         return null;
       },
       textInputType: TextInputType.phone,
-      hintText: 'رقم الهاتف'.tr(),
+      hintText: 'رقم الجوال'.tr(),
       suffix: const Text(''),
     );
   }

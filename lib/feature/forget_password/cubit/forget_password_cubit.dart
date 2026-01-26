@@ -26,7 +26,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   // 1. Send OTP
   Future<void> sendOtp() async {
     if (phoneController.text.isEmpty) {
-      emit(const ForgetPasswordState.error('يرجى إدخال رقم الهاتف'));
+      emit(const ForgetPasswordState.error('يرجى إدخال رقم الجوال'));
       return;
     }
 
@@ -71,7 +71,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     }
 
     if (phoneController.text.isEmpty) {
-      emit(ForgetPasswordState.error('رقم الهاتف غير متوفر'));
+      emit(ForgetPasswordState.error('رقم الجوال غير متوفر'));
       return;
     }
 

@@ -23,14 +23,14 @@ class LoginIputDataWidget extends StatelessWidget {
             obscureText: false,
             validator: (v) {
               if (v!.isEmpty) {
-                return 'من فضلك تأكد من ادخال البريد الاكتروني'.tr();
+                return 'من فضلك تأكد من ادخال رقم الجوال '.tr();
               }
               return null;
             },
             fillColor: fillColor,
             textInputType: TextInputType.text,
-            hintText: 'email@gmail.com',
-            lableText: 'البريد الاكتروني'.tr(),
+            hintText: '5x xxx xxxx',
+            lableText: 'رقم الجوال '.tr(),
             textInputAction: TextInputAction.next,
           ),
           verticalSpace(20),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../feature/main_screen/data/model/my_profile_model.dart';
+import '../helpers/shared_pref_helper.dart';
 
 class CacheHelper {
   static SharedPreferences? _prefs;
@@ -13,9 +14,8 @@ class CacheHelper {
     WidgetsFlutterBinding.ensureInitialized();
 
     _prefs = await SharedPreferences.getInstance();
-  }
+  } //save myProfile
 
-  //save myProfile
   static Future<bool> savemyProfile(MyProfileModel myProfile) async {
     try {
       String jsonString = json.encode(myProfile.toJson()); // Convert to JSON

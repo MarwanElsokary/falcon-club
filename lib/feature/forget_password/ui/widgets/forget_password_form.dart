@@ -25,9 +25,9 @@ class ForgetPasswordForm extends StatelessWidget {
         obscureText: false,
         validator: (v) {
           if (v == null || v.isEmpty) {
-            return 'من فضلك تأكد من ادخال رقم الهاتف'.tr();
+            return 'من فضلك تأكد من ادخال رقم الجوال'.tr();
           } else if (v.length != 11) {
-            return 'رقم الهاتف يجب أن يكون 11 أرقام'.tr();
+            return 'رقم الجوال يجب أن يكون 11 أرقام'.tr();
           }
           return null;
         },

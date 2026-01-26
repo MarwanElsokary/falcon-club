@@ -12,7 +12,7 @@ class PlayerProfileAppBarWidget extends StatelessWidget {
       onTap: () => context.pop(),
       child: Row(
         children: [
-          BackButton(color: Colors.white),
+         const  BackButton(color: Colors.white),
           Expanded(
             child: TextUtils(
               fontSize: 16,

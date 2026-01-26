@@ -108,7 +108,7 @@ class _AiPercentWidgetState extends State<AiPercentWidget>
                               : Color(0xFF0CE2C6),
 
                           text: (widget.percent) < 2.5
-                              ? 'آداء سيئ'
+                              ? 'شد حيلك'
                               : (widget.percent) < 5
                               ? 'آداء متوسط'
                               : (widget.percent) < 7

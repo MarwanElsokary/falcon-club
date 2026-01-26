@@ -36,7 +36,7 @@ class AiGenerateScreen extends StatelessWidget {
                   width: context.displayWidth / 1.5,
                 ),
                 CenterTextUtils(
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                   text: ' سوف يتم ارسال اشعار لك عند الانتهاء من تقيم الفيديو'

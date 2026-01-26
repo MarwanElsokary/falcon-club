@@ -6,6 +6,7 @@ import 'package:falcon/core/widget/show_error_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/widget/text_utils.dart';
 import '../../creat_real/ui/widget/upload_progras_widget.dart';
 import '../cubit/MeasurementCubit.dart';
 import '../cubit/measurement_state.dart';
@@ -38,16 +39,15 @@ class MeasurementScreen extends StatelessWidget {
                   SafeArea(
                     child: Row(
                       children: [
-                        const BackButton(color: Colors.white),
-                        Text(
-                          'الرجوع'.tr(),
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
+                        const  BackButton(color: Colors.white),
+                        Expanded(
+                          child: TextUtils(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
                             color: Colors.white,
+                            text: 'الرجوع'.tr(),
                           ),
                         ),
-
                       ],
                     ),
                   ),

@@ -175,14 +175,14 @@ class Skill {
   Skill({required this.skillName, required this.score});
 
   factory Skill.fromJson(Map<String, dynamic> json) => Skill(
-    skillName: json["skillName"] ?? '',
+    skillName: json["skill"] ?? '',
     score: json["score"]?.toDouble() ?? 0.0,
   );
 
-  Map<String, dynamic> toJson() => {"skillName": skillName, "score": score};
+  Map<String, dynamic> toJson() => {"skill": skillName, "score": score};
 
   @override
-  String toString() => 'Skill(skillName: "$skillName", score: $score)';
+  String toString() => 'Skill(skill: "$skillName", score: $score)';
 }
 
 class Equipment {
