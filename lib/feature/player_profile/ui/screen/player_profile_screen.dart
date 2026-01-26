@@ -21,6 +21,7 @@ import '../../../player_profile/ui/widget/player_experiance_widget.dart';
 import '../../../player_profile/ui/widget/player_image_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
+import '../widget/player_measurements_image_widget.dart';
 import '../widget/player_measurements_widget.dart'; // تأكد من الاستيراد
 import '../widget/player_videos_widget.dart';
 import '../widget/simple_radar_chart.dart';
@@ -130,6 +131,9 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
                 // 🆕 Measurements - مباشر من البيانات
                 PlayerMeasurementsWidget(playerProfile: playerProfile), // هنا!
                 verticalSpace(10),
+                // 🆕 Bio Image - صورة القياسات
+                PlayerBioImageWidget(playerProfile: playerProfile),
+                verticalSpace(10),
                 //player Videos
                 PlayerVideosWidget(),
                 verticalSpace(10),
@@ -167,6 +171,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
     );
   }
 
+
   Widget _buildRadarChartWithData(List<Skill> skills) {
     log('📊 عدد المهارات المستلمة: ${skills.length}');
 
@@ -203,6 +208,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
       ],
     );
   }
+
 
   // Widget _buildSimpleSubscribeMessage(BuildContext context, int skillsCount) {
   //   return Container(

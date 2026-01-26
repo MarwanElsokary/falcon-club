@@ -29,7 +29,7 @@ class LoginIputDataWidget extends StatelessWidget {
             },
             fillColor: fillColor,
             textInputType: TextInputType.text,
-            hintText: '5x xxx xxxx',
+            hintText: '05x xxx xxxx',
             lableText: 'رقم الجوال '.tr(),
             textInputAction: TextInputAction.next,
           ),

@@ -53,6 +53,8 @@ class Data {
   dynamic joinDate;
   dynamic isCompleted;
   dynamic position;
+  dynamic bioDate;
+  dynamic bioImage;
   dynamic tps;
 
   Data({
@@ -71,6 +73,7 @@ class Data {
     required this.phoneNumber,
     required this.birthDate,
     required this.direction,
+    required this.bioImage,
     required this.height,
     required this.weight,
     required this.photo,
@@ -84,6 +87,7 @@ class Data {
     required this.positionName,
     required this.clubJoinDate,
     required this.joinDate,
+    required this.bioDate,
     required this.position,
     required this.tps,
   });
@@ -91,6 +95,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     userId: json["userId"],
     isCompleted: json["isCompleted"],
+    bioImage: json["bioImage"],
     accountNumber: json["accountNumber"],
     firstName: json["firstName"],
     isSubscribed: json["isSubscribed"] ?? false,
@@ -115,6 +120,7 @@ class Data {
     joinDate: json["joinDate"],
     position: json["position"],
     tps: json["tps"],
+    bioDate: json["bioDate"],
     bioHeight: json["bioHeight"],
     bioShoulderWidth: json["bioShoulderWidth"],
     bioArmLength: json["bioArmLength"],
@@ -140,6 +146,8 @@ class Data {
     "branchName": branchName,
     "branchId": branchId,
     "clubId": clubId,
+    "bioImage": bioImage,
+    "bioDate": bioDate,
     "clubName": clubName,
     "positionId": positionId,
     "clubImage": clubImage,

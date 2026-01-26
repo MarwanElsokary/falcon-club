@@ -85,7 +85,9 @@ class RadarChartPainter extends CustomPainter {
     );
 
     for (int i = 0; i < skills.length; i++) {
-      double angle = 2 * 3.14159265359 * i / skills.length;
+      // تعديل الزاوية لجعل المهارة الأولى في الأعلى (المنتصف)
+      double angle = (2 * pi * i / skills.length) - (pi / 2);
+
       Offset endPoint = Offset(
         center.dx + radius * cos(angle),
         center.dy + radius * sin(angle),
@@ -108,11 +110,23 @@ class RadarChartPainter extends CustomPainter {
         displayText = "$skillName\n${value.toStringAsFixed(1)}";
       }
 
-      // حساب موقع النص
+      // حساب موقع النص - زيادة المسافة للنصوص الجانبية
       double textAngle = angle;
+      double textDistance = radius + 25; // زيادة المسافة للنصوص
+
+      // إذا كانت المهارة في الأعلى (السرعة)، نضعها أقرب قليلاً
+      if (i == 0) {
+        textDistance = radius + 15;
+      }
+
+      // فقط لمهارة التحكم بالكرة - زيادة المسافة
+      if (skillName == 'التحكم بالكرة') {
+        textDistance = radius + 35; // زيادة المسافة بشكل كبير
+      }
+
       Offset textOffset = Offset(
-        center.dx + (radius + 20) * cos(textAngle),
-        center.dy + (radius + 20) * sin(textAngle),
+        center.dx + textDistance * cos(textAngle),
+        center.dy + textDistance * sin(textAngle),
       );
 
       textPainter.text = TextSpan(
@@ -126,10 +140,19 @@ class RadarChartPainter extends CustomPainter {
       );
       textPainter.layout();
 
-      // حساب مركز النص
+      // حساب مركز النص مع تعديل خاص للنص العلوي
+      double textCenterX = textOffset.dx;
+      double textCenterY = textOffset.dy;
+
+      // تعديلات خاصة للتحكم بالكرة
+      if (skillName == 'التحكم بالكرة') {
+        textCenterX = textOffset.dx + (textPainter.width * -0.2); // إبعاد أكثر
+        textCenterY = textOffset.dy - (textPainter.height * 0.2); // رفع قليلاً
+      }
+
       final textCenter = Offset(
-        textOffset.dx - textPainter.width / 2,
-        textOffset.dy - textPainter.height / 2,
+        textCenterX - textPainter.width / 2,
+        textCenterY - textPainter.height / 2,
       );
 
       textPainter.paint(canvas, textCenter);
@@ -147,7 +170,8 @@ class RadarChartPainter extends CustomPainter {
 
     final path = Path();
     for (int i = 0; i < skills.length; i++) {
-      double angle = 2 * 3.14159265359 * i / skills.length;
+      // نفس تعديل الزاوية
+      double angle = (2 * pi * i / skills.length) - (pi / 2);
       var skill = skills[i];
       double value = skill['value'];
 
@@ -176,7 +200,7 @@ class RadarChartPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < skills.length; i++) {
-      double angle = 2 * 3.14159265359 * i / skills.length;
+      double angle = (2 * pi * i / skills.length) - (pi / 2);
       var skill = skills[i];
       double value = skill['value'];
 
