@@ -111,26 +111,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               itemBuilder: (context, index) {
                                 return SlideEnimationWidget(
                                   index: 0,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      verticalSpace(40),
-                                      TextUtils(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w700,
-                                        color: mainColor,
-                                        text: contact[index]['title'],
-                                      ),
-                                      verticalSpace(10),
-                                      TextUtils(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                        text: contact[index]['desc'],
-                                      ),
-                                    ],
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        verticalSpace(40),
+                                        TextUtils(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                          color: mainColor,
+                                          text: contact[index]['title'],
+                                        ),
+                                        verticalSpace(10),
+                                        TextUtils(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black,
+                                          text: contact[index]['desc'],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
