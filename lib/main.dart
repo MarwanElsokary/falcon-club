@@ -17,6 +17,7 @@ void main() async {
     DeviceOrientation
         .portraitDown, // اختياري لو عايز يسمح بالوضع العمودي المقلوب
   ]);
+  await CacheHelper.init();
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
 
