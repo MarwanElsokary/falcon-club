@@ -17,7 +17,7 @@ PODS:
   - image_cropper (0.0.4):
     - Flutter
     - TOCropViewController (~> 2.7.4)
-  - image_gallery_saver (2.0.2):
+  - image_gallery_saver (1.5.0):
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
@@ -141,7 +141,7 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
   get_thumbnail_video: 1a754d46b860dffefcc57b7290a43089cd5d7e58
   image_cropper: 5f162dcf988100dc1513f9c6b7eb42cd6fbf9156
-  image_gallery_saver: 14711d79da40581063e8842a11acf1969d781ed7
+  image_gallery_saver: 50ed0238a5f3747c340f4357c21e8c54b7ead376
   image_picker_ios: e0ece4aa2a75771a7de3fa735d26d90817041326
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d

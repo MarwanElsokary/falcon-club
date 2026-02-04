@@ -94,4 +94,28 @@ class CacheHelper {
     await _prefs?.clear();
   }
 
+  static Future<bool> saveHomeTrials(String json) async {
+    return await _prefs?.setString('home_trials', json) ?? false;
+  }
+
+  static String? getHomeTrials() {
+    return _prefs?.getString('home_trials');
+  }
+  // دالة عامة لحفظ أي String
+  static Future<bool> setString(String key, String value) async {
+    try {
+      return await _prefs?.setString(key, value) ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // دالة عامة لجلب أي String
+  static String getString(String key) {
+    try {
+      return _prefs?.getString(key) ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
 }

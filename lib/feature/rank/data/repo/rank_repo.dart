@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'package:falcon/core/networking/api_result.dart';
-
+import '../../../../core/cache/cach_Helper.dart';
 import '../../../../core/networking/api_error_handler.dart';
 import '../../../../core/networking/api_service.dart';
 import '../model/rank_model.dart';
@@ -9,10 +10,22 @@ class RankRepo {
 
   RankRepo(this._apiService);
 
-  //myProfile
   Future<ApiResult<RankModel>> rank() async {
     try {
+      final key = 'rank';
+      final cached = CacheHelper.getString(key);
+
+      if (cached.isNotEmpty) {
+        final decoded = jsonDecode(cached);
+        final model = RankModel.fromJson(decoded);
+        return ApiResult.success(model);
+      }
+
       final response = await _apiService.rank();
+
+      // خزنه في الكاش
+      CacheHelper.setString(key, jsonEncode(response.toJson()));
+
       return ApiResult.success(response);
     } catch (errro) {
       return ApiResult.failure(ErrorHandler.handle(errro));

@@ -18,23 +18,16 @@ class MainRepo {
   //myProfile
   Future<ApiResult<MyProfileModel>> myProfile() async {
     try {
-      // 🧠 لو الكاش صالح
       if (CacheHelper.isMyProfileValid()) {
+        log('📦 myProfile FROM CACHE');
         final cached = CacheHelper.getmyProfile();
         if (cached != null) {
           return ApiResult.success(cached);
         }
       }
-      if (CacheHelper.isMyProfileValid()) {
-        log('📦 myProfile FROM CACHE');
-      } else {
-        log('🌐 myProfile FROM API');
-      }
 
-      // 🌐 API
+      log('🌐 myProfile FROM API');
       final response = await _apiService.myProfile();
-
-      // 💾 Cache
       await CacheHelper.savemyProfile(response);
 
       return ApiResult.success(response);
@@ -61,6 +54,7 @@ class MainRepo {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
+
 
   //categories
   // Future<ApiResult<CategoriesModel>> categories() async {
