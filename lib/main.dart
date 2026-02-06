@@ -8,6 +8,7 @@ import 'core/cache/cach_Helper.dart';
 import 'core/di/dependency_injection.dart';
 import 'core/routing/app_router.dart';
 import 'core/thems/thems.dart';
+import 'feature/home/ui/screen/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         ),
 
         child: MaterialApp(
+          scrollBehavior:  NoGlowScrollBehavior(),
           title: 'Winner',
           debugShowCheckedModeBanner: false,
           theme: themsApp.light,
