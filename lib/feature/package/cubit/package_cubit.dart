@@ -14,9 +14,30 @@ class PackageCubit extends Cubit<PackageState> {
   final formKey = GlobalKey<FormState>();
 
   List<PackageModel> packageList = [];
+  List<String> termsAndPolicies = []; // أضف هذا المتغير الجديد
+
   //
 
 
+
+  // دالة جديدة لجلب الشروط والخصوصية
+  Future<void> getTermsAndPolicies() async {
+    final result = await _repo.getTermsAndPolicies();
+    result.when(
+      success: (data) {
+        if (data is List) {
+          termsAndPolicies = List<String>.from(data);
+        } else if (data is String) {
+          termsAndPolicies = [data];
+        }
+        // لا نحتاج لإرسال state لأننا نستخدمها فقط للعرض
+      },
+      failure: (error) {
+        // يمكن تجاهل الخطأ أو التعامل معه حسب الحاجة
+        print('Failed to load terms and policies: $error');
+      },
+    );
+  }
   // MARK: -allPackagesState
   void emitAllPackagesState() async {
     emit(const PackageState.packageloading());

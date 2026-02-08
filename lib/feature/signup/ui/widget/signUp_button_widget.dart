@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/di/dependency_injection.dart';
 import 'package:falcon/core/widget/showSuccesSnackBar.dart';
 import 'package:falcon/feature/signup/ui/widget/pinput_screen_with_navigation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,34 +13,120 @@ import 'package:falcon/core/widget/button_utils.dart';
 import 'package:falcon/core/widget/loading_button_utils.dart';
 import 'package:falcon/core/widget/show_error_snack_bar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
 import '../../../../core/widget/padding_nav_bar.dart';
 import '../../../../core/widget/slide_enimation_widget.dart';
+import '../../../../core/widget/text_utils.dart';
 import '../../../login/cubit/login_cubit.dart';
 import '../../../login/cubit/login_state.dart';
 
-class SignupButtonWidget extends StatelessWidget {
+class SignupButtonWidget extends StatefulWidget {
   const SignupButtonWidget({super.key, required this.update});
 
   final bool update;
 
   @override
+  State<SignupButtonWidget> createState() => _SignupButtonWidgetState();
+}
+
+class _SignupButtonWidgetState extends State<SignupButtonWidget> {
+  bool _agreedToTerms = false;
+  List<String> _termsAndPolicies = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTermsAndPolicies();
+  }
+
+  void _loadTermsAndPolicies() {
+    final cubit = context.read<LoginCubit>();
+    _termsAndPolicies = cubit.termsAndPolicies;
+
+    if (_termsAndPolicies.isEmpty) {
+      cubit.getTermsAndPolicies().then((_) {
+        if (mounted) {
+          setState(() {
+            _termsAndPolicies = cubit.termsAndPolicies;
+          });
+        }
+      });
+    }
+  }
+
+  void _showTermsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        title: TextUtils(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: mainColor,
+          text: 'الشروط والسياسات'.tr(),
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (_termsAndPolicies.isEmpty)
+                Center(
+                  child: CircularProgressIndicator(
+                    color: mainColor,
+                  ),
+                )
+              else
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _termsAndPolicies
+                      .map((term) => Padding(
+                    padding: EdgeInsets.only(bottom: 8.h),
+                    child: TextUtils(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                      text: '• $term',
+                    ),
+                  ))
+                      .toList(),
+                ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: TextUtils(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: mainColor,
+              text: 'فهمت'.tr(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: paddingNavBar(),
-      height: 130.w,
+      height: widget.update ? 130.w : 180.w, // زيادة الارتفاع إذا كان إنشاء حساب
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is registerSuccess) {
-            // عرض شاشة التحقق بالكود
             showCupertinoModalBottomSheet(
               expand: true,
               context: context,
               backgroundColor: Colors.transparent,
               builder: (c) => BlocProvider(
                 create: (context) => getIt<LoginCubit>(),
-                // استخدم الشاشة المعدلة التي تنتقل تلقائياً عند نجاح التحقق
                 child: PinputScreenWithNavigation(
                   phoneNumber: context.read<LoginCubit>().controller.email.text,
                 ),
@@ -74,18 +161,81 @@ class SignupButtonWidget extends StatelessWidget {
                   : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // 🔥 Checkbox الموافقة على الشروط - فقط عند إنشاء حساب جديد
+                  if (!widget.update)
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: fillColor,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: _agreedToTerms,
+                            onChanged: (value) {
+                              setState(() {
+                                _agreedToTerms = value ?? false;
+                              });
+                            },
+                            activeColor: mainColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.r),
+                            ),
+                          ),
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                  fontFamily: 'Cairo',
+                                ),
+                                children: [
+                                  TextSpan(text: 'أوافق على '.tr()),
+                                  TextSpan(
+                                    text: 'الشروط والسياسات'.tr(),
+                                    style: TextStyle(
+                                      color: mainColor,
+                                      fontWeight: FontWeight.w700,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        _showTermsDialog(context);
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (!widget.update) verticalSpace(10),
                   ButtonUtils(
-                    text: update ? 'تعديل'.tr() : 'انشاء حساب'.tr(),
+                    text: widget.update ? 'تعديل'.tr() : 'انشاء حساب'.tr(),
                     onPressed: () {
+                      // 🔥 التحقق من الموافقة على الشروط (فقط عند إنشاء حساب)
+                      if (!widget.update && !_agreedToTerms) {
+                        showErrorSnackBar(
+                          context: context,
+                          title: 'يجب الموافقة على الشروط والسياسات للمتابعة'.tr(),
+                        );
+                        return;
+                      }
+
                       if (context
                           .read<LoginCubit>()
                           .formKey
                           .currentState!
                           .validate()) {
-                        if (update) {
-                          context
-                              .read<LoginCubit>()
-                              .emitupdateProfileStates();
+                        if (widget.update) {
+                          context.read<LoginCubit>().emitupdateProfileStates();
                         } else {
                           context.read<LoginCubit>().emitregisterStates();
                         }
@@ -100,7 +250,7 @@ class SignupButtonWidget extends StatelessWidget {
                     background: mainColor,
                   ),
                   Visibility(
-                    visible: !update,
+                    visible: !widget.update,
                     child: InkWell(
                       onTap: () {
                         context.pushNamed(AppRoute.loginScreen);

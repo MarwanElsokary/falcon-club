@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(color: whiteclr),
           ),
           body: Container(
-            color: mainColor, // 👈 رجعنا الخلفية الأصلية
+            color: mainColor,
             child: ClipRect(
               child: CustomScrollView(
                 slivers: [
@@ -90,6 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+
+        // 🔥 الأيقونة الخلفية - بس هي اللي IgnorePointer
         PositionedDirectional(
           end: 0,
           child: IgnorePointer(
@@ -97,17 +99,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
+        // 🔥 الـ AppBar بدون IgnorePointer عشان الـ interactions تشتغل
         PositionedDirectional(
-          child: IgnorePointer(
-            child: SafeArea(child: HomeAppBarWidget()),
+          top: 0,
+          start: 0,
+          end: 0,
+          child: SafeArea(
+            child: HomeAppBarWidget(),
           ),
         ),
-
-
       ],
     );
   }
 }
+
 class NoGlowScrollBehavior extends ScrollBehavior {
   @override
   Widget buildOverscrollIndicator(
@@ -118,4 +123,3 @@ class NoGlowScrollBehavior extends ScrollBehavior {
     return child;
   }
 }
-

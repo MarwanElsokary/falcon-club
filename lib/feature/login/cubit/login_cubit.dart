@@ -35,6 +35,8 @@ class LoginCubit extends Cubit<LoginState> {
   int maxLength = 9;
   String codeCountry = '+966';
   bool isAvailable = false;
+  List<String> termsAndPolicies = [];
+
 
   // Profile data
   int direction = 0;
@@ -148,6 +150,22 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
+  // أضف هذه الدالة
+  Future<void> getTermsAndPolicies() async {
+    final result = await _loginRepo.getTermsAndPolicies();
+    result.when(
+      success: (data) {
+        if (data is List) {
+          termsAndPolicies = List<String>.from(data);
+        } else if (data is String) {
+          termsAndPolicies = [data];
+        }
+      },
+      failure: (error) {
+        print('Failed to load terms and policies: $error');
+      },
+    );
+  }
   // Old method name for backward compatibility
   Future<void> emitverifyCodeStates() async => await verifyOtp();
 

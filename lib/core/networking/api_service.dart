@@ -50,6 +50,10 @@ abstract class ApiService {
   @POST(ApiConstants.otp)
   Future otp(@Query('otp') int otp);
 
+  // أضف في قسم الـ GET endpoints في ApiService
+  @GET(ApiConstants.getTermsAndPolicies)
+  Future getTermsAndPolicies();
+
   //Player/GetCountries
   @GET(ApiConstants.countries)
   Future<CountriesClubModel> countries();

@@ -26,7 +26,7 @@ class RealsCubit extends Cubit<RealsState> {
   TextEditingController commetnController = TextEditingController();
 
   // MARK: - reals
-  void emitreals({
+   emitreals({
     required String pageNumber,
     required String pageSize,
     required String playerId,
