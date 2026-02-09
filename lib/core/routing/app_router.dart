@@ -69,17 +69,17 @@ class AppRouter {
             child: const LoginScreen(),
           ),
         );
-      // case AppRoute.paymentVerificationScreen:
-      //   final args = settings.arguments as Map<String, dynamic>;
-      //   return MaterialPageRoute(
-      //     builder: (_) => BlocProvider.value(
-      //       value: getIt<PackageCubit>(),
-      //       child: PaymentVerificationScreen(
-      //         verificationUrl: args['verificationUrl'],
-      //         packageId: args['packageId'],
-      //       ),
-      //     ),
-      //   );
+    // case AppRoute.paymentVerificationScreen:
+    //   final args = settings.arguments as Map<String, dynamic>;
+    //   return MaterialPageRoute(
+    //     builder: (_) => BlocProvider.value(
+    //       value: getIt<PackageCubit>(),
+    //       child: PaymentVerificationScreen(
+    //         verificationUrl: args['verificationUrl'],
+    //         packageId: args['packageId'],
+    //       ),
+    //     ),
+    //   );
 
       case AppRoute.signUpScreen:
         final args = arguments as Map<String, dynamic>?;
@@ -174,8 +174,6 @@ class AppRouter {
             providers: [
               BlocProvider(
                 create: (_) => getIt<RealsCubit>()..emitreals(
-                  pageNumber: '1',
-                  pageSize: '10',
                   playerId: playerId,
                 ),
               ),

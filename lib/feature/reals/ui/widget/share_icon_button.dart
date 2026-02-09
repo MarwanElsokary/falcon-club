@@ -7,159 +7,390 @@ import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
 import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../core/helpers/spacing.dart';
 import '../../../../core/thems/thems.dart';
+import '../../../../core/widget/center_text_utils.dart';
 
-class ShareIconButton extends StatelessWidget {
+class ShareIconButton extends StatefulWidget {
   const ShareIconButton({super.key, required this.index});
   final int index;
 
-  // 🔥 دالة تحميل الفيديو من الرابط
-  Future<String?> _downloadVideo(String videoUrl) async {
+  @override
+  State<ShareIconButton> createState() => _ShareIconButtonState();
+}
+
+class _ShareIconButtonState extends State<ShareIconButton> {
+  // 🔥 حل المشكلة: مفيش static - كل زر له key خاص به
+  late final GlobalKey _shareButtonKey = GlobalKey();
+
+  Future<bool> _requestPermissions() async {
+    if (Platform.isIOS) {
+      return true;
+    } else if (Platform.isAndroid) {
+      if (await Permission.videos.isDenied) {
+        final status = await Permission.videos.request();
+        return status.isGranted;
+      }
+      return true;
+    }
+    return true;
+  }
+
+  Future<String?> _downloadVideo(String videoUrl, BuildContext context) async {
     try {
       final dio = Dio();
       final directory = await getTemporaryDirectory();
-      final filePath = '${directory.path}/shared_video_${DateTime.now().millisecondsSinceEpoch}.mp4';
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final fileName = 'falcon_video_$timestamp.mp4';
+      final filePath = '${directory.path}/$fileName';
+
+      debugPrint('📥 بدء التحميل من: $videoUrl');
 
       await dio.download(
         videoUrl,
         filePath,
+        options: Options(
+          receiveTimeout: const Duration(minutes: 2),
+          sendTimeout: const Duration(minutes: 2),
+          followRedirects: true,
+          validateStatus: (status) => status! < 500,
+        ),
         onReceiveProgress: (received, total) {
           if (total != -1) {
-            print('Download progress: ${(received / total * 100).toStringAsFixed(0)}%');
+            final progress = (received / total * 100).toStringAsFixed(1);
+            debugPrint('📥 التقدم: $progress%');
           }
         },
       );
 
-      return filePath;
+      final file = File(filePath);
+      if (await file.exists()) {
+        final fileSize = await file.length();
+        final fileSizeMB = fileSize / (1024 * 1024);
+        debugPrint('✅ تم التحميل: ${fileSizeMB.toStringAsFixed(2)} MB');
+
+        if (fileSizeMB > 50) {
+          debugPrint('⚠️ الملف كبير جداً');
+          if (context.mounted) {
+            _showSizeWarning(context, fileSizeMB);
+          }
+        }
+
+        return filePath;
+      }
+
+      return null;
     } catch (e) {
-      print('Error downloading video: $e');
+      debugPrint('❌ خطأ في التحميل: $e');
       return null;
     }
   }
 
-  // 🔥 دالة المشاركة المُحدَّثة
   Future<void> _shareVideo(BuildContext context) async {
     final cubit = context.read<RealsCubit>();
-    final reel = cubit.realsVide[index];
+    final reel = cubit.realsVide[widget.index];
 
-    // عرض loading
+    debugPrint('🎬 تم الضغط على زر المشاركة - Index: ${widget.index}');
+
+    if (!context.mounted) return;
+
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 16),
-              Text('جاري تحضير الفيديو...'),
-            ],
+      builder: (context) => WillPopScope(
+        onWillPop: () async => false,
+        child: Dialog(
+          backgroundColor: Colors.black87,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
+          child: Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 60.w,
+                  height: 60.w,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 4,
+                    valueColor: AlwaysStoppedAnimation<Color>(mainColor),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  'جاري تحضير الفيديو...',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
 
     try {
-      // تحميل الفيديو
-      final videoPath = await _downloadVideo(reel.video.toString());
-
-      // إغلاق loading
-      Navigator.pop(context);
-
-      if (videoPath != null) {
-        // 🔥 الحل: إضافة sharePositionOrigin للـ iPad/iOS
-        final box = context.findRenderObject() as RenderBox?;
-        final sharePositionOrigin = box != null
-            ? box.localToGlobal(Offset.zero) & box.size
-            : null;
-
-        // مشاركة الفيديو مع النص
-        final result = await Share.shareXFiles(
-          [XFile(videoPath)],
-          text: '${reel.description ?? ""}\n\nشاهد هذا الفيديو الرائع! 🎥',
-          subject: 'مشاركة فيديو',
-          sharePositionOrigin: sharePositionOrigin, // 🔥 هذا هو الحل
-        );
-
-        // حذف الملف المؤقت بعد المشاركة
-        if (result.status == ShareResultStatus.success ||
-            result.status == ShareResultStatus.dismissed) {
-          try {
-            await File(videoPath).delete();
-          } catch (e) {
-            print('Error deleting temp file: $e');
-          }
+      final hasPermission = await _requestPermissions();
+      if (!hasPermission) {
+        if (context.mounted) {
+          Navigator.pop(context);
+          _showPermissionDialog(context);
         }
-      } else {
-        // في حالة فشل التحميل، شارك الرابط فقط
-        final box = context.findRenderObject() as RenderBox?;
-        final sharePositionOrigin = box != null
-            ? box.localToGlobal(Offset.zero) & box.size
-            : null;
-
-        await Share.share(
-          '${reel.description ?? ""}\n\nشاهد هذا الفيديو: ${reel.video}',
-          subject: 'مشاركة فيديو',
-          sharePositionOrigin: sharePositionOrigin,
-        );
+        return;
       }
-    } catch (e) {
-      print('Share error: $e');
 
-      // إغلاق loading في حالة الخطأ
-      if (Navigator.canPop(context)) {
+      final videoPath = await _downloadVideo(reel.video.toString(), context);
+
+      if (context.mounted) {
         Navigator.pop(context);
       }
 
-      // مشاركة الرابط كبديل
-      try {
-        final box = context.findRenderObject() as RenderBox?;
-        final sharePositionOrigin = box != null
-            ? box.localToGlobal(Offset.zero) & box.size
-            : null;
-
-        await Share.share(
-          '${reel.description ?? ""}\n\nشاهد هذا الفيديو: ${reel.video}',
-          subject: 'مشاركة فيديو',
-          sharePositionOrigin: sharePositionOrigin,
-        );
-      } catch (shareError) {
-        print('Fallback share error: $shareError');
-
-        // عرض رسالة للمستخدم
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('حدث خطأ أثناء المشاركة'),
-            backgroundColor: Colors.red,
-          ),
-        );
+      if (videoPath != null && context.mounted) {
+        await _performShare(context, reel, videoPath);
+        _scheduleCleanup(videoPath);
+      } else {
+        if (context.mounted) {
+          await _shareLinkOnly(context, reel);
+        }
+      }
+    } catch (e) {
+      debugPrint('❌ خطأ: $e');
+      if (context.mounted) {
+        Navigator.pop(context);
+        _showErrorDialog(context, 'حدث خطأ');
       }
     }
   }
 
+  /// 🔥 الحصول على مكان الزر للـ iOS
+  Rect? _getShareButtonRect() {
+    try {
+      final RenderBox? renderBox =
+      _shareButtonKey.currentContext?.findRenderObject() as RenderBox?;
+
+      if (renderBox != null) {
+        final position = renderBox.localToGlobal(Offset.zero);
+        final size = renderBox.size;
+
+        debugPrint('📍 مكان الزر: $position, الحجم: $size');
+
+        return Rect.fromLTWH(
+          position.dx,
+          position.dy,
+          size.width,
+          size.height,
+        );
+      }
+    } catch (e) {
+      debugPrint('⚠️ خطأ في الحصول على مكان الزر: $e');
+    }
+    return null;
+  }
+
+  Future<void> _performShare(BuildContext context, dynamic reel, String videoPath) async {
+    try {
+      final xFile = XFile(
+        videoPath,
+        mimeType: 'video/mp4',
+        name: 'فيديو_falcon_${reel.id}.mp4',
+      );
+
+      String shareText = '🎥 شاهد هذا الفيديو من تطبيق Falcon';
+      if (reel.description != null && reel.description.toString().trim().isNotEmpty) {
+        shareText = '${reel.description}\n\n$shareText';
+      }
+
+      // 🔥 الحصول على مكان الزر
+      final sharePositionOrigin = _getShareButtonRect();
+
+      debugPrint('📤 المشاركة مع Position: $sharePositionOrigin');
+
+      final result = await Share.shareXFiles(
+        [xFile],
+        text: shareText,
+        subject: 'فيديو من Falcon',
+        sharePositionOrigin: sharePositionOrigin,
+      );
+
+      debugPrint('✅ نتيجة المشاركة: ${result.status}');
+
+      if (context.mounted && result.status == ShareResultStatus.success) {
+        _showSuccessSnackbar(context);
+      }
+    } catch (e) {
+      debugPrint('❌ خطأ في المشاركة: $e');
+      if (context.mounted) {
+        await _shareLinkOnly(context, reel);
+      }
+    }
+  }
+
+  Future<void> _shareLinkOnly(BuildContext context, dynamic reel) async {
+    try {
+      String shareText = '🎥 شاهد هذا الفيديو الرائع';
+
+      if (reel.description != null && reel.description.toString().trim().isNotEmpty) {
+        shareText = '${reel.description}\n\n$shareText';
+      }
+
+      shareText += '\n\n${reel.video}';
+
+      // 🔥 مع sharePositionOrigin للرابط أيضاً
+      final sharePositionOrigin = _getShareButtonRect();
+
+      await Share.share(
+        shareText,
+        subject: 'فيديو من Falcon',
+        sharePositionOrigin: sharePositionOrigin,
+      );
+
+      if (context.mounted) {
+        _showInfoSnackbar(context);
+      }
+    } catch (e) {
+      debugPrint('❌ فشل: $e');
+    }
+  }
+
+  void _scheduleCleanup(String filePath) {
+    Future.delayed(const Duration(seconds: 30), () {
+      try {
+        final file = File(filePath);
+        if (file.existsSync()) {
+          file.deleteSync();
+          debugPrint('🗑️ تم حذف الملف');
+        }
+      } catch (e) {
+        debugPrint('⚠️ خطأ في الحذف: $e');
+      }
+    });
+  }
+
+  void _showSizeWarning(BuildContext context, double sizeMB) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('الفيديو كبير (${sizeMB.toStringAsFixed(1)} MB)'),
+        duration: const Duration(seconds: 3),
+        backgroundColor: Colors.orange,
+      ),
+    );
+  }
+
+  void _showSuccessSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('تمت المشاركة بنجاح'),
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  void _showInfoSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('تمت مشاركة الرابط'),
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+
+  void _showPermissionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('صلاحيات مطلوبة'),
+        content: Text('يحتاج التطبيق للوصول للتخزين'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () {
+              openAppSettings();
+              Navigator.pop(context);
+            },
+            child: Text('الإعدادات'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('خطأ'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('حسناً'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _shareVideo(context),
-      child: ClipOval(
-        child: Container(
-          width: 45.w,
-          height: 45.w,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: mainColor.withOpacity(0.2),
-            shape: BoxShape.circle,
+    debugPrint('🔨 بناء ShareIconButton - Index: ${widget.index}');
+
+    return Column(
+      children: [
+        GestureDetector(
+          // 🔥 إضافة key هنا
+          key: _shareButtonKey,
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            debugPrint('🎯 تم الضغط على Share - Index: ${widget.index}');
+            _shareVideo(context);
+          },
+          child: Stack(
+            children: [
+              ClipOval(
+                child: Container(
+                  width: 45.w,
+                  height: 45.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: mainColor.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              PositionedDirectional(
+                start: 0,
+                bottom: 0,
+                end: 0,
+                top: 0,
+                child: Container(
+                  padding: EdgeInsets.all(10.w), // 🔥 توسيع منطقة الضغط الداخلية
+                  child: SvgPicture.asset('assets/svgs/share_reals.svg'),
+                ),
+              ),
+            ],
           ),
-          child: SvgPicture.asset('assets/svgs/share_reals.svg'),
         ),
-      ),
+        verticalSpace(5),
+        SizedBox(
+          width: 45.w,
+          child: CenterTextUtils(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            text: '', // 🔥 نفس نمط الأزرار الأخرى
+          ),
+        ),
+      ],
     );
   }
 }

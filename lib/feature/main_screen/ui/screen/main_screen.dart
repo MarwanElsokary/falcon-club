@@ -89,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               BlocProvider(
                 create: (context) => getIt<RealsCubit>()
-                  ..emitreals(pageNumber: '1', pageSize: '10', playerId: ''),
+                  ..emitreals(playerId: ''),
                 child: MainRealsScreen(
                   playerProfile: false,
                   playnowOrNot: context.read<MainCubit>().openProfile

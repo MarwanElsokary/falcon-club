@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:falcon/feature/player_profile/cubit/player_profile_state.dart';
-import 'package:falcon/feature/player_profile/data/repo/player_profile_repo.dart';
 
 import '../data/repo/skills_repo.dart';
 
