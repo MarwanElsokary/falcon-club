@@ -52,6 +52,7 @@ class _ShareIconButtonState extends State<ShareIconButton> {
         videoUrl,
         filePath,
         options: Options(
+
           receiveTimeout: const Duration(minutes: 2),
           sendTimeout: const Duration(minutes: 2),
           followRedirects: true,
@@ -69,7 +70,15 @@ class _ShareIconButtonState extends State<ShareIconButton> {
       if (await file.exists()) {
         final fileSize = await file.length();
         final fileSizeMB = fileSize / (1024 * 1024);
-        debugPrint('✅ تم التحميل: ${fileSizeMB.toStringAsFixed(2)} MB');
+
+        debugPrint('📦 حجم الملف: ${fileSizeMB.toStringAsFixed(2)} MB');
+
+        // 🔥 التحقق من أن الملف تم تحميله بنجاح (أكبر من 100 KB)
+        if (fileSize < 100 * 1024) {
+          debugPrint('❌ الملف صغير جداً ($fileSize bytes) - التحميل فشل');
+          await file.delete();
+          return null;
+        }
 
         if (fileSizeMB > 50) {
           debugPrint('⚠️ الملف كبير جداً');
@@ -93,6 +102,11 @@ class _ShareIconButtonState extends State<ShareIconButton> {
     final reel = cubit.realsVide[widget.index];
 
     debugPrint('🎬 تم الضغط على زر المشاركة - Index: ${widget.index}');
+    debugPrint('🎬 Reel ID: ${reel.id}');
+    debugPrint('🎬 Video URL: ${reel.video}');
+    debugPrint('🎬 Share Video Path: ${reel.shareVideo}');
+    debugPrint('🎬 Share Video Path is null?: ${reel.shareVideo == null}');
+    debugPrint('🎬 Share Video Path is empty?: ${reel.shareVideo?.isEmpty ?? true}');
 
     if (!context.mounted) return;
 
@@ -144,7 +158,31 @@ class _ShareIconButtonState extends State<ShareIconButton> {
         return;
       }
 
-      final videoPath = await _downloadVideo(reel.video.toString(), context);
+      String? videoPath;
+
+      // 🔥 محاولة 1: استخدام shareVideoPath
+      if (reel.shareVideo != null &&
+          reel.shareVideo!.isNotEmpty &&
+          !reel.shareVideo!.contains('.m3u8')) {
+        debugPrint('✅ محاولة 1: استخدام shareVideoPath للتحميل');
+        videoPath = await _downloadVideo(reel.shareVideo!, context);
+      }
+
+      // 🔥 محاولة 2: لو shareVideoPath فشل، جرب نحول الـ HLS لـ MP4
+      if (videoPath == null && reel.video != null) {
+        final videoUrl = reel.video.toString();
+
+        // لو الرابط .m3u8، حاول تحوله لـ .mp4
+        if (videoUrl.contains('.m3u8')) {
+          debugPrint('⚠️ محاولة 2: تحويل HLS لـ MP4');
+          final mp4Url = videoUrl.replaceAll('.m3u8', '.mp4');
+          debugPrint('🔄 المحاولة بـ: $mp4Url');
+          videoPath = await _downloadVideo(mp4Url, context);
+        } else {
+          debugPrint('⚠️ محاولة 2: استخدام video URL مباشرة');
+          videoPath = await _downloadVideo(videoUrl, context);
+        }
+      }
 
       if (context.mounted) {
         Navigator.pop(context);
@@ -154,6 +192,7 @@ class _ShareIconButtonState extends State<ShareIconButton> {
         await _performShare(context, reel, videoPath);
         _scheduleCleanup(videoPath);
       } else {
+        debugPrint('⚠️ كل المحاولات فشلت، سيتم مشاركة الرابط فقط');
         if (context.mounted) {
           await _shareLinkOnly(context, reel);
         }
@@ -200,30 +239,26 @@ class _ShareIconButtonState extends State<ShareIconButton> {
         name: 'فيديو_falcon_${reel.id}.mp4',
       );
 
-      String shareText = '🎥 شاهد هذا الفيديو من تطبيق Falcon';
-      if (reel.description != null && reel.description.toString().trim().isNotEmpty) {
-        shareText = '${reel.description}\n\n$shareText';
-      }
+      final playerName = reel.playerName ?? 'لاعب';
 
-      // 🔥 الحصول على مكان الزر
+      final shareText =
+          'فيديو اللاعب $playerName\n'
+          'تطبيق فتيت لاكتشاف المواهب الرياضية في كرة القدم\n\n'
+          'https://apps.apple.com/app/id6744823258';
+
       final sharePositionOrigin = _getShareButtonRect();
-
-      debugPrint('📤 المشاركة مع Position: $sharePositionOrigin');
 
       final result = await Share.shareXFiles(
         [xFile],
         text: shareText,
-        subject: 'فيديو من Falcon',
+        subject: 'فيديو اللاعب $playerName',
         sharePositionOrigin: sharePositionOrigin,
       );
-
-      debugPrint('✅ نتيجة المشاركة: ${result.status}');
 
       if (context.mounted && result.status == ShareResultStatus.success) {
         _showSuccessSnackbar(context);
       }
     } catch (e) {
-      debugPrint('❌ خطأ في المشاركة: $e');
       if (context.mounted) {
         await _shareLinkOnly(context, reel);
       }
@@ -231,32 +266,25 @@ class _ShareIconButtonState extends State<ShareIconButton> {
   }
 
   Future<void> _shareLinkOnly(BuildContext context, dynamic reel) async {
-    try {
-      String shareText = '🎥 شاهد هذا الفيديو الرائع';
+    final playerName = reel.playerName ?? 'لاعب';
 
-      if (reel.description != null && reel.description.toString().trim().isNotEmpty) {
-        shareText = '${reel.description}\n\n$shareText';
-      }
+    final shareText =
+        'فيديو اللاعب $playerName\n'
+        'تطبيق فتيت لاكتشاف المواهب الرياضية في كرة القدم\n\n'
+        'https://apps.apple.com/app/id6744823258';
 
-      shareText += '\n\n${reel.video}';
+    final sharePositionOrigin = _getShareButtonRect();
 
-      // 🔥 مع sharePositionOrigin للرابط أيضاً
-      final sharePositionOrigin = _getShareButtonRect();
+    await Share.share(
+      shareText,
+      subject: 'فيديو اللاعب $playerName',
+      sharePositionOrigin: sharePositionOrigin,
+    );
 
-      await Share.share(
-        shareText,
-        subject: 'فيديو من Falcon',
-        sharePositionOrigin: sharePositionOrigin,
-      );
-
-      if (context.mounted) {
-        _showInfoSnackbar(context);
-      }
-    } catch (e) {
-      debugPrint('❌ فشل: $e');
+    if (context.mounted) {
+      _showInfoSnackbar(context);
     }
   }
-
   void _scheduleCleanup(String filePath) {
     Future.delayed(const Duration(seconds: 30), () {
       try {
