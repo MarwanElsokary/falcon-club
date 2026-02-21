@@ -15,6 +15,7 @@ class RealModel {
   dynamic pageSize;
   dynamic totalPages;
 
+
   RealModel({
     required this.data,
     required this.totalCount,
@@ -53,6 +54,8 @@ class RealsVide {
   dynamic isLiked;
   dynamic isMyReel;
   List<Comment> comments;
+  final String? shareVideo;   // رابط مباشر للفيديو القابل للتحميل
+
 
   RealsVide({
     required this.id,
@@ -66,7 +69,7 @@ class RealsVide {
     required this.commentsCount,
     required this.isLiked,
     required this.isMyReel,
-    required this.comments,
+    required this.comments, this.shareVideo,
   });
 
   factory RealsVide.fromJson(Map<String, dynamic> json) => RealsVide(
@@ -77,6 +80,7 @@ class RealsVide {
     description: json["description"],
     playerName: json["playerName"],
     playerPhoto: json["playerPhoto"],
+    shareVideo: json["shareVideo"],
     likesCount: json["likesCount"],
     commentsCount: json["commentsCount"],
     isLiked: json["isLiked"],
@@ -94,6 +98,7 @@ class RealsVide {
     "description": description,
     "playerName": playerName,
     "playerPhoto": playerPhoto,
+    "shareVideo": shareVideo,
     "likesCount": likesCount,
     "commentsCount": commentsCount,
     "isLiked": isLiked,

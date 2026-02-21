@@ -18,6 +18,16 @@ class PackageRepo {
     }
   }
 
+  //getTermsAndPolicies
+  Future<ApiResult> getTermsAndPolicies() async {
+    try {
+      final response = await _apiService.getTermsAndPolicies();
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
+
   //payPackage
   Future<ApiResult> payPackage({required payPackageBody}) async {
     try {

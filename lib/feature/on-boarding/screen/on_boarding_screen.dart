@@ -77,7 +77,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             controller: _pageController,
             children: [
               OnBoardingFirstScreen(
-                onBoardingImage: 'assets/images/Group 441 1.png',
+                onBoardingImage: 'assets/images/iPhone 16 Pro Max - 47 2.png',
               ),
               OnBoardingFirstScreen(
                 onBoardingImage: 'assets/images/Group 440 1.png',

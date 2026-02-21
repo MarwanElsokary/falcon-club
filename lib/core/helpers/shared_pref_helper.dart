@@ -16,15 +16,22 @@ class SharedPrefHelper {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove(key);
   }
+
   // أضف هذه الدالة في LoginCubit
   Future<void> debugPrintSharedPrefs() async {
-    final userId = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userId);
-    final token = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
+    final userId = await SharedPrefHelper.getSecuredString(
+      SharedPrefKeys.userId,
+    );
+    final token = await SharedPrefHelper.getSecuredString(
+      SharedPrefKeys.userToken,
+    );
 
     log('🔍 Debug SharedPreferences:');
     log('userId: $userId');
     log('userToken: $token');
-    log('isCompleted: ${await SharedPrefHelper.getBool(SharedPrefKeys.isCompleted)}');
+    log(
+      'isCompleted: ${await SharedPrefHelper.getBool(SharedPrefKeys.isCompleted)}',
+    );
   }
 
   static Future<void> setBool(String key, bool value) async {
@@ -126,4 +133,42 @@ class SharedPrefHelper {
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.deleteAll();
   }
+
+  static Future<void> setJson(String key, String json) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, json);
+  }
+
+  static Future<String?> getJson(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
+  }
+
+  static Future<void> setCacheTime(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(key, DateTime.now().millisecondsSinceEpoch);
+  }
+
+  static Future<int?> getCacheTime(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key);
+  }
+
+  static Future<bool> isCacheValid({
+    required String timeKey,
+    required Duration maxAge,
+  }) async {
+    final cachedTime = await getCacheTime(timeKey);
+    if (cachedTime == null) return false;
+
+    final now = DateTime.now().millisecondsSinceEpoch;
+    return (now - cachedTime) <= maxAge.inMilliseconds;
+  }
+
+  static Future<void> clearCache(String dataKey, String timeKey) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(dataKey);
+    await prefs.remove(timeKey);
+  }
+
 }

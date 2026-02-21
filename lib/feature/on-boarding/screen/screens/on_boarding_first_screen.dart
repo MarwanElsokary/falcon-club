@@ -19,7 +19,7 @@ class _OnBoardingFirstScreenState extends State<OnBoardingFirstScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.onBoardingImage == 'assets/images/Group 441 1.png'
+    return widget.onBoardingImage == 'assets/images/iPhone 16 Pro Max - 47 2.png'
         ? Column(
             children: [
               Container(

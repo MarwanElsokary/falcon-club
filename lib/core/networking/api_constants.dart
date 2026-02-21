@@ -114,6 +114,7 @@ class ApiConstants {
 
   //deletAccount
   static const String deleteAccount = "delete-account";
+  static const String getTermsAndPolicies = "/Account/GetTermsAndPolicies";
 
   static const String forgetPasswordByPhone =
       '/Account/ForgetPasswordByOtpPhone';

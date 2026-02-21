@@ -36,11 +36,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // int currentIndex = 0;
   @override
   void initState() {
     super.initState();
-    // context.read<MainCubit>().emitMyProfile();
+    // 🔥 تفعيل استدعاء الـ API
+    context.read<MainCubit>().emitMyProfile();
   }
 
   @override
@@ -58,13 +58,13 @@ class _MainScreenState extends State<MainScreen> {
                 providers: [
                   BlocProvider(
                     create: (context) =>
-                        getIt<ExperimentsCubit>()
-                          ..emitbestTrials(categoryId: ''),
+                    getIt<ExperimentsCubit>()
+                      ..emitbestTrials(categoryId: ''),
                   ),
                   BlocProvider(
                     create: (context) =>
-                        getIt<TrainingCubit>()
-                          ..emitallExercises(categoryId: '', popular: true),
+                    getIt<TrainingCubit>()
+                      ..emitallExercises(categoryId: '', popular: true),
                   ),
                 ],
                 child: const HomeScreen(),
@@ -79,17 +79,17 @@ class _MainScreenState extends State<MainScreen> {
 
               CreatRealScreen(
                 playAnimation:
-                    context.read<MainCubit>().currentIndex.value == 2,
+                context.read<MainCubit>().currentIndex.value == 2,
               ),
               BlocProvider(
                 create: (context) =>
-                    getIt<TrainingCubit>()
-                      ..emitallExercises(categoryId: '', popular: false),
+                getIt<TrainingCubit>()
+                  ..emitallExercises(categoryId: '', popular: false),
                 child: const TrainingScreen(),
               ),
               BlocProvider(
                 create: (context) => getIt<RealsCubit>()
-                  ..emitreals(pageNumber: '1', pageSize: '10', playerId: ''),
+                  ..emitreals(playerId: ''),
                 child: MainRealsScreen(
                   playerProfile: false,
                   playnowOrNot: context.read<MainCubit>().openProfile
@@ -134,11 +134,10 @@ class _MainScreenState extends State<MainScreen> {
                                               'assets/images/Subtract.png',
                                             ),
                                           ),
-                                          // color: Colors.white,
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                           children: List.generate(5, (index) {
                                             bool isSelected =
                                                 currentIndex == index;
@@ -149,21 +148,20 @@ class _MainScreenState extends State<MainScreen> {
                                                   if (index != 2) {
                                                     setState(() {
                                                       context
-                                                              .read<MainCubit>()
-                                                              .currentIndex
-                                                              .value =
+                                                          .read<MainCubit>()
+                                                          .currentIndex
+                                                          .value =
                                                           index;
                                                     });
                                                   }
                                                   print(currentIndex);
-                                                  // context.read<MainCubit>().playVideo();
                                                 },
                                                 splashColor: Colors.transparent,
                                                 highlightColor:
-                                                    Colors.transparent,
+                                                Colors.transparent,
                                                 child: Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                                   children: [
                                                     // Icon
                                                     SizedBox(
@@ -185,9 +183,9 @@ class _MainScreenState extends State<MainScreen> {
                                                       color: isSelected
                                                           ? mainColor
                                                           : mainColor
-                                                                .withOpacity(
-                                                                  0.5,
-                                                                ),
+                                                          .withOpacity(
+                                                        0.5,
+                                                      ),
                                                       text: title[index],
                                                     ),
                                                     verticalSpace(5),
@@ -216,7 +214,7 @@ class _MainScreenState extends State<MainScreen> {
                                     ],
                                   ),
                                   ProfileCheckWrapper(
-                                    showInHome: true, // النسخة المصغرة للـ drawer
+                                    showInHome: true,
                                     child: const SizedBox.shrink(),
                                   ),
                                   PositionedDirectional(
@@ -228,10 +226,10 @@ class _MainScreenState extends State<MainScreen> {
                                         print('object');
                                         setState(() {
                                           context
-                                                  .read<MainCubit>()
-                                                  .currentIndex
-                                                  .value =
-                                              2;
+                                              .read<MainCubit>()
+                                              .currentIndex
+                                              .value =
+                                          2;
                                         });
                                       },
                                     ),

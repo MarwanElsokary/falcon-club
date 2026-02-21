@@ -1,24 +1,25 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/widget/text_utils.dart';
 import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
-import 'package:falcon/feature/reals/ui/widget/stop_and_mute_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../cubit/reals_cubit.dart';
 import '../../data/model/real_model.dart';
-import '../widget/comment_button_widget.dart';
-import '../widget/fav_reals_widget.dart';
-import '../widget/share_icon_button.dart';
-import '../widget/video_user_data_widget.dart';
+import '../widget/loadingMoreIndicator.dart';
+import '../widget/realsUserInfoOverlay.dart';
+import '../widget/reals_actions_overlay ·.dart';
+import '../widget/refreshIndicatorOverlay.dart';
+import '../widget/stop_and_mute_widget.dart';
+import '../widget/video_player_manager.dart';
+import '../widget/video_player_widget.dart';
+import '../widget/video_preloader.dart';
 
+/// 🎬 Reals Screen
+/// الشاشة الرئيسية لعرض الفيديوهات
 class RealsScreen extends StatefulWidget {
   const RealsScreen({
     super.key,
@@ -26,6 +27,7 @@ class RealsScreen extends StatefulWidget {
     required this.playnowOrNot,
     required this.playerProfile,
   });
+
   final Function() ontap;
   final bool playnowOrNot;
   final bool playerProfile;
@@ -35,341 +37,314 @@ class RealsScreen extends StatefulWidget {
 }
 
 class _RealsScreenState extends State<RealsScreen> {
-  final ScrollController _scrollController = ScrollController();
+  // Controllers
+  late PageController _pageController;
+  late VideoPlayerManager _videoManager;
+
+  // State
   int _currentIndex = 0;
-  int lastIndex = 0;
+  int _lastIndex = 0;
+  bool _isPlayNow = true;
+  bool _isRefreshing = false;
+  bool _iOpenItNow = false;
 
-  /// ⭐ بدل _videos الثابتة
+  // Data
   List<RealsVide> get reals => context.read<RealsCubit>().realsVide;
-
-  final Map<int, int> _viewIds = {};
-  final Map<int, bool> _muted = {};
-  final Map<int, bool> _isPlaying = {};
-  bool isPlayNow = true;
 
   @override
   void initState() {
     super.initState();
-    log('initState');
+    log('initState - RealsScreen');
 
-    /// تهيئة mute / play لكل فيديو
-    for (int i = 0; i < reals.length; i++) {
-      _muted[i] = false;
-      _isPlaying[i] = false;
+    _pageController = PageController(initialPage: 0, keepPage: true);
+    _videoManager = VideoPlayerManager();
+    _videoManager.initializeFirstVideos(reals.length);
+  }
+
+  @override
+  void dispose() {
+    _videoManager.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  // ========================================================================
+  // LIFECYCLE METHODS
+  // ========================================================================
+
+  void _handlePlaybackState() {
+    if (widget.playnowOrNot) {
+      if (_videoManager.viewIds.containsKey(_lastIndex) && !_iOpenItNow) {
+        _videoManager.playVideo(_lastIndex);
+      }
+      _iOpenItNow = true;
+    } else {
+      _iOpenItNow = false;
+      if (_videoManager.viewIds.containsKey(_lastIndex)) {
+        _videoManager.pauseVideo(_lastIndex);
+      }
     }
   }
 
-  void _pauseAllExcept(int currentIndex) {
-    _viewIds.forEach((index, viewId) {
-      if (index != currentIndex) {
-        final channel = MethodChannel('native-video-view-$viewId');
-        channel.invokeMethod('pause');
-        _isPlaying[index] = false;
-      }
+  // ========================================================================
+  // VIDEO CALLBACKS
+  // ========================================================================
+
+  void _onViewCreated(int index, int viewId) {
+    _videoManager.registerView(index, viewId);
+
+    if (index == 0 && _currentIndex == 0) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        _videoManager.playVideo(index);
+      });
+    }
+  }
+
+  void _onPageChanged(int index) {
+    if (index != _currentIndex) {
+      _currentIndex = index;
+      _lastIndex = index;
+      _videoManager.playVideo(_currentIndex);
+
+      VideoPreloader.smartPreload(
+        allVideoUrls: reals.map((e) => e.video.toString()).toList(),
+        currentIndex: index,
+      );
+
+      _videoManager.cleanupOldViews(index);
+      _loadMoreIfNeeded(index);
+    }
+  }
+
+  void _onVideoTap(int index) {
+    _lastIndex = index;
+    _videoManager.togglePlay(index);
+    setState(() {
+      _isPlayNow = _videoManager.isPlaying[index] ?? false;
     });
   }
 
-  void _onViewCreated(int index, int viewId) {
-    _viewIds[index] = viewId;
-
-    if (index == 0) {
-      _playVideo(index);
-      _smartPreload(index);
-    }
+  void _onMuteTap(int index) {
+    _lastIndex = index;
+    _videoManager.toggleMute(index);
+    setState(() {});
   }
 
-  void _smartPreload(int currentIndex) {
+  // ========================================================================
+  // REFRESH & PAGINATION
+  // ========================================================================
+
+  Future<void> _handleRefresh() async {
+    if (_isRefreshing) return;
+
+    setState(() => _isRefreshing = true);
+
     try {
-      const channel = MethodChannel('video-preloader');
-      channel.invokeMethod('preload', {
-        'urls': reals.map((e) => e.video.toString()).toList(),
-        'currentIndex': currentIndex,
-      });
+      await _videoManager.pauseAllExcept(-1);
+
+      final playerId = ''; // TODO: احصل على playerId الصحيح
+      await context.read<RealsCubit>().refreshReals(playerId: playerId);
+
+      _videoManager.dispose();
+      _videoManager = VideoPlayerManager();
+      _videoManager.initializeFirstVideos(reals.length);
+
+      _currentIndex = 0;
+      _lastIndex = 0;
+
+      if (_pageController.hasClients) {
+        await _pageController.animateToPage(
+          0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
     } catch (e) {
-      debugPrint('❌ Preload error: $e');
+      log('⚠️ Refresh error: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isRefreshing = false);
+      }
     }
   }
 
-  void _playVideo(int index) {
-    lastIndex = index;
+  void _loadMoreIfNeeded(int index) {
+    final cubit = context.read<RealsCubit>();
 
-    if (!_viewIds.containsKey(index)) return;
-
-    final viewId = _viewIds[index]!;
-    final channel = MethodChannel('native-video-view-$viewId');
-
-    _pauseAllExcept(index);
-
-    channel.invokeMethod('play');
-    _isPlaying[index] = true;
-
-    setState(() {});
-    _smartPreload(index);
-  }
-
-  void _pauseVideo(int index) {
-    lastIndex = index;
-
-    if (!_viewIds.containsKey(index)) return;
-
-    final viewId = _viewIds[index]!;
-    final channel = MethodChannel('native-video-view-$viewId');
-
-    channel.invokeMethod('pause');
-    _isPlaying[index] = false;
-
-    setState(() {});
-  }
-
-  void _togglePlay(int index) {
-    lastIndex = index;
-
-    if (_isPlaying[index] == true) {
-      _pauseVideo(index);
-      isPlayNow = false;
-    } else {
-      isPlayNow = true;
-      _playVideo(index);
+    if (index >= reals.length - 2 &&
+        !cubit.isLoadingMore &&
+        cubit.hasMoreData) {
+      final playerId = ''; // TODO: احصل على playerId الصحيح
+      cubit.loadMoreReals(playerId: playerId);
     }
   }
 
-  void _toggleMute(int index) {
-    lastIndex = index;
+  // ========================================================================
+  // USER INTERACTION CALLBACKS
+  // ========================================================================
 
-    if (!_viewIds.containsKey(index)) return;
+  Future<void> _onUserProfileTap() async {
+    if (_videoManager.viewIds.containsKey(_lastIndex)) {
+      await _videoManager.pauseVideo(_lastIndex);
+    }
 
-    final viewId = _viewIds[index]!;
-    final channel = MethodChannel('native-video-view-$viewId');
-
-    _muted[index] = !(_muted[index] ?? false);
-    channel.invokeMethod('setVolume', {'muted': _muted[index]});
-
-    setState(() {});
+    context.read<MainCubit>().openProfile = true;
+    await Future.delayed(const Duration(milliseconds: 500));
+    _iOpenItNow = false;
   }
 
-  bool iOpenItNow = false;
+  // ========================================================================
+  // BUILD
+  // ========================================================================
 
   @override
   Widget build(BuildContext context) {
-    /// ⛔ إغلاق وفتح الفيديو عند الرجوع للشاشة
-    if (widget.playnowOrNot) {
-      if (_viewIds.containsKey(lastIndex) && !iOpenItNow) {
-        final viewId = _viewIds[lastIndex]!;
-        final channel = MethodChannel('native-video-view-$viewId');
-
-        _pauseAllExcept(lastIndex);
-        channel.invokeMethod('play');
-        _isPlaying[lastIndex] = true;
-      }
-      iOpenItNow = true;
-    } else {
-      iOpenItNow = false;
-      if (_viewIds.containsKey(lastIndex)) {
-        final viewId = _viewIds[lastIndex]!;
-        final channel = MethodChannel('native-video-view-$viewId');
-        channel.invokeMethod('pause');
-        _isPlaying[lastIndex] = false;
-      }
-    }
+    _handlePlaybackState();
 
     return PopScope(
       onPopInvoked: (didPop) {
-        if (_viewIds.containsKey(lastIndex)) {
-          final viewId = _viewIds[lastIndex]!;
-          final channel = MethodChannel('native-video-view-$viewId');
-          channel.invokeMethod('pause');
-          _isPlaying[lastIndex] = false;
+        if (_videoManager.viewIds.containsKey(_lastIndex)) {
+          _videoManager.pauseVideo(_lastIndex);
         }
       },
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Stack(
           children: [
-            NotificationListener<ScrollEndNotification>(
-              onNotification: (notification) {
-                final index =
-                    (_scrollController.offset /
-                            MediaQuery.of(context).size.height)
-                        .round();
-
-                if (index != _currentIndex) {
-                  _currentIndex = index;
-                  _playVideo(_currentIndex);
-                }
-
-                return true;
-              },
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: EdgeInsets.zero,
-                physics: const PageScrollPhysics(),
-
-                /// ⭐ هنا عدد الريلز الحقيقية
-                itemCount: reals.length,
-
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Center(
-                          child: Lottie.asset(
-                            'assets/lottie/load.json',
-                            width: 100,
-                            height: 100,
-                          ),
-                        ),
-
-                        /// ⭐ تشغيل الفيديو من API
-                        GestureDetector(
-                          onTap: () => _togglePlay(index),
-                          child: SizedBox(
-                            height: context.displayHeight,
-                            width: context.displayWidth,
-                            child: Platform.isAndroid
-                                ? AndroidView(
-                                    viewType: 'native-video-view',
-                                    creationParams: {
-                                      'url': reals[index].video.toString(),
-                                      'index': index,
-                                    },
-                                    creationParamsCodec:
-                                        const StandardMessageCodec(),
-                                    onPlatformViewCreated: (viewId) =>
-                                        _onViewCreated(index, viewId),
-                                  )
-                                : UiKitView(
-                                    viewType: 'native-video-view',
-                                    creationParams: {
-                                      'url': reals[index].video.toString(),
-                                      'index': index,
-                                    },
-                                    creationParamsCodec:
-                                        const StandardMessageCodec(),
-                                    onPlatformViewCreated: (viewId) =>
-                                        _onViewCreated(index, viewId),
-                                  ),
-                          ),
-                        ),
-
-                        PositionedDirectional(
-                          end: 20.w,
-                          bottom: widget.playerProfile ? 20.h : 100.h,
-                          start: 20.w,
-                          top: 0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              FavRealsWidget(
-                                key: ValueKey(reals[index].id),
-                                index: index,
-                              ),
-                              verticalSpace(10),
-                              CommentButtonWidget(
-                                index: index,
-                                onTap: widget.ontap,
-                              ),
-                              verticalSpace(10),
-                              ShareIconButton(),
-                            ],
-                          ),
-                        ),
-
-                        PositionedDirectional(
-                          bottom: widget.playerProfile ? 20.h : 110.h,
-                          start: 20.w,
-                          end: 75.w,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: VideoUserDataWidget(
-                                  playerProfile: widget.playerProfile,
-                                  index: index,
-                                  onTab: () async {
-                                    if (_viewIds.containsKey(lastIndex)) {
-                                      final viewId = _viewIds[lastIndex]!;
-                                      final channel = MethodChannel(
-                                        'native-video-view-$viewId',
-                                      );
-                                      channel.invokeMethod('pause');
-                                      _isPlaying[lastIndex] = false;
-                                    }
-                                    context.read<MainCubit>().openProfile =
-                                        true;
-
-                                    await Future.delayed(
-                                      const Duration(milliseconds: 500),
-                                    );
-
-                                    iOpenItNow = false;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        PositionedDirectional(
-                          end: 70.w,
-                          top: 0,
-                          bottom: 180.h,
-                          start: 0,
-                          child: InkWell(
-                            onTap: () => _togglePlay(index),
-                            child: Visibility(
-                              visible: !isPlayNow,
-                              child: StopAndMuteWidget(
-                                isPlaying: _isPlaying[index] ?? false,
-                                muted: _muted[index] ?? false,
-                                toggleMute: () => _toggleMute(index),
-                                togglePlay: () => _togglePlay(index),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+            // Main Content
+            RefreshIndicator(
+              onRefresh: _handleRefresh,
+              color: Colors.white,
+              backgroundColor: Colors.grey[900],
+              strokeWidth: 3,
+              displacement: 80,
+              child: _buildPageView(),
             ),
-            Visibility(
-              visible: widget.playerProfile,
-              child: PositionedDirectional(
-                top: 40.w,
-                start: 0.w,
-                end: 20.w,
-                child: InkWell(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: Row(
-                    children: [
-                      BackButton(color: Colors.white),
-                      Expanded(
-                        child: TextUtils(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          text: 'الرجوع'.tr(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+
+            // Back Button (للـ Profile)
+            if (widget.playerProfile) _buildBackButton(),
+
+            // Refresh Indicator Overlay
+            if (_isRefreshing) const RefreshIndicatorOverlay(),
           ],
         ),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+  // ========================================================================
+  // BUILD HELPERS
+  // ========================================================================
+
+  Widget _buildPageView() {
+    return PageView.builder(
+      controller: _pageController,
+      scrollDirection: Axis.vertical,
+      physics: const ClampingScrollPhysics(),
+      itemCount: reals.length,
+      onPageChanged: _onPageChanged,
+      itemBuilder: (context, index) {
+        _videoManager.initializeVideo(index);
+        return _buildVideoPage(index);
+      },
+    );
+  }
+
+  Widget _buildVideoPage(int index) {
+    final reel = reals[index];
+
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Video Player
+          VideoPlayerWidget(
+            videoUrl: reel.video.toString(),
+            index: index,
+            onPlatformViewCreated: (viewId) => _onViewCreated(index, viewId),
+            onTap: () => _onVideoTap(index),
+          ),
+
+          // Actions Overlay
+          RealsActionsOverlay(
+            index: index,
+            reelId: reel.id,
+            playerProfile: widget.playerProfile,
+            onCommentTap: widget.ontap,
+          ),
+
+          // User Info Overlay
+          RealsUserInfoOverlay(
+            index: index,
+            playerProfile: widget.playerProfile,
+            onUserTap: _onUserProfileTap,
+          ),
+
+          // Play/Pause Overlay
+          _buildPlayPauseOverlay(index),
+
+          // Loading More Indicator
+          if (index == reals.length - 1 &&
+              context.watch<RealsCubit>().isLoadingMore)
+            const LoadingMoreIndicator(),
+        ],
+      ),
+    );
+  }
+
+  // 🔥 الحل: تعديل _buildPlayPauseOverlay عشان ما يغطيش على الأزرار
+  // 🔥 التعديل في reals_screen.dart - دالة _buildPlayPauseOverlay
+  Widget _buildPlayPauseOverlay(int index) {
+    return PositionedDirectional(
+      // 🔥 جعل المنطقة اليمين أصغر لتجنب تغطية الأزرار
+      end: 100.w,
+      // ⬅️ زيادة المساحة
+      top: 0,
+      bottom: 200.h,
+      // ⬅️ تأكد من عدم تغطية منطقة الأزرار السفلية
+      start: 0,
+      child: IgnorePointer(
+        // ⬅️ إضافة IgnorePointer لمنع التقاط النقرات
+        ignoring: !_isPlayNow, // ⬅️ يتجاهل النقرات عندما تكون visible
+        child: Visibility(
+          visible: !_isPlayNow,
+          child: Container(
+            color: Colors.transparent, // ⬅️ لون شفاف
+            child: StopAndMuteWidget(
+              isPlaying: _videoManager.isPlaying[index] ?? false,
+              muted: _videoManager.muted[index] ?? false,
+              toggleMute: () => _onMuteTap(index),
+              togglePlay: () => _onVideoTap(index),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackButton() {
+    return PositionedDirectional(
+      top: 40.w,
+      start: 0.w,
+      end: 20.w,
+      child: InkWell(
+        onTap: () => context.pop(),
+        child: Row(
+          children: [
+            const BackButton(color: Colors.white),
+            Expanded(
+              child: TextUtils(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                text: 'الرجوع'.tr(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

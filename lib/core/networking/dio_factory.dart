@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../helpers/constants.dart';
 import '../helpers/shared_pref_helper.dart';
@@ -10,6 +11,8 @@ class DioFactory {
   DioFactory._();
 
   static Dio? dio;
+  static bool isRefreshing = false;
+
 
   static Dio getDio() {
     Duration timeOut = const Duration(seconds: 30);
@@ -55,13 +58,15 @@ class DioFactory {
   }
 
   static void addDioInterceptor() {
-    dio?.interceptors.add(
-      PrettyDioLogger(
-        requestBody: true,
-        requestHeader: true,
-        responseHeader: true,
-      ),
-    );
+    if (kDebugMode) {
+      dio?.interceptors.add(
+        PrettyDioLogger(
+          requestBody: true,
+          responseBody: false,
+        ),
+      );
+    }
+
   }
 
   /// Add token refresh interceptor
@@ -70,11 +75,11 @@ class DioFactory {
       InterceptorsWrapper(
         onError: (error, handler) async {
           // Check if the error is due to an unauthorized request (token expired)
-          if (error.response?.statusCode == 401 &&
-              error.response?.data['message'] == 'Token expired') {
-            // Attempt to refresh the token
+          if (error.response?.statusCode == 401 && !isRefreshing) {
+            isRefreshing = true;
             try {
               final newToken = await refreshToken();
+              isRefreshing = false;
               if (newToken != null) {
                 // Update the header with the new token
                 setTokenIntoHeaderAfterLogin(newToken);
@@ -82,13 +87,21 @@ class DioFactory {
                 // Retry the original request with the new token
                 final options = error.response!.requestOptions;
                 options.headers['Authorization'] = 'Bearer $newToken';
-                final response = await dio!.fetch(options);
+                final response = await dio!.request(
+                  options.path,
+                  data: options.data,
+                  queryParameters: options.queryParameters,
+                  options: Options(
+                    method: options.method,
+                    headers: options.headers,
+                  ),
+                );
                 return handler.resolve(response);
               }
             } catch (e) {
               // If token refresh fails, propagate the error
-              return handler.reject(error);
-            }
+              isRefreshing = false;
+              return handler.reject(error);            }
           }
           // Propagate other errors
           return handler.next(error);

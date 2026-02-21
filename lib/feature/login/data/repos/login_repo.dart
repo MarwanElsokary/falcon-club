@@ -30,6 +30,7 @@ class LoginRepo {
     }
   }
 
+
   Future<ApiResult> register(loginRequestBody) async {
     try {
       final response = await _apiService.register(loginRequestBody);
@@ -85,6 +86,15 @@ class LoginRepo {
       return ApiResult.success(response);
     } catch (errro) {
       return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
+  //getTermsAndPolicies
+  Future<ApiResult> getTermsAndPolicies() async {
+    try {
+      final response = await _apiService.getTermsAndPolicies();
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
 }
