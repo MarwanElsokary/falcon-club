@@ -1,10 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/cubit/user_type_cubit.dart';
+import 'package:falcon/core/enums/user_type.dart';
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/routing/routes.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widget/filter_chips_widget.dart';
@@ -97,11 +100,15 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
                       ),
                       itemCount: players.length,
                       itemBuilder: (context, index) {
+                        final userType = context.read<UserTypeCubit>().state;
                         return PlayerCardWidget(
                           player: players[index],
-                          onInviteTap: () {
-                            _showInvitationDialog(context, players[index]);
-                          },
+                          onInviteTap: userType.canSendInvitations
+                              ? () {
+                                  _showInvitationDialog(
+                                      context, players[index]);
+                                }
+                              : null,
                         );
                       },
                     ),

@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../core/enums/user_type.dart';
 import '../../../core/helpers/constants.dart';
 import '../../../core/helpers/shared_pref_helper.dart';
 import '../../../core/networking/dio_factory.dart';
@@ -36,6 +37,9 @@ class LoginCubit extends Cubit<LoginState> {
   String codeCountry = '+966';
   bool isAvailable = false;
   List<String> termsAndPolicies = [];
+
+  /// User type selected during registration (club or scout).
+  UserType selectedUserType = UserType.club;
 
 
   // Profile data
@@ -102,6 +106,7 @@ class LoginCubit extends Cubit<LoginState> {
         "Email": controller.email.text,
         "CodePhoneNumber": codeCountry,
         "Password": controller.password.text,
+        "UserType": selectedUserType.toValue(),
         if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
       }),
     );
@@ -109,6 +114,12 @@ class LoginCubit extends Cubit<LoginState> {
     response.when(
       success: (data) async {
         await _saveAuthData(data);
+        // Save the selected user type locally
+        await SharedPrefHelper.setData(
+          SharedPrefKeys.userType,
+          selectedUserType.toValue(),
+        );
+        log('✅ UserType saved during registration: ${selectedUserType.toValue()}');
         emit(LoginState.registersuccess(data));
       },
       failure: (error) {
@@ -424,6 +435,14 @@ class LoginCubit extends Cubit<LoginState> {
       SharedPrefKeys.isCompleted,
       isCompleted,
     );
+
+    // ===== UserType =====
+    final userTypeValue = response['userType']?.toString() ??
+        response['user']?['userType']?.toString();
+    if (userTypeValue != null && userTypeValue.isNotEmpty) {
+      await SharedPrefHelper.setData(SharedPrefKeys.userType, userTypeValue);
+      log('✅ UserType saved from API: $userTypeValue');
+    }
 
     log('✅ IsCompleted saved: $isCompleted');
   }

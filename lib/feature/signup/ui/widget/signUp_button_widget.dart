@@ -13,6 +13,7 @@ import 'package:falcon/core/widget/button_utils.dart';
 import 'package:falcon/core/widget/loading_button_utils.dart';
 import 'package:falcon/core/widget/show_error_snack_bar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../../../../core/enums/user_type.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
@@ -21,6 +22,7 @@ import '../../../../core/widget/slide_enimation_widget.dart';
 import '../../../../core/widget/text_utils.dart';
 import '../../../login/cubit/login_cubit.dart';
 import '../../../login/cubit/login_state.dart';
+import '../screen/user_type_selection_screen.dart';
 
 class SignupButtonWidget extends StatefulWidget {
   const SignupButtonWidget({super.key, required this.update});
@@ -219,7 +221,7 @@ class _SignupButtonWidgetState extends State<SignupButtonWidget> {
                   if (!widget.update) verticalSpace(10),
                   ButtonUtils(
                     text: widget.update ? 'تعديل'.tr() : 'انشاء حساب'.tr(),
-                    onPressed: () {
+                    onPressed: () async {
                       // 🔥 التحقق من الموافقة على الشروط (فقط عند إنشاء حساب)
                       if (!widget.update && !_agreedToTerms) {
                         showErrorSnackBar(
@@ -237,7 +239,19 @@ class _SignupButtonWidgetState extends State<SignupButtonWidget> {
                         if (widget.update) {
                           context.read<LoginCubit>().emitupdateProfileStates();
                         } else {
-                          context.read<LoginCubit>().emitregisterStates();
+                          // Navigate to UserTypeSelectionScreen first
+                          final selectedType = await Navigator.push<UserType>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const UserTypeSelectionScreen(),
+                            ),
+                          );
+
+                          // If user selected a type, proceed with registration
+                          if (selectedType != null && context.mounted) {
+                            context.read<LoginCubit>().selectedUserType = selectedType;
+                            context.read<LoginCubit>().emitregisterStates();
+                          }
                         }
                       } else {
                         showErrorSnackBar(

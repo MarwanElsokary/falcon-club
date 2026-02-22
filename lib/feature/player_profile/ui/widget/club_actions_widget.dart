@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/cubit/user_type_cubit.dart';
+import 'package:falcon/core/enums/user_type.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../invitation/ui/screen/send_invitation_screen.dart';
@@ -20,6 +23,9 @@ class ClubActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userType = context.watch<UserTypeCubit>().state;
+    final bool canInvite = userType.canSendInvitations;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
@@ -27,28 +33,30 @@ class ClubActionsWidget extends StatelessWidget {
           // Action buttons row
           Row(
             children: [
-              // Send Invitation
-              Expanded(
-                child: _buildActionButton(
-                  context: context,
-                  icon: Icons.mail_outline,
-                  label: 'ارسال دعوة'.tr(),
-                  color: mainColor,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SendInvitationScreen(
-                          playerId: playerId,
-                          playerName: playerName,
+              // Send Invitation (club only)
+              if (canInvite) ...[
+                Expanded(
+                  child: _buildActionButton(
+                    context: context,
+                    icon: Icons.mail_outline,
+                    label: 'ارسال دعوة'.tr(),
+                    color: mainColor,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => SendInvitationScreen(
+                            playerId: playerId,
+                            playerName: playerName,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-              horizontalSpace(8),
-              // Add Note
+                horizontalSpace(8),
+              ],
+              // Add Note (both club and scout)
               Expanded(
                 child: _buildActionButton(
                   context: context,
@@ -69,7 +77,7 @@ class ClubActionsWidget extends StatelessWidget {
                 ),
               ),
               horizontalSpace(8),
-              // Create Report
+              // Create Report (both club and scout)
               Expanded(
                 child: _buildActionButton(
                   context: context,

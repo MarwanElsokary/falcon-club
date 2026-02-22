@@ -10,6 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/cubit/user_type_cubit.dart';
+import '../../../../core/enums/user_type.dart';
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
@@ -45,14 +47,14 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // في ملف custom_drawer.dart
-    // ابحث عن List itemData واضف العنصر ده بعد التدريبات وقبل سياسة الخصوصية:
+    final userType = context.watch<UserTypeCubit>().state;
+    final bool isClub = userType == UserType.club;
 
     List itemData = [
       {
         'width': 20.w,
         'icon': 'assets/svgs/profile.svg',
-        'title': 'حساب النادي'.tr(),
+        'title': isClub ? 'حساب النادي'.tr() : 'حسابي'.tr(),
         'ontap': () {
           context.pushNamed(
             AppRoute.playerProfile,
@@ -87,14 +89,16 @@ class CustomDrawer extends StatelessWidget {
           context.pushNamed(AppRoute.playersListScreen);
         },
       },
-      {
-        'width': 20.w,
-        'icon': 'assets/svgs/Training_select.svg',
-        'title': 'فريق النادي'.tr(),
-        'ontap': () {
-          context.pushNamed(AppRoute.clubTeamScreen);
+      // Club-only: Team management
+      if (isClub)
+        {
+          'width': 20.w,
+          'icon': 'assets/svgs/Training_select.svg',
+          'title': 'فريق النادي'.tr(),
+          'ontap': () {
+            context.pushNamed(AppRoute.clubTeamScreen);
+          },
         },
-      },
       {
         'width': 20.w,
         'icon': 'assets/svgs/rank_icon.svg',
@@ -122,7 +126,6 @@ class CustomDrawer extends StatelessWidget {
           context.pushNamed(AppRoute.trainingScreen);
         },
       },
-
       {
         'width': 20.w,
         'icon': 'assets/svgs/ruler-angular-svgrepo-com.svg',

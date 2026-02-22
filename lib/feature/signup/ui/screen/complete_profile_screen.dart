@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/cubit/user_type_cubit.dart';
 import 'package:falcon/core/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,12 +65,16 @@ class CompleteProfileScreen extends StatelessWidget {
 
   void _handleStateChanges(BuildContext context, LoginState state) {
     state.maybeWhen(
-      updateProfilesuccess: (_) {
+      updateProfilesuccess: (_) async {
         log('✅ Profile completed successfully');
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoute.mainScreen,
-              (route) => false,
-        );
+        // Reload user type before navigating to main screen
+        await context.read<UserTypeCubit>().loadUserType();
+        if (context.mounted) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            AppRoute.mainScreen,
+                (route) => false,
+          );
+        }
       },
       updateProfileerror: (error) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -176,10 +181,14 @@ class CompleteProfileScreen extends StatelessWidget {
     );
   }
 
-  void _skipToMain(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoute.mainScreen,
-          (route) => false,
-    );
+  void _skipToMain(BuildContext context) async {
+    // Reload user type before navigating to main screen
+    await context.read<UserTypeCubit>().loadUserType();
+    if (context.mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        AppRoute.mainScreen,
+            (route) => false,
+      );
+    }
   }
 }

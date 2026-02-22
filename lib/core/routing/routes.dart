@@ -46,6 +46,9 @@ class AppRoute {
   //playerProfile (viewed from club perspective)
   static const String playerProfile = '/playerProfile';
 
+  //user type selection
+  static const String userTypeSelectionScreen = '/userTypeSelectionScreen';
+
   //club-specific routes
   static const String playersListScreen = '/playersListScreen';
   static const String clubTeamScreen = '/clubTeamScreen';

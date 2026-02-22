@@ -33,6 +33,7 @@ import '../../feature/reals/ui/screen/main_reals_screen.dart';
 import '../../feature/signup/ui/screen/complete_profile_screen.dart';
 import '../../feature/signup/ui/screen/position_screen.dart';
 import '../../feature/signup/ui/screen/sign_up_screen.dart';
+import '../../feature/signup/ui/screen/user_type_selection_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
 import '../../feature/invitation/ui/screen/send_invitation_screen.dart';
 import '../../feature/player_notes/ui/screen/player_notes_screen.dart';
@@ -345,6 +346,14 @@ class AppRouter {
             create: (_) => getIt<MeasurementCubit>(),
             child: const MeasurementScreen(),
           ),
+        );
+
+    // ========================================================================
+    // USER TYPE SELECTION
+    // ========================================================================
+      case AppRoute.userTypeSelectionScreen:
+        return MaterialPageRoute(
+          builder: (_) => const UserTypeSelectionScreen(),
         );
 
     // ========================================================================

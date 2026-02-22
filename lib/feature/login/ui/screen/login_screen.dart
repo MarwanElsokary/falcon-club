@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/cubit/user_type_cubit.dart';
 import '../../../../core/helpers/constants.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
@@ -31,6 +32,10 @@ class LoginScreen extends StatelessWidget {
                     false;
 
             if (isCompleted) {
+              // Reload user type before navigating to main screen
+              if (context.mounted) {
+                await context.read<UserTypeCubit>().loadUserType();
+              }
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 AppRoute.mainScreen,

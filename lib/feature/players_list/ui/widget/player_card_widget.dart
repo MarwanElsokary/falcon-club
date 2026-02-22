@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/cubit/user_type_cubit.dart';
+import 'package:falcon/core/enums/user_type.dart';
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/routing/routes.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -24,6 +27,8 @@ class PlayerCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isInvited = player.isInvited == true;
+    final userType = context.watch<UserTypeCubit>().state;
+    final bool canInvite = userType.canSendInvitations;
 
     return GestureDetector(
       onTap: () {
@@ -151,43 +156,44 @@ class PlayerCardWidget extends StatelessWidget {
                       ],
                     ),
 
-                    // Invitation button
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: isInvited ? null : onInviteTap,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              isInvited ? Colors.grey[300] : mainColor,
-                          foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(vertical: 6.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          elevation: 0,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (isInvited)
-                              Icon(Icons.check_circle,
-                                  size: 14.w, color: Colors.teal),
-                            if (isInvited) horizontalSpace(4),
-                            Text(
-                              isInvited
-                                  ? 'تم ارسال دعوة'.tr()
-                                  : 'ارسال دعوة'.tr(),
-                              style: TextStyle(
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w600,
-                                color: isInvited ? Colors.black54 : Colors.white,
-                              ),
+                    // Invitation button (club only)
+                    if (canInvite)
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: isInvited ? null : onInviteTap,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                isInvited ? Colors.grey[300] : mainColor,
+                            foregroundColor: Colors.white,
+                            padding: EdgeInsets.symmetric(vertical: 6.h),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
-                          ],
+                            elevation: 0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (isInvited)
+                                Icon(Icons.check_circle,
+                                    size: 14.w, color: Colors.teal),
+                              if (isInvited) horizontalSpace(4),
+                              Text(
+                                isInvited
+                                    ? 'تم ارسال دعوة'.tr()
+                                    : 'ارسال دعوة'.tr(),
+                                style: TextStyle(
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: isInvited ? Colors.black54 : Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),
