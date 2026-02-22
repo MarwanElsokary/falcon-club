@@ -14,67 +14,78 @@ class ApiConstants {
   static const String payPackage = "Payment/CreatePayment";
 
   //register
-  static const String register = "Account/RegisterPlayer";
+  static const String register = "Account/RegisterClub";
 
-  //RegisterPlayerStep2
-  static const String registerStep2 = "Account/RegisterPlayerStep2";
+  //RegisterClubStep2
+  static const String registerStep2 = "Account/RegisterClubStep2";
 
-  //register
-  static const String updateProfile = "Player/UpdateProfile";
+  //updateProfile
+  static const String updateProfile = "Club/UpdateProfile";
 
   //otp
   static const String otp = "Account/ConfirmPhoneByOtp";
 
   //countries
-  static const String countries = "Player/GetCountries";
+  static const String countries = "Club/GetCountries";
 
   //ClubsByCountry
-  static const String clubsByCountry = "Player/GetClubsByCountry";
+  static const String clubsByCountry = "Club/GetClubsByCountry";
 
   //myProfile
-  static const String myProfile = "Player/GetProfile";
+  static const String myProfile = "Club/GetProfile";
 
   //Payment/GetAllPackages
   static const String allPackages = "Payment/GetAllPackages";
 
-  //
-  static const String profileById = "Player/GetProfileById";
+  //profileById
+  static const String profileById = "Club/GetPlayerProfileById";
 
-  //
-  static const String rank = "Player/GetTopPlayers";
+  //rank
+  static const String rank = "Club/GetTopPlayers";
 
   //reals
-  static const String reals = "Player/GetReels";
+  static const String reals = "Club/GetReels";
 
   //ProfileFeature
-  static const String profileFeature = "Player/ProfileFeature";
+  static const String profileFeature = "Club/PlayerProfileFeature";
 
   //toggleLikeReel
-  static const String toggleLikeReel = "Player/ToggleLikeReel";
+  static const String toggleLikeReel = "Club/ToggleLikeReel";
 
   //addComment
-  static const String addComment = "Player/AddComment";
+  static const String addComment = "Club/AddComment";
 
   //categories
-  static const String categories = "Player/GetCaregories";
+  static const String categories = "Club/GetCategories";
 
-  //Player/GetAllTrials
-  static const String allTrials = "Player/GetAllTrials";
+  //Club/GetAllTrials
+  static const String allTrials = "Club/GetAllTrials";
 
   //allExercises
-  static const String allExercises = "Player/GetAllExercises";
+  static const String allExercises = "Club/GetAllExercises";
 
   //trialDetails
-  static const String trialDetails = "Player/GetTrial";
+  static const String trialDetails = "Club/GetTrial";
 
   //exerciseDetails
-  static const String exerciseDetails = "Player/GetExercise";
+  static const String exerciseDetails = "Club/GetExercise";
 
   //addAttempt
-  static const String addAttempt = "Player/AddAttempt";
+  static const String addAttempt = "Club/AddAttempt";
 
-  //
-  static const String addReel = "Player/AddReel";
+  //addReel
+  static const String addReel = "Club/AddReel";
+
+  //club-specific endpoints
+  static const String sendInvitation = "Club/SendInvitation";
+  static const String getPlayersList = "Club/GetPlayersList";
+  static const String getClubTeam = "Club/GetClubTeam";
+  static const String addPlayerNote = "Club/AddPlayerNote";
+  static const String getPlayerNotes = "Club/GetPlayerNotes";
+  static const String createPlayerReport = "Club/CreatePlayerReport";
+  static const String getPlayerReports = "Club/GetPlayerReports";
+  static const String addPlayerToTeam = "Club/AddPlayerToTeam";
+  static const String removePlayerFromTeam = "Club/RemovePlayerFromTeam";
 
   //send-verification-code
   static const String sendVerificationCode = "auth/send-otp";

@@ -311,7 +311,7 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Colors.black54,
-                  text: 'اشترك الآن للوصول إلى قائمة الترتيب الكاملة ومعرفة موقعك بين اللاعبين'.tr(),
+                  text: 'اشترك الآن للوصول إلى قائمة الترتيب الكاملة واكتشاف أفضل اللاعبين'.tr(),
                   maxlines: 3,
                 ),
                 verticalSpace(20),
@@ -327,8 +327,8 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                   child: Column(
                     children: [
                       _buildFeatureItem('عرض الترتيب الكامل'),
-                      _buildFeatureItem('مقارنة أدائك باللاعبين'),
-                      _buildFeatureItem('تتبع تقدمك'),
+                      _buildFeatureItem('مقارنة أداء اللاعبين'),
+                      _buildFeatureItem('تتبع أداء اللاعبين'),
                       _buildFeatureItem('احصائيات مفصلة'),
                     ],
                   ),

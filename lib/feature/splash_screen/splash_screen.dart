@@ -4,10 +4,12 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/thems/thems.dart';
 
+import '../../core/cubit/user_type_cubit.dart';
 import '../../core/helpers/constants.dart';
 import '../../core/helpers/shared_pref_helper.dart';
 import '../../core/routing/routes.dart';
@@ -190,15 +192,17 @@ class _SplashScreenState extends State<SplashScreen>
                           );
                       log(userToken.toString());
 
-                      await SharedPrefHelper.getSecuredString(
-                        SharedPrefKeys.userType,
-                      );
-
                       await SharedPrefHelper.setSecuredString(
                         SharedPrefKeys.lang,
                         EasyLocalization.of(context)!.locale.toString(),
                       );
+
                       if (userToken.toString().isNotEmpty) {
+                        // Reload user type before navigating to main screen
+                        // ignore: use_build_context_synchronously
+                        if (context.mounted) {
+                          await context.read<UserTypeCubit>().loadUserType();
+                        }
                         // ignore: use_build_context_synchronously
                         context.pushNamedAndRemoveUntil(
                           AppRoute.mainScreen,

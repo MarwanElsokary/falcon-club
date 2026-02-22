@@ -22,9 +22,10 @@ import '../../../player_profile/ui/widget/player_image_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
 import '../widget/player_measurements_image_widget.dart';
-import '../widget/player_measurements_widget.dart'; // تأكد من الاستيراد
+import '../widget/player_measurements_widget.dart';
 import '../widget/player_videos_widget.dart';
 import '../widget/simple_radar_chart.dart';
+import '../widget/club_actions_widget.dart';
 
 class PlayerProfileScreen extends StatefulWidget {
   const PlayerProfileScreen({
@@ -116,7 +117,13 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
                 verticalSpace(20),
                 //user Image
                 PlayerImageWidget(playerProfile: playerProfile),
-                verticalSpace(5),
+                verticalSpace(10),
+                // Club actions: Send Invitation, Notes, Report
+                ClubActionsWidget(
+                  playerId: widget.playerId,
+                  playerName: '${playerProfile.data.firstName ?? ''} ${playerProfile.data.lastName ?? ''}'.trim(),
+                ),
+                verticalSpace(10),
                 //player chart
                 _buildSkillsChartSection(),
                 // player more info

@@ -84,7 +84,7 @@ class PlayerAllVideosItemWidget extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 color: blackclr,
-                text: 'لا يوجد لقطات ل هذا لاعب'.tr(),
+                text: 'لا يوجد لقطات لهذا اللاعب'.tr(),
               ),
               verticalSpace(20),
             ],
