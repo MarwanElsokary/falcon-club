@@ -17,6 +17,7 @@ import '../../../../../core/widget/text_utils.dart';
 import 'reverse_widgt.dart';
 
 class TopPlayerWidget extends StatelessWidget {
+  // Club context: Shows top players for scouting purposes
   const TopPlayerWidget({super.key});
 
   @override
@@ -50,7 +51,7 @@ class TopPlayerWidget extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
-                      text: 'شاهد كيف تتصدر بين اللاعبين الآخرين'.tr(),
+                      text: 'أفضل اللاعبين المتاحين للتعاقد'.tr(),
                     ),
                   ),
                 ],

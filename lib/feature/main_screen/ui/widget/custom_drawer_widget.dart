@@ -52,7 +52,7 @@ class CustomDrawer extends StatelessWidget {
       {
         'width': 20.w,
         'icon': 'assets/svgs/profile.svg',
-        'title': 'الحساب'.tr(),
+        'title': 'حساب النادي'.tr(),
         'ontap': () {
           context.pushNamed(
             AppRoute.playerProfile,
@@ -78,6 +78,22 @@ class CustomDrawer extends StatelessWidget {
         'icon': 'assets/svgs/notification_icon.svg',
         'title': 'الاشعارات'.tr(),
         'ontap': () {},
+      },
+      {
+        'width': 20.w,
+        'icon': 'assets/svgs/Experiments_select.svg',
+        'title': 'قائمة اللاعبين'.tr(),
+        'ontap': () {
+          context.pushNamed(AppRoute.playersListScreen);
+        },
+      },
+      {
+        'width': 20.w,
+        'icon': 'assets/svgs/Training_select.svg',
+        'title': 'فريق النادي'.tr(),
+        'ontap': () {
+          context.pushNamed(AppRoute.clubTeamScreen);
+        },
       },
       {
         'width': 20.w,

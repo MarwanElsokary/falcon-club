@@ -36,7 +36,7 @@ class PlayerMeasurementsWidget extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 color: Colors.black,
-                text: 'قياسات اللاعب'.tr(),
+                text: 'القياسات الجسدية'.tr(),
               ),
               verticalSpace(15),
               _buildMeasurementsGrid(),

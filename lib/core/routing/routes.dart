@@ -43,8 +43,16 @@ class AppRoute {
   //mainScreen
   static const String mainScreen = '/mainScreen';
 
-  //playerProfile
+  //playerProfile (viewed from club perspective)
   static const String playerProfile = '/playerProfile';
+
+  //club-specific routes
+  static const String playersListScreen = '/playersListScreen';
+  static const String clubTeamScreen = '/clubTeamScreen';
+  static const String sendInvitationScreen = '/sendInvitationScreen';
+  static const String playerNotesScreen = '/playerNotesScreen';
+  static const String playerReportsScreen = '/playerReportsScreen';
+  static const String createReportScreen = '/createReportScreen';
 
   //mainRealsScreen
   static const String mainRealsScreen = '/mainRealsScreen';

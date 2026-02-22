@@ -15,17 +15,16 @@ import 'package:falcon/core/widget/slide_enimation_widget.dart';
 
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/thems/thems.dart';
-import '../../../creat_real/ui/screen/creat_real_screen.dart';
 import '../../../experiments/ui/screen/experiment_screen.dart';
 import '../../../home/ui/screen/home_screen.dart';
+import '../../../players_list/ui/screen/players_list_screen.dart';
+import '../../../club_team/ui/screen/club_team_screen.dart';
 import '../../../reals/ui/screen/main_reals_screen.dart';
 import '../../../signup/ui/widget/profile_completion_middleware.dart';
 import '../../../signup/ui/widget/profile_completion_progress.dart';
 import '../../../training/cubit/training_cubit.dart';
-import '../../../training/ui/screen/training_screen.dart';
 import '../../cubit/main_cubit.dart';
 import '../widget/custom_drawer_widget.dart';
-import '../widget/upload_button_widget.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatefulWidget {
@@ -54,6 +53,7 @@ class _MainScreenState extends State<MainScreen> {
           IndexedStack(
             index: context.read<MainCubit>().currentIndex.value,
             children: [
+              // Tab 0: Home (الرئيسية)
               MultiBlocProvider(
                 providers: [
                   BlocProvider(
@@ -70,32 +70,28 @@ class _MainScreenState extends State<MainScreen> {
                 child: const HomeScreen(),
               ),
 
-              BlocProvider(
-                create: (context) => getIt<ExperimentsCubit>()
-                  ..emitallTrials(categoryId: '')
-                  ..emitbestTrials(categoryId: ''),
-                child: const ExperimentScreen(),
-              ),
+              // Tab 1: My Team (فريقي)
+              const ClubTeamScreen(),
 
-              CreatRealScreen(
-                playAnimation:
-                context.read<MainCubit>().currentIndex.value == 2,
-              ),
-              BlocProvider(
-                create: (context) =>
-                getIt<TrainingCubit>()
-                  ..emitallExercises(categoryId: '', popular: false),
-                child: const TrainingScreen(),
-              ),
+              // Tab 2: Highlights/Clips (اللقطات) - center tab
               BlocProvider(
                 create: (context) => getIt<RealsCubit>()
                   ..emitreals(playerId: ''),
                 child: MainRealsScreen(
                   playerProfile: false,
-                  playnowOrNot: context.read<MainCubit>().openProfile
-                      ? false
-                      : context.read<MainCubit>().currentIndex.value == 4,
+                  playnowOrNot: context.read<MainCubit>().currentIndex.value == 2,
                 ),
+              ),
+
+              // Tab 3: Interest List / Players List (قائمة الاهتمامات)
+              const PlayersListScreen(),
+
+              // Tab 4: Scout (الباحث)
+              BlocProvider(
+                create: (context) => getIt<ExperimentsCubit>()
+                  ..emitallTrials(categoryId: '')
+                  ..emitbestTrials(categoryId: ''),
+                child: const ExperimentScreen(),
               ),
             ],
           ),
@@ -145,16 +141,13 @@ class _MainScreenState extends State<MainScreen> {
                                             return Expanded(
                                               child: InkWell(
                                                 onTap: () {
-                                                  if (index != 2) {
-                                                    setState(() {
-                                                      context
-                                                          .read<MainCubit>()
-                                                          .currentIndex
-                                                          .value =
-                                                          index;
-                                                    });
-                                                  }
-                                                  print(currentIndex);
+                                                  setState(() {
+                                                    context
+                                                        .read<MainCubit>()
+                                                        .currentIndex
+                                                        .value =
+                                                        index;
+                                                  });
                                                 },
                                                 splashColor: Colors.transparent,
                                                 highlightColor:
@@ -193,9 +186,7 @@ class _MainScreenState extends State<MainScreen> {
                                                       duration: const Duration(
                                                         milliseconds: 300,
                                                       ),
-                                                      height: index == 2
-                                                          ? 0
-                                                          : isSelected
+                                                      height: isSelected
                                                           ? 7.h
                                                           : 0.h,
                                                       width: 7.w,
@@ -217,23 +208,6 @@ class _MainScreenState extends State<MainScreen> {
                                     showInHome: true,
                                     child: const SizedBox.shrink(),
                                   ),
-                                  PositionedDirectional(
-                                    start: 0,
-                                    end: 0,
-                                    top: 0,
-                                    child: UploadButtonWidget(
-                                      ontap: () {
-                                        print('object');
-                                        setState(() {
-                                          context
-                                              .read<MainCubit>()
-                                              .currentIndex
-                                              .value =
-                                          2;
-                                        });
-                                      },
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -251,40 +225,28 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  /// Inactive SVG icons
+  /// Inactive SVG icons (club navigation)
   List listOfInactiveIcons = [
-    SvgPicture.asset(
-      'assets/svgs/home_unSelect.svg',
-      color: mainColor.withOpacity(0.5),
-    ),
-    SvgPicture.asset(
-      'assets/svgs/Experiments_un_select.svg',
-      color: mainColor.withOpacity(0.5),
-    ),
-    Container(),
-    SvgPicture.asset(
-      'assets/svgs/Training_un_select.svg',
-      color: mainColor.withOpacity(0.5),
-    ),
-    SvgPicture.asset(
-      'assets/svgs/reals_un_select.svg',
-      color: mainColor.withOpacity(0.5),
-    ),
+    Icon(Icons.home_outlined, color: mainColor.withOpacity(0.5), size: 24),
+    Icon(Icons.groups_outlined, color: mainColor.withOpacity(0.5), size: 24),
+    Icon(Icons.videocam_outlined, color: mainColor.withOpacity(0.5), size: 24),
+    Icon(Icons.bookmark_border, color: mainColor.withOpacity(0.5), size: 24),
+    Icon(Icons.search, color: mainColor.withOpacity(0.5), size: 24),
   ];
 
-  /// Active SVG icons
+  /// Active SVG icons (club navigation)
   List listOfActiveIcons = [
-    SvgPicture.asset('assets/svgs/home_select.svg'),
-    SvgPicture.asset('assets/svgs/Experiments_select.svg'),
-    Container(),
-    SvgPicture.asset('assets/svgs/Training_select.svg'),
-    SvgPicture.asset('assets/svgs/reals_select.svg'),
+    Icon(Icons.home_filled, color: mainColor, size: 26),
+    Icon(Icons.groups, color: mainColor, size: 26),
+    Icon(Icons.videocam, color: mainColor, size: 26),
+    Icon(Icons.bookmark, color: mainColor, size: 26),
+    Icon(Icons.search, color: mainColor, size: 26),
   ];
   List title = [
     'الرئيسية'.tr(),
-    'التجارب'.tr(),
-    '',
-    'التدريبات'.tr(),
-    'منشورات'.tr(),
+    'فريقي'.tr(),
+    'اللقطات'.tr(),
+    'قائمة الاهتمامات'.tr(),
+    'الباحث'.tr(),
   ];
 }

@@ -34,6 +34,12 @@ import '../../feature/signup/ui/screen/complete_profile_screen.dart';
 import '../../feature/signup/ui/screen/position_screen.dart';
 import '../../feature/signup/ui/screen/sign_up_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
+import '../../feature/invitation/ui/screen/send_invitation_screen.dart';
+import '../../feature/player_notes/ui/screen/player_notes_screen.dart';
+import '../../feature/player_reports/ui/screen/create_report_screen.dart';
+import '../../feature/player_reports/ui/screen/player_reports_screen.dart';
+import '../../feature/players_list/ui/screen/players_list_screen.dart';
+import '../../feature/club_team/ui/screen/club_team_screen.dart';
 import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/ui/screen/training_screen.dart';
 import '../../feature/training_details/cubit/training_details_cubit.dart';
@@ -338,6 +344,55 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (_) => getIt<MeasurementCubit>(),
             child: const MeasurementScreen(),
+          ),
+        );
+
+    // ========================================================================
+    // CLUB-SPECIFIC SCREENS
+    // ========================================================================
+      case AppRoute.playersListScreen:
+        return MaterialPageRoute(
+          builder: (_) => const PlayersListScreen(),
+        );
+
+      case AppRoute.clubTeamScreen:
+        return MaterialPageRoute(
+          builder: (_) => const ClubTeamScreen(),
+        );
+
+      case AppRoute.sendInvitationScreen:
+        final args = arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => SendInvitationScreen(
+            playerId: args['playerId'] as String,
+            playerName: args['playerName'] as String,
+          ),
+        );
+
+      case AppRoute.playerNotesScreen:
+        final args = arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => PlayerNotesScreen(
+            playerId: args['playerId'] as String,
+            playerName: args['playerName'] as String,
+          ),
+        );
+
+      case AppRoute.createReportScreen:
+        final args = arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => CreateReportScreen(
+            playerId: args['playerId'] as String,
+            playerName: args['playerName'] as String,
+          ),
+        );
+
+      case AppRoute.playerReportsScreen:
+        final args = arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => PlayerReportsScreen(
+            playerId: args['playerId'] as String,
+            playerName: args['playerName'] as String,
           ),
         );
 

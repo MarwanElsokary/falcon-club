@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
 
         child: MaterialApp(
           scrollBehavior:  NoGlowScrollBehavior(),
-          title: 'Winner',
+          title: 'Falcon Club',
           debugShowCheckedModeBanner: false,
           theme: themsApp.light,
           localizationsDelegates: context.localizationDelegates,
