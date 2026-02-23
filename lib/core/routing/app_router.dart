@@ -30,8 +30,10 @@ import '../../feature/rank/cubit/rank_cubit.dart';
 import '../../feature/rank/ui/screen/rank_screen.dart';
 import '../../feature/reals/cubit/reals_cubit.dart';
 import '../../feature/reals/ui/screen/main_reals_screen.dart';
+import '../../feature/signup/ui/screen/club_sign_up_screen.dart';
 import '../../feature/signup/ui/screen/complete_profile_screen.dart';
 import '../../feature/signup/ui/screen/position_screen.dart';
+import '../../feature/signup/ui/screen/registration_type_screen.dart';
 import '../../feature/signup/ui/screen/sign_up_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
 import '../../feature/training/cubit/training_cubit.dart';
@@ -89,6 +91,17 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (_) => getIt<LoginCubit>()..loadCountries(),
             child: SignUpScreen(update: update),
+          ),
+        );
+
+      case AppRoute.registrationTypeScreen:
+        return _fadeTransitionRoute(const RegistrationTypeScreen());
+
+      case AppRoute.clubSignUpScreen:
+        return MaterialWithModalsPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<LoginCubit>()..loadCountries(),
+            child: const ClubSignUpScreen(),
           ),
         );
 

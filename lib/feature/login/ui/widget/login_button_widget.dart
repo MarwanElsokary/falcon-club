@@ -72,10 +72,8 @@ class LoginButtonWidget extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            // to login screen
                             context.pushNamed(
-                              AppRoute.signUpScreen,
-                              arguments: {'update': false},
+                              AppRoute.registrationTypeScreen,
                             );
                           },
                           child: Text.rich(

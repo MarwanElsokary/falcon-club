@@ -120,6 +120,51 @@ class LoginCubit extends Cubit<LoginState> {
   // Old method name for backward compatibility
   void emitregisterStates() => register();
 
+  // ============================================================================
+  // CLUB REGISTRATION
+  // ============================================================================
+
+  Future<void> registerClub() async {
+    if (!formKey.currentState!.validate()) return;
+
+    // Validate club-specific fields
+    if (selectedUniversityId == null) {
+      emit(const LoginState.registererror(error: 'يرجى اختيار المدينة'));
+      return;
+    }
+    if (selectedCollegesId == null) {
+      emit(const LoginState.registererror(error: 'يرجى اختيار النادي'));
+      return;
+    }
+
+    emit(const LoginState.registerloading());
+
+    final response = await _loginRepo.registerClub(
+      FormData.fromMap({
+        "PlayerId": "ClubId",
+        "FirstName": controller.name.text,
+        "LastName": controller.lastName.text,
+        "Email": controller.email.text,
+        "PhoneNumber": controller.phone.text,
+        "Gender": gender == -1 ? 0 : gender,
+        "Password": controller.password.text,
+        if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
+      }),
+    );
+
+    response.when(
+      success: (data) async {
+        await _saveAuthData(data);
+        emit(LoginState.registersuccess(data));
+      },
+      failure: (error) {
+        emit(LoginState.registererror(
+          error: error.apiErrorModel.message ?? 'فشل تسجيل النادي',
+        ));
+      },
+    );
+  }
+
   // New method name
   Future<void> verifyOtp() async {
     final code = controller.verifyCode.text.trim();

@@ -16,6 +16,9 @@ class ApiConstants {
   //register
   static const String register = "Account/RegisterPlayer";
 
+  //registerClub
+  static const String registerClub = "Account/RegisterClub";
+
   //RegisterPlayerStep2
   static const String registerStep2 = "Account/RegisterPlayerStep2";
 

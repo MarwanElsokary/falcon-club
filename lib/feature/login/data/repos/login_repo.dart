@@ -40,6 +40,16 @@ class LoginRepo {
     }
   }
 
+  //registerClub
+  Future<ApiResult> registerClub(FormData body) async {
+    try {
+      final response = await _apiService.registerClub(body);
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
+
   Future<ApiResult> completeRegistration(FormData body) async {
     try {
       final response = await _apiService.completeRegistration(body);

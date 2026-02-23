@@ -38,6 +38,10 @@ abstract class ApiService {
   @POST(ApiConstants.register)
   Future register(@Body() registerBody);
 
+  //registerClub
+  @POST(ApiConstants.registerClub)
+  Future registerClub(@Body() FormData body);
+
   //register step 2
   @POST(ApiConstants.registerStep2)
   Future completeRegistration(@Body() FormData body);

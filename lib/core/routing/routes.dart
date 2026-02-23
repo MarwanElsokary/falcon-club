@@ -31,6 +31,12 @@ class AppRoute {
   //signUpScreen
   static const String signUpScreen = '/signUpScreen';
 
+  //registrationTypeScreen
+  static const String registrationTypeScreen = '/registrationTypeScreen';
+
+  //clubSignUpScreen
+  static const String clubSignUpScreen = '/clubSignUpScreen';
+
   //positionScreen
   static const String positionScreen = '/positionScreen';
 
