@@ -20,7 +20,7 @@ class ClubPinputScreenWithNavigation extends StatelessWidget {
       listener: (context, state) {
         if (state is VerificationCodeSuccess) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-            AppRoute.mainScreen,
+            AppRoute.clubMainScreen,
             (route) => false,
           );
         }

@@ -19,6 +19,12 @@ class ApiConstants {
   //registerClub
   static const String registerClub = "Account/RegisterClub";
 
+  //clubUpdateProfile
+  static const String clubUpdateProfile = "Club/UpdateProfile";
+
+  //clubGetPlayers
+  static const String clubGetPlayers = "Club/GetClubPlayers";
+
   //RegisterPlayerStep2
   static const String registerStep2 = "Account/RegisterPlayerStep2";
 

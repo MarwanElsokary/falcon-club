@@ -42,6 +42,14 @@ abstract class ApiService {
   @POST(ApiConstants.registerClub)
   Future registerClub(@Body() FormData body);
 
+  //clubUpdateProfile
+  @PUT(ApiConstants.clubUpdateProfile)
+  Future clubUpdateProfile(@Body() FormData body);
+
+  //clubGetPlayers
+  @GET(ApiConstants.clubGetPlayers)
+  Future clubGetPlayers();
+
   //register step 2
   @POST(ApiConstants.registerStep2)
   Future completeRegistration(@Body() FormData body);

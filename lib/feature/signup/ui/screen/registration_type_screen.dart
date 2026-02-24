@@ -26,7 +26,7 @@ class RegistrationTypeScreen extends StatelessWidget {
               fontSize: 26,
               fontWeight: FontWeight.w700,
               color: Colors.black,
-              text: 'هل أنت نادي أم كشافة؟'.tr(),
+              text: 'هل أنت مدرب في نادي أم كشاف؟'.tr(),
             ),
             verticalSpace(10),
             TextUtils(
@@ -40,7 +40,7 @@ class RegistrationTypeScreen extends StatelessWidget {
               context: context,
               icon: Icons.sports_soccer,
               title: 'نادي'.tr(),
-              subtitle: 'سجل كنادي لاستكشاف اللاعبين'.tr(),
+              subtitle: 'سجل كمدرب في نادي لاستكشاف اللاعبين'.tr(),
               isEnabled: true,
               onTap: () {
                 context.pushNamed(AppRoute.clubSignUpScreen);
@@ -50,7 +50,7 @@ class RegistrationTypeScreen extends StatelessWidget {
             _buildOptionCard(
               context: context,
               icon: Icons.search,
-              title: 'كشافة'.tr(),
+              title: 'كشاف'.tr(),
               subtitle: 'لم تضاف بعد، سيتم الإضافة قريباً'.tr(),
               isEnabled: false,
               onTap: () {
@@ -177,7 +177,7 @@ class RegistrationTypeScreen extends StatelessWidget {
           fontSize: 18,
           fontWeight: FontWeight.w700,
           color: mainColor,
-          text: 'كشافة'.tr(),
+          text: 'كشاف'.tr(),
         ),
         content: TextUtils(
           fontSize: 14,
