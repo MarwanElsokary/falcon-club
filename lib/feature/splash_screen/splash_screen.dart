@@ -190,7 +190,7 @@ class _SplashScreenState extends State<SplashScreen>
                           );
                       log(userToken.toString());
 
-                      await SharedPrefHelper.getSecuredString(
+                      final userType = await SharedPrefHelper.getSecuredString(
                         SharedPrefKeys.userType,
                       );
 
@@ -199,9 +199,12 @@ class _SplashScreenState extends State<SplashScreen>
                         EasyLocalization.of(context)!.locale.toString(),
                       );
                       if (userToken.toString().isNotEmpty) {
+                        final route = userType == 'club'
+                            ? AppRoute.clubMainScreen
+                            : AppRoute.mainScreen;
                         // ignore: use_build_context_synchronously
                         context.pushNamedAndRemoveUntil(
-                          AppRoute.mainScreen,
+                          route,
                           predicate: (route) => false,
                         );
                       } else {

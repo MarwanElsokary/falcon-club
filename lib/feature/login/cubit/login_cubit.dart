@@ -471,6 +471,28 @@ class LoginCubit extends Cubit<LoginState> {
     );
 
     log('✅ IsCompleted saved: $isCompleted');
+
+    // ===== UserType from JWT roles =====
+    try {
+      final parts = token.split('.');
+      if (parts.length == 3) {
+        final payloadJson = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
+        final payload = json.decode(payloadJson);
+        final roles = payload['role'] ?? payload['roles'] ?? [];
+        final roleList = roles is List ? roles.map((e) => e.toString()).toList() : [roles.toString()];
+
+        if (roleList.contains('Club')) {
+          await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'club');
+          log('✅ UserType saved: club');
+        } else {
+          await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'player');
+          log('✅ UserType saved: player');
+        }
+      }
+    } catch (e) {
+      log('⚠️ Error parsing JWT roles: $e');
+      await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'player');
+    }
   }
 
   Future<MultipartFile> _createMultipartFile(String imagePath) async {

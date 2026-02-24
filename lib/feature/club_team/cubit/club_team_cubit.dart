@@ -41,12 +41,26 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
       return;
     }
     emit(const ClubTeamState.myProfileloading());
-    final response = await _repo.myProfile();
+    final response = await _repo.clubGetProfile();
     response.when(
-      success: (profile) async {
-        cachedProfile = profile;
-        await CacheHelper.savemyProfile(profile);
-        emit(ClubTeamState.myProfilesuccess(profile));
+      success: (data) async {
+        try {
+          MyProfileModel profile;
+          if (data is MyProfileModel) {
+            profile = data;
+          } else if (data is Map<String, dynamic>) {
+            profile = MyProfileModel.fromJson(data);
+          } else {
+            emit(const ClubTeamState.myProfileerror(error: 'خطأ في تحميل الملف الشخصي'));
+            return;
+          }
+          cachedProfile = profile;
+          await CacheHelper.savemyProfile(profile);
+          emit(ClubTeamState.myProfilesuccess(profile));
+        } catch (e) {
+          log('Error parsing club profile: $e');
+          emit(const ClubTeamState.myProfileerror(error: 'خطأ في تحميل الملف الشخصي'));
+        }
       },
       failure: (error) {
         emit(ClubTeamState.myProfileerror(

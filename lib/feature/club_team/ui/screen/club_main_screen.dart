@@ -1,16 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/helpers/constants.dart';
 import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falcon/core/helpers/shared_pref_helper.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/core/widget/slide_enimation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
 import '../../cubit/club_team_cubit.dart';
-import '../widget/club_drawer_widget.dart';
 import 'club_my_team_screen.dart';
 import 'club_profile_screen.dart';
 import 'placeholder_screen.dart';
@@ -32,19 +33,41 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: context.read<ClubTeamCubit>().sliderDrawerKey,
-      drawer: const ClubDrawerWidget(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.logout, color: mainColor, size: 24.w),
+          onPressed: () => _showLogoutDialog(context),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.only(end: 16.w),
+            child: CenterTextUtils(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              text: 'صقر'.tr(),
+            ),
+          ),
+        ],
+      ),
       body: Stack(
         children: [
-          IndexedStack(
-            index: context.read<ClubTeamCubit>().currentIndex.value,
-            children: [
-              const ClubProfileScreen(),
-              const ClubMyTeamScreen(),
-              PlaceholderScreen(title: 'قريباً'.tr()),
-              PlaceholderScreen(title: 'قريباً'.tr()),
-              PlaceholderScreen(title: 'قريباً'.tr()),
-            ],
+          ValueListenableBuilder(
+            valueListenable: context.read<ClubTeamCubit>().currentIndex,
+            builder: (context, currentIndex, _) {
+              return IndexedStack(
+                index: currentIndex,
+                children: [
+                  const ClubProfileScreen(),
+                  const ClubMyTeamScreen(),
+                  PlaceholderScreen(title: 'قريباً'.tr()),
+                  PlaceholderScreen(title: 'قريباً'.tr()),
+                  PlaceholderScreen(title: 'قريباً'.tr()),
+                ],
+              );
+            },
           ),
           PositionedDirectional(
             bottom: 0,
@@ -172,6 +195,80 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          title: CenterTextUtils(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            text: 'هل تريد تسجيل الخروج؟'.tr(),
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () async {
+                      await SharedPrefHelper.clearSpecificSecureData(
+                        SharedPrefKeys.userToken,
+                      );
+                      await SharedPrefHelper.clearAllData();
+                      Navigator.of(dialogContext).pop();
+                      context.pushNamedAndRemoveUntil(
+                        AppRoute.loginScreen,
+                        predicate: (route) => false,
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.w),
+                      decoration: BoxDecoration(
+                        color: mainColor,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: CenterTextUtils(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        text: 'نعم'.tr(),
+                      ),
+                    ),
+                  ),
+                ),
+                horizontalSpace(15),
+                Expanded(
+                  child: InkWell(
+                    onTap: () => Navigator.of(dialogContext).pop(),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        color: primerymainColor,
+                      ),
+                      child: CenterTextUtils(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        text: 'لا'.tr(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            verticalSpace(10),
+          ],
+        );
+      },
     );
   }
 

@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:falcon/core/helpers/constants.dart';
 import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falcon/core/helpers/shared_pref_helper.dart';
 import 'package:falcon/core/widget/button_utils.dart';
 import 'package:falcon/core/widget/loading_button_utils.dart';
 import 'package:falcon/core/widget/showSuccesSnackBar.dart';
@@ -26,14 +28,20 @@ class LoginButtonWidget extends StatelessWidget {
       height: 130.w,
       padding: paddingNavBar(),
       child: BlocConsumer<LoginCubit, LoginState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is Success) {
             showSuccesSnackBar(
               context: context,
               title: "اهلا تم تسجيل دخولك بنجاح".tr(),
             );
+            final userType = await SharedPrefHelper.getSecuredString(
+              SharedPrefKeys.userType,
+            );
+            final route = userType == 'club'
+                ? AppRoute.clubMainScreen
+                : AppRoute.mainScreen;
             context.pushNamedAndRemoveUntil(
-              AppRoute.mainScreen,
+              route,
               predicate: (route) => false,
             );
           }

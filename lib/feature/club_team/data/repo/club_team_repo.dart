@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:falcon/core/networking/api_result.dart';
 import 'package:falcon/core/networking/api_error_handler.dart';
 import 'package:falcon/core/networking/api_service.dart';
-import 'package:falcon/feature/main_screen/data/model/my_profile_model.dart';
 
 class ClubTeamRepo {
   final ApiService _apiService;
@@ -29,10 +28,10 @@ class ClubTeamRepo {
     }
   }
 
-  //myProfile
-  Future<ApiResult<MyProfileModel>> myProfile() async {
+  //clubGetProfile
+  Future<ApiResult> clubGetProfile() async {
     try {
-      final response = await _apiService.myProfile();
+      final response = await _apiService.clubGetProfile();
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));

@@ -50,6 +50,10 @@ abstract class ApiService {
   @GET(ApiConstants.clubGetPlayers)
   Future clubGetPlayers();
 
+  //clubGetProfile
+  @GET(ApiConstants.clubGetProfile)
+  Future clubGetProfile();
+
   //register step 2
   @POST(ApiConstants.registerStep2)
   Future completeRegistration(@Body() FormData body);
