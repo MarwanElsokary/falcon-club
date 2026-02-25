@@ -1,15 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/constants.dart';
+import 'package:falcon/core/di/dependency_injection.dart';
 import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/shared_pref_helper.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/core/widget/slide_enimation_widget.dart';
+import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
+import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
+import 'package:falcon/feature/reals/ui/screen/main_reals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
 import '../../cubit/club_team_cubit.dart';
 import 'club_my_team_screen.dart';
@@ -33,158 +34,132 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.logout, color: mainColor, size: 24.w),
-          onPressed: () => _showLogoutDialog(context),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.only(end: 16.w),
-            child: CenterTextUtils(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-              text: 'صقر'.tr(),
-            ),
-          ),
-        ],
-      ),
       body: Stack(
         children: [
-          ValueListenableBuilder(
+          // ── Main content ──────────────────────────────────────────────────
+          ValueListenableBuilder<int>(
             valueListenable: context.read<ClubTeamCubit>().currentIndex,
             builder: (context, currentIndex, _) {
               return IndexedStack(
                 index: currentIndex,
                 children: [
+                  // 0 — ملفي
                   const ClubProfileScreen(),
+                  // 1 — فريقي
                   const ClubMyTeamScreen(),
+                  // 2 — اللاعيبين (Reels)
+                  MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => getIt<MainCubit>()),
+                      BlocProvider(
+                        create: (_) =>
+                            getIt<RealsCubit>()..emitreals(playerId: ''),
+                      ),
+                    ],
+                    child: MainRealsScreen(
+                      playerProfile: false,
+                      playnowOrNot: currentIndex == 2,
+                    ),
+                  ),
+                  // 3 — قائمة الاهتمامات
                   PlaceholderScreen(title: 'قريباً'.tr()),
-                  PlaceholderScreen(title: 'قريباً'.tr()),
+                  // 4 — الرتب
                   PlaceholderScreen(title: 'قريباً'.tr()),
                 ],
               );
             },
           ),
+
+          // ── Bottom navigation bar ─────────────────────────────────────────
           PositionedDirectional(
             bottom: 0,
             start: 0,
             end: 0,
-            child: ValueListenableBuilder(
+            child: ValueListenableBuilder<int>(
               valueListenable: context.read<ClubTeamCubit>().currentIndex,
               builder: (context, currentIndex, _) {
-                return ValueListenableBuilder(
+                return ValueListenableBuilder<bool>(
                   valueListenable: context.read<ClubTeamCubit>().show,
                   builder: (context, show, _) {
                     return AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      width: context.displayWidth / 1,
-                      height: show ? 130.h : 0,
+                      duration: const Duration(milliseconds: 300),
+                      width: context.displayWidth,
+                      height: show ? 80.h : 0,
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SlideEnimationWidget(
-                              index: 0,
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    children: [
-                                      verticalSpace(50),
-                                      Container(
-                                        height: 80.h,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                              'assets/images/Subtract.png',
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: SlideEnimationWidget(
+                          index: 0,
+                          child: Container(
+                            height: 80.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.08),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, -2),
+                                ),
+                              ],
+                            ),
+                            child: SafeArea(
+                              top: false,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children:
+                                    List.generate(5, (index) {
+                                  final isSelected = currentIndex == index;
+                                  return Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<ClubTeamCubit>()
+                                            .currentIndex
+                                            .value = index;
+                                      },
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height:
+                                                isSelected ? 26.h : 24.h,
+                                            width: isSelected ? 26.h : 24.h,
+                                            child: isSelected
+                                                ? _activeIcons[index]
+                                                : _inactiveIcons[index],
+                                          ),
+                                          CenterTextUtils(
+                                            fontSize: 9,
+                                            fontWeight: isSelected
+                                                ? FontWeight.w700
+                                                : FontWeight.w500,
+                                            color: isSelected
+                                                ? mainColor
+                                                : mainColor.withOpacity(0.5),
+                                            text: _titles[index],
+                                          ),
+                                          verticalSpace(4),
+                                          AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            height: isSelected ? 6.h : 0,
+                                            width: 6.w,
+                                            decoration: BoxDecoration(
+                                              color: mainColor,
+                                              shape: BoxShape.circle,
                                             ),
                                           ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children:
-                                              List.generate(5, (index) {
-                                            bool isSelected =
-                                                currentIndex == index;
-
-                                            return Expanded(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    context
-                                                        .read<ClubTeamCubit>()
-                                                        .currentIndex
-                                                        .value = index;
-                                                  });
-                                                },
-                                                splashColor:
-                                                    Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .center,
-                                                  children: [
-                                                    SizedBox(
-                                                      height: isSelected
-                                                          ? 26.h
-                                                          : 24.h,
-                                                      width: isSelected
-                                                          ? 26.h
-                                                          : 24.h,
-                                                      child: isSelected
-                                                          ? _activeIcons[
-                                                              index]
-                                                          : _inactiveIcons[
-                                                              index],
-                                                    ),
-                                                    CenterTextUtils(
-                                                      fontSize: 10,
-                                                      fontWeight: isSelected
-                                                          ? FontWeight.w700
-                                                          : FontWeight.w500,
-                                                      color: isSelected
-                                                          ? mainColor
-                                                          : mainColor
-                                                              .withOpacity(
-                                                                  0.5),
-                                                      text: _titles[index],
-                                                    ),
-                                                    verticalSpace(5),
-                                                    AnimatedContainer(
-                                                      duration:
-                                                          const Duration(
-                                                        milliseconds: 300,
-                                                      ),
-                                                      height: isSelected
-                                                          ? 7.h
-                                                          : 0.h,
-                                                      width: 7.w,
-                                                      decoration:
-                                                          BoxDecoration(
-                                                        color: mainColor,
-                                                        shape:
-                                                            BoxShape.circle,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                  );
+                                }),
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     );
@@ -198,101 +173,32 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
     );
   }
 
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          title: CenterTextUtils(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-            text: 'هل تريد تسجيل الخروج؟'.tr(),
-          ),
-          actionsAlignment: MainAxisAlignment.center,
-          actions: [
-            Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () async {
-                      await SharedPrefHelper.clearSpecificSecureData(
-                        SharedPrefKeys.userToken,
-                      );
-                      await SharedPrefHelper.clearAllData();
-                      Navigator.of(dialogContext).pop();
-                      context.pushNamedAndRemoveUntil(
-                        AppRoute.loginScreen,
-                        predicate: (route) => false,
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10.w),
-                      decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.circular(20.r),
-                      ),
-                      child: CenterTextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        text: 'نعم'.tr(),
-                      ),
-                    ),
-                  ),
-                ),
-                horizontalSpace(15),
-                Expanded(
-                  child: InkWell(
-                    onTap: () => Navigator.of(dialogContext).pop(),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        color: primerymainColor,
-                      ),
-                      child: CenterTextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                        text: 'لا'.tr(),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace(10),
-          ],
-        );
-      },
-    );
-  }
-
   List<Widget> get _inactiveIcons => [
-        Icon(Icons.person_outline, color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.groups_outlined, color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.analytics_outlined, color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.calendar_today_outlined, color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.settings_outlined, color: mainColor.withOpacity(0.5), size: 24.h),
+        Icon(Icons.person_outline,
+            color: mainColor.withOpacity(0.5), size: 24.h),
+        Icon(Icons.groups_outlined,
+            color: mainColor.withOpacity(0.5), size: 24.h),
+        Icon(Icons.sports_soccer_outlined,
+            color: mainColor.withOpacity(0.5), size: 24.h),
+        Icon(Icons.bookmark_border,
+            color: mainColor.withOpacity(0.5), size: 24.h),
+        Icon(Icons.leaderboard_outlined,
+            color: mainColor.withOpacity(0.5), size: 24.h),
       ];
 
   List<Widget> get _activeIcons => [
         Icon(Icons.person, color: mainColor, size: 26.h),
         Icon(Icons.groups, color: mainColor, size: 26.h),
-        Icon(Icons.analytics, color: mainColor, size: 26.h),
-        Icon(Icons.calendar_today, color: mainColor, size: 26.h),
-        Icon(Icons.settings, color: mainColor, size: 26.h),
+        Icon(Icons.sports_soccer, color: mainColor, size: 26.h),
+        Icon(Icons.bookmark, color: mainColor, size: 26.h),
+        Icon(Icons.leaderboard, color: mainColor, size: 26.h),
       ];
 
   List<String> get _titles => [
         'ملفي'.tr(),
         'فريقي'.tr(),
-        'قريباً'.tr(),
-        'قريباً'.tr(),
-        'قريباً'.tr(),
+        'اللاعيبين'.tr(),
+        'الاهتمامات'.tr(),
+        'الرتب'.tr(),
       ];
 }

@@ -32,6 +32,9 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   MyProfileModel? cachedProfile;
   List<ClubPlayer> cachedPlayers = [];
 
+  // team squad: positionKey → list of players added to that section
+  final Map<String, List<ClubPlayer>> teamSquad = {};
+
   // ============================================================================
   // MY PROFILE
   // ============================================================================
@@ -159,6 +162,19 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
     return cachedPlayers
         .where((p) => (p.positionName ?? '').toString().contains(position))
         .toList();
+  }
+
+  List<ClubPlayer> getSquadByPosition(String positionKey) {
+    return teamSquad[positionKey] ?? [];
+  }
+
+  void addPlayerToSection(String positionKey, ClubPlayer player) {
+    final current = List<ClubPlayer>.from(teamSquad[positionKey] ?? []);
+    if (current.any((p) => p.id == player.id)) return;
+    current.add(player);
+    teamSquad[positionKey] = current;
+    // Notify listeners by re-emitting current players state
+    emit(ClubTeamState.clubPlayerssuccess(cachedPlayers));
   }
 
   @override

@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/helpers/constants.dart';
 import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falcon/core/helpers/shared_pref_helper.dart';
 import 'package:falcon/core/helpers/spacing.dart';
+import 'package:falcon/core/routing/routes.dart';
 import 'package:falcon/core/thems/thems.dart';
+import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/core/widget/text_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,54 +40,67 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
       body: Container(
         width: context.displayWidth / 1,
         height: context.displayHeight / 1,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/Frame 1011 1.png'),
             fit: BoxFit.cover,
           ),
         ),
         child: SafeArea(
-          child: BlocConsumer<ClubTeamCubit, ClubTeamState>(
-            listener: (context, state) {
-              if (state is clubUpdateProfileSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('تم تحديث الملف الشخصي بنجاح'.tr()),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-              }
-              if (state is clubUpdateProfileError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.error),
-                    backgroundColor: redClr,
-                  ),
-                );
-              }
-            },
-            buildWhen: (previous, current) =>
-                current is clubProfileLoading ||
-                current is clubProfileSuccess ||
-                current is clubProfileError,
-            builder: (context, state) {
-              return state.maybeWhen(
-                myProfileloading: () => Center(
-                  child: CupertinoActivityIndicator(
-                    color: Colors.white,
-                    radius: 15.w,
-                  ),
+          child: Stack(
+            children: [
+              BlocConsumer<ClubTeamCubit, ClubTeamState>(
+                listener: (context, state) {
+                  if (state is clubUpdateProfileSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('تم تحديث الملف الشخصي بنجاح'.tr()),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  }
+                  if (state is clubUpdateProfileError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.error),
+                        backgroundColor: redClr,
+                      ),
+                    );
+                  }
+                },
+                buildWhen: (previous, current) =>
+                    current is clubProfileLoading ||
+                    current is clubProfileSuccess ||
+                    current is clubProfileError,
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    myProfileloading: () => Center(
+                      child: CupertinoActivityIndicator(
+                        color: Colors.white,
+                        radius: 15.w,
+                      ),
+                    ),
+                    myProfileerror: (error) => _buildError(error),
+                    myProfilesuccess: (profile) => _buildProfile(profile),
+                    orElse: () => Center(
+                      child: CupertinoActivityIndicator(
+                        color: Colors.white,
+                        radius: 15.w,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              // Logout button — top-right (RTL: end = right)
+              PositionedDirectional(
+                top: 4.h,
+                end: 4.w,
+                child: IconButton(
+                  icon: Icon(Icons.logout, color: mainColor, size: 24.w),
+                  onPressed: () => _showLogoutDialog(context),
                 ),
-                myProfileerror: (error) => _buildError(error),
-                myProfilesuccess: (profile) => _buildProfile(profile),
-                orElse: () => Center(
-                  child: CupertinoActivityIndicator(
-                    color: Colors.white,
-                    radius: 15.w,
-                  ),
-                ),
-              );
-            },
+              ),
+            ],
           ),
         ),
       ),
@@ -136,6 +153,7 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
             ),
           ),
           verticalSpace(10),
+          // Full name
           TextUtils(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -143,15 +161,8 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
             text:
                 '${profile.data.firstName ?? ''} ${profile.data.lastName ?? ''}',
           ),
-          verticalSpace(5),
-          TextUtils(
-            fontSize: 13,
-            fontWeight: FontWeight.w400,
-            color: greyClr,
-            text: profile.data.clubName ?? 'مدرب نادي'.tr(),
-          ),
           verticalSpace(20),
-          // info cards
+          // Info card: phone | gender | club
           Container(
             width: context.displayWidth / 1,
             padding: paddingUtils(),
@@ -181,11 +192,22 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                     value: _genderText(profile.data.gender),
                   ),
                 ),
+                Container(
+                  height: 40.h,
+                  width: 1,
+                  color: greyClr.withOpacity(0.3),
+                ),
+                Expanded(
+                  child: _infoItem(
+                    title: 'النادي'.tr(),
+                    value: '${profile.data.clubName ?? ''}',
+                  ),
+                ),
               ],
             ),
           ),
           verticalSpace(30),
-          // edit button
+          // Edit button
           Padding(
             padding: paddingUtils(),
             child: InkWell(
@@ -221,7 +243,7 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
               ),
             ),
           ),
-          verticalSpace(40),
+          verticalSpace(100),
         ],
       ),
     );
@@ -249,6 +271,7 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
           fontWeight: FontWeight.w700,
           color: Colors.white,
           text: value,
+          maxlines: 1,
         ),
       ],
     );
@@ -285,12 +308,86 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
               ),
               child: Text(
                 'إعادة المحاولة'.tr(),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          title: CenterTextUtils(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            text: 'هل تريد تسجيل الخروج؟'.tr(),
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () async {
+                      await SharedPrefHelper.clearSpecificSecureData(
+                        SharedPrefKeys.userToken,
+                      );
+                      await SharedPrefHelper.clearAllData();
+                      Navigator.of(dialogContext).pop();
+                      context.pushNamedAndRemoveUntil(
+                        AppRoute.loginScreen,
+                        predicate: (route) => false,
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.w),
+                      decoration: BoxDecoration(
+                        color: mainColor,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: CenterTextUtils(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        text: 'نعم'.tr(),
+                      ),
+                    ),
+                  ),
+                ),
+                horizontalSpace(15),
+                Expanded(
+                  child: InkWell(
+                    onTap: () => Navigator.of(dialogContext).pop(),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        color: primerymainColor,
+                      ),
+                      child: CenterTextUtils(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        text: 'لا'.tr(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            verticalSpace(10),
+          ],
+        );
+      },
     );
   }
 }
