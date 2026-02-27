@@ -1,16 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/di/dependency_injection.dart';
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/text_utils.dart';
+import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
+import 'package:falcon/feature/player_profile/ui/widget/player_all_videos_item_widget.dart';
+import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/routing/routes.dart';
 import '../../cubit/club_team_cubit.dart';
 import '../../cubit/club_team_state.dart';
 import '../../data/model/club_player_model.dart';
@@ -28,9 +31,24 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
 
   final List<Map<String, dynamic>> _positionSections = [
     {'key': 'حارس', 'title': 'الحارس', 'emoji': '🧤'},
-    {'key': 'دفاع', 'title': 'الدفاع', 'icon': Icons.favorite, 'color': const Color(0xFFFF0000)},
-    {'key': 'وسط', 'title': 'خط الوسط', 'icon': Icons.sync, 'color': mainColor},
-    {'key': 'هجوم', 'title': 'الهجوم', 'icon': Icons.bolt, 'color': const Color(0xFFFFBF00)},
+    {
+      'key': 'دفاع',
+      'title': 'الدفاع',
+      'icon': Icons.favorite,
+      'color': const Color(0xFFFF0000),
+    },
+    {
+      'key': 'وسط',
+      'title': 'خط الوسط',
+      'icon': Icons.sync,
+      'color': mainColor,
+    },
+    {
+      'key': 'هجوم',
+      'title': 'الهجوم',
+      'icon': Icons.bolt,
+      'color': const Color(0xFFFFBF00),
+    },
   ];
 
   @override
@@ -54,23 +72,50 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
         child: Column(
           children: [
             verticalSpace(12),
+
             // ── Header ──────────────────────────────────────────────────────
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.groups, color: mainColor, size: 28.w),
-                  horizontalSpace(8),
-                  TextUtils(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                    text: 'فريق النادي'.tr(),
+                  // "الرجوع" — left side in RTL
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).maybePop(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.arrow_forward_ios,
+                            color: mainColor, size: 14.w),
+                        horizontalSpace(4),
+                        TextUtils(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: mainColor,
+                          text: 'الرجوع'.tr(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Title — right side in RTL
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.groups, color: mainColor, size: 26.w),
+                      horizontalSpace(6),
+                      TextUtils(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        text: 'فريق النادي'.tr(),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            verticalSpace(14),
+            verticalSpace(12),
+
             // ── Tabs ────────────────────────────────────────────────────────
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -103,7 +148,8 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
                 ),
               ),
             ),
-            verticalSpace(12),
+            verticalSpace(10),
+
             // ── Filter chips ────────────────────────────────────────────────
             SizedBox(
               height: 34.h,
@@ -113,15 +159,16 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
                 children: [
                   _filterChip(label: 'فلتر'.tr(), icon: Icons.filter_list),
                   horizontalSpace(8),
-                  _filterChip(label: 'حسب المركز'.tr()),
+                  _filterChip(label: 'حسب الأداء'.tr()),
                   horizontalSpace(8),
                   _filterChip(label: 'حسب العمر'.tr()),
                   horizontalSpace(8),
-                  _filterChip(label: 'حسب الأداء'.tr()),
+                  _filterChip(label: 'حسب المركز'.tr()),
                 ],
               ),
             ),
-            verticalSpace(12),
+            verticalSpace(10),
+
             // ── Content ─────────────────────────────────────────────────────
             Expanded(
               child: BlocBuilder<ClubTeamCubit, ClubTeamState>(
@@ -181,19 +228,19 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
     return TabBarView(
       controller: _tabController,
       children: [
-        _buildPositionSections(isReserve: false),
-        _buildPositionSections(isReserve: true),
+        _buildPositionSections(tabIndex: 0),
+        _buildPositionSections(tabIndex: 1),
       ],
     );
   }
 
-  Widget _buildPositionSections({required bool isReserve}) {
+  Widget _buildPositionSections({required int tabIndex}) {
     return SingleChildScrollView(
       padding: EdgeInsets.only(bottom: 100.h),
       child: Column(
-        children: _positionSections.map((section) {
-          return _buildPositionSection(section, isReserve: isReserve);
-        }).toList(),
+        children: _positionSections
+            .map((s) => _buildPositionSection(s, tabIndex: tabIndex))
+            .toList(),
       ),
     );
   }
@@ -201,60 +248,74 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
   // ── Section ───────────────────────────────────────────────────────────────
   Widget _buildPositionSection(
     Map<String, dynamic> section, {
-    required bool isReserve,
+    required int tabIndex,
   }) {
     final cubit = context.read<ClubTeamCubit>();
     final positionKey = section['key'] as String;
     final title = section['title'] as String;
-    final squadPlayers = cubit.getSquadByPosition(positionKey);
+    final squad = cubit.getSquadByPosition(positionKey, tabIndex: tabIndex);
+    final maxPlayers = cubit.maxPlayersForPosition(positionKey);
+    final isFull = squad.length >= maxPlayers;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section header
+          // Header row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Icon + title (in RTL this renders on the right)
+              // Icon + title + count (right in RTL)
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   _sectionIcon(section),
                   horizontalSpace(6),
                   TextUtils(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: Colors.black,
                     text: title.tr(),
                   ),
+                  horizontalSpace(6),
+                  Text(
+                    '(${squad.length}/$maxPlayers)',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: isFull ? mainColor : greyClr,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               ),
-              // Add button (in RTL this renders on the left)
-              GestureDetector(
-                onTap: () => _showAddPlayerSheet(positionKey),
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),
-                  decoration: BoxDecoration(
-                    color: mainColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: TextUtils(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: mainColor,
-                    text: 'أضف لاعب +'.tr(),
+              // Add button — hidden when full (left in RTL)
+              if (!isFull)
+                GestureDetector(
+                  onTap: () => _showAddPlayerSheet(positionKey, tabIndex),
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),
+                    decoration: BoxDecoration(
+                      color: mainColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20.r),
+                    ),
+                    child: TextUtils(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: mainColor,
+                      text: 'أضف لاعب +'.tr(),
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
           verticalSpace(12),
-          // Player cards row
-          if (squadPlayers.isEmpty)
+
+          // Empty or player cards
+          if (squad.isEmpty)
             Container(
-              height: 90.h,
+              height: 80.h,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: fillColor,
@@ -265,19 +326,18 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: greyClr,
-                  text: 'لا يوجد لاعبين — اضغط أضف لاعب +'.tr(),
+                  text: 'اضغط "أضف لاعب +" لإضافة لاعب'.tr(),
                 ),
               ),
             )
           else
             SizedBox(
-              height: 240.h,
+              height: 230.h,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemCount: squadPlayers.length,
+                itemCount: squad.length,
                 separatorBuilder: (_, __) => horizontalSpace(12),
-                itemBuilder: (_, index) =>
-                    _buildPlayerCard(squadPlayers[index]),
+                itemBuilder: (_, i) => _buildPlayerCard(squad[i]),
               ),
             ),
           verticalSpace(20),
@@ -286,7 +346,7 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
     );
   }
 
-  // ── Section icon helper ───────────────────────────────────────────────────
+  // ── Section icon ──────────────────────────────────────────────────────────
   Widget _sectionIcon(Map<String, dynamic> section) {
     if (section.containsKey('emoji')) {
       return Text(
@@ -304,32 +364,23 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
   // ── Player card ───────────────────────────────────────────────────────────
   Widget _buildPlayerCard(ClubPlayer player) {
     return GestureDetector(
-      onTap: () {
-        context.pushNamed(
-          AppRoute.playerProfile,
-          arguments: {
-            'isMyProfile': false,
-            'playerId': player.id?.toString() ?? '',
-          },
-        );
-      },
+      onTap: () => _showPlayerDetailSheet(player),
       child: Container(
         width: 160.w,
-        height: 240.h,
         decoration: BoxDecoration(
           color: mainColor,
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Top info bar ──────────────────────────────────────────────
+            // Header: name/position/TPS + circle photo
             Padding(
-              padding: EdgeInsets.all(8.w),
+              padding: EdgeInsets.fromLTRB(10.w, 10.w, 10.w, 6.w),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Name / position / rating
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,9 +403,8 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
                         verticalSpace(4),
                         Row(
                           children: [
-                            Icon(Icons.star,
-                                color: Colors.amber, size: 12.w),
-                            horizontalSpace(2),
+                            Icon(Icons.star, color: Colors.amber, size: 12.w),
+                            horizontalSpace(3),
                             TextUtils(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
@@ -366,72 +416,57 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
                       ],
                     ),
                   ),
-                  horizontalSpace(4),
-                  // Small circle profile photo
+                  horizontalSpace(6),
+                  // Small circular profile photo — top right
                   Container(
-                    width: 38.w,
-                    height: 38.w,
+                    width: 40.w,
+                    height: 40.w,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 2.w),
                     ),
-                    child: ClipOval(
-                      child: _buildPlayerImage(player.photo?.toString()),
-                    ),
+                    child: ClipOval(child: _buildPhoto(player.photo?.toString())),
                   ),
                 ],
               ),
             ),
-            // ── Large photo ───────────────────────────────────────────────
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
+
+            // Two video thumbnail placeholders — middle
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomStart: Radius.circular(16.r),
-                      bottomEnd: Radius.circular(16.r),
-                    ),
-                    child: _buildLargePlayerImage(player.photo?.toString()),
-                  ),
-                  // Gradient overlay for bottom button legibility
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 8.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomStart: Radius.circular(16.r),
-                          bottomEnd: Radius.circular(16.r),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            secondMainColor.withOpacity(0.95),
-                            Colors.transparent,
-                          ],
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.bar_chart,
-                              color: Colors.white, size: 13.w),
-                          horizontalSpace(4),
-                          TextUtils(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            text: 'التقارير الرقمية'.tr(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  Expanded(child: _videoThumb()),
+                  horizontalSpace(6),
+                  Expanded(child: _videoThumb()),
                 ],
+              ),
+            ),
+            verticalSpace(8),
+
+            // "التقارير الرقمية" white button — bottom
+            Padding(
+              padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 10.w),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.bar_chart, color: mainColor, size: 14.w),
+                    horizontalSpace(4),
+                    TextUtils(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: mainColor,
+                      text: 'التقارير الرقمية'.tr(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -440,63 +475,65 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
     );
   }
 
-  // ── Image helpers — same pattern as rank screen ───────────────────────────
-  Widget _buildPlayerImage(String? photoPath) {
-    if (photoPath == null || photoPath.isEmpty) {
-      return Container(
-        color: offWhiteClr,
-        child: Image.asset(
-          'assets/images/Mask group.png',
-          fit: BoxFit.cover,
-        ),
-      );
-    }
-    return CachedNetworkImage(
-      imageUrl: photoPath,
-      fit: BoxFit.cover,
-      placeholder: (_, __) => Skeletonizer(
-        enabled: true,
-        child: Container(color: fillColor),
+  Widget _videoThumb() {
+    return Container(
+      height: 90.h,
+      decoration: BoxDecoration(
+        color: secondMainColor,
+        borderRadius: BorderRadius.circular(8.r),
       ),
-      errorWidget: (_, __, ___) => Container(
-        color: offWhiteClr,
-        child: Image.asset(
-          'assets/images/Mask group.png',
-          fit: BoxFit.cover,
-        ),
+      child: Center(
+        child: Icon(Icons.play_circle_outline,
+            color: Colors.white54, size: 26.w),
       ),
     );
   }
 
-  Widget _buildLargePlayerImage(String? photoPath) {
+  // ── Photo loader (same pattern as rank screen) ────────────────────────────
+  Widget _buildPhoto(String? photoPath) {
     if (photoPath == null || photoPath.isEmpty) {
       return Container(
-        color: secondMainColor,
-        child: Center(
-          child: Icon(Icons.person, color: Colors.white54, size: 48.w),
-        ),
+        color: offWhiteClr,
+        child: Image.asset('assets/images/Mask group.png', fit: BoxFit.cover),
       );
     }
     return CachedNetworkImage(
       imageUrl: photoPath,
       fit: BoxFit.cover,
-      placeholder: (_, __) => Skeletonizer(
-        enabled: true,
-        child: Container(color: secondMainColor),
-      ),
+      placeholder: (_, __) =>
+          Skeletonizer(enabled: true, child: Container(color: fillColor)),
       errorWidget: (_, __, ___) => Container(
-        color: secondMainColor,
-        child: Center(
-          child: Icon(Icons.person, color: Colors.white54, size: 48.w),
-        ),
+        color: offWhiteClr,
+        child: Image.asset('assets/images/Mask group.png', fit: BoxFit.cover),
+      ),
+    );
+  }
+
+  // ── FIX 3: Card tap → player detail bottom sheet ──────────────────────────
+  void _showPlayerDetailSheet(ClubPlayer player) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => getIt<MainCubit>()),
+          BlocProvider(
+            create: (_) => getIt<RealsCubit>()
+              ..emitreals(playerId: player.id?.toString() ?? ''),
+          ),
+        ],
+        child: _PlayerDetailSheet(player: player),
       ),
     );
   }
 
   // ── Add player bottom sheet ───────────────────────────────────────────────
-  void _showAddPlayerSheet(String positionKey) {
+  void _showAddPlayerSheet(String positionKey, int tabIndex) {
     final cubit = context.read<ClubTeamCubit>();
-    final allPlayers = cubit.cachedPlayers;
+    final available = cubit.cachedPlayers
+        .where((p) => !cubit.isPlayerInTab(tabIndex, p))
+        .toList();
 
     showModalBottomSheet(
       context: context,
@@ -531,37 +568,34 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
             ),
             verticalSpace(12),
             Expanded(
-              child: allPlayers.isEmpty
+              child: available.isEmpty
                   ? Center(
                       child: TextUtils(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: greyClr,
-                        text: 'لا يوجد لاعبين متاحين'.tr(),
+                        text: 'لا يوجد لاعبون متاحون'.tr(),
                       ),
                     )
                   : ListView.separated(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      itemCount: allPlayers.length,
+                      itemCount: available.length,
                       separatorBuilder: (_, __) =>
                           Divider(color: greyClr.withOpacity(0.2)),
-                      itemBuilder: (_, index) {
-                        final player = allPlayers[index];
+                      itemBuilder: (_, i) {
+                        final p = available[i];
                         return ListTile(
                           contentPadding: EdgeInsets.zero,
                           leading: CircleAvatar(
                             radius: 22.r,
                             backgroundColor: fillColor,
-                            backgroundImage:
-                                player.photo != null &&
-                                        player.photo
-                                            .toString()
-                                            .isNotEmpty
-                                    ? CachedNetworkImageProvider(
-                                        player.photo.toString())
-                                    : null,
-                            child: player.photo == null ||
-                                    player.photo.toString().isEmpty
+                            backgroundImage: p.photo != null &&
+                                    p.photo.toString().isNotEmpty
+                                ? CachedNetworkImageProvider(
+                                    p.photo.toString())
+                                : null,
+                            child: p.photo == null ||
+                                    p.photo.toString().isEmpty
                                 ? Icon(Icons.person,
                                     color: greyClr, size: 20.w)
                                 : null,
@@ -570,21 +604,22 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
-                            text: player.fullName,
+                            text: p.fullName,
                           ),
                           subtitle: TextUtils(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: blackclr,
-                            text: player.positionName?.toString() ?? '',
+                            text: p.positionName?.toString() ?? '',
                           ),
-                          trailing: Icon(
-                            Icons.add_circle_outline,
-                            color: mainColor,
-                            size: 24.w,
-                          ),
+                          trailing: Icon(Icons.add_circle_outline,
+                              color: mainColor, size: 24.w),
                           onTap: () {
-                            cubit.addPlayerToSection(positionKey, player);
+                            cubit.addPlayerToSection(
+                              positionKey,
+                              p,
+                              tabIndex: tabIndex,
+                            );
                             Navigator.pop(sheetCtx);
                           },
                         );
@@ -613,8 +648,7 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
           ),
           verticalSpace(16),
           ElevatedButton(
-            onPressed: () =>
-                context.read<ClubTeamCubit>().emitClubPlayers(),
+            onPressed: () => context.read<ClubTeamCubit>().emitClubPlayers(),
             style: ElevatedButton.styleFrom(backgroundColor: mainColor),
             child: Text(
               'إعادة المحاولة'.tr(),
@@ -622,6 +656,144 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen>
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ── Player detail bottom sheet ─────────────────────────────────────────────
+class _PlayerDetailSheet extends StatelessWidget {
+  final ClubPlayer player;
+  const _PlayerDetailSheet({required this.player});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.85,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Handle bar
+            Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Container(
+                  width: 40.w,
+                  height: 4.h,
+                  decoration: BoxDecoration(
+                    color: greyClr,
+                    borderRadius: BorderRadius.circular(2.r),
+                  ),
+                ),
+              ),
+            ),
+
+            // Player info card (purple, full-width)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(14.w),
+                decoration: BoxDecoration(
+                  color: mainColor,
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 64.w,
+                      height: 64.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2.w),
+                      ),
+                      child: ClipOval(child: _buildPhoto(player.photo?.toString())),
+                    ),
+                    SizedBox(width: 14.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextUtils(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            text: player.fullName,
+                            maxlines: 1,
+                          ),
+                          SizedBox(height: 2.h),
+                          TextUtils(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white70,
+                            text: player.positionName?.toString() ?? '',
+                          ),
+                          SizedBox(height: 4.h),
+                          Row(
+                            children: [
+                              Icon(Icons.star, color: Colors.amber, size: 14.w),
+                              SizedBox(width: 4.w),
+                              TextUtils(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                text: '${player.tps ?? 0}',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20.h),
+
+            // Section title
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: TextUtils(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+                text: 'اللقطات',
+              ),
+            ),
+            SizedBox(height: 10.h),
+
+            // Reels grid — reuses PlayerAllVideosItemWidget (reads RealsCubit)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: const PlayerAllVideosItemWidget(),
+            ),
+            SizedBox(height: 30.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPhoto(String? photoPath) {
+    if (photoPath == null || photoPath.isEmpty) {
+      return Container(
+        color: offWhiteClr,
+        child: Image.asset('assets/images/Mask group.png', fit: BoxFit.cover),
+      );
+    }
+    return CachedNetworkImage(
+      imageUrl: photoPath,
+      fit: BoxFit.cover,
+      placeholder: (_, __) =>
+          Skeletonizer(enabled: true, child: Container(color: fillColor)),
+      errorWidget: (_, __, ___) => Container(
+        color: offWhiteClr,
+        child: Image.asset('assets/images/Mask group.png', fit: BoxFit.cover),
       ),
     );
   }

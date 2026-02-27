@@ -32,8 +32,8 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   MyProfileModel? cachedProfile;
   List<ClubPlayer> cachedPlayers = [];
 
-  // team squad: positionKey → list of players added to that section
-  final Map<String, List<ClubPlayer>> teamSquad = {};
+  // team squads: tabIndex (0=أساسية, 1=احتياطي) → positionKey → players
+  final Map<int, Map<String, List<ClubPlayer>>> teamSquads = {0: {}, 1: {}};
 
   // ============================================================================
   // MY PROFILE
@@ -164,16 +164,54 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
         .toList();
   }
 
-  List<ClubPlayer> getSquadByPosition(String positionKey) {
-    return teamSquad[positionKey] ?? [];
+  List<ClubPlayer> getSquadByPosition(
+    String positionKey, {
+    required int tabIndex,
+  }) {
+    return teamSquads[tabIndex]?[positionKey] ?? [];
   }
 
-  void addPlayerToSection(String positionKey, ClubPlayer player) {
-    final current = List<ClubPlayer>.from(teamSquad[positionKey] ?? []);
-    if (current.any((p) => p.id == player.id)) return;
+  int maxPlayersForPosition(String positionKey) {
+    switch (positionKey) {
+      case 'حارس':
+        return 1;
+      case 'دفاع':
+        return 4;
+      case 'وسط':
+        return 3;
+      case 'هجوم':
+        return 3;
+      default:
+        return 5;
+    }
+  }
+
+  bool isPlayerInTab(int tabIndex, ClubPlayer player) {
+    return teamSquads[tabIndex]
+            ?.values
+            .any((list) => list.any((p) => p.id == player.id)) ??
+        false;
+  }
+
+  void addPlayerToSection(
+    String positionKey,
+    ClubPlayer player, {
+    required int tabIndex,
+  }) {
+    if (isPlayerInTab(tabIndex, player)) return;
+
+    final tabSquad = Map<String, List<ClubPlayer>>.from(
+      teamSquads[tabIndex]
+              ?.map((k, v) => MapEntry(k, List<ClubPlayer>.from(v))) ??
+          {},
+    );
+    final current = List<ClubPlayer>.from(tabSquad[positionKey] ?? []);
+
+    if (current.length >= maxPlayersForPosition(positionKey)) return;
+
     current.add(player);
-    teamSquad[positionKey] = current;
-    // Notify listeners by re-emitting current players state
+    tabSquad[positionKey] = current;
+    teamSquads[tabIndex] = tabSquad;
     emit(ClubTeamState.clubPlayerssuccess(cachedPlayers));
   }
 
