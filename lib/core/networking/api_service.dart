@@ -54,6 +54,10 @@ abstract class ApiService {
   @GET(ApiConstants.clubGetProfile)
   Future clubGetProfile();
 
+  //getReelsByPlayerId
+  @GET(ApiConstants.getReelsByPlayerId)
+  Future<dynamic> getReelsByPlayerId(@Query("playerId") String playerId);
+
   //register step 2
   @POST(ApiConstants.registerStep2)
   Future completeRegistration(@Body() FormData body);

@@ -37,4 +37,33 @@ class ClubTeamRepo {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
+
+  //getReelsByPlayerId — returns list of thumbnail/video URLs
+  Future<ApiResult<List<String>>> getReelsByPlayerId(String playerId) async {
+    try {
+      final response = await _apiService.getReelsByPlayerId(playerId);
+      final urls = <String>[];
+      if (response is Map<String, dynamic>) {
+        final data = response['data'];
+        if (data is List) {
+          for (final item in data) {
+            if (item is Map<String, dynamic>) {
+              final url = item['thumbnailUrl'] ??
+                  item['videoUrl'] ??
+                  item['video'] ??
+                  item['photoPath'];
+              if (url != null && url.toString().isNotEmpty) {
+                urls.add(url.toString());
+              }
+            } else if (item is String && item.isNotEmpty) {
+              urls.add(item);
+            }
+          }
+        }
+      }
+      return ApiResult.success(urls);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
 }

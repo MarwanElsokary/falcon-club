@@ -28,12 +28,16 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   int gender = -1;
   String imagePath = '';
 
-  // cached data
+  // cached profile
   MyProfileModel? cachedProfile;
-  List<ClubPlayer> cachedPlayers = [];
 
-  // team squads: tabIndex (0=أساسية, 1=احتياطي) → positionKey → players
-  final Map<int, Map<String, List<ClubPlayer>>> teamSquads = {0: {}, 1: {}};
+  // Grouped players: sectionKey → list of players
+  // Keys follow fixed order: 'الحارس', 'الدفاع', 'خط الوسط', 'الهجوم', 'أخرى'
+  Map<String, List<ClubPlayer>> cachedGroupedPlayers = {};
+  bool _playersFetched = false;
+
+  // Reels cache: playerId → list of thumbnail/video URLs
+  final Map<String, List<String>> _reelsCache = {};
 
   // ============================================================================
   // MY PROFILE
@@ -54,7 +58,8 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
           } else if (data is Map<String, dynamic>) {
             profile = MyProfileModel.fromJson(data);
           } else {
-            emit(const ClubTeamState.myProfileerror(error: 'خطأ في تحميل الملف الشخصي'));
+            emit(const ClubTeamState.myProfileerror(
+                error: 'خطأ في تحميل الملف الشخصي'));
             return;
           }
           cachedProfile = profile;
@@ -62,7 +67,8 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
           emit(ClubTeamState.myProfilesuccess(profile));
         } catch (e) {
           log('Error parsing club profile: $e');
-          emit(const ClubTeamState.myProfileerror(error: 'خطأ في تحميل الملف الشخصي'));
+          emit(const ClubTeamState.myProfileerror(
+              error: 'خطأ في تحميل الملف الشخصي'));
         }
       },
       failure: (error) {
@@ -122,11 +128,11 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   }
 
   // ============================================================================
-  // CLUB PLAYERS
+  // CLUB PLAYERS — fetch once, group by position section, cache
   // ============================================================================
-  void emitClubPlayers() async {
-    if (cachedPlayers.isNotEmpty) {
-      emit(ClubTeamState.clubPlayerssuccess(cachedPlayers));
+  Future<void> fetchClubPlayers() async {
+    if (_playersFetched) {
+      emit(ClubTeamState.clubPlayerssuccess(cachedGroupedPlayers));
       return;
     }
     emit(const ClubTeamState.clubPlayersloading());
@@ -134,21 +140,14 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
     response.when(
       success: (data) {
         try {
-          if (data is Map<String, dynamic>) {
-            final playersList = data['data'] as List? ?? [];
-            cachedPlayers = playersList
-                .map((e) => ClubPlayer.fromJson(e as Map<String, dynamic>))
-                .toList();
-          } else if (data is List) {
-            cachedPlayers = data
-                .map((e) => ClubPlayer.fromJson(e as Map<String, dynamic>))
-                .toList();
-          }
+          cachedGroupedPlayers = _parseAndGroup(data);
+          _playersFetched = true;
+          emit(ClubTeamState.clubPlayerssuccess(cachedGroupedPlayers));
         } catch (e) {
           log('Error parsing players: $e');
-          cachedPlayers = [];
+          emit(const ClubTeamState.clubPlayerserror(
+              error: 'خطأ في تحميل اللاعبين'));
         }
-        emit(ClubTeamState.clubPlayerssuccess(cachedPlayers));
       },
       failure: (error) {
         emit(ClubTeamState.clubPlayerserror(
@@ -158,61 +157,84 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
     );
   }
 
-  List<ClubPlayer> getPlayersByPosition(String position) {
-    return cachedPlayers
-        .where((p) => (p.positionName ?? '').toString().contains(position))
-        .toList();
-  }
+  Map<String, List<ClubPlayer>> _parseAndGroup(dynamic rawResponse) {
+    final allPlayers = <ClubPlayer>[];
 
-  List<ClubPlayer> getSquadByPosition(
-    String positionKey, {
-    required int tabIndex,
-  }) {
-    return teamSquads[tabIndex]?[positionKey] ?? [];
-  }
+    if (rawResponse is Map<String, dynamic>) {
+      final dataField = rawResponse['data'];
 
-  int maxPlayersForPosition(String positionKey) {
-    switch (positionKey) {
-      case 'حارس':
-        return 1;
-      case 'دفاع':
-        return 4;
-      case 'وسط':
-        return 3;
-      case 'هجوم':
-        return 3;
-      default:
-        return 5;
+      if (dataField is Map<String, dynamic>) {
+        // New API: { data: { playersByPosition: [...], withoutPosition: [] } }
+        final byPosition =
+            dataField['playersByPosition'] as List? ?? [];
+        for (final group in byPosition) {
+          if (group is Map<String, dynamic>) {
+            final players = group['players'] as List? ?? [];
+            for (final p in players) {
+              if (p is Map<String, dynamic>) {
+                allPlayers.add(ClubPlayer.fromJson(p));
+              }
+            }
+          }
+        }
+        // Also include withoutPosition players
+        final without = dataField['withoutPosition'] as List? ?? [];
+        for (final p in without) {
+          if (p is Map<String, dynamic>) {
+            allPlayers.add(ClubPlayer.fromJson(p));
+          }
+        }
+      } else if (dataField is List) {
+        // Fallback: old flat list format
+        for (final p in dataField) {
+          if (p is Map<String, dynamic>) {
+            allPlayers.add(ClubPlayer.fromJson(p));
+          }
+        }
+      }
     }
+
+    return _groupBySection(allPlayers);
   }
 
-  bool isPlayerInTab(int tabIndex, ClubPlayer player) {
-    return teamSquads[tabIndex]
-            ?.values
-            .any((list) => list.any((p) => p.id == player.id)) ??
-        false;
+  Map<String, List<ClubPlayer>> _groupBySection(List<ClubPlayer> players) {
+    final result = <String, List<ClubPlayer>>{};
+    for (final player in players) {
+      final key = _getSectionKey(player.position);
+      result.putIfAbsent(key, () => []).add(player);
+    }
+    return result;
   }
 
-  void addPlayerToSection(
-    String positionKey,
-    ClubPlayer player, {
-    required int tabIndex,
-  }) {
-    if (isPlayerInTab(tabIndex, player)) return;
+  String _getSectionKey(String position) {
+    if (position.contains('حارس')) return 'الحارس';
+    if (position.contains('مدافع') || position.contains('ظهير')) {
+      return 'الدفاع';
+    }
+    if (position.contains('وسط')) return 'خط الوسط';
+    if (position.contains('هجوم') ||
+        position.contains('راس حربة') ||
+        position.contains('مهاجم') ||
+        position.contains('جناح')) return 'الهجوم';
+    return 'أخرى';
+  }
 
-    final tabSquad = Map<String, List<ClubPlayer>>.from(
-      teamSquads[tabIndex]
-              ?.map((k, v) => MapEntry(k, List<ClubPlayer>.from(v))) ??
-          {},
+  // ============================================================================
+  // REELS PER PLAYER — cached per playerId
+  // ============================================================================
+  Future<List<String>> getReelsForPlayer(String playerId) async {
+    if (_reelsCache.containsKey(playerId)) return _reelsCache[playerId]!;
+    final result = await _repo.getReelsByPlayerId(playerId);
+    return result.when(
+      success: (urls) {
+        _reelsCache[playerId] = urls;
+        return urls;
+      },
+      failure: (_) {
+        _reelsCache[playerId] = [];
+        return <String>[];
+      },
     );
-    final current = List<ClubPlayer>.from(tabSquad[positionKey] ?? []);
-
-    if (current.length >= maxPlayersForPosition(positionKey)) return;
-
-    current.add(player);
-    tabSquad[positionKey] = current;
-    teamSquads[tabIndex] = tabSquad;
-    emit(ClubTeamState.clubPlayerssuccess(cachedPlayers));
   }
 
   @override

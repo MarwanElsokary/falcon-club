@@ -1,58 +1,46 @@
-import 'dart:convert';
-
-ClubPlayersResponse clubPlayersResponseFromJson(String str) =>
-    ClubPlayersResponse.fromJson(json.decode(str));
-
-class ClubPlayersResponse {
-  dynamic message;
-  List<ClubPlayer> data;
-
-  ClubPlayersResponse({required this.message, required this.data});
-
-  factory ClubPlayersResponse.fromJson(Map<String, dynamic> json) =>
-      ClubPlayersResponse(
-        message: json["message"],
-        data: json["data"] != null
-            ? List<ClubPlayer>.from(
-                json["data"].map((x) => ClubPlayer.fromJson(x)))
-            : [],
-      );
-}
-
 class ClubPlayer {
-  dynamic id;
-  dynamic firstName;
-  dynamic lastName;
-  dynamic photo;
-  dynamic positionName;
-  dynamic positionId;
-  dynamic tps;
-  dynamic age;
-  dynamic clubName;
+  final String id;
+  final String accountNumber;
+  final String? photoPath;
+  final String name;
+  final int age;
+  final String gender;
+  final String position;
+  final int direction;
+  final String foot;
+  final double tps;
 
-  ClubPlayer({
+  const ClubPlayer({
     required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.photo,
-    required this.positionName,
-    required this.positionId,
-    required this.tps,
+    required this.accountNumber,
+    this.photoPath,
+    required this.name,
     required this.age,
-    required this.clubName,
+    required this.gender,
+    required this.position,
+    required this.direction,
+    required this.foot,
+    required this.tps,
   });
 
   factory ClubPlayer.fromJson(Map<String, dynamic> json) => ClubPlayer(
-        id: json["id"] ?? json["userId"],
-        firstName: json["firstName"] ?? json["name"] ?? '',
-        lastName: json["lastName"] ?? '',
-        photo: json["photo"] ?? json["photoPath"] ?? '',
-        positionName: json["positionName"] ?? json["position"] ?? '',
-        positionId: json["positionId"],
-        tps: json["tps"]?.toDouble() ?? 0.0,
-        age: json["age"],
-        clubName: json["clubName"] ?? '',
+        id: json['id']?.toString() ?? '',
+        accountNumber: json['accountNumber']?.toString() ?? '',
+        photoPath: json['photoPath']?.toString(),
+        name: json['name']?.toString() ??
+            ('${json['firstName'] ?? ''} ${json['lastName'] ?? ''}'.trim()),
+        age: (json['age'] as num?)?.toInt() ?? 0,
+        gender: json['gender']?.toString() ?? '',
+        position: json['position']?.toString() ??
+            json['positionName']?.toString() ??
+            '',
+        direction: (json['direction'] as num?)?.toInt() ?? 0,
+        foot: json['foot']?.toString() ?? '',
+        tps: (json['tps'] as num?)?.toDouble() ?? 0.0,
       );
 
-  String get fullName => '${firstName ?? ''} ${lastName ?? ''}'.trim();
+  // Backward-compatible getters for existing code that used old field names
+  String get fullName => name;
+  String? get photo => photoPath;
+  String? get positionName => position;
 }

@@ -58,6 +58,9 @@ class ApiConstants {
   //reals
   static const String reals = "Player/GetReels";
 
+  //getReelsByPlayerId
+  static const String getReelsByPlayerId = "Player/GetReelsByPlayerId";
+
   //ProfileFeature
   static const String profileFeature = "Player/ProfileFeature";
 
