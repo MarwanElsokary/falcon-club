@@ -36,6 +36,12 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   Map<String, List<ClubPlayer>> cachedGroupedPlayers = {};
   bool _playersFetched = false;
 
+  /// Force re-fetch and re-group players (clears cache)
+  void invalidatePlayersCache() {
+    _playersFetched = false;
+    cachedGroupedPlayers = {};
+  }
+
   // Reels cache: playerId → list of thumbnail/video URLs
   final Map<String, List<String>> _reelsCache = {};
 
@@ -208,10 +214,11 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
 
   String _getSectionKey(String position) {
     if (position.contains('حارس')) return 'الحارس';
+    // وسط must be checked BEFORE مدافع so that "وسط مدافع" → خط الوسط, not الدفاع
+    if (position.contains('وسط')) return 'خط الوسط';
     if (position.contains('مدافع') || position.contains('ظهير')) {
       return 'الدفاع';
     }
-    if (position.contains('وسط')) return 'خط الوسط';
     if (position.contains('هجوم') ||
         position.contains('راس حربة') ||
         position.contains('مهاجم') ||

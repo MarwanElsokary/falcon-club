@@ -53,8 +53,9 @@ class PositionSectionWidget extends StatelessWidget {
         verticalSpace(12),
 
         // Horizontal list of player cards
+        // Height accommodates 200.w wide cards with thumbnails ~80.h + padding
         SizedBox(
-          height: 270.h,
+          height: 320.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 20.w),

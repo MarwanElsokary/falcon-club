@@ -8,7 +8,11 @@ import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+/// Light background color for thumbnail container and reports button — Figma #EFF4FF
+const Color _lightBg = Color(0xFFEFF4FF);
 
 class PlayerCardWidget extends StatefulWidget {
   final ClubPlayer player;
@@ -25,9 +29,8 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
   @override
   void initState() {
     super.initState();
-    _reelsFuture = context
-        .read<ClubTeamCubit>()
-        .getReelsForPlayer(widget.player.id);
+    _reelsFuture =
+        context.read<ClubTeamCubit>().getReelsForPlayer(widget.player.id);
   }
 
   @override
@@ -35,197 +38,159 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
     final player = widget.player;
 
     return Container(
-      width: 160.w,
+      // Figma specs: width 200, borderRadius 20, bg #5D2BF4, padding 16v/8h
+      width: 200.w,
       decoration: BoxDecoration(
         color: mainColor,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(20.r),
       ),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── 1. Header: name + circle photo ───────────────────────────────
-          Padding(
-            padding: EdgeInsets.fromLTRB(10.w, 10.w, 10.w, 4.w),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: TextUtils(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    text: player.name,
-                    maxlines: 2,
-                  ),
-                ),
-                horizontalSpace(6),
-                _buildPhoto(player),
-              ],
-            ),
-          ),
+          // ── 1. Player info row: details left, photo right ─────────────────
+          _buildInfoRow(player),
+          verticalSpace(12),
 
-          // ── 2. Position ───────────────────────────────────────────────────
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: TextUtils(
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: Colors.white70,
-              text: player.position,
-              maxlines: 1,
-            ),
-          ),
-          verticalSpace(4),
-
-          // ── 3. Foot indicator + TPS ───────────────────────────────────────
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: Row(
-              children: [
-                _buildFootIndicator(player.foot),
-                const Spacer(),
-                Icon(Icons.star, color: Colors.amber, size: 12.w),
-                horizontalSpace(3),
-                TextUtils(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                  text: player.tps.toStringAsFixed(1),
-                ),
-              ],
-            ),
-          ),
+          // ── 2. Reel thumbnails ────────────────────────────────────────────
+          _buildThumbnailsSection(),
           verticalSpace(8),
 
-          // ── 4. Reel thumbnails ────────────────────────────────────────────
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: FutureBuilder<List<String>>(
-              future: _reelsFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Row(
-                    children: [
-                      Expanded(child: _videoThumbShimmer()),
-                      horizontalSpace(6),
-                      Expanded(child: _videoThumbShimmer()),
-                    ],
-                  );
-                }
-                final urls = snapshot.data ?? [];
-                return Row(
-                  children: [
-                    Expanded(
-                      child: _videoThumb(urls.isNotEmpty ? urls[0] : null),
-                    ),
-                    horizontalSpace(6),
-                    Expanded(
-                      child: _videoThumb(urls.length > 1 ? urls[1] : null),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          verticalSpace(8),
-
-          // ── 5. "التقارير الرقمية" button ──────────────────────────────────
-          Padding(
-            padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 10.w),
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 8.h),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.bar_chart, color: mainColor, size: 14.w),
-                  horizontalSpace(4),
-                  TextUtils(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: mainColor,
-                    text: 'التقارير الرقمية'.tr(),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // ── 3. "التقارير الرقمية" button ──────────────────────────────────
+          _buildReportsButton(),
         ],
       ),
     );
   }
 
-  // ── Player photo (top-right circle) ────────────────────────────────────────
+  // ── Info row ───────────────────────────────────────────────────────────────
+  Widget _buildInfoRow(ClubPlayer player) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Left: name, position, foot icons, TPS
+        Expanded(child: _buildPlayerDetails(player)),
+        horizontalSpace(8),
+        // Right: photo frame
+        _buildPhoto(player),
+      ],
+    );
+  }
+
+  // ── Player details (left column) ───────────────────────────────────────────
+  Widget _buildPlayerDetails(ClubPlayer player) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Name — bold white
+        TextUtils(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+          text: player.name,
+          maxlines: 2,
+        ),
+        verticalSpace(4),
+
+        // Arabic position — small white70
+        TextUtils(
+          fontSize: 11,
+          fontWeight: FontWeight.w400,
+          color: Colors.white70,
+          text: player.position,
+          maxlines: 1,
+        ),
+        verticalSpace(6),
+
+        // Foot icons using SVG assets
+        _buildFootIcons(player.foot),
+        verticalSpace(6),
+
+        // TPS rating with star SVG
+        _buildTpsRow(player.tps),
+      ],
+    );
+  }
+
+  // ── Photo frame (right side) ───────────────────────────────────────────────
+  // Figma: width 48, height 65, borderRadius 120, bg #31187D, padding 4
   Widget _buildPhoto(ClubPlayer player) {
+    final hasPhoto = player.photoPath != null && player.photoPath!.isNotEmpty;
+
     return Container(
-      width: 40.w,
-      height: 40.w,
+      width: 48.w,
+      height: 65.h,
+      padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2.w),
+        color: secondMainColor, // #31187D
+        borderRadius: BorderRadius.circular(120.r),
       ),
-      child: ClipOval(
-        child: player.photoPath != null && player.photoPath!.isNotEmpty
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(116.r),
+        child: hasPhoto
             ? CachedNetworkImage(
                 imageUrl: player.photoPath!,
                 fit: BoxFit.cover,
                 placeholder: (_, __) => Skeletonizer(
                   enabled: true,
-                  child: Container(color: fillColor),
+                  child: Container(color: secondMainColor),
                 ),
-                errorWidget: (_, __, ___) => _fallbackPhoto(player.name),
+                errorWidget: (_, __, ___) => _photoFallback(player.name),
               )
-            : _fallbackPhoto(player.name),
+            : _photoFallback(player.name),
       ),
     );
   }
 
-  Widget _fallbackPhoto(String name) {
+  Widget _photoFallback(String name) {
     return Container(
       color: secondMainColor,
       alignment: Alignment.center,
       child: Text(
-        name.isNotEmpty ? name[0] : '?',
+        name.isNotEmpty ? name[0] : '؟',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 16.sp,
+          fontSize: 18.sp,
           fontWeight: FontWeight.w700,
         ),
       ),
     );
   }
 
-  // ── Foot indicator ──────────────────────────────────────────────────────────
-  Widget _buildFootIndicator(String foot) {
-    // TODO: Replace with SVG assets when available
-    // Right foot asset: assets/svgs/foot_right.svg
-    // Left foot asset: assets/svgs/foot_left.svg
+  // ── Foot icons ─────────────────────────────────────────────────────────────
+  // Vector.svg  = RIGHT foot — bright (1.0) when يمين, dimmed (0.4) when يسار
+  // fteet.svg   = LEFT  foot — bright (1.0) when يسار, dimmed (0.4) when يمين
+  Widget _buildFootIcons(String foot) {
     final isRight = foot == 'يمين';
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // First icon represents right foot
-        Text(
-          '🦶',
-          style: TextStyle(
-            fontSize: 12.sp,
-            color: isRight ? Colors.white : Colors.white38,
+        // Right foot
+        Opacity(
+          opacity: isRight ? 1.0 : 0.4,
+          child: SvgPicture.asset(
+            'assets/svgs/Vector.svg',
+            width: 16.w,
+            height: 16.w,
+            colorFilter: const ColorFilter.mode(
+              Colors.white,
+              BlendMode.srcIn,
+            ),
           ),
         ),
-        horizontalSpace(2),
-        // Second icon represents left foot (mirrored)
-        Transform.scale(
-          scaleX: -1,
-          child: Text(
-            '🦶',
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: !isRight ? Colors.white : Colors.white38,
+        horizontalSpace(4),
+        // Left foot (barefoot SVG)
+        Opacity(
+          opacity: !isRight ? 1.0 : 0.4,
+          child: SvgPicture.asset(
+            'assets/svgs/fteet.svg',
+            width: 16.w,
+            height: 16.w,
+            colorFilter: const ColorFilter.mode(
+              Colors.white,
+              BlendMode.srcIn,
             ),
           ),
         ),
@@ -233,49 +198,145 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
     );
   }
 
-  // ── Video thumbnail ─────────────────────────────────────────────────────────
-  Widget _videoThumb(String? url) {
+  // ── TPS with solar_star-bold-duotone.svg ──────────────────────────────────
+  Widget _buildTpsRow(double tps) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SvgPicture.asset(
+          'assets/svgs/solar_star-bold-duotone.svg',
+          width: 14.w,
+          height: 14.w,
+          colorFilter: const ColorFilter.mode(
+            Colors.amber,
+            BlendMode.srcIn,
+          ),
+        ),
+        horizontalSpace(4),
+        TextUtils(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+          text: tps.toStringAsFixed(1),
+        ),
+      ],
+    );
+  }
+
+  // ── Reel thumbnails container ──────────────────────────────────────────────
+  // Figma: bg #EFF4FF, borderRadius 12, border-bottom 0.5px,
+  //        padding 8top/10right/8bottom/10left, gap 8 between thumbnails
+  Widget _buildThumbnailsSection() {
+    return Container(
+      decoration: BoxDecoration(
+        color: _lightBg,
+        borderRadius: BorderRadius.circular(12.r),
+        border: const Border(
+          bottom: BorderSide(color: Color(0xFFCBD5E0), width: 0.5),
+        ),
+      ),
+      padding: EdgeInsets.fromLTRB(10.w, 8.h, 10.w, 8.h),
+      child: FutureBuilder<List<String>>(
+        future: _reelsFuture,
+        builder: (context, snapshot) {
+          final isLoading =
+              snapshot.connectionState == ConnectionState.waiting;
+          final urls = snapshot.data ?? [];
+
+          return Row(
+            children: [
+              Expanded(
+                child: isLoading
+                    ? _thumbShimmer()
+                    : _thumbWidget(
+                        urls.isNotEmpty ? urls[0] : null,
+                      ),
+              ),
+              horizontalSpace(8),
+              Expanded(
+                child: isLoading
+                    ? _thumbShimmer()
+                    : _thumbWidget(
+                        urls.length > 1 ? urls[1] : null,
+                      ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _thumbWidget(String? url) {
     if (url != null && url.isNotEmpty) {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(8.r),
+        borderRadius: BorderRadius.circular(12.r),
         child: CachedNetworkImage(
           imageUrl: url,
-          height: 90.h,
+          height: 80.h,
           fit: BoxFit.cover,
-          placeholder: (_, __) => _videoThumbShimmer(),
-          errorWidget: (_, __, ___) => _videoThumbPlaceholder(),
+          placeholder: (_, __) => _thumbShimmer(),
+          errorWidget: (_, __, ___) => _thumbPlaceholder(),
         ),
       );
     }
-    return _videoThumbPlaceholder();
+    return _thumbPlaceholder();
   }
 
-  Widget _videoThumbPlaceholder() {
+  Widget _thumbPlaceholder() {
     return Container(
-      height: 90.h,
+      height: 80.h,
       decoration: BoxDecoration(
-        color: secondMainColor,
-        borderRadius: BorderRadius.circular(8.r),
+        color: greyClr.withOpacity(0.25),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: Center(
         child: Icon(
           Icons.play_circle_outline,
-          color: Colors.white54,
-          size: 26.w,
+          color: greyClr,
+          size: 24.w,
         ),
       ),
     );
   }
 
-  Widget _videoThumbShimmer() {
+  Widget _thumbShimmer() {
     return Skeletonizer(
       enabled: true,
       child: Container(
-        height: 90.h,
+        height: 80.h,
         decoration: BoxDecoration(
-          color: secondMainColor,
-          borderRadius: BorderRadius.circular(8.r),
+          color: greyClr.withOpacity(0.25),
+          borderRadius: BorderRadius.circular(12.r),
         ),
+      ),
+    );
+  }
+
+  // ── Reports button ─────────────────────────────────────────────────────────
+  // Figma: bg #EFF4FF, borderRadius 12, full width, padding 8v/10h
+  // In RTL layout: icon appears on the RIGHT of text
+  Widget _buildReportsButton() {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: _lightBg,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // In RTL, first widget in Row appears on the right
+          Icon(Icons.bar_chart_rounded, color: mainColor, size: 16.w),
+          horizontalSpace(6),
+          TextUtils(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: mainColor,
+            text: 'التقارير الرقمية'.tr(),
+          ),
+        ],
       ),
     );
   }
