@@ -29,6 +29,13 @@ mixin _$ClubTeamState {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) =>
       throw _privateConstructorUsedError;
 
@@ -44,6 +51,13 @@ mixin _$ClubTeamState {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -64,6 +78,13 @@ class _$Initial implements _Initial {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => initial();
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -77,6 +98,13 @@ class _$Initial implements _Initial {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => initial != null ? initial() : orElse();
 }
@@ -96,6 +124,13 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => myProfileloading();
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -109,6 +144,13 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => myProfileloading != null ? myProfileloading() : orElse();
 }
@@ -130,6 +172,13 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => myProfilesuccess(myProfileModel);
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -143,6 +192,13 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => myProfilesuccess != null ? myProfilesuccess(myProfileModel) : orElse();
 }
@@ -164,6 +220,13 @@ class _$clubProfileErrorImpl implements clubProfileError {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => myProfileerror(error);
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -177,6 +240,13 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => myProfileerror != null ? myProfileerror(error) : orElse();
 }
@@ -196,6 +266,13 @@ class _$clubUpdateProfileLoadingImpl implements clubUpdateProfileLoading {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => updateProfileloading();
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -209,6 +286,13 @@ class _$clubUpdateProfileLoadingImpl implements clubUpdateProfileLoading {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => updateProfileloading != null ? updateProfileloading() : orElse();
 }
@@ -230,6 +314,13 @@ class _$clubUpdateProfileSuccessImpl implements clubUpdateProfileSuccess {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => updateProfilesuccess(response);
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -243,6 +334,13 @@ class _$clubUpdateProfileSuccessImpl implements clubUpdateProfileSuccess {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => updateProfilesuccess != null ? updateProfilesuccess(response) : orElse();
 }
@@ -264,6 +362,13 @@ class _$clubUpdateProfileErrorImpl implements clubUpdateProfileError {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => updateProfileerror(error);
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -277,6 +382,13 @@ class _$clubUpdateProfileErrorImpl implements clubUpdateProfileError {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => updateProfileerror != null ? updateProfileerror(error) : orElse();
 }
@@ -296,6 +408,13 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => clubPlayersloading();
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -309,6 +428,13 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => clubPlayersloading != null ? clubPlayersloading() : orElse();
 }
@@ -330,6 +456,13 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => clubPlayerssuccess(players);
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -343,6 +476,13 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => clubPlayerssuccess != null ? clubPlayerssuccess(players) : orElse();
 }
@@ -364,6 +504,13 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     required TResult Function() clubPlayersloading,
     required TResult Function(dynamic players) clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
   }) => clubPlayerserror(error);
   @override
   TResult maybeWhen<TResult extends Object?>({
@@ -377,6 +524,345 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult Function()? clubPlayersloading,
     TResult Function(dynamic players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
     required TResult orElse(),
   }) => clubPlayerserror != null ? clubPlayerserror(error) : orElse();
+}
+
+// ── NEW: Favorites States ─────────────────────────────────────────────────────
+
+/// @nodoc
+class _$favLoadingImpl implements favLoading {
+  const _$favLoadingImpl();
+  @override
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() updateProfileloading,
+    required TResult Function(dynamic response) updateProfilesuccess,
+    required TResult Function(String error) updateProfileerror,
+    required TResult Function() clubPlayersloading,
+    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
+  }) => favloading();
+  @override
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? updateProfileloading,
+    TResult Function(dynamic response)? updateProfilesuccess,
+    TResult Function(String error)? updateProfileerror,
+    TResult Function()? clubPlayersloading,
+    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
+    required TResult orElse(),
+  }) => favloading != null ? favloading() : orElse();
+}
+
+/// @nodoc
+class _$favSuccessImpl implements favSuccess {
+  const _$favSuccessImpl(this.players);
+  @override
+  final dynamic players;
+  @override
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() updateProfileloading,
+    required TResult Function(dynamic response) updateProfilesuccess,
+    required TResult Function(String error) updateProfileerror,
+    required TResult Function() clubPlayersloading,
+    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
+  }) => favsuccess(players);
+  @override
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? updateProfileloading,
+    TResult Function(dynamic response)? updateProfilesuccess,
+    TResult Function(String error)? updateProfileerror,
+    TResult Function()? clubPlayersloading,
+    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
+    required TResult orElse(),
+  }) => favsuccess != null ? favsuccess(players) : orElse();
+}
+
+/// @nodoc
+class _$favErrorImpl implements favError {
+  const _$favErrorImpl({required this.error});
+  @override
+  final String error;
+  @override
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() updateProfileloading,
+    required TResult Function(dynamic response) updateProfilesuccess,
+    required TResult Function(String error) updateProfileerror,
+    required TResult Function() clubPlayersloading,
+    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
+  }) => faverror(error);
+  @override
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? updateProfileloading,
+    TResult Function(dynamic response)? updateProfilesuccess,
+    TResult Function(String error)? updateProfileerror,
+    TResult Function()? clubPlayersloading,
+    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
+    required TResult orElse(),
+  }) => faverror != null ? faverror(error) : orElse();
+}
+
+/// @nodoc
+class _$addFavSuccessImpl implements addFavSuccess {
+  const _$addFavSuccessImpl();
+  @override
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() updateProfileloading,
+    required TResult Function(dynamic response) updateProfilesuccess,
+    required TResult Function(String error) updateProfileerror,
+    required TResult Function() clubPlayersloading,
+    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
+  }) => addFavsuccess();
+  @override
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? updateProfileloading,
+    TResult Function(dynamic response)? updateProfilesuccess,
+    TResult Function(String error)? updateProfileerror,
+    TResult Function()? clubPlayersloading,
+    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
+    required TResult orElse(),
+  }) => addFavsuccess != null ? addFavsuccess() : orElse();
+}
+
+/// @nodoc
+class _$addFavErrorImpl implements addFavError {
+  const _$addFavErrorImpl({required this.error});
+  @override
+  final String error;
+  @override
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() updateProfileloading,
+    required TResult Function(dynamic response) updateProfilesuccess,
+    required TResult Function(String error) updateProfileerror,
+    required TResult Function() clubPlayersloading,
+    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
+  }) => addFaverror(error);
+  @override
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? updateProfileloading,
+    TResult Function(dynamic response)? updateProfilesuccess,
+    TResult Function(String error)? updateProfileerror,
+    TResult Function()? clubPlayersloading,
+    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
+    required TResult orElse(),
+  }) => addFaverror != null ? addFaverror(error) : orElse();
+}
+
+/// @nodoc
+class _$removeFavSuccessImpl implements removeFavSuccess {
+  const _$removeFavSuccessImpl();
+  @override
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() updateProfileloading,
+    required TResult Function(dynamic response) updateProfilesuccess,
+    required TResult Function(String error) updateProfileerror,
+    required TResult Function() clubPlayersloading,
+    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
+  }) => removeFavsuccess();
+  @override
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? updateProfileloading,
+    TResult Function(dynamic response)? updateProfilesuccess,
+    TResult Function(String error)? updateProfileerror,
+    TResult Function()? clubPlayersloading,
+    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
+    required TResult orElse(),
+  }) => removeFavsuccess != null ? removeFavsuccess() : orElse();
+}
+
+/// @nodoc
+class _$removeFavErrorImpl implements removeFavError {
+  const _$removeFavErrorImpl({required this.error});
+  @override
+  final String error;
+  @override
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() myProfileloading,
+    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
+    required TResult Function(String error) myProfileerror,
+    required TResult Function() updateProfileloading,
+    required TResult Function(dynamic response) updateProfilesuccess,
+    required TResult Function(String error) updateProfileerror,
+    required TResult Function() clubPlayersloading,
+    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(String error) clubPlayerserror,
+    required TResult Function() favloading,
+    required TResult Function(dynamic players) favsuccess,
+    required TResult Function(String error) faverror,
+    required TResult Function() addFavsuccess,
+    required TResult Function(String error) addFaverror,
+    required TResult Function() removeFavsuccess,
+    required TResult Function(String error) removeFaverror,
+  }) => removeFaverror(error);
+  @override
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? myProfileloading,
+    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
+    TResult Function(String error)? myProfileerror,
+    TResult Function()? updateProfileloading,
+    TResult Function(dynamic response)? updateProfilesuccess,
+    TResult Function(String error)? updateProfileerror,
+    TResult Function()? clubPlayersloading,
+    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(String error)? clubPlayerserror,
+    TResult Function()? favloading,
+    TResult Function(dynamic players)? favsuccess,
+    TResult Function(String error)? faverror,
+    TResult Function()? addFavsuccess,
+    TResult Function(String error)? addFaverror,
+    TResult Function()? removeFavsuccess,
+    TResult Function(String error)? removeFaverror,
+    required TResult orElse(),
+  }) => removeFaverror != null ? removeFaverror(error) : orElse();
 }

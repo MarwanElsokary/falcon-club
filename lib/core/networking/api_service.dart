@@ -58,6 +58,18 @@ abstract class ApiService {
   @GET(ApiConstants.getReelsByPlayerId)
   Future<dynamic> getReelsByPlayerId(@Query("playerId") String playerId);
 
+  //addToFav
+  @POST(ApiConstants.addToFav)
+  Future<dynamic> addToFav(@Query("playerId") String playerId);
+
+  //removeFromFav
+  @DELETE(ApiConstants.removeFromFav)
+  Future<dynamic> removeFromFav(@Query("playerId") String playerId);
+
+  //getFav
+  @GET(ApiConstants.getFav)
+  Future<dynamic> getFav();
+
   //register step 2
   @POST(ApiConstants.registerStep2)
   Future completeRegistration(@Body() FormData body);

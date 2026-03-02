@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/cache/cach_Helper.dart'; // ✅ استيراد CacheHelper
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/core/widget/text_utils.dart';
@@ -43,26 +42,14 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
           builder: (context, state) {
             return state.maybeWhen(
               allExercisessuccess: (allExercisata) {
-                // ✅ الحصول على حالة الاشتراك من الكاش مباشرة
-                final myProfile = CacheHelper.getmyProfile();
-                final isSubscribed = myProfile?.data.isSubscribed == true;
+                // Show all exercises — no subscription restriction
+                final exercisesToShow = allExercisata.data;
 
-                // ✅ تصفية التمارين بناءً على حالة الاشتراك
-                final exercisesToShow = allExercisata.data.where((exercise) {
-                  // إذا كان المستخدم مشتركًا، نعرض كل التمارين
-                  if (isSubscribed) {
-                    return true;
-                  }
-                  // إذا لم يكن مشتركًا، نعرض فقط التمارين المجانية
-                  return exercise.isPaid == false;
-                }).toList();
-
-                // ✅ إذا لم يكن هناك تمارين للعرض (للمستخدم غير المشترك)
                 if (exercisesToShow.isEmpty) {
-                  return SizedBox.shrink(); // لا نعرض أي شيء
+                  return const SizedBox.shrink();
                 }
 
-                // ✅ تحديد عدد التمارين المعروضة (بحد أقصى 4)
+                // Cap at 4 items for the carousel
                 final displayCount = exercisesToShow.length > 4 ? 4 : exercisesToShow.length;
 
                 return Column(
@@ -89,22 +76,15 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
 
                       itemBuilder: (context, index, realIndex) {
                         final exercise = exercisesToShow[index];
-                        final isLocked = exercise.isPaid == true && !isSubscribed;
 
                         return GestureDetector(
                           onTap: () {
-                            if (isLocked) {
-                              // ✅ عرض رسالة الاشتراك إذا كان التمرين مقفولاً
-                              _showSubscriptionDialog(context);
-                            } else {
-                              // ✅ الانتقال لصفحة التفاصيل
-                              context.pushNamed(
-                                AppRoute.trainingDetailsScreen,
-                                arguments: {
-                                  'exerciseId': exercise.id?.toString() ?? '',
-                                },
-                              );
-                            }
+                            context.pushNamed(
+                              AppRoute.trainingDetailsScreen,
+                              arguments: {
+                                'exerciseId': exercise.id?.toString() ?? '',
+                              },
+                            );
                           },
                           child: Container(
                             height: 170.w,
@@ -270,36 +250,6 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                           ),
                                         ),
                                       ),
-                                      if (isLocked)
-                                        Container(
-                                          width: 100.h,
-                                          height: 120.h,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(16.r),
-                                            color: Colors.black.withOpacity(0.5),
-                                          ),
-                                          child: Center(
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.lock_outline_rounded,
-                                                  color: Colors.white,
-                                                  size: 24.w,
-                                                ),
-                                                verticalSpace(4),
-                                                Text(
-                                                  'مقفل'.tr(),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 10.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
                                     ],
                                   ),
                                 ),
@@ -373,157 +323,4 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
     );
   }
 
-  // ✅ دالة لعرض رسالة الاشتراك
-  void _showSubscriptionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.4),
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Container(
-          padding: EdgeInsets.all(20.w),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // ✅ أيقونة القفل في دائرة متدرجة
-              Container(
-                width: 80.w,
-                height: 80.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: [mainColor.withOpacity(0.1), mainColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.lock_outline_rounded,
-                    color: Colors.white,
-                    size: 40.w,
-                  ),
-                ),
-              ),
-              verticalSpace(20),
-
-              // ✅ العنوان
-              TextUtils(
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
-                color: Colors.black,
-                text: 'هذا التمرين متاح للمشتركين فقط'.tr(),
-              ),
-              verticalSpace(12),
-
-              // ✅ الوصف
-              TextUtils(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black54,
-                text: 'اشترك الآن للوصول إلى جميع التمارين المدفوعة والمحتوى الحصري'.tr(),
-                maxlines: 3,
-              ),
-              verticalSpace(20),
-
-              // ✅ الميزات
-              Container(
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: mainColor.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(15.r),
-                  border: Border.all(color: mainColor.withOpacity(0.2)),
-                ),
-                child: Column(
-                  children: [
-                    _buildFeatureItem('عرض جميع التمارين المدفوعة'),
-                    verticalSpace(8),
-                    _buildFeatureItem('وصول غير محدود للتدريبات'),
-                    verticalSpace(8),
-                    _buildFeatureItem('احصائيات تقدم مفصلة'),
-                    verticalSpace(8),
-                    _buildFeatureItem('محتوى حصري للمشتركين'),
-                  ],
-                ),
-              ),
-              verticalSpace(25),
-
-              // ✅ زر الاشتراك
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    context.pushNamed(AppRoute.packageScreen);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mainColor,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
-                    elevation: 4,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        text: 'اشترك الآن'.tr(),
-                      ),
-                      horizontalSpace(8),
-                      Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 16.w,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              verticalSpace(10),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ✅ دالة لبناء عنصر ميزة
-  Widget _buildFeatureItem(String text) {
-    return Row(
-      children: [
-        Icon(
-          Icons.check_circle,
-          color: mainColor,
-          size: 18.w,
-        ),
-        horizontalSpace(10),
-        Expanded(
-          child: TextUtils(
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-            text: text.tr(),
-          ),
-        ),
-      ],
-    );
-  }
 }

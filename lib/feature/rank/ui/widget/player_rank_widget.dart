@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/routing/routes.dart';
@@ -72,39 +71,11 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
   Widget build(BuildContext context) {
     final cubit = context.read<RankCubit>();
     final items = cubit.rankList;
-    final isSubscribed = cubit.isSubscribed;
 
-    // ✅ تحديد عدد العناصر المعروضة بناءً على حالة الاشتراك فقط
-    final displayCount = isSubscribed ? items.length : 3;
-
-    // ✅ إذا كان المستخدم غير مشترك، نعرض رسالة الاشتراك في منتصف الشاشة
-    if (!isSubscribed) {
-      return Column(
-        children: [
-          // الجزء العلوي: أول 3 عناصر
-          Expanded(
-            flex: 1,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: displayCount,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-              itemBuilder: (context, index) {
-                return _buildPlayerItem(items, index);
-              },
-            ),
-          ),
-          // رسالة الاشتراك في المنتصف
-          SingleChildScrollView(
-            child: _buildSubscribeMessage(context),
-          ),
-        ],
-      );
-    }
-
-    // ✅ إذا كان المستخدم مشتركاً، نعرض كل العناصر
+    // Show full list — no subscription restriction
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: displayCount,
+      itemCount: items.length,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       itemBuilder: (context, index) {
         return _buildPlayerItem(items, index);
@@ -246,179 +217,6 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
             ],
           ),
           verticalSpace(10),
-        ],
-      ),
-    );
-  }
-
-  // ✅ دالة لبناء رسالة الاشتراك (تصميم مشابه لـ PlayerMeasurementsWidget)
-  Widget _buildSubscribeMessage(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              color: whiteclr,
-              borderRadius: BorderRadius.circular(30.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // الأيقونة
-                Container(
-                  width: 80.w,
-                  height: 80.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [mainColor.withOpacity(0.1), mainColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.lock_outline_rounded,
-                      color: Colors.white,
-                      size: 40.w,
-                    ),
-                  ),
-                ),
-                verticalSpace(20),
-
-                // العنوان
-                TextUtils(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                  text: 'الترتيب الكامل مغلق'.tr(),
-                ),
-                verticalSpace(12),
-
-                // الوصف
-                TextUtils(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black54,
-                  text: 'اشترك الآن للوصول إلى قائمة الترتيب الكاملة ومعرفة موقعك بين اللاعبين'.tr(),
-                  maxlines: 3,
-                ),
-                verticalSpace(20),
-
-                // الميزات
-                Container(
-                  padding: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                    color: mainColor.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(15.r),
-                    border: Border.all(color: mainColor.withOpacity(0.2)),
-                  ),
-                  child: Column(
-                    children: [
-                      _buildFeatureItem('عرض الترتيب الكامل'),
-                      _buildFeatureItem('مقارنة أدائك باللاعبين'),
-                      _buildFeatureItem('تتبع تقدمك'),
-                      _buildFeatureItem('احصائيات مفصلة'),
-                    ],
-                  ),
-                ),
-                verticalSpace(25),
-
-                // زر الاشتراك
-                ElevatedButton(
-                  onPressed: () {
-                    context.pushNamed(AppRoute.packageScreen);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mainColor,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
-                    elevation: 4,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        text: 'اشترك الآن'.tr(),
-                      ),
-                      horizontalSpace(8),
-                      Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 16.w,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                ),
-                verticalSpace(10),
-
-                // نص إضافي
-
-              ],
-            ),
-          ),
-
-          // زخرفة أعلى اليسار
-          PositionedDirectional(
-            top: 0,
-            start: 0,
-            child: SvgPicture.asset(
-              'assets/svgs/Group 385.svg',
-              width: 60.w,
-            ),
-          ),
-
-          // زخرفة أسفل اليمين
-          PositionedDirectional(
-            end: 0,
-            bottom: 0,
-            child: SvgPicture.asset(
-              'assets/svgs/Group 386-2.svg',
-              width: 80.w,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ✅ دالة لبناء عنصر ميزة
-  Widget _buildFeatureItem(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
-      child: Row(
-        children: [
-          Icon(
-            Icons.check_circle,
-            color: mainColor,
-            size: 18.w,
-          ),
-          horizontalSpace(10),
-          Expanded(
-            child: TextUtils(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-              text: text.tr(),
-            ),
-          ),
         ],
       ),
     );

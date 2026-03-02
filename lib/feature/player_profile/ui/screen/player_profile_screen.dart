@@ -4,6 +4,7 @@ import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/slide_enimation_widget.dart';
+import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
 import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
 import 'package:falcon/feature/main_screen/cubit/main_state.dart';
 import 'package:falcon/feature/player_profile/ui/widget/player_more_info_widget.dart';
@@ -43,10 +44,27 @@ class PlayerProfileScreen extends StatefulWidget {
 class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   bool _skillsLoaded = false;
 
+  // Favorites — accessed safely if ClubTeamCubit is in the widget tree
+  ClubTeamCubit? _clubCubit;
+  bool _isFavorited = false;
+
   @override
   void initState() {
     super.initState();
     log('🎬 PlayerProfileScreen initialized for playerId: ${widget.playerId}');
+    // Safely try to access ClubTeamCubit (only available in club app context)
+    try {
+      _clubCubit = context.read<ClubTeamCubit>();
+      _isFavorited = _clubCubit!.isFavorited(widget.playerId);
+    } catch (_) {
+      _clubCubit = null;
+    }
+  }
+
+  Future<void> _toggleFavorite() async {
+    if (_clubCubit == null) return;
+    setState(() => _isFavorited = !_isFavorited);
+    await _clubCubit!.toggleFavorite(widget.playerId);
   }
 
   @override
@@ -57,7 +75,32 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
           preferredSize: Size(context.displayWidth / 1, 30.h),
           child: Container(
             color: mainColor,
-            child: SafeArea(child: PlayerProfileAppBarWidget()),
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  PlayerProfileAppBarWidget(),
+                  // Bookmark icon — only shown when ClubTeamCubit is available
+                  if (_clubCubit != null)
+                    PositionedDirectional(
+                      start: 12.w,
+                      top: 0,
+                      bottom: 0,
+                      child: GestureDetector(
+                        onTap: _toggleFavorite,
+                        child: Center(
+                          child: Icon(
+                            _isFavorited
+                                ? Icons.bookmark_rounded
+                                : Icons.bookmark_border_rounded,
+                            color: Colors.white,
+                            size: 24.w,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
         body: Container(

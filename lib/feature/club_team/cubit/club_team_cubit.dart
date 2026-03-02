@@ -227,6 +227,81 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   }
 
   // ============================================================================
+  // FAVORITES — fetch list, toggle (add/remove), local Set cache
+  // ============================================================================
+  Set<String> favoritedPlayerIds = {};
+  List<ClubPlayer> cachedFavPlayers = [];
+
+  bool isFavorited(String playerId) => favoritedPlayerIds.contains(playerId);
+
+  Future<void> fetchFavorites() async {
+    emit(const ClubTeamState.favloading());
+    final response = await _repo.getFav();
+    response.when(
+      success: (data) {
+        try {
+          final players = <ClubPlayer>[];
+          if (data is Map<String, dynamic>) {
+            final raw = data['data'];
+            final list = raw is List ? raw : (raw is Map ? [raw] : []);
+            for (final p in list) {
+              if (p is Map<String, dynamic>) players.add(ClubPlayer.fromJson(p));
+            }
+          } else if (data is List) {
+            for (final p in data) {
+              if (p is Map<String, dynamic>) players.add(ClubPlayer.fromJson(p));
+            }
+          }
+          cachedFavPlayers = players;
+          favoritedPlayerIds = players.map((p) => p.id).toSet();
+          emit(ClubTeamState.favsuccess(players));
+        } catch (e) {
+          log('Error parsing favorites: $e');
+          emit(const ClubTeamState.faverror(error: 'خطأ في تحميل المفضلة'));
+        }
+      },
+      failure: (error) {
+        emit(ClubTeamState.faverror(
+          error: error.apiErrorModel.message ?? 'فشل جلب المفضلة',
+        ));
+      },
+    );
+  }
+
+  Future<void> toggleFavorite(String playerId) async {
+    if (isFavorited(playerId)) {
+      // Remove
+      favoritedPlayerIds.remove(playerId);
+      cachedFavPlayers.removeWhere((p) => p.id == playerId);
+      final response = await _repo.removeFromFav(playerId);
+      response.when(
+        success: (_) => emit(const ClubTeamState.removeFavsuccess()),
+        failure: (error) {
+          // Revert optimistic update on failure
+          favoritedPlayerIds.add(playerId);
+          emit(ClubTeamState.removeFaverror(
+            error: error.apiErrorModel.message ?? 'فشل إزالة اللاعب من المفضلة',
+          ));
+        },
+      );
+    } else {
+      // Add
+      favoritedPlayerIds.add(playerId);
+      final response = await _repo.addToFav(playerId);
+      response.when(
+        success: (_) => emit(const ClubTeamState.addFavsuccess()),
+        failure: (error) {
+          // Revert optimistic update on failure
+          favoritedPlayerIds.remove(playerId);
+          emit(ClubTeamState.addFaverror(
+            error: error.apiErrorModel.message ?? 'فشل إضافة اللاعب للمفضلة',
+          ));
+        },
+      );
+    }
+  }
+
+  // ============================================================================
   // REELS PER PLAYER — cached per playerId
   // ============================================================================
   Future<List<String>> getReelsForPlayer(String playerId) async {

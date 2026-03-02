@@ -27,4 +27,14 @@ class ClubTeamState with _$ClubTeamState {
       clubPlayersSuccess;
   const factory ClubTeamState.clubPlayerserror({required String error}) =
       clubPlayersError;
+
+  //favorites
+  const factory ClubTeamState.favloading() = favLoading;
+  const factory ClubTeamState.favsuccess(dynamic players) = favSuccess;
+  const factory ClubTeamState.faverror({required String error}) = favError;
+  const factory ClubTeamState.addFavsuccess() = addFavSuccess;
+  const factory ClubTeamState.addFaverror({required String error}) = addFavError;
+  const factory ClubTeamState.removeFavsuccess() = removeFavSuccess;
+  const factory ClubTeamState.removeFaverror({required String error}) =
+      removeFavError;
 }

@@ -5,6 +5,8 @@ import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/core/widget/slide_enimation_widget.dart';
 import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
+import 'package:falcon/feature/rank/cubit/rank_cubit.dart';
+import 'package:falcon/feature/rank/ui/screen/rank_screen.dart';
 import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
 import 'package:falcon/feature/reals/ui/screen/main_reals_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,7 @@ import '../../../../core/thems/thems.dart';
 import '../../cubit/club_team_cubit.dart';
 import 'club_my_team_screen.dart';
 import 'club_profile_screen.dart';
-import 'placeholder_screen.dart';
+import 'favorites_screen.dart';
 
 class ClubMainScreen extends StatefulWidget {
   const ClubMainScreen({super.key});
@@ -61,10 +63,13 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
                       playnowOrNot: currentIndex == 2,
                     ),
                   ),
-                  // 3 — قائمة الاهتمامات
-                  PlaceholderScreen(title: 'قريباً'.tr()),
-                  // 4 — الرتب
-                  PlaceholderScreen(title: 'قريباً'.tr()),
+                  // 3 — قائمة الاهتمامات (Favorites)
+                  const FavoritesScreen(),
+                  // 4 — الرتب (Rank)
+                  BlocProvider(
+                    create: (_) => getIt<RankCubit>()..emitRank(),
+                    child: const RankScreen(),
+                  ),
                 ],
               );
             },
