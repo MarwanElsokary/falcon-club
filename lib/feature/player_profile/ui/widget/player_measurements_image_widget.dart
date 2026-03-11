@@ -11,7 +11,7 @@ import 'package:falcon/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
@@ -391,7 +391,7 @@ class PlayerBioImageWidget extends StatelessWidget {
                 subtitle: 'حفظ الصورة في معرض الصور',
                 onTap: () {
                   Navigator.pop(context);
-                  _downloadImage(context, imageUrl);
+                  // _downloadImage(context, imageUrl);
                 },
               ),
               verticalSpace(20),
@@ -500,7 +500,7 @@ class PlayerBioImageWidget extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.download, color: Colors.white),
                 onPressed: () {
-                  _downloadImage(context, imageUrl);
+                  // _downloadImage(context, imageUrl);
                 },
               ),
             ],
@@ -540,37 +540,37 @@ class PlayerBioImageWidget extends StatelessWidget {
     );
   }
 
-  Future<void> _downloadImage(BuildContext context, String imageUrl) async {
-    try {
-      // طلب إذن الكتابة للتخزين
-      if (Platform.isAndroid || Platform.isIOS) {
-        final status = await Permission.storage.request();
-        if (!status.isGranted) {
-          showSuccesSnackBar(context: context, title: 'يجب منح إذن التخزين لتحميل الصورة');
-          return;
-        }
-      }
-
-      showSuccesSnackBar(context: context, title: 'جاري تحميل الصورة...');
-
-      final response = await http.get(Uri.parse(imageUrl));
-      final bytes = response.bodyBytes;
-
-      // حفظ الصورة في المعرض
-      final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(bytes),
-        quality: 100,
-        name:
-        'قياسات_${playerProfile.data.firstName}_${DateTime.now().millisecondsSinceEpoch}',
-      );
-
-      if (result['isSuccess'] == true) {
-        showSuccesSnackBar(title: 'تم تحميل الصورة بنجاح', context: context);
-      } else {
-        showErrorSnackBar(title: 'فشل في تحميل الصورة', context: context);
-      }
-    } catch (e) {
-      showErrorSnackBar(context: context, title: 'حدث خطأ أثناء التحميل: $e');
-    }
-  }
+  // Future<void> _downloadImage(BuildContext context, String imageUrl) async {
+  //   try {
+  //     // طلب إذن الكتابة للتخزين
+  //     if (Platform.isAndroid || Platform.isIOS) {
+  //       final status = await Permission.storage.request();
+  //       if (!status.isGranted) {
+  //         showSuccesSnackBar(context: context, title: 'يجب منح إذن التخزين لتحميل الصورة');
+  //         return;
+  //       }
+  //     }
+  //
+  //     showSuccesSnackBar(context: context, title: 'جاري تحميل الصورة...');
+  //
+  //     final response = await http.get(Uri.parse(imageUrl));
+  //     final bytes = response.bodyBytes;
+  //
+  //     // حفظ الصورة في المعرض
+  //     final result = await ImageGallerySaver.saveImage(
+  //       Uint8List.fromList(bytes),
+  //       quality: 100,
+  //       name:
+  //       'قياسات_${playerProfile.data.firstName}_${DateTime.now().millisecondsSinceEpoch}',
+  //     );
+  //
+  //     if (result['isSuccess'] == true) {
+  //       showSuccesSnackBar(title: 'تم تحميل الصورة بنجاح', context: context);
+  //     } else {
+  //       showErrorSnackBar(title: 'فشل في تحميل الصورة', context: context);
+  //     }
+  //   } catch (e) {
+  //     showErrorSnackBar(context: context, title: 'حدث خطأ أثناء التحميل: $e');
+  //   }
+  // }
 }

@@ -11,8 +11,12 @@ class TrainingDetailsCubit extends Cubit<TrainingDetailsState> {
 
   String videoPath = '';
 
+  // ── الـ exerciseId الحالي — بيستخدمه ClubTrainingDetailsScreen ─
+  String? currentExerciseId;
+
   // MARK: - exerciseDetails
   void emitexerciseDetails({required String exerciseId}) async {
+    currentExerciseId = exerciseId;
     emit(const TrainingDetailsState.exerciseDetailsLoading());
     final response = await _repo.exerciseDetails(exerciseId: exerciseId);
     response.when(

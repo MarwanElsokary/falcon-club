@@ -6,6 +6,8 @@ import '../../feature/Measurement/cubit/MeasurementCubit.dart';
 import '../../feature/Measurement/ui/MeasurementScreen.dart';
 import '../../feature/Player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
+import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
+import '../../feature/club_team/ui/screen/club_profile_screen.dart';
 import '../../feature/creat_real/cubit/creat_real_cubit.dart';
 import '../../feature/creat_real/ui/screen/publish_my_video.dart';
 import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
@@ -42,8 +44,15 @@ import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/ui/screen/training_screen.dart';
 import '../../feature/training_details/cubit/training_details_cubit.dart';
 import '../../feature/training_details/data/model/exercise_details_model.dart';
+import '../../feature/training_details/ui/screen/ClubTrainingDetailsScreen.dart';
 import '../../feature/training_details/ui/screen/ai_generate_screen.dart';
 import '../../feature/training_details/ui/screen/training_details_screen.dart';
+// ── Club training details — بدون رفع فيديو ─────────────────────────
+import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
+import '../../feature/player_attempts/data/model/player_attempts_model.dart';
+import '../../feature/player_attempts/data/repo/player_attempts_repo.dart';
+import '../../feature/player_attempts/ui/screen/player_attempts_screen.dart';
+import '../../feature/player_attempts/ui/screen/player_attempt_detail_screen.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 
@@ -73,17 +82,6 @@ class AppRouter {
             child: const LoginScreen(),
           ),
         );
-    // case AppRoute.paymentVerificationScreen:
-    //   final args = settings.arguments as Map<String, dynamic>;
-    //   return MaterialPageRoute(
-    //     builder: (_) => BlocProvider.value(
-    //       value: getIt<PackageCubit>(),
-    //       child: PaymentVerificationScreen(
-    //         verificationUrl: args['verificationUrl'],
-    //         packageId: args['packageId'],
-    //       ),
-    //     ),
-    //   );
 
       case AppRoute.signUpScreen:
         final args = arguments as Map<String, dynamic>?;
@@ -120,6 +118,14 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (_) => getIt<LoginCubit>()..loadCountries(),
             child: const CompleteProfileScreen(),
+          ),
+        );
+
+      case AppRoute.clubProfileScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
+            child: const ClubProfileScreen(),
           ),
         );
 
@@ -201,7 +207,8 @@ class AppRouter {
                 ),
               ),
               BlocProvider(
-                create: (_) => getIt<MainCubit>()..emitProfileById(userId: playerId),
+                create: (_) => getIt<MainCubit>()
+                  ..emitProfileById(userId: playerId),
               ),
             ],
             child: PlayerProfileScreen(
@@ -261,6 +268,7 @@ class AppRouter {
           ),
         );
 
+    // ── شاشة تمرين اللاعب — بترفع فيديو ──────────────────────────
       case AppRoute.trainingDetailsScreen:
         final args = arguments as Map<String, dynamic>;
         final exerciseId = args['exerciseId'] as String;
@@ -270,6 +278,26 @@ class AppRouter {
             create: (_) => getIt<TrainingDetailsCubit>()
               ..emitexerciseDetails(exerciseId: exerciseId),
             child: const TrainingDetailsScreen(),
+          ),
+        );
+
+    // ── شاشة تمرين النادي — متابعة اللاعبين بدون رفع فيديو ───────
+      case AppRoute.clubTrainingDetailsScreen:
+        final args = arguments as Map<String, dynamic>;
+        final exerciseId = args['exerciseId'] as String;
+
+        return _fadeTransitionRoute(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => getIt<TrainingDetailsCubit>()
+                  ..emitexerciseDetails(exerciseId: exerciseId),
+              ),
+              BlocProvider(
+                create: (_) => getIt<ExperianceDetailsCubit>(),
+              ),
+            ],
+            child: const ClubTrainingDetailsScreen(),
           ),
         );
 
@@ -365,6 +393,35 @@ class AppRouter {
         );
 
     // ========================================================================
+    // PLAYER ATTEMPTS
+    // ========================================================================
+      case AppRoute.playerAttemptsScreen:
+        final args = arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<PlayerAttemptsCubit>(),
+            child: PlayerAttemptsScreen(
+              exerciseId:    args['exerciseId']    as int,
+              playerId:      args['playerId']      as String,
+              playerName:    args['playerName']    as String,
+              playerPhoto:   args['playerPhoto']   as String?,
+              totalAttempts: args['totalAttempts'] as int,
+            ),
+          ),
+        );
+
+      case AppRoute.playerAttemptDetailScreen:
+        final args = arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => PlayerAttemptDetailScreen(
+            attempt:      args['attempt']      as PlayerAttempt,
+            attemptIndex: args['attemptIndex'] as int,
+            playerName:   args['playerName']   as String,
+            exerciseId:   args['exerciseId']   as int,
+          ),
+        );
+
+    // ========================================================================
     // DEFAULT
     // ========================================================================
       default:
@@ -374,7 +431,6 @@ class AppRouter {
     }
   }
 
-  // Helper method for fade transitions
   PageRouteBuilder _fadeTransitionRoute(Widget page) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,

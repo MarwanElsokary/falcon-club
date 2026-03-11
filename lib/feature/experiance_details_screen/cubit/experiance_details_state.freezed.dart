@@ -24,6 +24,18 @@ mixin _$ExperianceDetailsState {
     required TResult Function(TrialDetailsModel trialDetailsModel)
     trialsDetailssuccess,
     required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -32,6 +44,14 @@ mixin _$ExperianceDetailsState {
     TResult? Function(TrialDetailsModel trialDetailsModel)?
     trialsDetailssuccess,
     TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -39,6 +59,14 @@ mixin _$ExperianceDetailsState {
     TResult Function()? trialsDetailsLoading,
     TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
     TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +75,15 @@ mixin _$ExperianceDetailsState {
     required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
     required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
     required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -54,6 +91,13 @@ mixin _$ExperianceDetailsState {
     TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -61,6 +105,13 @@ mixin _$ExperianceDetailsState {
     TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -138,6 +189,18 @@ class _$InitialImpl implements _Initial {
     required TResult Function(TrialDetailsModel trialDetailsModel)
     trialsDetailssuccess,
     required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
   }) {
     return initial();
   }
@@ -150,6 +213,14 @@ class _$InitialImpl implements _Initial {
     TResult? Function(TrialDetailsModel trialDetailsModel)?
     trialsDetailssuccess,
     TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
   }) {
     return initial?.call();
   }
@@ -161,6 +232,14 @@ class _$InitialImpl implements _Initial {
     TResult Function()? trialsDetailsLoading,
     TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
     TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -176,6 +255,15 @@ class _$InitialImpl implements _Initial {
     required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
     required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
     required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
   }) {
     return initial(this);
   }
@@ -187,6 +275,13 @@ class _$InitialImpl implements _Initial {
     TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
   }) {
     return initial?.call(this);
   }
@@ -198,6 +293,13 @@ class _$InitialImpl implements _Initial {
     TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -261,6 +363,18 @@ class _$trialsDetailsLoadingImpl implements trialsDetailsLoading {
     required TResult Function(TrialDetailsModel trialDetailsModel)
     trialsDetailssuccess,
     required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
   }) {
     return trialsDetailsLoading();
   }
@@ -273,6 +387,14 @@ class _$trialsDetailsLoadingImpl implements trialsDetailsLoading {
     TResult? Function(TrialDetailsModel trialDetailsModel)?
     trialsDetailssuccess,
     TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
   }) {
     return trialsDetailsLoading?.call();
   }
@@ -284,6 +406,14 @@ class _$trialsDetailsLoadingImpl implements trialsDetailsLoading {
     TResult Function()? trialsDetailsLoading,
     TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
     TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
     required TResult orElse(),
   }) {
     if (trialsDetailsLoading != null) {
@@ -299,6 +429,15 @@ class _$trialsDetailsLoadingImpl implements trialsDetailsLoading {
     required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
     required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
     required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
   }) {
     return trialsDetailsLoading(this);
   }
@@ -310,6 +449,13 @@ class _$trialsDetailsLoadingImpl implements trialsDetailsLoading {
     TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
   }) {
     return trialsDetailsLoading?.call(this);
   }
@@ -321,6 +467,13 @@ class _$trialsDetailsLoadingImpl implements trialsDetailsLoading {
     TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
     required TResult orElse(),
   }) {
     if (trialsDetailsLoading != null) {
@@ -415,6 +568,18 @@ class _$trialsDetailsSuccessImpl implements trialsDetailsSuccess {
     required TResult Function(TrialDetailsModel trialDetailsModel)
     trialsDetailssuccess,
     required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
   }) {
     return trialsDetailssuccess(trialDetailsModel);
   }
@@ -427,6 +592,14 @@ class _$trialsDetailsSuccessImpl implements trialsDetailsSuccess {
     TResult? Function(TrialDetailsModel trialDetailsModel)?
     trialsDetailssuccess,
     TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
   }) {
     return trialsDetailssuccess?.call(trialDetailsModel);
   }
@@ -438,6 +611,14 @@ class _$trialsDetailsSuccessImpl implements trialsDetailsSuccess {
     TResult Function()? trialsDetailsLoading,
     TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
     TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
     required TResult orElse(),
   }) {
     if (trialsDetailssuccess != null) {
@@ -453,6 +634,15 @@ class _$trialsDetailsSuccessImpl implements trialsDetailsSuccess {
     required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
     required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
     required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
   }) {
     return trialsDetailssuccess(this);
   }
@@ -464,6 +654,13 @@ class _$trialsDetailsSuccessImpl implements trialsDetailsSuccess {
     TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
   }) {
     return trialsDetailssuccess?.call(this);
   }
@@ -475,6 +672,13 @@ class _$trialsDetailsSuccessImpl implements trialsDetailsSuccess {
     TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
     required TResult orElse(),
   }) {
     if (trialsDetailssuccess != null) {
@@ -576,6 +780,18 @@ class _$trialsDetailsErrorImpl implements trialsDetailsError {
     required TResult Function(TrialDetailsModel trialDetailsModel)
     trialsDetailssuccess,
     required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
   }) {
     return trialsDetailserror(error);
   }
@@ -588,6 +804,14 @@ class _$trialsDetailsErrorImpl implements trialsDetailsError {
     TResult? Function(TrialDetailsModel trialDetailsModel)?
     trialsDetailssuccess,
     TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
   }) {
     return trialsDetailserror?.call(error);
   }
@@ -599,6 +823,14 @@ class _$trialsDetailsErrorImpl implements trialsDetailsError {
     TResult Function()? trialsDetailsLoading,
     TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
     TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
     required TResult orElse(),
   }) {
     if (trialsDetailserror != null) {
@@ -614,6 +846,15 @@ class _$trialsDetailsErrorImpl implements trialsDetailsError {
     required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
     required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
     required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
   }) {
     return trialsDetailserror(this);
   }
@@ -625,6 +866,13 @@ class _$trialsDetailsErrorImpl implements trialsDetailsError {
     TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
   }) {
     return trialsDetailserror?.call(this);
   }
@@ -636,6 +884,13 @@ class _$trialsDetailsErrorImpl implements trialsDetailsError {
     TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
     TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
     TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
     required TResult orElse(),
   }) {
     if (trialsDetailserror != null) {
@@ -655,5 +910,1447 @@ abstract class trialsDetailsError implements ExperianceDetailsState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$trialsDetailsErrorImplCopyWith<_$trialsDetailsErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$exercisePlayersLoadingImplCopyWith<$Res> {
+  factory _$$exercisePlayersLoadingImplCopyWith(
+    _$exercisePlayersLoadingImpl value,
+    $Res Function(_$exercisePlayersLoadingImpl) then,
+  ) = __$$exercisePlayersLoadingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String exerciseId});
+}
+
+/// @nodoc
+class __$$exercisePlayersLoadingImplCopyWithImpl<$Res>
+    extends
+        _$ExperianceDetailsStateCopyWithImpl<$Res, _$exercisePlayersLoadingImpl>
+    implements _$$exercisePlayersLoadingImplCopyWith<$Res> {
+  __$$exercisePlayersLoadingImplCopyWithImpl(
+    _$exercisePlayersLoadingImpl _value,
+    $Res Function(_$exercisePlayersLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? exerciseId = null}) {
+    return _then(
+      _$exercisePlayersLoadingImpl(
+        exerciseId: null == exerciseId
+            ? _value.exerciseId
+            : exerciseId // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$exercisePlayersLoadingImpl implements exercisePlayersLoading {
+  const _$exercisePlayersLoadingImpl({required this.exerciseId});
+
+  @override
+  final String exerciseId;
+
+  @override
+  String toString() {
+    return 'ExperianceDetailsState.exercisePlayersLoading(exerciseId: $exerciseId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$exercisePlayersLoadingImpl &&
+            (identical(other.exerciseId, exerciseId) ||
+                other.exerciseId == exerciseId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exerciseId);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$exercisePlayersLoadingImplCopyWith<_$exercisePlayersLoadingImpl>
+  get copyWith =>
+      __$$exercisePlayersLoadingImplCopyWithImpl<_$exercisePlayersLoadingImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() trialsDetailsLoading,
+    required TResult Function(TrialDetailsModel trialDetailsModel)
+    trialsDetailssuccess,
+    required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
+  }) {
+    return exercisePlayersLoading(exerciseId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? trialsDetailsLoading,
+    TResult? Function(TrialDetailsModel trialDetailsModel)?
+    trialsDetailssuccess,
+    TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
+  }) {
+    return exercisePlayersLoading?.call(exerciseId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? trialsDetailsLoading,
+    TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
+    TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (exercisePlayersLoading != null) {
+      return exercisePlayersLoading(exerciseId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
+    required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
+    required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
+  }) {
+    return exercisePlayersLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
+  }) {
+    return exercisePlayersLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (exercisePlayersLoading != null) {
+      return exercisePlayersLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class exercisePlayersLoading implements ExperianceDetailsState {
+  const factory exercisePlayersLoading({required final String exerciseId}) =
+      _$exercisePlayersLoadingImpl;
+
+  String get exerciseId;
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$exercisePlayersLoadingImplCopyWith<_$exercisePlayersLoadingImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$exercisePlayersSuccessImplCopyWith<$Res> {
+  factory _$$exercisePlayersSuccessImplCopyWith(
+    _$exercisePlayersSuccessImpl value,
+    $Res Function(_$exercisePlayersSuccessImpl) then,
+  ) = __$$exercisePlayersSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String exerciseId, ExerciseDetailsWithPlayersModel data});
+}
+
+/// @nodoc
+class __$$exercisePlayersSuccessImplCopyWithImpl<$Res>
+    extends
+        _$ExperianceDetailsStateCopyWithImpl<$Res, _$exercisePlayersSuccessImpl>
+    implements _$$exercisePlayersSuccessImplCopyWith<$Res> {
+  __$$exercisePlayersSuccessImplCopyWithImpl(
+    _$exercisePlayersSuccessImpl _value,
+    $Res Function(_$exercisePlayersSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? exerciseId = null, Object? data = null}) {
+    return _then(
+      _$exercisePlayersSuccessImpl(
+        exerciseId: null == exerciseId
+            ? _value.exerciseId
+            : exerciseId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        data: null == data
+            ? _value.data
+            : data // ignore: cast_nullable_to_non_nullable
+                  as ExerciseDetailsWithPlayersModel,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$exercisePlayersSuccessImpl implements exercisePlayersSuccess {
+  const _$exercisePlayersSuccessImpl({
+    required this.exerciseId,
+    required this.data,
+  });
+
+  @override
+  final String exerciseId;
+  @override
+  final ExerciseDetailsWithPlayersModel data;
+
+  @override
+  String toString() {
+    return 'ExperianceDetailsState.exercisePlayerssuccess(exerciseId: $exerciseId, data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$exercisePlayersSuccessImpl &&
+            (identical(other.exerciseId, exerciseId) ||
+                other.exerciseId == exerciseId) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exerciseId, data);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$exercisePlayersSuccessImplCopyWith<_$exercisePlayersSuccessImpl>
+  get copyWith =>
+      __$$exercisePlayersSuccessImplCopyWithImpl<_$exercisePlayersSuccessImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() trialsDetailsLoading,
+    required TResult Function(TrialDetailsModel trialDetailsModel)
+    trialsDetailssuccess,
+    required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
+  }) {
+    return exercisePlayerssuccess(exerciseId, data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? trialsDetailsLoading,
+    TResult? Function(TrialDetailsModel trialDetailsModel)?
+    trialsDetailssuccess,
+    TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
+  }) {
+    return exercisePlayerssuccess?.call(exerciseId, data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? trialsDetailsLoading,
+    TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
+    TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (exercisePlayerssuccess != null) {
+      return exercisePlayerssuccess(exerciseId, data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
+    required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
+    required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
+  }) {
+    return exercisePlayerssuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
+  }) {
+    return exercisePlayerssuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (exercisePlayerssuccess != null) {
+      return exercisePlayerssuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class exercisePlayersSuccess implements ExperianceDetailsState {
+  const factory exercisePlayersSuccess({
+    required final String exerciseId,
+    required final ExerciseDetailsWithPlayersModel data,
+  }) = _$exercisePlayersSuccessImpl;
+
+  String get exerciseId;
+  ExerciseDetailsWithPlayersModel get data;
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$exercisePlayersSuccessImplCopyWith<_$exercisePlayersSuccessImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$exercisePlayersErrorImplCopyWith<$Res> {
+  factory _$$exercisePlayersErrorImplCopyWith(
+    _$exercisePlayersErrorImpl value,
+    $Res Function(_$exercisePlayersErrorImpl) then,
+  ) = __$$exercisePlayersErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String exerciseId, String error});
+}
+
+/// @nodoc
+class __$$exercisePlayersErrorImplCopyWithImpl<$Res>
+    extends
+        _$ExperianceDetailsStateCopyWithImpl<$Res, _$exercisePlayersErrorImpl>
+    implements _$$exercisePlayersErrorImplCopyWith<$Res> {
+  __$$exercisePlayersErrorImplCopyWithImpl(
+    _$exercisePlayersErrorImpl _value,
+    $Res Function(_$exercisePlayersErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? exerciseId = null, Object? error = null}) {
+    return _then(
+      _$exercisePlayersErrorImpl(
+        exerciseId: null == exerciseId
+            ? _value.exerciseId
+            : exerciseId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        error: null == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$exercisePlayersErrorImpl implements exercisePlayersError {
+  const _$exercisePlayersErrorImpl({
+    required this.exerciseId,
+    required this.error,
+  });
+
+  @override
+  final String exerciseId;
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'ExperianceDetailsState.exercisePlayerserror(exerciseId: $exerciseId, error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$exercisePlayersErrorImpl &&
+            (identical(other.exerciseId, exerciseId) ||
+                other.exerciseId == exerciseId) &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exerciseId, error);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$exercisePlayersErrorImplCopyWith<_$exercisePlayersErrorImpl>
+  get copyWith =>
+      __$$exercisePlayersErrorImplCopyWithImpl<_$exercisePlayersErrorImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() trialsDetailsLoading,
+    required TResult Function(TrialDetailsModel trialDetailsModel)
+    trialsDetailssuccess,
+    required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
+  }) {
+    return exercisePlayerserror(exerciseId, error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? trialsDetailsLoading,
+    TResult? Function(TrialDetailsModel trialDetailsModel)?
+    trialsDetailssuccess,
+    TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
+  }) {
+    return exercisePlayerserror?.call(exerciseId, error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? trialsDetailsLoading,
+    TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
+    TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (exercisePlayerserror != null) {
+      return exercisePlayerserror(exerciseId, error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
+    required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
+    required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
+  }) {
+    return exercisePlayerserror(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
+  }) {
+    return exercisePlayerserror?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (exercisePlayerserror != null) {
+      return exercisePlayerserror(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class exercisePlayersError implements ExperianceDetailsState {
+  const factory exercisePlayersError({
+    required final String exerciseId,
+    required final String error,
+  }) = _$exercisePlayersErrorImpl;
+
+  String get exerciseId;
+  String get error;
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$exercisePlayersErrorImplCopyWith<_$exercisePlayersErrorImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$clubAddAttemptLoadingImplCopyWith<$Res> {
+  factory _$$clubAddAttemptLoadingImplCopyWith(
+    _$clubAddAttemptLoadingImpl value,
+    $Res Function(_$clubAddAttemptLoadingImpl) then,
+  ) = __$$clubAddAttemptLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$clubAddAttemptLoadingImplCopyWithImpl<$Res>
+    extends
+        _$ExperianceDetailsStateCopyWithImpl<$Res, _$clubAddAttemptLoadingImpl>
+    implements _$$clubAddAttemptLoadingImplCopyWith<$Res> {
+  __$$clubAddAttemptLoadingImplCopyWithImpl(
+    _$clubAddAttemptLoadingImpl _value,
+    $Res Function(_$clubAddAttemptLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$clubAddAttemptLoadingImpl implements clubAddAttemptLoading {
+  const _$clubAddAttemptLoadingImpl();
+
+  @override
+  String toString() {
+    return 'ExperianceDetailsState.addAttemptLoading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$clubAddAttemptLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() trialsDetailsLoading,
+    required TResult Function(TrialDetailsModel trialDetailsModel)
+    trialsDetailssuccess,
+    required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
+  }) {
+    return addAttemptLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? trialsDetailsLoading,
+    TResult? Function(TrialDetailsModel trialDetailsModel)?
+    trialsDetailssuccess,
+    TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
+  }) {
+    return addAttemptLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? trialsDetailsLoading,
+    TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
+    TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttemptLoading != null) {
+      return addAttemptLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
+    required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
+    required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
+  }) {
+    return addAttemptLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
+  }) {
+    return addAttemptLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttemptLoading != null) {
+      return addAttemptLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class clubAddAttemptLoading implements ExperianceDetailsState {
+  const factory clubAddAttemptLoading() = _$clubAddAttemptLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$clubAddAttemptProgressImplCopyWith<$Res> {
+  factory _$$clubAddAttemptProgressImplCopyWith(
+    _$clubAddAttemptProgressImpl value,
+    $Res Function(_$clubAddAttemptProgressImpl) then,
+  ) = __$$clubAddAttemptProgressImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int progress});
+}
+
+/// @nodoc
+class __$$clubAddAttemptProgressImplCopyWithImpl<$Res>
+    extends
+        _$ExperianceDetailsStateCopyWithImpl<$Res, _$clubAddAttemptProgressImpl>
+    implements _$$clubAddAttemptProgressImplCopyWith<$Res> {
+  __$$clubAddAttemptProgressImplCopyWithImpl(
+    _$clubAddAttemptProgressImpl _value,
+    $Res Function(_$clubAddAttemptProgressImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? progress = null}) {
+    return _then(
+      _$clubAddAttemptProgressImpl(
+        null == progress
+            ? _value.progress
+            : progress // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$clubAddAttemptProgressImpl implements clubAddAttemptProgress {
+  const _$clubAddAttemptProgressImpl(this.progress);
+
+  @override
+  final int progress;
+
+  @override
+  String toString() {
+    return 'ExperianceDetailsState.addAttemptProgress(progress: $progress)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$clubAddAttemptProgressImpl &&
+            (identical(other.progress, progress) ||
+                other.progress == progress));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, progress);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$clubAddAttemptProgressImplCopyWith<_$clubAddAttemptProgressImpl>
+  get copyWith =>
+      __$$clubAddAttemptProgressImplCopyWithImpl<_$clubAddAttemptProgressImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() trialsDetailsLoading,
+    required TResult Function(TrialDetailsModel trialDetailsModel)
+    trialsDetailssuccess,
+    required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
+  }) {
+    return addAttemptProgress(progress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? trialsDetailsLoading,
+    TResult? Function(TrialDetailsModel trialDetailsModel)?
+    trialsDetailssuccess,
+    TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
+  }) {
+    return addAttemptProgress?.call(progress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? trialsDetailsLoading,
+    TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
+    TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttemptProgress != null) {
+      return addAttemptProgress(progress);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
+    required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
+    required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
+  }) {
+    return addAttemptProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
+  }) {
+    return addAttemptProgress?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttemptProgress != null) {
+      return addAttemptProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class clubAddAttemptProgress implements ExperianceDetailsState {
+  const factory clubAddAttemptProgress(final int progress) =
+      _$clubAddAttemptProgressImpl;
+
+  int get progress;
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$clubAddAttemptProgressImplCopyWith<_$clubAddAttemptProgressImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$clubAddAttemptSuccessImplCopyWith<$Res> {
+  factory _$$clubAddAttemptSuccessImplCopyWith(
+    _$clubAddAttemptSuccessImpl value,
+    $Res Function(_$clubAddAttemptSuccessImpl) then,
+  ) = __$$clubAddAttemptSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$clubAddAttemptSuccessImplCopyWithImpl<$Res>
+    extends
+        _$ExperianceDetailsStateCopyWithImpl<$Res, _$clubAddAttemptSuccessImpl>
+    implements _$$clubAddAttemptSuccessImplCopyWith<$Res> {
+  __$$clubAddAttemptSuccessImplCopyWithImpl(
+    _$clubAddAttemptSuccessImpl _value,
+    $Res Function(_$clubAddAttemptSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$clubAddAttemptSuccessImpl implements clubAddAttemptSuccess {
+  const _$clubAddAttemptSuccessImpl();
+
+  @override
+  String toString() {
+    return 'ExperianceDetailsState.addAttemptsuccess()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$clubAddAttemptSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() trialsDetailsLoading,
+    required TResult Function(TrialDetailsModel trialDetailsModel)
+    trialsDetailssuccess,
+    required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
+  }) {
+    return addAttemptsuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? trialsDetailsLoading,
+    TResult? Function(TrialDetailsModel trialDetailsModel)?
+    trialsDetailssuccess,
+    TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
+  }) {
+    return addAttemptsuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? trialsDetailsLoading,
+    TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
+    TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttemptsuccess != null) {
+      return addAttemptsuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
+    required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
+    required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
+  }) {
+    return addAttemptsuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
+  }) {
+    return addAttemptsuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttemptsuccess != null) {
+      return addAttemptsuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class clubAddAttemptSuccess implements ExperianceDetailsState {
+  const factory clubAddAttemptSuccess() = _$clubAddAttemptSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$clubAddAttemptErrorImplCopyWith<$Res> {
+  factory _$$clubAddAttemptErrorImplCopyWith(
+    _$clubAddAttemptErrorImpl value,
+    $Res Function(_$clubAddAttemptErrorImpl) then,
+  ) = __$$clubAddAttemptErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$clubAddAttemptErrorImplCopyWithImpl<$Res>
+    extends
+        _$ExperianceDetailsStateCopyWithImpl<$Res, _$clubAddAttemptErrorImpl>
+    implements _$$clubAddAttemptErrorImplCopyWith<$Res> {
+  __$$clubAddAttemptErrorImplCopyWithImpl(
+    _$clubAddAttemptErrorImpl _value,
+    $Res Function(_$clubAddAttemptErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? error = null}) {
+    return _then(
+      _$clubAddAttemptErrorImpl(
+        error: null == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$clubAddAttemptErrorImpl implements clubAddAttemptError {
+  const _$clubAddAttemptErrorImpl({required this.error});
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'ExperianceDetailsState.addAttempterror(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$clubAddAttemptErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$clubAddAttemptErrorImplCopyWith<_$clubAddAttemptErrorImpl> get copyWith =>
+      __$$clubAddAttemptErrorImplCopyWithImpl<_$clubAddAttemptErrorImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() trialsDetailsLoading,
+    required TResult Function(TrialDetailsModel trialDetailsModel)
+    trialsDetailssuccess,
+    required TResult Function(String error) trialsDetailserror,
+    required TResult Function(String exerciseId) exercisePlayersLoading,
+    required TResult Function(
+      String exerciseId,
+      ExerciseDetailsWithPlayersModel data,
+    )
+    exercisePlayerssuccess,
+    required TResult Function(String exerciseId, String error)
+    exercisePlayerserror,
+    required TResult Function() addAttemptLoading,
+    required TResult Function(int progress) addAttemptProgress,
+    required TResult Function() addAttemptsuccess,
+    required TResult Function(String error) addAttempterror,
+  }) {
+    return addAttempterror(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? trialsDetailsLoading,
+    TResult? Function(TrialDetailsModel trialDetailsModel)?
+    trialsDetailssuccess,
+    TResult? Function(String error)? trialsDetailserror,
+    TResult? Function(String exerciseId)? exercisePlayersLoading,
+    TResult? Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult? Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult? Function()? addAttemptLoading,
+    TResult? Function(int progress)? addAttemptProgress,
+    TResult? Function()? addAttemptsuccess,
+    TResult? Function(String error)? addAttempterror,
+  }) {
+    return addAttempterror?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? trialsDetailsLoading,
+    TResult Function(TrialDetailsModel trialDetailsModel)? trialsDetailssuccess,
+    TResult Function(String error)? trialsDetailserror,
+    TResult Function(String exerciseId)? exercisePlayersLoading,
+    TResult Function(String exerciseId, ExerciseDetailsWithPlayersModel data)?
+    exercisePlayerssuccess,
+    TResult Function(String exerciseId, String error)? exercisePlayerserror,
+    TResult Function()? addAttemptLoading,
+    TResult Function(int progress)? addAttemptProgress,
+    TResult Function()? addAttemptsuccess,
+    TResult Function(String error)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttempterror != null) {
+      return addAttempterror(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(trialsDetailsLoading value) trialsDetailsLoading,
+    required TResult Function(trialsDetailsSuccess value) trialsDetailssuccess,
+    required TResult Function(trialsDetailsError value) trialsDetailserror,
+    required TResult Function(exercisePlayersLoading value)
+    exercisePlayersLoading,
+    required TResult Function(exercisePlayersSuccess value)
+    exercisePlayerssuccess,
+    required TResult Function(exercisePlayersError value) exercisePlayerserror,
+    required TResult Function(clubAddAttemptLoading value) addAttemptLoading,
+    required TResult Function(clubAddAttemptProgress value) addAttemptProgress,
+    required TResult Function(clubAddAttemptSuccess value) addAttemptsuccess,
+    required TResult Function(clubAddAttemptError value) addAttempterror,
+  }) {
+    return addAttempterror(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult? Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult? Function(trialsDetailsError value)? trialsDetailserror,
+    TResult? Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult? Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult? Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult? Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult? Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult? Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult? Function(clubAddAttemptError value)? addAttempterror,
+  }) {
+    return addAttempterror?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(trialsDetailsLoading value)? trialsDetailsLoading,
+    TResult Function(trialsDetailsSuccess value)? trialsDetailssuccess,
+    TResult Function(trialsDetailsError value)? trialsDetailserror,
+    TResult Function(exercisePlayersLoading value)? exercisePlayersLoading,
+    TResult Function(exercisePlayersSuccess value)? exercisePlayerssuccess,
+    TResult Function(exercisePlayersError value)? exercisePlayerserror,
+    TResult Function(clubAddAttemptLoading value)? addAttemptLoading,
+    TResult Function(clubAddAttemptProgress value)? addAttemptProgress,
+    TResult Function(clubAddAttemptSuccess value)? addAttemptsuccess,
+    TResult Function(clubAddAttemptError value)? addAttempterror,
+    required TResult orElse(),
+  }) {
+    if (addAttempterror != null) {
+      return addAttempterror(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class clubAddAttemptError implements ExperianceDetailsState {
+  const factory clubAddAttemptError({required final String error}) =
+      _$clubAddAttemptErrorImpl;
+
+  String get error;
+
+  /// Create a copy of ExperianceDetailsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$clubAddAttemptErrorImplCopyWith<_$clubAddAttemptErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

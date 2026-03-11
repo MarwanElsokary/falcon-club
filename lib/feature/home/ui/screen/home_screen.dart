@@ -4,10 +4,8 @@ import 'package:falcon/core/thems/thems.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:http/http.dart';
 
 import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../main_screen/cubit/main_cubit.dart';
@@ -19,7 +17,9 @@ import '../widget/top_rate_widget/top_player_widget.dart';
 import '../widget/upload_training_wdget/upload_training_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final VoidCallback? onDrawerTap;
+
+  const HomeScreen({super.key, this.onDrawerTap});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -28,15 +28,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh() async {
     final mainCubit = context.read<MainCubit>();
-
-    // Reload APIs
     context.read<ExperimentsCubit>().emitbestTrials(categoryId: '');
-    context.read<TrainingCubit>()
-        .emitallExercises(categoryId: '', popular: true);
-
-    // لو عندك بيانات تانية
+    context.read<TrainingCubit>().emitallExercises(categoryId: '', popular: true);
     mainCubit.emitCategories();
-
     await Future.delayed(const Duration(milliseconds: 400));
   }
 
@@ -47,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Scaffold(
           backgroundColor: whiteclr,
           appBar: PreferredSize(
-            preferredSize: Size(context.displayWidth / 1, 66.h),
+            preferredSize: Size(context.displayWidth, 66.h),
             child: Container(color: whiteclr),
           ),
           body: Container(
@@ -71,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
                   SliverToBoxAdapter(
                     child: Column(
                       children: [
@@ -91,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // 🔥 الأيقونة الخلفية - بس هي اللي IgnorePointer
+        // الأيقونة الخلفية
         PositionedDirectional(
           end: 0,
           child: IgnorePointer(
@@ -99,13 +92,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // 🔥 الـ AppBar بدون IgnorePointer عشان الـ interactions تشتغل
+        // الـ AppBar — يمرر الـ onDrawerTap
         PositionedDirectional(
           top: 0,
           start: 0,
           end: 0,
           child: SafeArea(
-            child: HomeAppBarWidget(),
+            child: HomeAppBarWidget(onDrawerTap: widget.onDrawerTap),
           ),
         ),
       ],

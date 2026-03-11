@@ -54,9 +54,14 @@ abstract class ApiService {
   @GET(ApiConstants.clubGetProfile)
   Future clubGetProfile();
 
+  @GET(ApiConstants.getReelsByPlayerId)
+  Future<dynamic> getPlayerReports(String playerId);
+
+  // endpoint: GET /api/reports/player/{playerId}  ← عدّل حسب الـ API بتاعك
+
   //getReelsByPlayerId
   @GET(ApiConstants.getReelsByPlayerId)
-  Future<dynamic> getReelsByPlayerId(@Query("playerId") String playerId);
+  Future<dynamic> getReelsByPlayerId();
 
   //addToFav
   @POST(ApiConstants.addToFav)
@@ -66,7 +71,7 @@ abstract class ApiService {
   @DELETE(ApiConstants.removeFromFav)
   Future<dynamic> removeFromFav(@Query("playerId") String playerId);
 
-  //getFav
+  //GetFavPlayers
   @GET(ApiConstants.getFav)
   Future<dynamic> getFav();
 
@@ -93,8 +98,8 @@ abstract class ApiService {
   //clubsByCountry
   @GET(ApiConstants.clubsByCountry)
   Future<CountriesClubModel> clubsByCountry(
-    @Query('CountryId') String countryId,
-  );
+      @Query('CountryId') String countryId,
+      );
 
   //myProfile
   @GET(ApiConstants.myProfile)
@@ -118,10 +123,10 @@ abstract class ApiService {
   //real
   @GET(ApiConstants.reals)
   Future<RealModel> reals(
-    @Query('pageNumber') String pageNumber,
-    @Query('pageSize') String pageSize,
-    @Query('playerId') String playerId,
-  );
+      @Query('pageNumber') String pageNumber,
+      @Query('pageSize') String pageSize,
+      @Query('playerId') String playerId,
+      );
 
   //toggleLikeReel
   @POST(ApiConstants.toggleLikeReel)
@@ -130,9 +135,9 @@ abstract class ApiService {
   //addComment
   @POST(ApiConstants.addComment)
   Future addComment(
-    @Query('ReelId') int reelId,
-    @Query('Comment') String comment,
-  );
+      @Query('ReelId') int reelId,
+      @Query('Comment') String comment,
+      );
 
   //categories
   @GET(ApiConstants.categories)
@@ -141,16 +146,16 @@ abstract class ApiService {
   //allTrials
   @GET(ApiConstants.allTrials)
   Future<AllTrialsModel> allTrials(
-    @Query('CategoryId') String categoryId,
-    @Query('Popular') String popular,
-  );
+      @Query('CategoryId') String categoryId,
+      @Query('Popular') String popular,
+      );
 
   //allExercises
   @GET(ApiConstants.allExercises)
   Future<AllExercisesModel> allExercises(
-    @Query('CategoryId') String categoryId,
-    @Query('Popular') String popular,
-  );
+      @Query('CategoryId') String categoryId,
+      @Query('Popular') String popular,
+      );
 
   //trialDetails
   @GET(ApiConstants.trialDetails)
@@ -159,14 +164,22 @@ abstract class ApiService {
   //trialDetails
   @GET(ApiConstants.exerciseDetails)
   Future<ExerciseDetailsModel> exerciseDetails(
-    @Query('ExerciseId') String exerciseId,
-  );
+      @Query('ExerciseId') String exerciseId,
+      );
 
   @POST(ApiConstants.addAttempt)
   Future addAttempt(
-    @Body() addAttemptBody,
-    @Query('ExerciseId') String exerciseId,
-  );
+      @Body() addAttemptBody,
+      @Query('ExerciseId') String exerciseId,
+      );
+
+  // POST /api/Club/AddAttempt — المدرب يرفع فيديو للاعب
+  @POST(ApiConstants.clubAddAttempt)
+  Future clubAddAttempt(
+      @Body() FormData body,
+      @Query('PlayerId') String playerId,
+      @Query('ExerciseId') int exerciseId,
+      );
 
   //delete account
   @DELETE(ApiConstants.deleteAccount)
@@ -180,21 +193,21 @@ abstract class ApiService {
   // Forget Password Endpoints
   @POST(ApiConstants.forgetPasswordByPhone)
   Future<ForgetPasswordResponse> forgetPasswordByPhone(
-    @Query('phoneNumber') String phoneNumber,
-  );
+      @Query('phoneNumber') String phoneNumber,
+      );
 
   @POST(ApiConstants.checkOtp)
   @FormUrlEncoded()
   Future<CheckOtpResponse> checkOtp(
-    @Field('otp') String otp,
-    @Field('phoneNumber') String phoneNumber,
-  );
+      @Field('otp') String otp,
+      @Field('phoneNumber') String phoneNumber,
+      );
 
   @POST(ApiConstants.resetPassword)
   @FormUrlEncoded()
   Future<ResetPasswordResponse> resetPassword(
-    @Field('Token') String token,
-    @Field('Password') String password,
-    @Field('ConfirmPassword') String confirmPassword,
-  );
+      @Field('Token') String token,
+      @Field('Password') String password,
+      @Field('ConfirmPassword') String confirmPassword,
+      );
 }

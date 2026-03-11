@@ -17,28 +17,33 @@ class TrainingDetailsRepo {
   Future<ApiResult<ExerciseDetailsModel>> exerciseDetails({
     required String exerciseId,
   }) async {
-    try {
-      final key = 'exercise_details_$exerciseId';
-      final cached = CacheHelper.getString(key);
+    final key = 'exercise_details_$exerciseId';
 
+    try {
+      // ── جرب الكاش أولاً ────────────────────────────────────────
+      final cached = CacheHelper.getString(key);
       if (cached.isNotEmpty) {
-        final decoded = jsonDecode(cached);
-        final model = ExerciseDetailsModel.fromJson(decoded);
-        return ApiResult.success(model);
+        try {
+          final decoded = jsonDecode(cached);
+          final model = ExerciseDetailsModel.fromJson(decoded);
+          return ApiResult.success(model);
+        } catch (_) {
+          // لو الكاش فاسد — امسحه واجيب من الـ API
+          CacheHelper.setString(key, '');
+        }
       }
 
+      // ── API ─────────────────────────────────────────────────────
       final response = await _apiService.exerciseDetails(exerciseId);
-
-      // خزنه في الكاش
       CacheHelper.setString(key, jsonEncode(response.toJson()));
 
       return ApiResult.success(response);
-    } catch (errro) {
-      return ApiResult.failure(ErrorHandler.handle(errro));
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
 
-  // addAttempt لا نعمل له caching، لأنه بيغير الحالة ويحتاج request مباشر
+  // addAttempt — بدون caching
   Future<ApiResult> addAttempt({
     required FormData addAttemptBody,
     required String exerciseId,

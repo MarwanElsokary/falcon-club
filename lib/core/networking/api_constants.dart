@@ -23,7 +23,7 @@ class ApiConstants {
   static const String clubUpdateProfile = "Club/UpdateProfile";
 
   //clubGetPlayers
-  static const String clubGetPlayers = "Club/GetClubPlayers";
+  static const String clubGetPlayers = "Club/GetPlayersByClub";
 
   //clubGetProfile
   static const String clubGetProfile = "Club/GetProfile";
@@ -59,7 +59,7 @@ class ApiConstants {
   static const String reals = "Player/GetReels";
 
   //getReelsByPlayerId
-  static const String getReelsByPlayerId = "Player/GetReelsByPlayerId";
+  static const String getReelsByPlayerId = "Player/GetReels";
 
   //addToFav
   static const String addToFav = "Club/AddToFav";
@@ -68,7 +68,7 @@ class ApiConstants {
   static const String removeFromFav = "Club/RemoveFromFav";
 
   //getFav
-  static const String getFav = "Club/GetFav";
+  static const String getFav = "Club/GetFavPlayers";
 
   //ProfileFeature
   static const String profileFeature = "Player/ProfileFeature";
@@ -83,19 +83,22 @@ class ApiConstants {
   static const String categories = "Player/GetCaregories";
 
   //Player/GetAllTrials
-  static const String allTrials = "Player/GetAllTrials";
+  static const String allTrials = "club/GetAllTrials";
 
   //allExercises
-  static const String allExercises = "Player/GetAllExercises";
+  static const String allExercises = "club/GetAllExercises";
 
   //trialDetails
-  static const String trialDetails = "Player/GetTrial";
+  static const String trialDetails = "club/GetTrial";
 
   //exerciseDetails
-  static const String exerciseDetails = "Player/GetExercise";
+  static const String exerciseDetails = "club/GetExercise";
 
   //addAttempt
   static const String addAttempt = "Player/AddAttempt";
+
+  //clubAddAttempt
+  static const String clubAddAttempt = "Club/AddAttempt";
 
   //
   static const String addReel = "Player/AddReel";

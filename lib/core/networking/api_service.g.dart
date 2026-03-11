@@ -155,7 +155,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Club/GetClubPlayers',
+            'Club/GetPlayersByClub',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -188,16 +188,37 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<dynamic> getReelsByPlayerId(String playerId) async {
+  Future<dynamic> getPlayerReports(String playerId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'playerId': playerId};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<dynamic>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Player/GetReelsByPlayerId',
+            'Player/GetReels',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
+  Future<dynamic> getReelsByPlayerId() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'Player/GetReels',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -260,7 +281,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Club/GetFav',
+            'Club/GetFavPlayers',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -652,7 +673,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Player/GetAllTrials',
+            'club/GetAllTrials',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -685,7 +706,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Player/GetAllExercises',
+            'club/GetAllExercises',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -712,7 +733,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Player/GetTrial',
+            'club/GetTrial',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -739,7 +760,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Player/GetExercise',
+            'club/GetExercise',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -767,6 +788,34 @@ class _ApiService implements ApiService {
           .compose(
             _dio.options,
             'Player/AddAttempt',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
+  Future<dynamic> clubAddAttempt(
+    FormData body,
+    String playerId,
+    int exerciseId,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'PlayerId': playerId,
+      r'ExerciseId': exerciseId,
+    };
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'Club/AddAttempt',
             queryParameters: queryParameters,
             data: _data,
           )

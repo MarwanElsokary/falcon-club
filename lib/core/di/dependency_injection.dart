@@ -16,6 +16,10 @@ import 'package:get_it/get_it.dart';
 
 import '../../feature/Measurement/cubit/MeasurementCubit.dart';
 import '../../feature/Measurement/data/repo/MeasurementRepo.dart';
+import '../../feature/club_team/cubit/club_exercises_cubit.dart';
+import '../../feature/club_team/data/repo/club_exercises_repo.dart';
+import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
+import '../../feature/player_attempts/data/repo/player_attempts_repo.dart';
 import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
 import '../../feature/experiance_details_screen/data/repo/experiance_details_repo.dart';
 import '../../feature/experiments/data/repo/experiments_repo.dart';
@@ -71,18 +75,18 @@ Future<void> setupGetIt() async {
 
   // MARK: - ExperianceDetails
   getIt.registerLazySingleton<ExperianceDetailsRepo>(
-    () => ExperianceDetailsRepo(getIt()),
+        () => ExperianceDetailsRepo(getIt()),
   );
   getIt.registerFactory<ExperianceDetailsCubit>(
-    () => ExperianceDetailsCubit(getIt()),
+        () => ExperianceDetailsCubit(getIt()),
   );
 
   // MARK: - TrainingDetails
   getIt.registerLazySingleton<TrainingDetailsRepo>(
-    () => TrainingDetailsRepo(getIt()),
+        () => TrainingDetailsRepo(getIt()),
   );
   getIt.registerFactory<TrainingDetailsCubit>(
-    () => TrainingDetailsCubit(getIt()),
+        () => TrainingDetailsCubit(getIt()),
   );
 
   // MARK: - CreatReal
@@ -99,12 +103,12 @@ Future<void> setupGetIt() async {
 
   // MARK: - PlayerProfileRepo (مسجل كـ LazySingleton)
   getIt.registerLazySingleton<PlayerProfileRepo>(
-    () => PlayerProfileRepo(getIt<ApiService>()),
+        () => PlayerProfileRepo(getIt<ApiService>()),
   );
 
   // MARK: - PlayerProfileCubit
   getIt.registerFactory<PlayerProfileCubit>(
-    () => PlayerProfileCubit(getIt<PlayerProfileRepo>()),
+        () => PlayerProfileCubit(getIt<PlayerProfileRepo>()),
   );
 
   // MARK: - Package
@@ -113,10 +117,26 @@ Future<void> setupGetIt() async {
 
   // MARK: - Forget Password
   getIt.registerLazySingleton<ForgetPasswordRepo>(
-    () => ForgetPasswordRepo(getIt<ApiService>()),
+        () => ForgetPasswordRepo(getIt<ApiService>()),
   );
 
   getIt.registerFactory<ForgetPasswordCubit>(
-    () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
+        () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
+  );
+
+  // MARK: - PlayerAttempts
+  getIt.registerLazySingleton<PlayerAttemptsRepo>(
+        () => PlayerAttemptsRepo(getIt<ApiService>()),
+  );
+  getIt.registerFactory<PlayerAttemptsCubit>(
+        () => PlayerAttemptsCubit(getIt<PlayerAttemptsRepo>()),
+  );
+
+  // MARK: - ClubExercises
+  getIt.registerLazySingleton<ClubExercisesRepo>(
+        () => ClubExercisesRepo(getIt<ApiService>()),
+  );
+  getIt.registerFactory<ClubExercisesCubit>(
+        () => ClubExercisesCubit(getIt<ClubExercisesRepo>()),
   );
 }

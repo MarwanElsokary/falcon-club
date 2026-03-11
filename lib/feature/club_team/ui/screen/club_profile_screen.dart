@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/constants.dart';
 import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/shared_pref_helper.dart';
 import 'package:falcon/core/helpers/spacing.dart';
@@ -8,12 +7,15 @@ import 'package:falcon/core/routing/routes.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/core/widget/text_utils.dart';
+import 'package:falcon/core/widget/url-call.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/helpers/constants.dart';
 import '../../../../core/widget/padding_utils.dart';
 import '../../../main_screen/data/model/my_profile_model.dart';
 import '../../cubit/club_team_cubit.dart';
@@ -38,8 +40,8 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: context.displayWidth / 1,
-        height: context.displayHeight / 1,
+        width: context.displayWidth,
+        height: context.displayHeight,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/Frame 1011 1.png'),
@@ -47,60 +49,47 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
           ),
         ),
         child: SafeArea(
-          child: Stack(
-            children: [
-              BlocConsumer<ClubTeamCubit, ClubTeamState>(
-                listener: (context, state) {
-                  if (state is clubUpdateProfileSuccess) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('تم تحديث الملف الشخصي بنجاح'.tr()),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  }
-                  if (state is clubUpdateProfileError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.error),
-                        backgroundColor: redClr,
-                      ),
-                    );
-                  }
-                },
-                buildWhen: (previous, current) =>
-                    current is clubProfileLoading ||
-                    current is clubProfileSuccess ||
-                    current is clubProfileError,
-                builder: (context, state) {
-                  return state.maybeWhen(
-                    myProfileloading: () => Center(
-                      child: CupertinoActivityIndicator(
-                        color: Colors.white,
-                        radius: 15.w,
-                      ),
-                    ),
-                    myProfileerror: (error) => _buildError(error),
-                    myProfilesuccess: (profile) => _buildProfile(profile),
-                    orElse: () => Center(
-                      child: CupertinoActivityIndicator(
-                        color: Colors.white,
-                        radius: 15.w,
-                      ),
-                    ),
-                  );
-                },
-              ),
-              // Logout button — top-right (RTL: end = right)
-              PositionedDirectional(
-                top: 4.h,
-                end: 4.w,
-                child: IconButton(
-                  icon: Icon(Icons.logout, color: mainColor, size: 24.w),
-                  onPressed: () => _showLogoutDialog(context),
+          child: BlocConsumer<ClubTeamCubit, ClubTeamState>(
+            listener: (context, state) {
+              if (state is clubUpdateProfileSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('تم تحديث الملف الشخصي بنجاح'.tr()),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+              if (state is clubUpdateProfileError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.error),
+                    backgroundColor: redClr,
+                  ),
+                );
+              }
+            },
+            buildWhen: (previous, current) =>
+            current is clubProfileLoading ||
+                current is clubProfileSuccess ||
+                current is clubProfileError,
+            builder: (context, state) {
+              return state.maybeWhen(
+                myProfileloading: () => Center(
+                  child: CupertinoActivityIndicator(
+                    color: Colors.white,
+                    radius: 15.w,
+                  ),
                 ),
-              ),
-            ],
+                myProfileerror: (error) => _buildError(error),
+                myProfilesuccess: (profile) => _buildProfile(profile),
+                orElse: () => Center(
+                  child: CupertinoActivityIndicator(
+                    color: Colors.white,
+                    radius: 15.w,
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -113,7 +102,8 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           verticalSpace(20),
-          // profile image
+
+          // ── صورة البروفايل ────────────────────────────────────────────
           Align(
             alignment: Alignment.center,
             child: Container(
@@ -142,29 +132,27 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                   ),
                   errorWidget: (context, url, error) => Padding(
                     padding: EdgeInsets.all(20.w),
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: 40.w,
-                    ),
+                    child: Icon(Icons.person, color: Colors.white, size: 40.w),
                   ),
                 ),
               ),
             ),
           ),
           verticalSpace(10),
-          // Full name
+
+          // ── الاسم ─────────────────────────────────────────────────────
           TextUtils(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: Colors.white,
             text:
-                '${profile.data.firstName ?? ''} ${profile.data.lastName ?? ''}',
+            '${profile.data.firstName ?? ''} ${profile.data.lastName ?? ''}',
           ),
           verticalSpace(20),
-          // Info card: phone | gender | club
+
+          // ── بطاقة المعلومات: هاتف | جنس | نادي ──────────────────────
           Container(
-            width: context.displayWidth / 1,
+            width: context.displayWidth,
             padding: paddingUtils(),
             decoration: BoxDecoration(
               color: secondMainColor,
@@ -178,14 +166,11 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                 Expanded(
                   child: _infoItem(
                     title: 'الهاتف'.tr(),
-                    value: '${profile.data.phoneNumber ?? ''}',
+                    value: profile.data.phoneNumber ?? '',
                   ),
                 ),
                 Container(
-                  height: 40.h,
-                  width: 1,
-                  color: greyClr.withOpacity(0.3),
-                ),
+                    height: 40.h, width: 1, color: greyClr.withOpacity(0.3)),
                 Expanded(
                   child: _infoItem(
                     title: 'الجنس'.tr(),
@@ -193,61 +178,106 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                   ),
                 ),
                 Container(
-                  height: 40.h,
-                  width: 1,
-                  color: greyClr.withOpacity(0.3),
-                ),
+                    height: 40.h, width: 1, color: greyClr.withOpacity(0.3)),
                 Expanded(
                   child: _infoItem(
                     title: 'النادي'.tr(),
-                    value: '${profile.data.clubName ?? ''}',
+                    value: profile.data.clubName ?? '',
                   ),
                 ),
               ],
             ),
           ),
           verticalSpace(30),
-          // Edit button
+
+          // ── قائمة الإجراءات ───────────────────────────────────────────
           Padding(
             padding: paddingUtils(),
-            child: InkWell(
-              onTap: () {
-                final cubit = context.read<ClubTeamCubit>();
-                cubit.initProfileForm();
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (_) => BlocProvider.value(
-                    value: cubit,
-                    child: const ClubEditProfileSheet(),
-                  ),
-                );
-              },
-              borderRadius: BorderRadius.circular(16.r),
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 14.h),
-                decoration: BoxDecoration(
-                  color: mainColor,
-                  borderRadius: BorderRadius.circular(16.r),
+            child: Column(
+              children: [
+                // ── تعديل الملف الشخصي ──────────────────────────────────
+                _buildActionItem(
+                  icon: 'assets/svgs/svgexport-18 (1) 2.svg',
+                  iconWidth: 20.w,
+                  title: 'تعديل الملف الشخصي'.tr(),
+                  onTap: () {
+                    final cubit = context.read<ClubTeamCubit>();
+                    cubit.initProfileForm();
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => BlocProvider.value(
+                        value: cubit,
+                        child: const ClubEditProfileSheet(),
+                      ),
+                    );
+                  },
                 ),
-                child: Center(
-                  child: TextUtils(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    text: 'تعديل الملف الشخصي'.tr(),
-                  ),
-                ),
-              ),
+                _buildDivider(),
+
+                // ── سياسة الخصوصية ───────────────────────────────────────
+                // _buildActionItem(
+                //   icon: 'assets/svgs/lock-svgrepo-com.svg',
+                //   iconWidth: 20.w,
+                //   title: 'سياسة الخصوصية'.tr(),
+                //   onTap: () => urlCall(
+                //     context: context,
+                //     url: 'https://falconai.net/api/Website/GetPrivacy',
+                //   ),
+                // ),
+                // _buildDivider(),
+
+                // ── تسجيل الخروج ─────────────────────────────────────────
+                // _buildActionItem(
+                //   icon: 'assets/svgs/logout_icon.svg',
+                //   iconWidth: 15.w,
+                //   title: 'تسجيل الخروج'.tr(),
+                //   onTap: () => _showLogoutDialog(context),
+                // ),
+              ],
             ),
           ),
+
           verticalSpace(100),
         ],
       ),
     );
   }
+
+  Widget _buildActionItem({
+    required String icon,
+    required double iconWidth,
+    required String title,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+  }) {
+    final color = isDestructive ? redClr : Colors.white;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12.r),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 14.h),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextUtils(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: color,
+                text: title,
+              ),
+            ),
+            SizedBox(width: 12.w),
+            SvgPicture.asset(icon, width: iconWidth, color: color),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDivider() =>
+      Divider(color: Colors.white.withOpacity(0.15), height: 1);
 
   String _genderText(dynamic gender) {
     if (gender == null) return '';
@@ -260,19 +290,17 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
     return Column(
       children: [
         TextUtils(
-          fontSize: 10,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          text: title,
-        ),
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            text: title),
         verticalSpace(2),
         TextUtils(
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          text: value,
-          maxlines: 1,
-        ),
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            text: value,
+            maxlines: 1),
       ],
     );
   }
@@ -287,29 +315,22 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
             Icon(Icons.error, color: Colors.red, size: 60.w),
             verticalSpace(20),
             TextUtils(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              text: 'حدث خطأ'.tr(),
-            ),
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                text: 'حدث خطأ'.tr()),
             verticalSpace(10),
             TextUtils(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.white70,
-              text: error,
-            ),
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.white70,
+                text: error),
             verticalSpace(20),
             ElevatedButton(
-              onPressed: () =>
-                  context.read<ClubTeamCubit>().emitMyProfile(),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: mainColor,
-              ),
-              child: Text(
-                'إعادة المحاولة'.tr(),
-                style: const TextStyle(color: Colors.white),
-              ),
+              onPressed: () => context.read<ClubTeamCubit>().emitMyProfile(),
+              style: ElevatedButton.styleFrom(backgroundColor: mainColor),
+              child: Text('إعادة المحاولة'.tr(),
+                  style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -323,8 +344,7 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
+              borderRadius: BorderRadius.circular(12.r)),
           title: CenterTextUtils(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -339,8 +359,7 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                   child: InkWell(
                     onTap: () async {
                       await SharedPrefHelper.clearSpecificSecureData(
-                        SharedPrefKeys.userToken,
-                      );
+                          SharedPrefKeys.userToken);
                       await SharedPrefHelper.clearAllData();
                       Navigator.of(dialogContext).pop();
                       context.pushNamedAndRemoveUntil(
@@ -351,15 +370,13 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10.w),
                       decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.circular(20.r),
-                      ),
+                          color: mainColor,
+                          borderRadius: BorderRadius.circular(20.r)),
                       child: CenterTextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        text: 'نعم'.tr(),
-                      ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          text: 'نعم'.tr()),
                     ),
                   ),
                 ),
@@ -370,15 +387,13 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10.w),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        color: primerymainColor,
-                      ),
+                          borderRadius: BorderRadius.circular(20.r),
+                          color: primerymainColor),
                       child: CenterTextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                        text: 'لا'.tr(),
-                      ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          text: 'لا'.tr()),
                     ),
                   ),
                 ),

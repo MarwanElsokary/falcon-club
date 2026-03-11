@@ -1,3 +1,7 @@
+// ══════════════════════════════════════════════════════════════════
+// favorite_player_card_widget.dart
+// ══════════════════════════════════════════════════════════════════
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/helpers/spacing.dart';
@@ -11,14 +15,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-/// Light background color for thumbnail container and button — Figma #EFF4FF
+import '../../../../core/routing/routes.dart';
+
 const Color _lightBg = Color(0xFFEFF4FF);
 
-/// Player card variant used in the Favorites 2-column grid.
-/// Shows rank badge top-left, "ارسال دعوة" button instead of reports button.
+// نفس مسارات الـ assets في PlayerCardWidget
+const String _rightFootAsset = 'assets/svgs/right.svg';
+const String _leftFootAsset  = 'assets/svgs/material-symbols_barefoot.svg';
+
 class FavoritePlayerCardWidget extends StatefulWidget {
   final ClubPlayer player;
-  final int rankIndex; // 0-based, displayed as rankIndex+1
+  final int rankIndex;
   final VoidCallback onInviteTap;
 
   const FavoritePlayerCardWidget({
@@ -33,7 +40,8 @@ class FavoritePlayerCardWidget extends StatefulWidget {
       _FavoritePlayerCardWidgetState();
 }
 
-class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
+class _FavoritePlayerCardWidgetState
+    extends State<FavoritePlayerCardWidget> {
   late Future<List<String>> _reelsFuture;
 
   @override
@@ -43,81 +51,89 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
         context.read<ClubTeamCubit>().getReelsForPlayer(widget.player.id);
   }
 
+  void _navigateToProfile() {
+    Navigator.of(context).pushNamed(
+      AppRoute.playerProfile,
+      arguments: {'isMyProfile': false, 'playerId': widget.player.id},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final player = widget.player;
 
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        // ── Card ──────────────────────────────────────────────────────────
-        Container(
-          decoration: BoxDecoration(
-            color: mainColor,
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 1. Player info row
-              _buildInfoRow(player),
-              verticalSpace(12),
-
-              // 2. Reel thumbnails
-              _buildThumbnailsSection(),
-              verticalSpace(8),
-
-              // 3. "ارسال دعوة" button
-              _buildInviteButton(),
-            ],
-          ),
-        ),
-
-        // ── Rank badge — top-start corner ──────────────────────────────
-        PositionedDirectional(
-          top: -8.h,
-          start: -8.w,
-          child: Container(
-            width: 28.w,
-            height: 28.w,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(0xFFFFB800), // gold
+    return GestureDetector(
+      onTap: _navigateToProfile,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // ── Card ────────────────────────────────────────────────────────
+          Container(
+            decoration: BoxDecoration(
+              color: mainColor,
+              borderRadius: BorderRadius.circular(20.r),
             ),
-            child: Center(
-              child: Text(
-                '${widget.rankIndex + 1}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w800,
+            padding: EdgeInsets.all(8.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildInfoRow(player),
+                SizedBox(height: 8.h),
+                _buildThumbnailsSection(),
+                SizedBox(height: 8.h),
+                _buildInviteButton(),
+              ],
+            ),
+          ),
+
+          // ── Rank badge — top-start (يمين في RTL) ───────────────────────
+          PositionedDirectional(
+            top: -8.h,
+            start: -8.w,
+            child: Container(
+              width: 28.w,
+              height: 28.w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFFFFB800),
+              ),
+              child: Center(
+                child: Text(
+                  '${widget.rankIndex + 1}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  // ── Info row ─────────────────────────────────────────────────────────────
+  // ── Info row: صورة oval على اليمين، نص على اليسار ────────────────────────
+  // نفس منطق PlayerCardWidget: الصورة أول child → يمين فيزيائي في RTL
   Widget _buildInfoRow(ClubPlayer player) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: _buildPlayerDetails(player)),
-        horizontalSpace(8),
+        // يمين: الصورة
         _buildPhoto(player),
+        SizedBox(width: 8.w),
+        // يسار: النص
+        Expanded(child: _buildPlayerDetails(player)),
       ],
     );
   }
 
-  // ── Player details ────────────────────────────────────────────────────────
   Widget _buildPlayerDetails(ClubPlayer player) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         TextUtils(
           fontSize: 13,
@@ -126,7 +142,7 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
           text: player.name,
           maxlines: 2,
         ),
-        verticalSpace(4),
+        SizedBox(height: 4.h),
         TextUtils(
           fontSize: 11,
           fontWeight: FontWeight.w400,
@@ -134,37 +150,37 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
           text: player.position,
           maxlines: 1,
         ),
-        verticalSpace(6),
+        SizedBox(height: 6.h),
         _buildFootIcons(player.foot),
-        verticalSpace(6),
+        SizedBox(height: 6.h),
         _buildTpsRow(player.tps),
       ],
     );
   }
 
-  // ── Photo ─────────────────────────────────────────────────────────────────
+  // ── الصورة oval — نفس PlayerCardWidget و PlayerImageWidget ───────────────
   Widget _buildPhoto(ClubPlayer player) {
-    final hasPhoto = player.photoPath != null && player.photoPath!.isNotEmpty;
+    final hasPhoto =
+        player.photoPath != null && player.photoPath!.isNotEmpty;
     return Container(
       width: 48.w,
-      height: 65.h,
-      padding: EdgeInsets.all(4.w),
+      height: 68.w, // oval: height > width
       decoration: BoxDecoration(
-        color: secondMainColor,
-        borderRadius: BorderRadius.circular(120.r),
+        borderRadius: BorderRadius.circular(100.r),
+        border: Border.all(color: secondMainColor, width: 2.5.w),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(116.r),
+        borderRadius: BorderRadius.circular(100.r),
         child: hasPhoto
             ? CachedNetworkImage(
-                imageUrl: player.photoPath!,
-                fit: BoxFit.cover,
-                placeholder: (_, __) => Skeletonizer(
-                  enabled: true,
-                  child: Container(color: secondMainColor),
-                ),
-                errorWidget: (_, __, ___) => _photoFallback(player.name),
-              )
+          imageUrl: player.photoPath!,
+          fit: BoxFit.cover,
+          placeholder: (_, __) => Skeletonizer(
+            enabled: true,
+            child: Container(color: secondMainColor),
+          ),
+          errorWidget: (_, __, ___) => _photoFallback(player.name),
+        )
             : _photoFallback(player.name),
       ),
     );
@@ -178,54 +194,51 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
         name.isNotEmpty ? name[0] : '؟',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 18.sp,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w700,
         ),
       ),
     );
   }
 
-  // ── Foot icons ────────────────────────────────────────────────────────────
   Widget _buildFootIcons(String foot) {
     final isRight = foot == 'يمين';
+    final isLeft  = foot == 'يسار';
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Opacity(
-          opacity: isRight ? 1.0 : 0.4,
+          opacity: isRight ? 1.0 : 0.35,
           child: SvgPicture.asset(
-            'assets/svgs/Vector.svg',
-            width: 16.w,
-            height: 16.w,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            _rightFootAsset,
+            width: 16.w, height: 16.w,
+            colorFilter:
+            const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           ),
         ),
-        horizontalSpace(4),
+        SizedBox(width: 4.w),
         Opacity(
-          opacity: !isRight ? 1.0 : 0.4,
+          opacity: isLeft ? 1.0 : 0.35,
           child: SvgPicture.asset(
-            'assets/svgs/fteet.svg',
-            width: 16.w,
-            height: 16.w,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            _leftFootAsset,
+            width: 16.w, height: 16.w,
+            colorFilter:
+            const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           ),
         ),
       ],
     );
   }
 
-  // ── TPS ───────────────────────────────────────────────────────────────────
   Widget _buildTpsRow(double tps) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         SvgPicture.asset(
           'assets/svgs/solar_star-bold-duotone.svg',
-          width: 14.w,
-          height: 14.w,
-          colorFilter: const ColorFilter.mode(Colors.amber, BlendMode.srcIn),
+          width: 14.w, height: 14.w,
         ),
-        horizontalSpace(4),
+        SizedBox(width: 4.w),
         TextUtils(
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -236,7 +249,6 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
     );
   }
 
-  // ── Thumbnails ────────────────────────────────────────────────────────────
   Widget _buildThumbnailsSection() {
     return Container(
       decoration: BoxDecoration(
@@ -246,7 +258,7 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
           bottom: BorderSide(color: Color(0xFFCBD5E0), width: 0.5),
         ),
       ),
-      padding: EdgeInsets.fromLTRB(10.w, 8.h, 10.w, 8.h),
+      padding: EdgeInsets.all(8.w),
       child: FutureBuilder<List<String>>(
         future: _reelsFuture,
         builder: (context, snapshot) {
@@ -258,17 +270,14 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
               Expanded(
                 child: isLoading
                     ? _thumbShimmer()
-                    : _thumbWidget(
-                        urls.isNotEmpty ? urls[0] : null,
-                      ),
+                    : _thumbWidget(urls.isNotEmpty ? urls[0] : null),
               ),
-              horizontalSpace(8),
+              SizedBox(width: 8.w),
               Expanded(
                 child: isLoading
                     ? _thumbShimmer()
                     : _thumbWidget(
-                        urls.length > 1 ? urls[1] : null,
-                      ),
+                    urls.length > 1 ? urls[1] : null),
               ),
             ],
           );
@@ -280,11 +289,12 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
   Widget _thumbWidget(String? url) {
     if (url != null && url.isNotEmpty) {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(10.r),
         child: CachedNetworkImage(
           imageUrl: url,
           height: 70.h,
           fit: BoxFit.cover,
+          width: double.infinity,
           placeholder: (_, __) => _thumbShimmer(),
           errorWidget: (_, __, ___) => _thumbPlaceholder(),
         ),
@@ -298,10 +308,11 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
       height: 70.h,
       decoration: BoxDecoration(
         color: greyClr.withOpacity(0.25),
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: Center(
-        child: Icon(Icons.play_circle_outline, color: greyClr, size: 22.w),
+        child: Icon(Icons.play_circle_outline,
+            color: greyClr, size: 22.w),
       ),
     );
   }
@@ -313,28 +324,29 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
         height: 70.h,
         decoration: BoxDecoration(
           color: greyClr.withOpacity(0.25),
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(10.r),
         ),
       ),
     );
   }
 
-  // ── Invite button ─────────────────────────────────────────────────────────
+  // ── Invite button — GestureDetector منفصل يمنع الـ tap من الوصول للكارت ──
   Widget _buildInviteButton() {
     return GestureDetector(
       onTap: widget.onInviteTap,
+      behavior: HitTestBehavior.opaque,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
           color: _lightBg,
           borderRadius: BorderRadius.circular(12.r),
         ),
-        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.send_rounded, color: mainColor, size: 16.w),
-            horizontalSpace(6),
+            SizedBox(width: 6.w),
             TextUtils(
               fontSize: 12,
               fontWeight: FontWeight.w600,

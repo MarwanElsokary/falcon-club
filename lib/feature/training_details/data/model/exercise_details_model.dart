@@ -63,26 +63,41 @@ class Data {
     photoPath: json["photoPath"],
     title: json["title"],
     description: json["description"],
+    // ── هذي الحقول مش موجودة في club/GetExercise response ──
     attemptsCount: json["attemptsCount"],
     score: json["score"],
-    videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
-    skills: List<String>.from(json["skills"].map((x) => x)),
-    equipments: List<Equipment>.from(
+    // ── lists — كلها null-safe ──────────────────────────────
+    videos: json["videos"] != null
+        ? List<Video>.from(
+      json["videos"].map((x) => Video.fromJson(x)),
+    )
+        : [],
+    skills: json["skills"] != null
+        ? List<String>.from(json["skills"].map((x) => x))
+        : [],
+    equipments: json["equipments"] != null
+        ? List<Equipment>.from(
       json["equipments"].map((x) => Equipment.fromJson(x)),
-    ),
-    strengths: List<dynamic>.from(json["strengths"].map((x) => x)),
-    improvementAreas: List<dynamic>.from(
-      json["improvementAreas"].map((x) => x),
-    ),
-    playerInstructions: List<String>.from(
-      json["playerInstructions"].map((x) => x),
-    ),
-    recommendedExercises: List<dynamic>.from(
-      json["recommendedExercises"].map((x) => x),
-    ),
-    attempts: List<Attempt>.from(
+    )
+        : [],
+    strengths: json["strengths"] != null
+        ? List<dynamic>.from(json["strengths"].map((x) => x))
+        : [],
+    improvementAreas: json["improvementAreas"] != null
+        ? List<dynamic>.from(json["improvementAreas"].map((x) => x))
+        : [],
+    playerInstructions: json["playerInstructions"] != null
+        ? List<String>.from(json["playerInstructions"].map((x) => x))
+        : [],
+    recommendedExercises: json["recommendedExercises"] != null
+        ? List<dynamic>.from(json["recommendedExercises"].map((x) => x))
+        : [],
+    // ── attempts — مش موجودة في club endpoint ───────────────
+    attempts: json["attempts"] != null
+        ? List<Attempt>.from(
       json["attempts"].map((x) => Attempt.fromJson(x)),
-    ),
+    )
+        : [],
   );
 
   Map<String, dynamic> toJson() => {
@@ -96,11 +111,12 @@ class Data {
     "skills": List<dynamic>.from(skills.map((x) => x)),
     "equipments": List<dynamic>.from(equipments.map((x) => x.toJson())),
     "strengths": List<dynamic>.from(strengths.map((x) => x)),
-    "improvementAreas": List<dynamic>.from(improvementAreas.map((x) => x)),
-    "playerInstructions": List<dynamic>.from(playerInstructions.map((x) => x)),
-    "recommendedExercises": List<dynamic>.from(
-      recommendedExercises.map((x) => x),
-    ),
+    "improvementAreas":
+    List<dynamic>.from(improvementAreas.map((x) => x)),
+    "playerInstructions":
+    List<dynamic>.from(playerInstructions.map((x) => x)),
+    "recommendedExercises":
+    List<dynamic>.from(recommendedExercises.map((x) => x)),
     "attempts": List<dynamic>.from(attempts.map((x) => x.toJson())),
   };
 }
@@ -134,7 +150,11 @@ class Attempt {
     rejectedReason: json["rejectedReason"],
     aiVideo: json["aiVideo"],
     visualizeVideo: json["visualizeVideo"],
-    skills: List<Skill>.from(json["skills"].map((x) => Skill.fromJson(x))),
+    skills: json["skills"] != null
+        ? List<Skill>.from(
+      json["skills"].map((x) => Skill.fromJson(x)),
+    )
+        : [],
   );
 
   Map<String, dynamic> toJson() => {
@@ -176,7 +196,7 @@ class Skill {
 
   factory Skill.fromJson(Map<String, dynamic> json) => Skill(
     skillName: json["skillName"] ?? '',
-    score: json["score"]?.toDouble() ?? 0.0,
+    score: (json["score"] ?? 0).toDouble(),
   );
 
   Map<String, dynamic> toJson() => {"skillName": skillName, "score": score};
@@ -202,7 +222,11 @@ class Video {
   dynamic description;
   dynamic number;
 
-  Video({required this.video, required this.description, required this.number});
+  Video({
+    required this.video,
+    required this.description,
+    required this.number,
+  });
 
   factory Video.fromJson(Map<String, dynamic> json) => Video(
     video: json["video"],

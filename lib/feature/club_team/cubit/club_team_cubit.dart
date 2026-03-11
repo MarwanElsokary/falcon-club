@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 
 import '../data/model/club_player_model.dart';
+import '../data/model/player_report_model.dart';
 import '../data/repo/club_team_repo.dart';
 import 'club_team_state.dart';
 
@@ -35,6 +36,30 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   // Keys follow fixed order: 'الحارس', 'الدفاع', 'خط الوسط', 'الهجوم', 'أخرى'
   Map<String, List<ClubPlayer>> cachedGroupedPlayers = {};
   bool _playersFetched = false;
+  // أضف في ClubTeamCubit
+
+  // Reports cache: playerId → list of reports
+  final Map<String, List<PlayerReport>> _reportsCache = {};
+
+  Future<void> fetchPlayerReports(String playerId) async {
+    if (_reportsCache.containsKey(playerId)) {
+      emit(ClubTeamState.playerReportsSuccess(_reportsCache[playerId]!));
+      return;
+    }
+    emit(const ClubTeamState.playerReportsLoading());
+    final result = await _repo.getPlayerReports(playerId);
+    result.when(
+      success: (reports) {
+        _reportsCache[playerId] = reports;
+        emit(ClubTeamState.playerReportsSuccess(reports));
+      },
+      failure: (error) {
+        emit(ClubTeamState.playerReportsError(
+          error: error.apiErrorModel.message ?? 'فشل تحميل التقارير',
+        ));
+      },
+    );
+  }
 
   /// Force re-fetch and re-group players (clears cache)
   void invalidatePlayersCache() {

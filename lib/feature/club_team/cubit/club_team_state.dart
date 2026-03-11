@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:falcon/feature/main_screen/data/model/my_profile_model.dart';
-
+import 'package:falcon/feature/club_team/data/model/player_report_model.dart';
 part 'club_team_state.freezed.dart';
 
 @freezed
@@ -37,4 +37,9 @@ class ClubTeamState with _$ClubTeamState {
   const factory ClubTeamState.removeFavsuccess() = removeFavSuccess;
   const factory ClubTeamState.removeFaverror({required String error}) =
       removeFavError;
+  const factory ClubTeamState.playerReportsLoading() = playerReportsLoadingState;
+  const factory ClubTeamState.playerReportsSuccess(List<PlayerReport> reports) =
+  playerReportsSuccessState;
+  const factory ClubTeamState.playerReportsError({required String error}) =
+  playerReportsErrorState;
 }

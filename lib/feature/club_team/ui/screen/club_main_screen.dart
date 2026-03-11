@@ -12,11 +12,15 @@ import 'package:falcon/feature/reals/ui/screen/main_reals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/thems/thems.dart';
+import '../../../experiments/cubit/experiments_cubit.dart';
+import '../../../home/ui/screen/home_screen.dart';
+import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
+import '../../../training/cubit/training_cubit.dart';
 import '../../cubit/club_team_cubit.dart';
 import 'club_my_team_screen.dart';
-import 'club_profile_screen.dart';
 import 'favorites_screen.dart';
 
 class ClubMainScreen extends StatefulWidget {
@@ -27,15 +31,33 @@ class ClubMainScreen extends StatefulWidget {
 }
 
 class _ClubMainScreenState extends State<ClubMainScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
     context.read<ClubTeamCubit>().emitMyProfile();
   }
 
+  void _toggleDrawer() {
+    if (_scaffoldKey.currentState?.isDrawerOpen == true) {
+      _scaffoldKey.currentState?.closeDrawer();
+    } else {
+      _scaffoldKey.currentState?.openDrawer();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+
+      // ── Drawer ────────────────────────────────────────────────────────────
+      drawer: BlocProvider(
+        create: (_) => getIt<MainCubit>()..emitMyProfile(),
+        child: const CustomDrawer(),
+      ),
+
       body: Stack(
         children: [
           // ── Main content ──────────────────────────────────────────────────
@@ -45,14 +67,35 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
               return IndexedStack(
                 index: currentIndex,
                 children: [
-                  // 0 — ملفي
-                  const ClubProfileScreen(),
+                  // 0 — الرئيسية
+                  MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) =>
+                            getIt<ExperimentsCubit>()
+                              ..emitbestTrials(categoryId: ''),
+                      ),
+                      BlocProvider(
+                        create: (_) =>
+                            getIt<TrainingCubit>()
+                              ..emitallExercises(categoryId: '', popular: true),
+                      ),
+                      BlocProvider(
+                        create: (_) => getIt<MainCubit>()..emitMyProfile(),
+                      ),
+                      BlocProvider(
+                        create: (_) => getIt<RankCubit>()..emitRank(),
+                      ),
+                    ],
+                    child: HomeScreen(onDrawerTap: _toggleDrawer),
+                  ),
+
                   // 1 — فريقي
                   const ClubMyTeamScreen(),
+
                   // 2 — اللاعيبين (Reels)
                   MultiBlocProvider(
                     providers: [
-                      BlocProvider(create: (_) => getIt<MainCubit>()),
                       BlocProvider(
                         create: (_) =>
                             getIt<RealsCubit>()..emitreals(playerId: ''),
@@ -63,8 +106,10 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
                       playnowOrNot: currentIndex == 2,
                     ),
                   ),
+
                   // 3 — قائمة الاهتمامات (Favorites)
                   const FavoritesScreen(),
+
                   // 4 — الرتب (Rank)
                   BlocProvider(
                     create: (_) => getIt<RankCubit>()..emitRank(),
@@ -111,16 +156,16 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
-                                children:
-                                    List.generate(5, (index) {
+                                children: List.generate(5, (index) {
                                   final isSelected = currentIndex == index;
                                   return Expanded(
                                     child: InkWell(
                                       onTap: () {
                                         context
-                                            .read<ClubTeamCubit>()
-                                            .currentIndex
-                                            .value = index;
+                                                .read<ClubTeamCubit>()
+                                                .currentIndex
+                                                .value =
+                                            index;
                                       },
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
@@ -129,8 +174,7 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           SizedBox(
-                                            height:
-                                                isSelected ? 26.h : 24.h,
+                                            height: isSelected ? 26.h : 24.h,
                                             width: isSelected ? 26.h : 24.h,
                                             child: isSelected
                                                 ? _activeIcons[index]
@@ -149,7 +193,8 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
                                           verticalSpace(4),
                                           AnimatedContainer(
                                             duration: const Duration(
-                                                milliseconds: 300),
+                                              milliseconds: 300,
+                                            ),
                                             height: isSelected ? 6.h : 0,
                                             width: 6.w,
                                             decoration: BoxDecoration(
@@ -179,31 +224,38 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
   }
 
   List<Widget> get _inactiveIcons => [
-        Icon(Icons.person_outline,
-            color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.groups_outlined,
-            color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.sports_soccer_outlined,
-            color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.bookmark_border,
-            color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.leaderboard_outlined,
-            color: mainColor.withOpacity(0.5), size: 24.h),
-      ];
+    SvgPicture.asset(
+      'assets/svgs/home_unSelect.svg',
+      color: mainColor.withOpacity(0.5),
+    ),
+    Icon(Icons.groups_outlined, color: mainColor.withOpacity(0.5), size: 24.h),
+    SvgPicture.asset(
+      'assets/svgs/reals_un_select.svg',
+      color: mainColor.withOpacity(0.5),
+    ),
+    SvgPicture.asset(
+      'assets/svgs/solar_clipboard-linear.svg',
+      color: mainColor.withOpacity(0.5),
+    ),
+    SvgPicture.asset(
+      'assets/svgs/rank_icon.svg',
+      color: mainColor.withOpacity(0.5),
+    ),
+  ];
 
   List<Widget> get _activeIcons => [
-        Icon(Icons.person, color: mainColor, size: 26.h),
-        Icon(Icons.groups, color: mainColor, size: 26.h),
-        Icon(Icons.sports_soccer, color: mainColor, size: 26.h),
-        Icon(Icons.bookmark, color: mainColor, size: 26.h),
-        Icon(Icons.leaderboard, color: mainColor, size: 26.h),
-      ];
+    SvgPicture.asset('assets/svgs/home_select.svg'),
+    Icon(Icons.groups, color: mainColor, size: 26.h),
+    SvgPicture.asset('assets/svgs/reals_select.svg'),
+    SvgPicture.asset('assets/svgs/solar_clipboard-linear1.svg'),
+    SvgPicture.asset('assets/svgs/rank_icon.svg', color: mainColor),
+  ];
 
   List<String> get _titles => [
-        'ملفي'.tr(),
-        'فريقي'.tr(),
-        'اللاعيبين'.tr(),
-        'الاهتمامات'.tr(),
-        'الرتب'.tr(),
-      ];
+    'الرئيسية'.tr(),
+    'فريقي'.tr(),
+    'اللاعيبين'.tr(),
+    'الاهتمامات'.tr(),
+    'الرتب'.tr(),
+  ];
 }

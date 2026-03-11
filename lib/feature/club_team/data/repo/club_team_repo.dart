@@ -3,6 +3,8 @@ import 'package:falcon/core/networking/api_result.dart';
 import 'package:falcon/core/networking/api_error_handler.dart';
 import 'package:falcon/core/networking/api_service.dart';
 
+import '../model/player_report_model.dart';
+
 class ClubTeamRepo {
   final ApiService _apiService;
 
@@ -71,7 +73,7 @@ class ClubTeamRepo {
   //getReelsByPlayerId — returns list of thumbnail/video URLs
   Future<ApiResult<List<String>>> getReelsByPlayerId(String playerId) async {
     try {
-      final response = await _apiService.getReelsByPlayerId(playerId);
+      final response = await _apiService.getReelsByPlayerId();
       final urls = <String>[];
       if (response is Map<String, dynamic>) {
         final data = response['data'];
@@ -92,6 +94,27 @@ class ClubTeamRepo {
         }
       }
       return ApiResult.success(urls);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
+
+  // endpoint: GET /api/reports/player/{playerId}  ← عدّل حسب الـ API بتاعك
+
+  Future<ApiResult<List<PlayerReport>>> getPlayerReports(String playerId) async {
+    try {
+      final response = await _apiService.getPlayerReports(playerId);
+      final reports = <PlayerReport>[];
+      if (response is Map<String, dynamic>) {
+        final data = response['data'];
+        final list = data is List ? data : [];
+        for (final item in list) {
+          if (item is Map<String, dynamic>) {
+            reports.add(PlayerReport.fromJson(item));
+          }
+        }
+      }
+      return ApiResult.success(reports);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }

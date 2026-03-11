@@ -8,13 +8,16 @@ class AppRoute {
   static const String measurementsScreen = '/measurementsScreen';
   static const String measurementDetailsScreen = '/measurementDetailsScreen';
   static const String measurementResultScreen = '/measurementResultScreen';
-  static const String lastMeasurementAttemptScreen = '/lastMeasurementAttemptScreen';
+  static const String lastMeasurementAttemptScreen =
+      '/lastMeasurementAttemptScreen';
   static const String measurementScreen = '/measurementScreen';
   static const String paymentVerificationScreen = '/paymentVerificationScreen';
 
+  static const String clubTrainingDetailsScreen = '/clubTrainingDetailsScreen';
 
   //welcomeScreen
   static const String resetPasswordScreen = '/resetPassword';
+  static const String clubProfileScreen = '/clubMyTeamScreen';
 
   //forgetPasswordScreen
   static const String forgetPasswordScreen = '/forgotPasswordScreen';
@@ -87,4 +90,10 @@ class AppRoute {
 
   //packagePayMentScreen
   static const String packagePayMentScreen = '/packagePayMentScreen';
+
+  // playerAttemptsScreen
+  static const String playerAttemptsScreen = '/playerAttemptsScreen';
+
+  // playerAttemptDetailScreen
+  static const String playerAttemptDetailScreen = '/playerAttemptDetailScreen';
 }

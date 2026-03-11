@@ -43,7 +43,7 @@ class AllTrainingWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.r),
                         onTap: () {
                           context.pushNamed(
-                            AppRoute.trainingDetailsScreen,
+                            AppRoute.clubTrainingDetailsScreen,
                             arguments: {
                               'exerciseId': '${exercise.id ?? ''}',
                             },
