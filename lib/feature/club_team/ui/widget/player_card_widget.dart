@@ -3,11 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
 import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
 import 'package:falcon/feature/club_team/ui/widget/player_reports_sheet.dart';
+import 'package:falcon/feature/player_reels/ui/widget/player_reels_section_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -19,37 +18,22 @@ const String _rightFootAsset = 'assets/svgs/right.svg';
 const String _leftFootAsset = 'assets/svgs/material-symbols_barefoot.svg';
 const Color _lightBg = Color(0xFFEFF4FF);
 
-class PlayerCardWidget extends StatefulWidget {
+class PlayerCardWidget extends StatelessWidget {
   final ClubPlayer player;
 
   const PlayerCardWidget({super.key, required this.player});
 
-  @override
-  State<PlayerCardWidget> createState() => _PlayerCardWidgetState();
-}
-
-class _PlayerCardWidgetState extends State<PlayerCardWidget> {
-  late Future<List<String>> _reelsFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _reelsFuture = context.read<ClubTeamCubit>().getReelsForPlayer(
-      widget.player.id,
-    );
-  }
-
-  void _navigateToProfile() {
+  void _navigateToProfile(BuildContext context) {
     Navigator.of(context).pushNamed(
       AppRoute.playerProfile,
-      arguments: {'isMyProfile': false, 'playerId': widget.player.id},
+      arguments: {'isMyProfile': false, 'playerId': player.id},
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _navigateToProfile,
+      onTap: () => _navigateToProfile(context),
       child: Container(
         width: 200.w,
         height: 351.h,
@@ -62,9 +46,22 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            _buildInfoRow(widget.player),
+            _buildInfoRow(player),
             SizedBox(height: 8.h),
-            Expanded(child: _buildThumbnailsSection()),
+            // ── Reels Section ──────────────────────────────────────
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: _lightBg,
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: const Border(
+                    bottom: BorderSide(color: Color(0xFFCBD5E0), width: 0.5),
+                  ),
+                ),
+                padding: EdgeInsets.all(8.w),
+                child: PlayerReelsSectionWidget(playerId: player.id),
+              ),
+            ),
             SizedBox(height: 8.h),
             _buildReportsButton(context),
             SizedBox(height: 6.h),
@@ -75,24 +72,13 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
     );
   }
 
-  // ══════════════════════════════════════════════════════════════════
-  // INFO ROW
-  // RTL layout: الاسم + بيانات على اليسار، الصورة على اليمين الفيزيائي
-  //
-  // نستخدم Directionality.of لضمان الصورة دايما يمين فيزيائي:
-  //   Row children: [photo, Expanded(text)]   ← في RTL هيرسم: text | photo
-  //                                              photo على اليمين ✓
-  // ══════════════════════════════════════════════════════════════════
   Widget _buildInfoRow(ClubPlayer player) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.end,
-
       children: [
-        // في RTL: هذا هو الـ child الأول فيظهر على اليمين الفيزيائي
         _buildPhoto(player),
         SizedBox(width: 8.w),
-        // النص يملأ الباقي على اليسار
         Expanded(child: _buildPlayerDetails(player)),
       ],
     );
@@ -127,14 +113,11 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
     );
   }
 
-  // ── الصورة — oval بالظبط زي PlayerImageWidget ───────────────────
-  // PlayerImageWidget: width 98.w, height 139.w, borderRadius 100.r
-  // هنا نصغّرها تناسبياً للكارت: width 52.w, height 74.w
   Widget _buildPhoto(ClubPlayer player) {
     final hasPhoto = player.photoPath != null && player.photoPath!.isNotEmpty;
     return Container(
       width: 52.w,
-      height: 74.w, // oval: height > width
+      height: 74.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100.r),
         border: Border.all(color: secondMainColor, width: 3.w),
@@ -158,7 +141,6 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
 
   Widget _photoFallback(String name) {
     return Container(
-
       color: secondMainColor,
       alignment: Alignment.center,
       child: Text(
@@ -181,22 +163,20 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
       children: [
         Opacity(
           opacity: isRight ? 1.0 : 0.35,
-          child: SvgPicture.asset(
-            _rightFootAsset,
-            width: 16.w,
-            height: 16.w,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
+          child: SvgPicture.asset(_rightFootAsset,
+              width: 16.w,
+              height: 16.w,
+              colorFilter:
+              const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
         ),
         SizedBox(width: 4.w),
         Opacity(
           opacity: isLeft ? 1.0 : 0.35,
-          child: SvgPicture.asset(
-            _leftFootAsset,
-            width: 16.w,
-            height: 16.w,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
+          child: SvgPicture.asset(_leftFootAsset,
+              width: 16.w,
+              height: 16.w,
+              colorFilter:
+              const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
         ),
       ],
     );
@@ -206,11 +186,8 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SvgPicture.asset(
-          'assets/svgs/solar_star-bold-duotone.svg',
-          width: 14.w,
-          height: 14.w,
-        ),
+        SvgPicture.asset('assets/svgs/solar_star-bold-duotone.svg',
+            width: 14.w, height: 14.w),
         SizedBox(width: 4.w),
         TextUtils(
           fontSize: 12,
@@ -222,87 +199,12 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
     );
   }
 
-  Widget _buildThumbnailsSection() {
-    return Container(
-      decoration: BoxDecoration(
-        color: _lightBg,
-        borderRadius: BorderRadius.circular(12.r),
-        border: const Border(
-          bottom: BorderSide(color: Color(0xFFCBD5E0), width: 0.5),
-        ),
-      ),
-      padding: EdgeInsets.all(8.w),
-      child: FutureBuilder<List<String>>(
-        future: _reelsFuture,
-        builder: (context, snapshot) {
-          final loading = snapshot.connectionState == ConnectionState.waiting;
-          final urls = snapshot.data ?? [];
-          return Row(
-            children: [
-              Expanded(
-                child: loading
-                    ? _thumbShimmer()
-                    : _thumbWidget(urls.isNotEmpty ? urls[0] : null),
-              ),
-              SizedBox(width: 8.w),
-              Expanded(
-                child: loading
-                    ? _thumbShimmer()
-                    : _thumbWidget(urls.length > 1 ? urls[1] : null),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _thumbWidget(String? url) {
-    if (url != null && url.isNotEmpty) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(10.r),
-        child: CachedNetworkImage(
-          imageUrl: url,
-          fit: BoxFit.cover,
-          width: double.infinity,
-          placeholder: (_, __) => _thumbShimmer(),
-          errorWidget: (_, __, ___) => _thumbPlaceholder(),
-        ),
-      );
-    }
-    return _thumbPlaceholder();
-  }
-
-  Widget _thumbPlaceholder() {
-    return Container(
-      decoration: BoxDecoration(
-        color: greyClr.withOpacity(0.25),
-        borderRadius: BorderRadius.circular(10.r),
-      ),
-      child: Center(
-        child: Icon(Icons.play_circle_outline, color: greyClr, size: 24.w),
-      ),
-    );
-  }
-
-  Widget _thumbShimmer() {
-    return Skeletonizer(
-      enabled: true,
-      child: Container(
-        decoration: BoxDecoration(
-          color: greyClr.withOpacity(0.25),
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-      ),
-    );
-  }
-
   Widget _buildReportsButton(BuildContext context) {
     return GestureDetector(
       onTap: () => showPlayerReportsSheet(
         context,
-        playerId: widget.player.id,
-        playerName: widget.player.name,
+        playerId: player.id,
+        playerName: player.name,
       ),
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -331,7 +233,7 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
 
   Widget _buildAssignExerciseButton(BuildContext context) {
     return GestureDetector(
-      onTap: () => showAssignExerciseSheet(context, player: widget.player),
+      onTap: () => showAssignExerciseSheet(context, player: player),
       behavior: HitTestBehavior.opaque,
       child: Container(
         width: double.infinity,
@@ -347,7 +249,8 @@ class _PlayerCardWidgetState extends State<PlayerCardWidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.sports_soccer_rounded, color: Colors.white, size: 16.w),
+            Icon(Icons.sports_soccer_rounded,
+                color: Colors.white, size: 16.w),
             SizedBox(width: 6.w),
             TextUtils(
               fontSize: 12,

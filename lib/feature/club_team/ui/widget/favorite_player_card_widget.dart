@@ -82,7 +82,7 @@ class _FavoritePlayerCardWidgetState
                 SizedBox(height: 8.h),
                 _buildThumbnailsSection(),
                 SizedBox(height: 8.h),
-                _buildInviteButton(),
+                // _buildInviteButton(),
               ],
             ),
           ),
@@ -331,31 +331,31 @@ class _FavoritePlayerCardWidgetState
   }
 
   // ── Invite button — GestureDetector منفصل يمنع الـ tap من الوصول للكارت ──
-  Widget _buildInviteButton() {
-    return GestureDetector(
-      onTap: widget.onInviteTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: _lightBg,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.send_rounded, color: mainColor, size: 16.w),
-            SizedBox(width: 6.w),
-            TextUtils(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: mainColor,
-              text: 'ارسال دعوة'.tr(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildInviteButton() {
+  //   return GestureDetector(
+  //     onTap: widget.onInviteTap,
+  //     behavior: HitTestBehavior.opaque,
+  //     child: Container(
+  //       width: double.infinity,
+  //       decoration: BoxDecoration(
+  //         color: _lightBg,
+  //         borderRadius: BorderRadius.circular(12.r),
+  //       ),
+  //       padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Icon(Icons.send_rounded, color: mainColor, size: 16.w),
+  //           SizedBox(width: 6.w),
+  //           TextUtils(
+  //             fontSize: 12,
+  //             fontWeight: FontWeight.w600,
+  //             color: mainColor,
+  //             text: 'ارسال دعوة'.tr(),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

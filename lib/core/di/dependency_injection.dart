@@ -6,6 +6,8 @@ import 'package:falcon/feature/login/cubit/login_cubit.dart';
 import 'package:falcon/feature/login/data/repos/login_repo.dart';
 import 'package:falcon/feature/package/cubit/package_cubit.dart';
 import 'package:falcon/feature/package/data/repo/package_repo.dart';
+import 'package:falcon/feature/player_reels/cubit/player_reels_cubit.dart';
+import 'package:falcon/feature/player_reels/data/repo/player_reels_repo.dart';
 import 'package:falcon/feature/rank/cubit/rank_cubit.dart';
 import 'package:falcon/feature/rank/data/repo/rank_repo.dart';
 import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
@@ -41,17 +43,12 @@ final getIt = GetIt.instance;
 Future<void> setupGetIt() async {
   // MARK: - Dio & ApiService
   Dio dio = DioFactory.getDio();
+  getIt.registerLazySingleton<Dio>(() => dio);           // ← مسجّل عشان PlayerReelsRepo يستخدمه
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
-
-
-  // MARK: - Forget Password
-
-
 
   // MARK: - Measurement
   getIt.registerLazySingleton<MeasurementRepo>(() => MeasurementRepo());
   getIt.registerFactory<MeasurementCubit>(() => MeasurementCubit(getIt()));
-
 
   // MARK: - Main
   getIt.registerLazySingleton<MainRepo>(() => MainRepo(getIt()));
@@ -101,12 +98,10 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<RankRepo>(() => RankRepo(getIt()));
   getIt.registerFactory<RankCubit>(() => RankCubit(getIt()));
 
-  // MARK: - PlayerProfileRepo (مسجل كـ LazySingleton)
+  // MARK: - PlayerProfile
   getIt.registerLazySingleton<PlayerProfileRepo>(
         () => PlayerProfileRepo(getIt<ApiService>()),
   );
-
-  // MARK: - PlayerProfileCubit
   getIt.registerFactory<PlayerProfileCubit>(
         () => PlayerProfileCubit(getIt<PlayerProfileRepo>()),
   );
@@ -119,7 +114,6 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<ForgetPasswordRepo>(
         () => ForgetPasswordRepo(getIt<ApiService>()),
   );
-
   getIt.registerFactory<ForgetPasswordCubit>(
         () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
   );
@@ -138,5 +132,13 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<ClubExercisesCubit>(
         () => ClubExercisesCubit(getIt<ClubExercisesRepo>()),
+  );
+
+  // MARK: - PlayerReels
+  getIt.registerLazySingleton<PlayerReelsRepo>(
+        () => PlayerReelsRepo(getIt<ApiService>(), getIt<Dio>()),
+  );
+  getIt.registerFactory<PlayerReelsCubit>(
+        () => PlayerReelsCubit(getIt<PlayerReelsRepo>()),
   );
 }
