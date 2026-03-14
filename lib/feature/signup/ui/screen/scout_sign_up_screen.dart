@@ -1,13 +1,12 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/di/dependency_injection.dart';
-import 'package:falcon/core/widget/showSuccesSnackBar.dart';
-import 'package:falcon/feature/signup/ui/widget/scout_pinput_screen_with_navigation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/helpers/app_regex.dart';
 import '../../../../core/helpers/extensions.dart';
@@ -21,15 +20,11 @@ import '../../../../core/widget/loading_button_utils.dart';
 import '../../../../core/widget/padding_nav_bar.dart';
 import '../../../../core/widget/padding_utils.dart';
 import '../../../../core/widget/show_error_snack_bar.dart';
+import '../../../../core/widget/showSuccesSnackBar.dart';
 import '../../../../core/widget/slide_enimation_widget.dart';
 import '../../../../core/widget/text_from_field_utils_widget.dart';
 import '../../../../core/widget/text_utils.dart';
-import '../../../login/cubit/login_cubit.dart';
-import '../../../login/cubit/login_state.dart';
-import '../widget/gender_widget.dart';
-import '../widget/phone_auth_text_from_field.dart';
-import '../widget/show_password_icon_widget.dart';
-import '../widget/upload_profile_image_widget.dart';
+import '../../cubit/scout_register_cubit.dart';
 
 class ScoutSignUpScreen extends StatefulWidget {
   const ScoutSignUpScreen({super.key});
@@ -39,43 +34,25 @@ class ScoutSignUpScreen extends StatefulWidget {
 }
 
 class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
-  late LoginCubit _cubit;
+  late ScoutRegisterCubit _cubit;
   final FocusNode _passwordFocusNode = FocusNode();
   final ValueNotifier<String> _passwordNotifier = ValueNotifier('');
   final ValueNotifier<bool> _showValidation = ValueNotifier(false);
   bool _agreedToTerms = false;
-  List<String> _termsAndPolicies = [];
 
   @override
   void initState() {
     super.initState();
-    _cubit = context.read<LoginCubit>();
+    _cubit = context.read<ScoutRegisterCubit>();
 
-    _cubit.controller.password.addListener(() {
-      _passwordNotifier.value = _cubit.controller.password.text;
+    _cubit.password.addListener(() {
+      _passwordNotifier.value = _cubit.password.text;
     });
 
     _passwordFocusNode.addListener(() {
       _showValidation.value =
-          _passwordFocusNode.hasFocus ||
-          _cubit.controller.password.text.isNotEmpty;
+          _passwordFocusNode.hasFocus || _cubit.password.text.isNotEmpty;
     });
-
-    _loadTermsAndPolicies();
-  }
-
-  void _loadTermsAndPolicies() {
-    _termsAndPolicies = _cubit.termsAndPolicies;
-
-    if (_termsAndPolicies.isEmpty) {
-      _cubit.getTermsAndPolicies().then((_) {
-        if (mounted) {
-          setState(() {
-            _termsAndPolicies = _cubit.termsAndPolicies;
-          });
-        }
-      });
-    }
   }
 
   @override
@@ -107,7 +84,7 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                 ),
                 verticalSpace(30),
 
-                // First name & Last name
+                // ── First name & Last name ────────────────────────────────────
                 Row(
                   children: [
                     Expanded(
@@ -115,10 +92,10 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                         columnCount: 2,
                         position: 0,
                         child: TextFromFieldUtilsWidget(
-                          controller: _cubit.controller.name,
+                          controller: _cubit.firstName,
                           obscureText: false,
                           validator: (v) {
-                            if (v!.isEmpty) {
+                            if (v == null || v.trim().isEmpty) {
                               return 'من فضلك تأكد من ادخال الاسم'.tr();
                             }
                             return null;
@@ -137,10 +114,10 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                         columnCount: 2,
                         position: 1,
                         child: TextFromFieldUtilsWidget(
-                          controller: _cubit.controller.lastName,
+                          controller: _cubit.lastName,
                           obscureText: false,
                           validator: (v) {
-                            if (v!.isEmpty) {
+                            if (v == null || v.trim().isEmpty) {
                               return 'من فضلك تأكد من ادخال الاسم'.tr();
                             }
                             return null;
@@ -157,18 +134,18 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                 ),
                 verticalSpace(20),
 
-                // Email
+                // ── Email ─────────────────────────────────────────────────────
                 AnimateBuilder(
                   columnCount: 1,
                   position: 2,
                   child: TextFromFieldUtilsWidget(
-                    controller: _cubit.controller.email,
+                    controller: _cubit.email,
                     obscureText: false,
                     validator: (v) {
-                      if (v!.isEmpty) {
+                      if (v == null || v.trim().isEmpty) {
                         return 'من فضلك تأكد من ادخال البريد الاكتروني'.tr();
                       }
-                      if (!AppRegex.isEmailValid(v)) {
+                      if (!AppRegex.isEmailValid(v.trim())) {
                         return 'من فضلك أدخل بريد إلكتروني صحيح'.tr();
                       }
                       return null;
@@ -182,52 +159,30 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                 ),
                 verticalSpace(20),
 
-                // Phone
+                // ── Phone ─────────────────────────────────────────────────────
                 AnimateBuilder(
                   columnCount: 1,
                   position: 3,
-                  child: PhoneAuthTextFormField(
-                    onChanged: (value) {
-                      _cubit.changeButtonStatus();
-                      if (value.toString().length == _cubit.maxLength) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    maxLength: _cubit.maxLength,
-                    controller: _cubit.controller.phone,
-                    obscureText: false,
-                    validator: (validator) {
-                      if (validator.toString().length != _cubit.maxLength) {
-                        return 'من فضلك ادخل رقم الجوال صحيح'.tr();
-                      }
-                      if (!AppRegex.isPhoneNumberValid(validator.toString())) {
-                        return 'رقم الجوال غير صالح'.tr();
-                      }
-                      return null;
-                    },
-                    textInputType: TextInputType.phone,
-                    hintText: 'رقم الجوال'.tr(),
-                    suffix: const Text(''),
-                  ),
+                  child: _buildPhoneField(),
                 ),
                 verticalSpace(20),
 
-                // Gender
+                // ── Gender ────────────────────────────────────────────────────
                 AnimateBuilder(
                   columnCount: 1,
                   position: 4,
-                  child: const EditGenderWidget(),
+                  child: _ScoutGenderWidget(cubit: _cubit),
                 ),
                 verticalSpace(20),
 
-                // Profile Image
+                // ── Profile Image ─────────────────────────────────────────────
                 AnimateBuilder(
                   columnCount: 1,
                   position: 5,
                   child: Center(
                     child: Column(
                       children: [
-                        const UploadProfileImageWidget(),
+                        _ScoutImageWidget(cubit: _cubit),
                         TextUtils(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -240,7 +195,7 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                 ),
                 verticalSpace(20),
 
-                // Password
+                // ── Password ──────────────────────────────────────────────────
                 _buildPasswordField(),
                 verticalSpace(20),
               ],
@@ -251,8 +206,61 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
     );
   }
 
+  // ── Phone field ──────────────────────────────────────────────────────────────
+  Widget _buildPhoneField() {
+    return TextFormField(
+      controller: _cubit.phone,
+      keyboardType: TextInputType.phone,
+      textInputAction: TextInputAction.next,
+      maxLength: _cubit.maxLength,
+      onChanged: (value) {
+        _cubit.updatePhoneAvailability();
+        if (value.length == _cubit.maxLength) {
+          FocusScope.of(context).nextFocus();
+        }
+      },
+      validator: (v) {
+        if (v == null || v.trim().length != _cubit.maxLength) {
+          return 'من فضلك ادخل رقم الجوال صحيح'.tr();
+        }
+        if (!AppRegex.isPhoneNumberValid(v.trim())) {
+          return 'رقم الجوال غير صالح'.tr();
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        counterText: '',
+        filled: true,
+        fillColor: fillColor,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.w),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.w),
+          borderSide: BorderSide(color: Colors.grey[300]!),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.w),
+          borderSide: BorderSide(color: mainColor, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.w),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+        hintText: 'رقم الجوال'.tr(),
+        labelText: 'رقم الجوال'.tr(),
+        labelStyle: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
+        prefixText: '${_cubit.codeCountry} ',
+        prefixStyle: TextStyle(color: Colors.black87, fontSize: 14.sp),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+      ),
+    );
+  }
+
+  // ── Password field ───────────────────────────────────────────────────────────
   Widget _buildPasswordField() {
-    return ValueListenableBuilder(
+    return ValueListenableBuilder<bool>(
       valueListenable: _cubit.showPassword,
       builder: (context, showPassword, _) {
         return Column(
@@ -262,7 +270,7 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
               columnCount: 1,
               position: 6,
               child: TextFormField(
-                controller: _cubit.controller.password,
+                controller: _cubit.password,
                 focusNode: _passwordFocusNode,
                 obscureText: showPassword,
                 validator: (v) {
@@ -302,7 +310,15 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                     color: Colors.grey[600],
                     fontSize: 14.sp,
                   ),
-                  suffixIcon: ShowPasswordIconWidget(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      showPassword ? Icons.visibility_off : Icons.visibility,
+                      color: mainColor,
+                    ),
+                    onPressed: () {
+                      _cubit.showPassword.value = !showPassword;
+                    },
+                  ),
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 16.w,
                     vertical: 14.h,
@@ -315,13 +331,12 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
             ),
             ValueListenableBuilder<bool>(
               valueListenable: _showValidation,
-              builder: (context, showValidation, _) {
-                if (!showValidation) return const SizedBox();
-
+              builder: (context, showVal, _) {
+                if (!showVal) return const SizedBox();
                 return ValueListenableBuilder<String>(
                   valueListenable: _passwordNotifier,
-                  builder: (context, password, _) {
-                    return _buildValidationRequirements(password);
+                  builder: (context, pwd, _) {
+                    return _buildValidationRequirements(pwd);
                   },
                 );
               },
@@ -332,13 +347,18 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
     );
   }
 
+  // ── Password strength indicator ──────────────────────────────────────────────
   Widget _buildValidationRequirements(String password) {
     final requirements = [
-      _ValidationItem('8 أحرف على الأقل', AppRegex.hasMinLength(password), Icons.text_fields),
-      _ValidationItem('حرف كبير (A-Z)', AppRegex.hasUpperCase(password), Icons.text_format),
-      _ValidationItem('حرف صغير (a-z)', AppRegex.hasLowerCase(password), Icons.text_fields_outlined),
+      _ValidationItem(
+          '8 أحرف على الأقل', AppRegex.hasMinLength(password), Icons.text_fields),
+      _ValidationItem(
+          'حرف كبير (A-Z)', AppRegex.hasUpperCase(password), Icons.text_format),
+      _ValidationItem(
+          'حرف صغير (a-z)', AppRegex.hasLowerCase(password), Icons.text_fields_outlined),
       _ValidationItem('رقم (0-9)', AppRegex.hasNumber(password), Icons.numbers),
-      _ValidationItem('رمز خاص (!@#...)', AppRegex.hasSpecialCharacter(password), Icons.star),
+      _ValidationItem(
+          'رمز خاص (!@#...)', AppRegex.hasSpecialCharacter(password), Icons.star),
     ];
 
     final completedCount = requirements.where((r) => r.isValid).length;
@@ -400,16 +420,16 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
           Wrap(
             spacing: 8.w,
             runSpacing: 8.h,
-            children: requirements.map((requirement) {
+            children: requirements.map((req) {
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color: requirement.isValid
+                  color: req.isValid
                       ? Colors.green.withOpacity(0.1)
                       : Colors.red.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(8.w),
                   border: Border.all(
-                    color: requirement.isValid
+                    color: req.isValid
                         ? Colors.green.withOpacity(0.3)
                         : Colors.red.withOpacity(0.2),
                   ),
@@ -418,17 +438,17 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      requirement.icon,
+                      req.icon,
                       size: 14.sp,
-                      color: requirement.isValid ? Colors.green : Colors.red,
+                      color: req.isValid ? Colors.green : Colors.red,
                     ),
                     horizontalSpace(6),
                     Text(
-                      requirement.text.tr(),
+                      req.text.tr(),
                       style: TextStyle(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w500,
-                        color: requirement.isValid ? Colors.green : Colors.red,
+                        color: req.isValid ? Colors.green : Colors.red,
                       ),
                     ),
                   ],
@@ -441,30 +461,24 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
     );
   }
 
+  // ── Bottom nav (register button + terms) ─────────────────────────────────────
   Widget _buildBottomNav() {
     return Container(
       padding: paddingNavBar(),
       height: 180.w,
-      child: BlocConsumer<LoginCubit, LoginState>(
+      child: BlocConsumer<ScoutRegisterCubit, ScoutRegisterState>(
         listener: (context, state) {
-          if (state is registerSuccess) {
-            showCupertinoModalBottomSheet(
-              expand: true,
-              context: context,
-              backgroundColor: Colors.transparent,
-              builder: (c) => BlocProvider(
-                create: (context) => getIt<LoginCubit>(),
-                child: ScoutPinputScreenWithNavigation(
-                  phoneNumber: context.read<LoginCubit>().controller.email.text,
-                ),
-              ),
-            );
+          if (state is ScoutRegisterSuccess) {
             showSuccesSnackBar(
               context: context,
-              title: 'تم ارسال الرمز الي بريدك الاكتروني'.tr(),
+              title: 'تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن'.tr(),
+            );
+            context.pushNamedAndRemoveUntil(
+              AppRoute.loginScreen,
+              predicate: (route) => false,
             );
           }
-          if (state is registerError) {
+          if (state is ScoutRegisterError) {
             showErrorSnackBar(context: context, title: state.error);
           }
         },
@@ -473,7 +487,7 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
             index: 0,
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 1000),
-              child: state is registerLoading
+              child: state is ScoutRegisterLoading
                   ? LoadButtonUtils()
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -521,9 +535,7 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                                           decoration: TextDecoration.underline,
                                         ),
                                         recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            _showTermsDialog(context);
-                                          },
+                                          ..onTap = () {},
                                       ),
                                     ],
                                   ),
@@ -539,19 +551,13 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                             if (!_agreedToTerms) {
                               showErrorSnackBar(
                                 context: context,
-                                title: 'يجب الموافقة على الشروط والسياسات للمتابعة'.tr(),
+                                title:
+                                    'يجب الموافقة على الشروط والسياسات للمتابعة'
+                                        .tr(),
                               );
                               return;
                             }
-
-                            if (_cubit.formKey.currentState!.validate()) {
-                              _cubit.registerScout();
-                            } else {
-                              showErrorSnackBar(
-                                context: context,
-                                title: 'من فضلك ادخل بيناتك'.tr(),
-                              );
-                            }
+                            _cubit.registerScout();
                           },
                           colorstext: Colors.white,
                           background: mainColor,
@@ -564,7 +570,7 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
                             TextSpan(
                               children: [
                                 TextSpan(
-                                  text: 'لديك حساب ب الفعل؟'.tr(),
+                                  text: 'لديك حساب بالفعل؟'.tr(),
                                   style: GoogleFonts.cairo(
                                     color: blackclr,
                                     fontSize: 14.sp,
@@ -594,55 +600,280 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
       ),
     );
   }
+}
 
-  void _showTermsDialog(BuildContext context) {
-    showDialog(
+// ── Local gender widget ───────────────────────────────────────────────────────
+
+class _ScoutGenderWidget extends StatefulWidget {
+  final ScoutRegisterCubit cubit;
+  const _ScoutGenderWidget({required this.cubit});
+
+  @override
+  State<_ScoutGenderWidget> createState() => _ScoutGenderWidgetState();
+}
+
+class _ScoutGenderWidgetState extends State<_ScoutGenderWidget> {
+  String _genderLabel = '';
+
+  void _showGenderSheet() {
+    showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.r),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
-        title: TextUtils(
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-          color: mainColor,
-          text: 'الشروط والسياسات'.tr(),
-        ),
-        content: SingleChildScrollView(
+      ),
+      builder: (ctx) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (_termsAndPolicies.isEmpty)
-                Center(
-                  child: CircularProgressIndicator(color: mainColor),
-                )
-              else
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _termsAndPolicies
-                      .map((term) => Padding(
-                            padding: EdgeInsets.only(bottom: 8.h),
-                            child: TextUtils(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                              text: '• $term',
-                            ),
-                          ))
-                      .toList(),
+              Container(
+                height: 4,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(4),
                 ),
+              ),
+              verticalSpace(16),
+              TextUtils(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+                text: 'اختر الجنس'.tr(),
+              ),
+              verticalSpace(20),
+              Row(
+                children: [
+                  Expanded(
+                    child: _GenderOption(
+                      label: 'ذكر',
+                      value: 0,
+                      selectedValue: widget.cubit.gender,
+                      onTap: () {
+                        widget.cubit.gender = 0;
+                        setState(() => _genderLabel = 'ذكر');
+                        Navigator.pop(ctx);
+                      },
+                    ),
+                  ),
+                  horizontalSpace(12),
+                  Expanded(
+                    child: _GenderOption(
+                      label: 'أنثى',
+                      value: 1,
+                      selectedValue: widget.cubit.gender,
+                      onTap: () {
+                        widget.cubit.gender = 1;
+                        setState(() => _genderLabel = 'أنثى');
+                        Navigator.pop(ctx);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              verticalSpace(20),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(12.r),
+      onTap: _showGenderSheet,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        decoration: BoxDecoration(
+          color: fillColor,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: Colors.grey[300]!),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: TextUtils(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: mainColor,
-              text: 'فهمت'.tr(),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                _genderLabel.isEmpty ? 'الجنس'.tr() : _genderLabel,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: _genderLabel.isEmpty
+                      ? mainColor.withOpacity(0.5)
+                      : Colors.black87,
+                ),
+              ),
+            ),
+            Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey[600]),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _GenderOption extends StatelessWidget {
+  final String label;
+  final int value;
+  final int selectedValue;
+  final VoidCallback onTap;
+
+  const _GenderOption({
+    required this.label,
+    required this.value,
+    required this.selectedValue,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelected = selectedValue == value;
+    return InkWell(
+      borderRadius: BorderRadius.circular(12.r),
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 14.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.r),
+          color: isSelected ? mainColor : null,
+          border: Border.all(color: isSelected ? mainColor : greyClr),
+        ),
+        child: Center(
+          child: TextUtils(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: isSelected ? Colors.white : Colors.black,
+            text: label.tr(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Local image picker widget ─────────────────────────────────────────────────
+
+class _ScoutImageWidget extends StatefulWidget {
+  final ScoutRegisterCubit cubit;
+  const _ScoutImageWidget({required this.cubit});
+
+  @override
+  State<_ScoutImageWidget> createState() => _ScoutImageWidgetState();
+}
+
+class _ScoutImageWidgetState extends State<_ScoutImageWidget> {
+  File? _selectedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final XFile? image = await _picker.pickImage(source: source);
+      if (image != null) {
+        setState(() => _selectedImage = File(image.path));
+        widget.cubit.imagePath = image.path;
+      }
+    } catch (_) {}
+  }
+
+  void _showImageSourceSheet() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (ctx) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 4,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              verticalSpace(16),
+              ListTile(
+                leading: Icon(Icons.camera_alt, color: mainColor),
+                title: Text('الكاميرا'.tr()),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickImage(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library, color: mainColor),
+                title: Text('معرض الصور'.tr()),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickImage(ImageSource.gallery);
+                },
+              ),
+              verticalSpace(10),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _showImageSourceSheet,
+      child: Stack(
+        children: [
+          Container(
+            width: 88.w,
+            height: 129.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100.r),
+              border: Border.all(color: secondMainColor, width: 5.w),
+              color: offWhiteClr,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100.r),
+              child: _selectedImage != null
+                  ? Image.file(_selectedImage!, fit: BoxFit.cover)
+                  : Center(
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.grey[400],
+                        size: 40.w,
+                      ),
+                    ),
+            ),
+          ),
+          PositionedDirectional(
+            end: 1,
+            bottom: 2,
+            child: Container(
+              padding: EdgeInsets.all(2.w),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: mainColor,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  _selectedImage != null ? Icons.done : Icons.add,
+                  color: Colors.white,
+                  size: 16.w,
+                ),
+              ),
             ),
           ),
         ],
@@ -650,6 +881,8 @@ class _ScoutSignUpScreenState extends State<ScoutSignUpScreen> {
     );
   }
 }
+
+// ── Validation item model ─────────────────────────────────────────────────────
 
 class _ValidationItem {
   final String text;

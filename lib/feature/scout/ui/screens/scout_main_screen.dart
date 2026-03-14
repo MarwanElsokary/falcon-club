@@ -4,21 +4,22 @@ import 'package:falcon/core/helpers/extensions.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/widget/center_text_utils.dart';
 import 'package:falcon/core/widget/slide_enimation_widget.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
-import 'package:falcon/feature/club_team/ui/screen/club_my_team_screen.dart';
 import 'package:falcon/feature/club_team/ui/screen/favorites_screen.dart';
+import 'package:falcon/feature/experiments/cubit/experiments_cubit.dart';
 import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
 import 'package:falcon/feature/rank/cubit/rank_cubit.dart';
 import 'package:falcon/feature/rank/ui/screen/rank_screen.dart';
 import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
 import 'package:falcon/feature/reals/ui/screen/main_reals_screen.dart';
+import 'package:falcon/feature/training/cubit/training_cubit.dart';
+import 'package:falcon/feature/training/ui/screen/training_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/thems/thems.dart';
 import '../../cubit/scout_cubit.dart';
-import 'scout_profile_screen.dart';
+import 'scout_home_screen.dart';
 
 class ScoutMainScreen extends StatefulWidget {
   const ScoutMainScreen({super.key});
@@ -33,21 +34,43 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // ── Main content ──────────────────────────────────────────────────
+          // ── Main content ────────────────────────────────────────────────
           ValueListenableBuilder<int>(
             valueListenable: context.read<ScoutCubit>().currentIndex,
             builder: (context, currentIndex, _) {
               return IndexedStack(
                 index: currentIndex,
                 children: [
-                  // 0 — الرتب (Rank)
-                  BlocProvider(
-                    create: (_) => getIt<RankCubit>()..emitRank(),
-                    child: const RankScreen(),
+                  // 0 — الرئيسية (Scout Home — read-only)
+                  MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) => getIt<ExperimentsCubit>()
+                          ..emitallTrials(categoryId: ''),
+                      ),
+                      BlocProvider(
+                        create: (_) => getIt<TrainingCubit>()
+                          ..emitallExercises(categoryId: '', popular: false),
+                      ),
+                    ],
+                    child: const ScoutHomeScreen(),
                   ),
-                  // 1 — قائمة الاهتمامات (Favorites — read only for scout)
-                  const FavoritesScreen(),
-                  // 2 — اللاعيبين (Reels)
+
+                  // 1 — التمارين (Training — read-only)
+                  MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) => getIt<TrainingCubit>()
+                          ..emitallExercises(categoryId: '', popular: false),
+                      ),
+                      BlocProvider(
+                        create: (_) => getIt<MainCubit>()..emitCategories(),
+                      ),
+                    ],
+                    child: const TrainingScreen(),
+                  ),
+
+                  // 2 — الريلز (Reels — center tab)
                   MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (_) => getIt<MainCubit>()),
@@ -61,16 +84,21 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                       playnowOrNot: currentIndex == 2,
                     ),
                   ),
-                  // 3 — فريقي (Club players by position — read only)
-                  const ClubMyTeamScreen(),
-                  // 4 — ملفي (Scout profile)
-                  const ScoutProfileScreen(),
+
+                  // 3 — اللاعبين (Favorites — read-only for scout)
+                  const FavoritesScreen(),
+
+                  // 4 — الرتب (Rank)
+                  BlocProvider(
+                    create: (_) => getIt<RankCubit>()..emitRank(),
+                    child: const RankScreen(),
+                  ),
                 ],
               );
             },
           ),
 
-          // ── Bottom navigation bar ─────────────────────────────────────────
+          // ── Bottom navigation bar ────────────────────────────────────────
           PositionedDirectional(
             bottom: 0,
             start: 0,
@@ -108,6 +136,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                                     MainAxisAlignment.spaceAround,
                                 children: List.generate(5, (index) {
                                   final isSelected = currentIndex == index;
+                                  final isCenter = index == 2;
                                   return Expanded(
                                     child: InkWell(
                                       onTap: () {
@@ -123,8 +152,12 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           SizedBox(
-                                            height: isSelected ? 26.h : 24.h,
-                                            width: isSelected ? 26.h : 24.h,
+                                            height: isCenter
+                                                ? (isSelected ? 30.h : 28.h)
+                                                : (isSelected ? 26.h : 24.h),
+                                            width: isCenter
+                                                ? (isSelected ? 30.h : 28.h)
+                                                : (isSelected ? 26.h : 24.h),
                                             child: isSelected
                                                 ? _activeIcons[index]
                                                 : _inactiveIcons[index],
@@ -172,31 +205,31 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
   }
 
   List<Widget> get _inactiveIcons => [
-        Icon(Icons.leaderboard_outlined,
+        Icon(Icons.home_outlined,
             color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.bookmark_border,
+        Icon(Icons.fitness_center_outlined,
             color: mainColor.withOpacity(0.5), size: 24.h),
         Icon(Icons.sports_soccer_outlined,
+            color: mainColor.withOpacity(0.5), size: 28.h),
+        Icon(Icons.people_outline,
             color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.groups_outlined,
-            color: mainColor.withOpacity(0.5), size: 24.h),
-        Icon(Icons.person_outline,
+        Icon(Icons.leaderboard_outlined,
             color: mainColor.withOpacity(0.5), size: 24.h),
       ];
 
   List<Widget> get _activeIcons => [
+        Icon(Icons.home, color: mainColor, size: 26.h),
+        Icon(Icons.fitness_center, color: mainColor, size: 26.h),
+        Icon(Icons.sports_soccer, color: mainColor, size: 30.h),
+        Icon(Icons.people, color: mainColor, size: 26.h),
         Icon(Icons.leaderboard, color: mainColor, size: 26.h),
-        Icon(Icons.bookmark, color: mainColor, size: 26.h),
-        Icon(Icons.sports_soccer, color: mainColor, size: 26.h),
-        Icon(Icons.groups, color: mainColor, size: 26.h),
-        Icon(Icons.person, color: mainColor, size: 26.h),
       ];
 
   List<String> get _titles => [
+        'الرئيسية'.tr(),
+        'التمارين'.tr(),
+        'الريلز'.tr(),
+        'اللاعبين'.tr(),
         'الرتب'.tr(),
-        'الاهتمامات'.tr(),
-        'اللاعيبين'.tr(),
-        'فريقي'.tr(),
-        'ملفي'.tr(),
       ];
 }

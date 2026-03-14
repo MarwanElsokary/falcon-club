@@ -88,6 +88,31 @@ class CacheHelper {
   }
 
   // =======================
+  // 🔹 USER ROLE
+  // =======================
+
+  /// Saves the raw role string from the login API response (e.g. "Scout", "Club", "Player").
+  static Future<bool> saveRole(String role) async {
+    try {
+      return await _prefs?.setString('userRole', role) ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Returns the saved role string, or empty string if not set.
+  static String getRole() {
+    try {
+      return _prefs?.getString('userRole') ?? '';
+    } catch (_) {
+      return '';
+    }
+  }
+
+  /// Convenience getter: true when the logged-in user has the Scout role.
+  static bool get isScout => getRole() == 'Scout';
+
+  // =======================
   // 🔹 CLEAR
   // =======================
   static Future<void> clearShared() async {

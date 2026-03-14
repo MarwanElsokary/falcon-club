@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:falcon/core/cache/cach_Helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -547,6 +548,17 @@ class LoginCubit extends Cubit<LoginState> {
 
     await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, userType);
     log('✅ UserType saved: $userType');
+
+    // ===== Save raw role to CacheHelper for CacheHelper.isScout checks =====
+    final rawRole = response['role']?.toString() ?? '';
+    if (rawRole.isNotEmpty) {
+      await CacheHelper.saveRole(rawRole);
+      log('✅ Role saved to CacheHelper: $rawRole');
+    } else {
+      // Derive from userType as fallback
+      final derivedRole = userType == 'scout' ? 'Scout' : userType == 'club' ? 'Club' : 'Player';
+      await CacheHelper.saveRole(derivedRole);
+    }
 
     return true;
   }

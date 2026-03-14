@@ -40,6 +40,7 @@ import '../../feature/club_team/cubit/club_team_cubit.dart';
 import '../../feature/club_team/ui/screen/club_main_screen.dart';
 import '../../feature/scout/cubit/scout_cubit.dart';
 import '../../feature/scout/ui/screens/scout_main_screen.dart';
+import '../../feature/signup/cubit/scout_register_cubit.dart';
 import '../../feature/splash_screen/splash_screen.dart';
 import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/ui/screen/training_screen.dart';
@@ -136,7 +137,7 @@ class AppRouter {
       case AppRoute.scoutSignUpScreen:
         return MaterialWithModalsPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => getIt<LoginCubit>(),
+            create: (_) => getIt<ScoutRegisterCubit>(),
             child: const ScoutSignUpScreen(),
           ),
         );
