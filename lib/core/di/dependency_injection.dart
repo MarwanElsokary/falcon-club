@@ -12,6 +12,7 @@ import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
 import 'package:falcon/feature/reals/data/repo/reals_repo.dart';
 import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
 import 'package:falcon/feature/club_team/data/repo/club_team_repo.dart';
+import 'package:falcon/feature/scout/cubit/scout_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../feature/Measurement/cubit/MeasurementCubit.dart';
@@ -56,6 +57,9 @@ Future<void> setupGetIt() async {
   // MARK: - Club Team
   getIt.registerLazySingleton<ClubTeamRepo>(() => ClubTeamRepo(getIt()));
   getIt.registerFactory<ClubTeamCubit>(() => ClubTeamCubit(getIt()));
+
+  // MARK: - Scout
+  getIt.registerFactory<ScoutCubit>(() => ScoutCubit(getIt<ApiService>()));
 
   // MARK: - Login
   getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt()));

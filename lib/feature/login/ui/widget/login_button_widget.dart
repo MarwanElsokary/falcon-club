@@ -37,9 +37,15 @@ class LoginButtonWidget extends StatelessWidget {
             final userType = await SharedPrefHelper.getSecuredString(
               SharedPrefKeys.userType,
             );
-            final route = userType == 'club'
-                ? AppRoute.clubMainScreen
-                : AppRoute.mainScreen;
+            final String route;
+            if (userType == 'club') {
+              route = AppRoute.clubMainScreen;
+            } else if (userType == 'scout') {
+              route = AppRoute.scoutMainScreen;
+            } else {
+              // Should not happen — Player accounts are rejected in _saveAuthData
+              route = AppRoute.mainScreen;
+            }
             context.pushNamedAndRemoveUntil(
               route,
               predicate: (route) => false,

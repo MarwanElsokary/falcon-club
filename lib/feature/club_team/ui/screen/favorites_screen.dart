@@ -1,4 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/helpers/constants.dart';
+import 'package:falcon/core/helpers/shared_pref_helper.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/text_utils.dart';
@@ -20,10 +22,24 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  bool _isScout = false;
+
   @override
   void initState() {
     super.initState();
     context.read<ClubTeamCubit>().fetchFavorites();
+    _loadUserType();
+  }
+
+  Future<void> _loadUserType() async {
+    final userType = await SharedPrefHelper.getSecuredString(
+      SharedPrefKeys.userType,
+    );
+    if (mounted) {
+      setState(() {
+        _isScout = userType == 'scout';
+      });
+    }
   }
 
   @override
@@ -147,10 +163,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         return FavoritePlayerCardWidget(
           player: player,
           rankIndex: index,
-          onInviteTap: () => showInviteFormSheet(
-            context,
-            playerName: player.name,
-          ),
+          showInviteButton: !_isScout,
+          onInviteTap: _isScout
+              ? () {}
+              : () => showInviteFormSheet(
+                    context,
+                    playerName: player.name,
+                  ),
         );
       },
     );

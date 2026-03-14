@@ -199,9 +199,14 @@ class _SplashScreenState extends State<SplashScreen>
                         EasyLocalization.of(context)!.locale.toString(),
                       );
                       if (userToken.toString().isNotEmpty) {
-                        final route = userType == 'club'
-                            ? AppRoute.clubMainScreen
-                            : AppRoute.mainScreen;
+                        final String route;
+                        if (userType == 'club') {
+                          route = AppRoute.clubMainScreen;
+                        } else if (userType == 'scout') {
+                          route = AppRoute.scoutMainScreen;
+                        } else {
+                          route = AppRoute.mainScreen;
+                        }
                         // ignore: use_build_context_synchronously
                         context.pushNamedAndRemoveUntil(
                           route,

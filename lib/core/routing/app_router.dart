@@ -34,9 +34,12 @@ import '../../feature/signup/ui/screen/club_sign_up_screen.dart';
 import '../../feature/signup/ui/screen/complete_profile_screen.dart';
 import '../../feature/signup/ui/screen/position_screen.dart';
 import '../../feature/signup/ui/screen/registration_type_screen.dart';
+import '../../feature/signup/ui/screen/scout_sign_up_screen.dart';
 import '../../feature/signup/ui/screen/sign_up_screen.dart';
 import '../../feature/club_team/cubit/club_team_cubit.dart';
 import '../../feature/club_team/ui/screen/club_main_screen.dart';
+import '../../feature/scout/cubit/scout_cubit.dart';
+import '../../feature/scout/ui/screens/scout_main_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
 import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/ui/screen/training_screen.dart';
@@ -112,6 +115,29 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
             child: const ClubMainScreen(),
+          ),
+        );
+
+      case AppRoute.scoutMainScreen:
+        return _fadeTransitionRoute(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => getIt<ScoutCubit>()..fetchProfile(),
+              ),
+              BlocProvider(
+                create: (_) => getIt<ClubTeamCubit>()..fetchClubPlayers(),
+              ),
+            ],
+            child: const ScoutMainScreen(),
+          ),
+        );
+
+      case AppRoute.scoutSignUpScreen:
+        return MaterialWithModalsPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<LoginCubit>(),
+            child: const ScoutSignUpScreen(),
           ),
         );
 

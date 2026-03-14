@@ -20,12 +20,14 @@ class FavoritePlayerCardWidget extends StatefulWidget {
   final ClubPlayer player;
   final int rankIndex; // 0-based, displayed as rankIndex+1
   final VoidCallback onInviteTap;
+  final bool showInviteButton;
 
   const FavoritePlayerCardWidget({
     super.key,
     required this.player,
     required this.rankIndex,
     required this.onInviteTap,
+    this.showInviteButton = true,
   });
 
   @override
@@ -69,8 +71,8 @@ class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
               _buildThumbnailsSection(),
               verticalSpace(8),
 
-              // 3. "ارسال دعوة" button
-              _buildInviteButton(),
+              // 3. "ارسال دعوة" button (hidden for scouts)
+              if (widget.showInviteButton) _buildInviteButton(),
             ],
           ),
         ),

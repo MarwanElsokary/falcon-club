@@ -40,6 +40,12 @@ class AppRoute {
   //clubMainScreen
   static const String clubMainScreen = '/clubMainScreen';
 
+  //scoutMainScreen
+  static const String scoutMainScreen = '/scoutMainScreen';
+
+  //scoutSignUpScreen
+  static const String scoutSignUpScreen = '/scoutSignUpScreen';
+
   //positionScreen
   static const String positionScreen = '/positionScreen';
 

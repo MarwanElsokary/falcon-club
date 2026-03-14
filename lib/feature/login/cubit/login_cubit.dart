@@ -76,8 +76,8 @@ class LoginCubit extends Cubit<LoginState> {
 
     response.when(
       success: (data) async {
-        await _saveAuthData(data);
-        emit(LoginState.success(data));
+        final proceed = await _saveAuthData(data, rejectPlayers: true);
+        if (proceed) emit(LoginState.success(data));
       },
       failure: (error) {
         emit(LoginState.error(error: error.apiErrorModel.message ?? 'فشل تسجيل الدخول'));
@@ -160,6 +160,41 @@ class LoginCubit extends Cubit<LoginState> {
       failure: (error) {
         emit(LoginState.registererror(
           error: error.apiErrorModel.message ?? 'فشل تسجيل النادي',
+        ));
+      },
+    );
+  }
+
+  // ============================================================================
+  // SCOUT REGISTRATION
+  // ============================================================================
+
+  Future<void> registerScout() async {
+    if (!formKey.currentState!.validate()) return;
+
+    emit(const LoginState.registerloading());
+
+    final response = await _loginRepo.registerScout(
+      FormData.fromMap({
+        "PlayerId": "ScoutId",
+        "FirstName": controller.name.text,
+        "LastName": controller.lastName.text,
+        "Email": controller.email.text,
+        "PhoneNumber": controller.phone.text,
+        "Gender": gender == -1 ? 0 : gender,
+        "Password": controller.password.text,
+        if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
+      }),
+    );
+
+    response.when(
+      success: (data) async {
+        await _saveAuthData(data);
+        emit(LoginState.registersuccess(data));
+      },
+      failure: (error) {
+        emit(LoginState.registererror(
+          error: error.apiErrorModel.message ?? 'فشل تسجيل الكشاف',
         ));
       },
     );
@@ -438,9 +473,47 @@ class LoginCubit extends Cubit<LoginState> {
     return value.contains('-') || !RegExp(r'^[0-9]+$').hasMatch(value);
   }
 
-  Future<void> _saveAuthData(Map<String, dynamic> response) async {
+  /// Returns true if the user should proceed (club or scout),
+  /// false if the role was rejected (Player or unknown) — in that case
+  /// all data is cleared and an error state has already been emitted.
+  Future<bool> _saveAuthData(Map<String, dynamic> response, {bool rejectPlayers = false}) async {
     final token = response['token']?.toString();
-    if (token == null || token.isEmpty) return;
+    if (token == null || token.isEmpty) return true;
+
+    // ===== UserType from JWT roles (resolve BEFORE saving token) =====
+    String userType = 'player';
+    try {
+      final parts = token.split('.');
+      if (parts.length == 3) {
+        final payloadJson = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
+        final payload = json.decode(payloadJson);
+        final roles = payload['role'] ?? payload['roles'] ?? [];
+        final roleList = roles is List ? roles.map((e) => e.toString()).toList() : [roles.toString()];
+
+        if (roleList.contains('Club') || roleList.contains('MainClub')) {
+          userType = 'club';
+        } else if (roleList.contains('Scout')) {
+          userType = 'scout';
+        } else {
+          // Player or unknown role
+          userType = 'player';
+        }
+        log('✅ Resolved userType: $userType from roles: $roleList');
+      }
+    } catch (e) {
+      log('⚠️ Error parsing JWT roles: $e');
+    }
+
+    // Reject Player (and unknown) roles when called from login()
+    if (rejectPlayers && userType == 'player') {
+      // Clear any partial data
+      await SharedPrefHelper.clearSpecificSecureData(SharedPrefKeys.userToken);
+      await SharedPrefHelper.clearSpecificSecureData(SharedPrefKeys.userId);
+      await SharedPrefHelper.clearSpecificSecureData(SharedPrefKeys.userType);
+      DioFactory.setTokenIntoHeaderAfterLogin('');
+      emit(const LoginState.error(error: 'هذا التطبيق مخصص للأندية والكشافين فقط'));
+      return false;
+    }
 
     await SharedPrefHelper.setSecuredString(
       SharedPrefKeys.userToken,
@@ -472,27 +545,10 @@ class LoginCubit extends Cubit<LoginState> {
 
     log('✅ IsCompleted saved: $isCompleted');
 
-    // ===== UserType from JWT roles =====
-    try {
-      final parts = token.split('.');
-      if (parts.length == 3) {
-        final payloadJson = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
-        final payload = json.decode(payloadJson);
-        final roles = payload['role'] ?? payload['roles'] ?? [];
-        final roleList = roles is List ? roles.map((e) => e.toString()).toList() : [roles.toString()];
+    await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, userType);
+    log('✅ UserType saved: $userType');
 
-        if (roleList.contains('Club')) {
-          await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'club');
-          log('✅ UserType saved: club');
-        } else {
-          await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'player');
-          log('✅ UserType saved: player');
-        }
-      }
-    } catch (e) {
-      log('⚠️ Error parsing JWT roles: $e');
-      await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'player');
-    }
+    return true;
   }
 
   Future<MultipartFile> _createMultipartFile(String imagePath) async {

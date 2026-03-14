@@ -51,10 +51,10 @@ class RegistrationTypeScreen extends StatelessWidget {
               context: context,
               icon: Icons.search,
               title: 'كشاف'.tr(),
-              subtitle: 'لم تضاف بعد، سيتم الإضافة قريباً'.tr(),
-              isEnabled: false,
+              subtitle: 'سجل ككشاف لاستكشاف المواهب والاعبين'.tr(),
+              isEnabled: true,
               onTap: () {
-                _showComingSoonDialog(context);
+                context.pushNamed(AppRoute.scoutSignUpScreen);
               },
             ),
           ],
