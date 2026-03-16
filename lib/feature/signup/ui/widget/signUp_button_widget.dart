@@ -143,7 +143,7 @@ class _SignupButtonWidgetState extends State<SignupButtonWidget> {
               title: 'تم تعديل الملف الشخصي بنجاح'.tr(),
             );
             context.pushNamedAndRemoveUntil(
-              AppRoute.mainScreen,
+              AppRoute.clubMainScreen,
               predicate: (route) => false,
             );
           }

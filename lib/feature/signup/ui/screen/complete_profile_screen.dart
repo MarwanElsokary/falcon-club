@@ -67,7 +67,7 @@ class CompleteProfileScreen extends StatelessWidget {
       updateProfilesuccess: (_) {
         log('✅ Profile completed successfully');
         Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoute.mainScreen,
+          AppRoute.clubMainScreen,
               (route) => false,
         );
       },
@@ -178,7 +178,7 @@ class CompleteProfileScreen extends StatelessWidget {
 
   void _skipToMain(BuildContext context) {
     Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoute.mainScreen,
+      AppRoute.clubMainScreen,
           (route) => false,
     );
   }

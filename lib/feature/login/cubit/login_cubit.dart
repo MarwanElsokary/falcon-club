@@ -26,7 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
   final formKey = GlobalKey<FormState>();
   final loginformKey = GlobalKey<FormState>();
 
-  // UI State (kept for backward compatibility with existing widgets)
+  // UI State
   ValueNotifier<bool> showPassword = ValueNotifier(true);
   ValueNotifier<int> positionID = ValueNotifier(-1);
   ValueNotifier<String> positionName = ValueNotifier('');
@@ -36,7 +36,6 @@ class LoginCubit extends Cubit<LoginState> {
   String codeCountry = '+966';
   bool isAvailable = false;
   List<String> termsAndPolicies = [];
-
 
   // Profile data
   int direction = 0;
@@ -61,7 +60,6 @@ class LoginCubit extends Cubit<LoginState> {
   // AUTH METHODS
   // ============================================================================
 
-  // New method name
   Future<void> login() async {
     if (!loginformKey.currentState!.validate()) return;
     emit(const LoginState.loading());
@@ -76,11 +74,26 @@ class LoginCubit extends Cubit<LoginState> {
 
     response.when(
       success: (data) async {
+        // ── تحقق من الـ role قبل أي حاجة ─────────────────────────
+        final role = data['role']?.toString() ?? '';
+
+        if (role == 'Player') {
+          // امسح أي بيانات ممكن اتحفظت
+          await SharedPrefHelper.removeSecuredString(SharedPrefKeys.userToken);
+          await SharedPrefHelper.removeSecuredString(SharedPrefKeys.userType);
+          await SharedPrefHelper.removeSecuredString(SharedPrefKeys.userId);
+          emit(const LoginState.error(
+            error: 'هذا التطبيق مخصص للأندية والكشافين فقط.\nإذا كنت لاعباً، يرجى استخدام تطبيق اللاعبين.',
+          ));
+          return;
+        }
+
         await _saveAuthData(data);
         emit(LoginState.success(data));
       },
       failure: (error) {
-        emit(LoginState.error(error: error.apiErrorModel.message ?? 'فشل تسجيل الدخول'));
+        emit(LoginState.error(
+            error: error.apiErrorModel.message ?? 'فشل تسجيل الدخول'));
       },
     );
   }
@@ -88,7 +101,10 @@ class LoginCubit extends Cubit<LoginState> {
   // Old method name for backward compatibility
   void emitloginStates() => login();
 
-  // New method name
+  // ============================================================================
+  // REGISTRATION
+  // ============================================================================
+
   Future<void> register() async {
     if (!formKey.currentState!.validate()) return;
     emit(const LoginState.registerloading());
@@ -112,12 +128,12 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginState.registersuccess(data));
       },
       failure: (error) {
-        emit(LoginState.registererror(error: error.apiErrorModel.message ?? 'فشل التسجيل'));
+        emit(LoginState.registererror(
+            error: error.apiErrorModel.message ?? 'فشل التسجيل'));
       },
     );
   }
 
-  // Old method name for backward compatibility
   void emitregisterStates() => register();
 
   // ============================================================================
@@ -127,7 +143,6 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> registerClub() async {
     if (!formKey.currentState!.validate()) return;
 
-    // Validate club-specific fields
     if (selectedUniversityId == null) {
       emit(const LoginState.registererror(error: 'يرجى اختيار المدينة'));
       return;
@@ -148,7 +163,8 @@ class LoginCubit extends Cubit<LoginState> {
         "PhoneNumber": controller.phone.text,
         "Gender": gender == -1 ? 0 : gender,
         "Password": controller.password.text,
-        if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
+        if (imagePath.isNotEmpty)
+          'Photo': await _createMultipartFile(imagePath),
       }),
     );
 
@@ -165,16 +181,20 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  // New method name
+  // ============================================================================
+  // OTP
+  // ============================================================================
+
   Future<void> verifyOtp() async {
     final code = controller.verifyCode.text.trim();
     if (code.isEmpty) {
-      emit(const LoginState.verificationCodeerror(error: 'يجب إدخال كود التحقق'));
+      emit(const LoginState.verificationCodeerror(
+          error: 'يجب إدخال كود التحقق'));
       return;
     }
-
     if (code.length != 6) {
-      emit(const LoginState.verificationCodeerror(error: 'يجب إدخال 6 أرقام'));
+      emit(const LoginState.verificationCodeerror(
+          error: 'يجب إدخال 6 أرقام'));
       return;
     }
 
@@ -195,31 +215,13 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  // أضف هذه الدالة
-  Future<void> getTermsAndPolicies() async {
-    final result = await _loginRepo.getTermsAndPolicies();
-    result.when(
-      success: (data) {
-        if (data is List) {
-          termsAndPolicies = List<String>.from(data);
-        } else if (data is String) {
-          termsAndPolicies = [data];
-        }
-      },
-      failure: (error) {
-        print('Failed to load terms and policies: $error');
-      },
-    );
-  }
-  // Old method name for backward compatibility
   Future<void> emitverifyCodeStates() async => await verifyOtp();
 
   // ============================================================================
-  // COMPLETE REGISTRATION (Step 2)
+  // COMPLETE REGISTRATION
   // ============================================================================
 
   Future<void> completeRegistration() async {
-    // Validation
     final validationError = _validateProfileData();
     if (validationError != null) {
       emit(LoginState.updateProfileerror(error: validationError));
@@ -228,7 +230,6 @@ class LoginCubit extends Cubit<LoginState> {
 
     emit(const LoginState.updateProfileLoading());
 
-    // Get userId
     final userId = await _getUserId();
     if (userId == null) {
       emit(const LoginState.updateProfileerror(
@@ -251,18 +252,14 @@ class LoginCubit extends Cubit<LoginState> {
       if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
     });
 
-    log('📤 Complete Registration - UserId: $userId');
-
     final response = await _loginRepo.completeRegistration(formData);
 
     response.when(
       success: (data) async {
         await SharedPrefHelper.setBool(SharedPrefKeys.isCompleted, true);
-        log('✅ Complete Registration Success');
         emit(LoginState.updateProfilesuccess(data));
       },
       failure: (error) {
-        log('❌ Complete Registration Error: ${error.apiErrorModel.message}');
         emit(LoginState.updateProfileerror(
           error: error.apiErrorModel.message ?? 'خطأ في إكمال التسجيل',
         ));
@@ -270,11 +267,10 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  // Old method name for backward compatibility
   void emitCompleteRegistration() => completeRegistration();
 
   // ============================================================================
-  // PROFILE UPDATE (Existing users)
+  // PROFILE UPDATE
   // ============================================================================
 
   Future<void> updateProfile() async {
@@ -282,15 +278,20 @@ class LoginCubit extends Cubit<LoginState> {
 
     final response = await _loginRepo.updateProfile(
       FormData.fromMap({
-        if (controller.height.text.isNotEmpty) "Height": controller.height.text,
-        if (controller.weight.text.isNotEmpty) "Weight": controller.weight.text,
+        if (controller.height.text.isNotEmpty)
+          "Height": controller.height.text,
+        if (controller.weight.text.isNotEmpty)
+          "Weight": controller.weight.text,
         "PositionId": positionID.value.toString(),
         "Direction": direction.toString(),
         "BirthDate": birthDate,
         if (gender != -1) "Gender": gender.toString(),
-        if (selectedCollegesId != null) "ClubId": selectedCollegesId.toString(),
-        if (selectedUniversityId != null) "UniversityId": selectedUniversityId.toString(),
-        if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
+        if (selectedCollegesId != null)
+          "ClubId": selectedCollegesId.toString(),
+        if (selectedUniversityId != null)
+          "UniversityId": selectedUniversityId.toString(),
+        if (imagePath.isNotEmpty)
+          'Photo': await _createMultipartFile(imagePath),
       }),
     );
 
@@ -302,7 +303,6 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  // Old method name for backward compatibility
   void emitupdateProfileStates() => updateProfile();
 
   // ============================================================================
@@ -311,9 +311,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> loadCountries() async {
     emit(const LoginState.universityloading());
-
     final response = await _loginRepo.countries();
-
     response.when(
       success: (data) {
         universityList = data.data;
@@ -327,24 +325,17 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  // Old method name for backward compatibility
   void emitcountries() => loadCountries();
 
   Future<void> loadClubsByCountry(String countryId) async {
     emit(const LoginState.collegesloading());
-
     final response = await _loginRepo.clubsByCountry(countryId: countryId);
-
     response.when(
       success: (data) {
         collegesList = data.data;
-
-        // إذا كانت القائمة فارغة، اعرض رسالة للمستخدم
         if (collegesList.isEmpty) {
-          log('⚠️ No clubs found for country: $countryId');
           emit(const LoginState.collegeserror(
-            error: 'لا توجد أندية متاحة في هذه المدينة حالياً',
-          ));
+              error: 'لا توجد أندية متاحة في هذه المدينة حالياً'));
         } else {
           emit(const LoginState.collegessuccess());
         }
@@ -357,11 +348,59 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  // Old method name for backward compatibility
-  void emitclubsByCountry({required String countryId}) => loadClubsByCountry(countryId);
+  void emitclubsByCountry({required String countryId}) =>
+      loadClubsByCountry(countryId);
 
   // ============================================================================
-  // VALIDATION & HELPER METHODS
+  // TERMS
+  // ============================================================================
+
+  Future<void> getTermsAndPolicies() async {
+    final result = await _loginRepo.getTermsAndPolicies();
+    result.when(
+      success: (data) {
+        if (data is List) {
+          termsAndPolicies = List<String>.from(data);
+        } else if (data is String) {
+          termsAndPolicies = [data];
+        }
+      },
+      failure: (error) {
+        log('Failed to load terms and policies: $error');
+      },
+    );
+  }
+
+  // ============================================================================
+  // SAVE AUTH DATA — يحفظ role من الـ response مباشرة
+  // ============================================================================
+
+  Future<void> _saveAuthData(Map<String, dynamic> response) async {
+    final token = response['token']?.toString();
+    if (token == null || token.isEmpty) return;
+
+    await SharedPrefHelper.setSecuredString(SharedPrefKeys.userToken, token);
+    DioFactory.setTokenIntoHeaderAfterLogin(token);
+
+    // ── userId ────────────────────────────────────────────────────
+    String? userId = response['userId']?.toString();
+    userId ??= _extractUserIdFromToken(token);
+    if (userId != null) {
+      await SharedPrefHelper.setSecuredString(SharedPrefKeys.userId, userId);
+    }
+
+    // ── isCompleted — دايما true حسب الـ API ─────────────────────
+    await SharedPrefHelper.setBool(SharedPrefKeys.isCompleted, true);
+
+    // ── role — نحفظه مباشرة من الـ response ─────────────────────
+    // الـ API بيرجع: "Club" | "MainClub" | "Scout" | "Player"
+    final role = response['role']?.toString() ?? '';
+    await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, role);
+    log('✅ Role saved: $role');
+  }
+
+  // ============================================================================
+  // HELPERS
   // ============================================================================
 
   String? _validateProfileData() {
@@ -377,15 +416,14 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<String?> _getUserId() async {
-    // Try from SharedPreferences first
-    String? userId = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userId);
-
+    String? userId =
+    await SharedPrefHelper.getSecuredString(SharedPrefKeys.userId);
     if (userId != null && userId.isNotEmpty && _isValidGuid(userId)) {
       return userId;
     }
 
-    // Try from token
-    final token = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
+    final token =
+    await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
     if (token != null && token.isNotEmpty) {
       userId = _extractUserIdFromToken(token);
       if (userId != null && _isValidGuid(userId)) {
@@ -394,24 +432,23 @@ class LoginCubit extends Cubit<LoginState> {
       }
     }
 
-    // Last resort: fetch from API
     final response = await _loginRepo.getCurrentUser();
     String? apiUserId;
-
     response.when(
       success: (data) {
         apiUserId = data['userId']?.toString() ??
             data['id']?.toString() ??
             data['uid']?.toString();
       },
-      failure: (error) => log('❌ Error fetching current user: ${error.apiErrorModel.message}'),
+      failure: (error) =>
+          log('❌ Error fetching current user: ${error.apiErrorModel.message}'),
     );
 
     if (apiUserId != null && _isValidGuid(apiUserId!)) {
-      await SharedPrefHelper.setSecuredString(SharedPrefKeys.userId, apiUserId!);
+      await SharedPrefHelper.setSecuredString(
+          SharedPrefKeys.userId, apiUserId!);
       return apiUserId;
     }
-
     return null;
   }
 
@@ -419,10 +456,9 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final parts = token.split('.');
       if (parts.length != 3) return null;
-
-      final payloadJson = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
+      final payloadJson = utf8
+          .decode(base64Url.decode(base64Url.normalize(parts[1])));
       final payload = json.decode(payloadJson);
-
       return payload['uid']?.toString() ??
           payload['userId']?.toString() ??
           payload['id']?.toString() ??
@@ -434,78 +470,17 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   bool _isValidGuid(String value) {
-    // Check if it's a GUID format (not a phone number)
     return value.contains('-') || !RegExp(r'^[0-9]+$').hasMatch(value);
-  }
-
-  Future<void> _saveAuthData(Map<String, dynamic> response) async {
-    final token = response['token']?.toString();
-    if (token == null || token.isEmpty) return;
-
-    await SharedPrefHelper.setSecuredString(
-      SharedPrefKeys.userToken,
-      token,
-    );
-    DioFactory.setTokenIntoHeaderAfterLogin(token);
-
-    // ===== userId =====
-    String? userId = response['userId']?.toString();
-    userId ??= _extractUserIdFromToken(token);
-
-    if (userId != null) {
-      await SharedPrefHelper.setSecuredString(
-        SharedPrefKeys.userId,
-        userId,
-      );
-    }
-
-    // ===== IsCompleted =====
-    final isCompleted =
-        response['isCompleted'] ??
-            response['user']?['isCompleted'] ??
-            false;
-
-    await SharedPrefHelper.setBool(
-      SharedPrefKeys.isCompleted,
-      isCompleted,
-    );
-
-    log('✅ IsCompleted saved: $isCompleted');
-
-    // ===== UserType from JWT roles =====
-    try {
-      final parts = token.split('.');
-      if (parts.length == 3) {
-        final payloadJson = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
-        final payload = json.decode(payloadJson);
-        final roles = payload['role'] ?? payload['roles'] ?? [];
-        final roleList = roles is List ? roles.map((e) => e.toString()).toList() : [roles.toString()];
-
-        if (roleList.contains('Club')) {
-          await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'club');
-          log('✅ UserType saved: club');
-        } else {
-          await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'player');
-          log('✅ UserType saved: player');
-        }
-      }
-    } catch (e) {
-      log('⚠️ Error parsing JWT roles: $e');
-      await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, 'player');
-    }
   }
 
   Future<MultipartFile> _createMultipartFile(String imagePath) async {
     final file = File(imagePath);
-    if (!await file.exists()) {
-      throw Exception('File does not exist at $imagePath');
-    }
-
+    if (!await file.exists()) throw Exception('File does not exist');
     final compressedBytes = await _compressImage(file);
     final tempDir = await getTemporaryDirectory();
-    final tempFile = File('${tempDir.path}/compressed_${DateTime.now().millisecondsSinceEpoch}.jpg');
+    final tempFile = File(
+        '${tempDir.path}/compressed_${DateTime.now().millisecondsSinceEpoch}.jpg');
     await tempFile.writeAsBytes(compressedBytes);
-
     return MultipartFile.fromFile(
       tempFile.path,
       filename: 'profile_${DateTime.now().millisecondsSinceEpoch}.jpg',
@@ -519,27 +494,18 @@ class LoginCubit extends Cubit<LoginState> {
       minHeight: 600,
       quality: 80,
     );
-
-    if (result == null) {
-      throw Exception('Error compressing image');
-    }
-
+    if (result == null) throw Exception('Error compressing image');
     return result;
   }
 
-  // Old method name for backward compatibility
-  Future<MultipartFile> createImageFromFile(String imagePath) => _createMultipartFile(imagePath);
-
-  // ============================================================================
-  // UI STATE HELPERS
-  // ============================================================================
+  Future<MultipartFile> createImageFromFile(String imagePath) =>
+      _createMultipartFile(imagePath);
 
   void updatePhoneAvailability() {
     isAvailable = controller.phone.text.length == maxLength;
     emit(const LoginState.changeAvailableButtonSuccess());
   }
 
-  // Old method name for backward compatibility
   void changeButtonStatus() => updatePhoneAvailability();
 
   void updateVerifyCodeAvailability(int length) {
@@ -547,8 +513,8 @@ class LoginCubit extends Cubit<LoginState> {
     emit(const LoginState.changeAvailableButtonSuccess());
   }
 
-  // Old method name for backward compatibility
-  void changeVerifyButtonStatus(int length) => updateVerifyCodeAvailability(length);
+  void changeVerifyButtonStatus(int length) =>
+      updateVerifyCodeAvailability(length);
 
   @override
   Future<void> close() {

@@ -17,6 +17,7 @@ class AppRoute {
 
   //welcomeScreen
   static const String resetPasswordScreen = '/resetPassword';
+  static const String scoutMainScreen = '/scoutMainScreen';
   static const String clubProfileScreen = '/clubMyTeamScreen';
 
   //forgetPasswordScreen
@@ -52,8 +53,8 @@ class AppRoute {
   //completeProfileScreen
   static const String pinputScreen = '/pinputScreen';
 
-  //mainScreen
-  static const String mainScreen = '/mainScreen';
+  // //mainScreen
+  // static const String mainScreen = '/mainScreen';
 
   //playerProfile
   static const String playerProfile = '/playerProfile';

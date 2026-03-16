@@ -27,11 +27,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh() async {
-    final mainCubit = context.read<MainCubit>();
+    // امسح الـ cache عشان يجيب البيانات من جديد
+
+
+
+    // أعد الـ fetch
     context.read<ExperimentsCubit>().emitbestTrials(categoryId: '');
     context.read<TrainingCubit>().emitallExercises(categoryId: '', popular: true);
-    mainCubit.emitCategories();
-    await Future.delayed(const Duration(milliseconds: 400));
+    context.read<MainCubit>().emitCategories();
+
+    await Future.delayed(const Duration(milliseconds: 800));
   }
 
   @override
@@ -48,13 +53,18 @@ class _HomeScreenState extends State<HomeScreen> {
             color: mainColor,
             child: ClipRect(
               child: CustomScrollView(
+                // ← ده اللي بيخلي الريفريش يشتغل
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 slivers: [
                   CupertinoSliverRefreshControl(
                     onRefresh: _onRefresh,
                     builder: (context, refreshState, pulledExtent,
                         refreshTriggerPullDistance, refreshIndicatorExtent) {
-                      return Center(
-                        child: SizedBox(
+                      return Container(
+                        alignment: Alignment.center,
+                        child: const SizedBox(
                           height: 24,
                           width: 24,
                           child: CircularProgressIndicator(
@@ -84,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // الأيقونة الخلفية
         PositionedDirectional(
           end: 0,
           child: IgnorePointer(
@@ -92,7 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // الـ AppBar — يمرر الـ onDrawerTap
         PositionedDirectional(
           top: 0,
           start: 0,

@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
             if (isCompleted) {
               Navigator.pushNamedAndRemoveUntil(
                 context,
-                AppRoute.mainScreen,
+                AppRoute.clubMainScreen,
                     (_) => false,
               );
             } else {

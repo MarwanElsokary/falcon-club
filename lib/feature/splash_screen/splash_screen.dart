@@ -201,7 +201,7 @@ class _SplashScreenState extends State<SplashScreen>
                       if (userToken.toString().isNotEmpty) {
                         final route = userType == 'club'
                             ? AppRoute.clubMainScreen
-                            : AppRoute.mainScreen;
+                            : AppRoute.clubMainScreen;
                         // ignore: use_build_context_synchronously
                         context.pushNamedAndRemoveUntil(
                           route,

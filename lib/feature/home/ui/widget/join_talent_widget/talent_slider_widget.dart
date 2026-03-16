@@ -80,7 +80,7 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                         return GestureDetector(
                           onTap: () {
                             context.pushNamed(
-                              AppRoute.trainingDetailsScreen,
+                              AppRoute.clubTrainingDetailsScreen,
                               arguments: {
                                 'exerciseId': exercise.id?.toString() ?? '',
                               },

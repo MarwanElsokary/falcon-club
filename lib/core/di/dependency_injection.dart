@@ -15,11 +15,12 @@ import 'package:falcon/feature/reals/data/repo/reals_repo.dart';
 import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
 import 'package:falcon/feature/club_team/data/repo/club_team_repo.dart';
 import 'package:get_it/get_it.dart';
-
 import '../../feature/Measurement/cubit/MeasurementCubit.dart';
 import '../../feature/Measurement/data/repo/MeasurementRepo.dart';
 import '../../feature/club_team/cubit/club_exercises_cubit.dart';
+import '../../feature/digital_report/cubit/digitalReportCubit.dart';
 import '../../feature/club_team/data/repo/club_exercises_repo.dart';
+import '../../feature/digital_report/data/repo/digitalReportRepo.dart';
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
 import '../../feature/player_attempts/data/repo/player_attempts_repo.dart';
 import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
@@ -43,7 +44,9 @@ final getIt = GetIt.instance;
 Future<void> setupGetIt() async {
   // MARK: - Dio & ApiService
   Dio dio = DioFactory.getDio();
-  getIt.registerLazySingleton<Dio>(() => dio);           // ← مسجّل عشان PlayerReelsRepo يستخدمه
+  getIt.registerLazySingleton<Dio>(
+    () => dio,
+  ); // ← مسجّل عشان PlayerReelsRepo يستخدمه
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
 
   // MARK: - Measurement
@@ -72,18 +75,18 @@ Future<void> setupGetIt() async {
 
   // MARK: - ExperianceDetails
   getIt.registerLazySingleton<ExperianceDetailsRepo>(
-        () => ExperianceDetailsRepo(getIt()),
+    () => ExperianceDetailsRepo(getIt()),
   );
   getIt.registerFactory<ExperianceDetailsCubit>(
-        () => ExperianceDetailsCubit(getIt()),
+    () => ExperianceDetailsCubit(getIt()),
   );
 
   // MARK: - TrainingDetails
   getIt.registerLazySingleton<TrainingDetailsRepo>(
-        () => TrainingDetailsRepo(getIt()),
+    () => TrainingDetailsRepo(getIt()),
   );
   getIt.registerFactory<TrainingDetailsCubit>(
-        () => TrainingDetailsCubit(getIt()),
+    () => TrainingDetailsCubit(getIt()),
   );
 
   // MARK: - CreatReal
@@ -100,10 +103,10 @@ Future<void> setupGetIt() async {
 
   // MARK: - PlayerProfile
   getIt.registerLazySingleton<PlayerProfileRepo>(
-        () => PlayerProfileRepo(getIt<ApiService>()),
+    () => PlayerProfileRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<PlayerProfileCubit>(
-        () => PlayerProfileCubit(getIt<PlayerProfileRepo>()),
+    () => PlayerProfileCubit(getIt<PlayerProfileRepo>()),
   );
 
   // MARK: - Package
@@ -112,33 +115,39 @@ Future<void> setupGetIt() async {
 
   // MARK: - Forget Password
   getIt.registerLazySingleton<ForgetPasswordRepo>(
-        () => ForgetPasswordRepo(getIt<ApiService>()),
+    () => ForgetPasswordRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<ForgetPasswordCubit>(
-        () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
+    () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
   );
 
   // MARK: - PlayerAttempts
   getIt.registerLazySingleton<PlayerAttemptsRepo>(
-        () => PlayerAttemptsRepo(getIt<ApiService>()),
+    () => PlayerAttemptsRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<PlayerAttemptsCubit>(
-        () => PlayerAttemptsCubit(getIt<PlayerAttemptsRepo>()),
+    () => PlayerAttemptsCubit(getIt<PlayerAttemptsRepo>()),
   );
 
   // MARK: - ClubExercises
   getIt.registerLazySingleton<ClubExercisesRepo>(
-        () => ClubExercisesRepo(getIt<ApiService>()),
+    () => ClubExercisesRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<ClubExercisesCubit>(
-        () => ClubExercisesCubit(getIt<ClubExercisesRepo>()),
+    () => ClubExercisesCubit(getIt<ClubExercisesRepo>()),
   );
 
   // MARK: - PlayerReels
   getIt.registerLazySingleton<PlayerReelsRepo>(
-        () => PlayerReelsRepo(getIt<ApiService>(), getIt<Dio>()),
+    () => PlayerReelsRepo(getIt<ApiService>(), getIt<Dio>()),
   );
   getIt.registerFactory<PlayerReelsCubit>(
-        () => PlayerReelsCubit(getIt<PlayerReelsRepo>()),
+    () => PlayerReelsCubit(getIt<PlayerReelsRepo>()),
+  );
+  getIt.registerLazySingleton<DigitalReportRepo>(
+    () => DigitalReportRepo(getIt<Dio>()),
+  );
+  getIt.registerFactory<DigitalReportCubit>(
+    () => DigitalReportCubit(getIt<DigitalReportRepo>()),
   );
 }

@@ -41,10 +41,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           PositionedDirectional(
             start: 0,
             top: 0,
-            child: SvgPicture.asset(
-              'assets/svgs/Group 386.svg',
-              width: 120.w,
-            ),
+            child: SvgPicture.asset('assets/svgs/Group 386.svg', width: 120.w),
           ),
 
           // ── المحتوى ────────────────────────────────────────────────────
@@ -55,49 +52,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 SizedBox(height: 16.h),
 
                 // ── Header ───────────────────────────────────────────────
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // زر الرجوع — بس السهم بدون نص
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).maybePop(),
-                        child: Container(
-                          width: 36.w,
-                          height: 36.w,
-                          decoration: BoxDecoration(
-                            color: mainColor.withOpacity(0.08),
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: mainColor,
-                              size: 16.w,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      // العنوان على اليمين
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextUtils(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                            text: 'قائمة اللاعبين'.tr(),
-                          ),
-                          SizedBox(width: 8.w),
-                          Icon(Icons.bookmark,
-                              color: mainColor, size: 26.w),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                _buildHeader(),
 
                 SizedBox(height: 16.h),
 
@@ -105,14 +60,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 Expanded(
                   child: BlocBuilder<ClubTeamCubit, ClubTeamState>(
                     buildWhen: (prev, curr) =>
-                    curr is favLoading ||
+                        curr is favLoading ||
                         curr is favSuccess ||
                         curr is favError,
                     builder: (context, state) {
                       return state.maybeWhen(
                         favloading: () => Center(
-                          child:
-                          CupertinoActivityIndicator(radius: 15.w),
+                          child: CupertinoActivityIndicator(radius: 15.w),
                         ),
                         faverror: (error) => _buildError(error),
                         favsuccess: (data) {
@@ -122,8 +76,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           return _buildGrid(players);
                         },
                         orElse: () => Center(
-                          child:
-                          CupertinoActivityIndicator(radius: 15.w),
+                          child: CupertinoActivityIndicator(radius: 15.w),
                         ),
                       );
                     },
@@ -137,14 +90,33 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
+  Widget _buildHeader() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(Icons.groups, color: mainColor, size: 26.w),
+          SizedBox(width: 6.w),
+          TextUtils(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            text: ' اللاعبين المميزين'.tr(),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildGrid(List<ClubPlayer> players) {
     if (players.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.bookmark_border_outlined,
-                color: greyClr, size: 60.w),
+            Icon(Icons.bookmark_border_outlined, color: greyClr, size: 60.w),
             verticalSpace(16),
             TextUtils(
               fontSize: 14,
@@ -193,12 +165,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           ),
           verticalSpace(16),
           ElevatedButton(
-            onPressed: () =>
-                context.read<ClubTeamCubit>().fetchFavorites(),
-            style:
-            ElevatedButton.styleFrom(backgroundColor: mainColor),
-            child: Text('إعادة المحاولة'.tr(),
-                style: const TextStyle(color: Colors.white)),
+            onPressed: () => context.read<ClubTeamCubit>().fetchFavorites(),
+            style: ElevatedButton.styleFrom(backgroundColor: mainColor),
+            child: Text(
+              'إعادة المحاولة'.tr(),
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),

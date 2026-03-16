@@ -75,7 +75,7 @@ class _PayButtonWidgetState extends State<PayButtonWidget> {
                     title: 'مبروك تم الاشتراك في الباقه بنجاح',
                   );
                   context.pushNamedAndRemoveUntil(
-                    AppRoute.mainScreen,
+                    AppRoute.clubMainScreen,
                     predicate: (route) => false,
                   );
                 } else {
@@ -306,7 +306,7 @@ class _PayButtonWidgetState extends State<PayButtonWidget> {
         await Future.delayed(const Duration(seconds: 1));
 
         context.pushNamedAndRemoveUntil(
-          AppRoute.mainScreen,
+          AppRoute.clubMainScreen,
           predicate: (route) => false,
         );
       } else {

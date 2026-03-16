@@ -53,15 +53,15 @@ class CustomDrawer extends StatelessWidget {
           ); // ✅ استخدم المسار الجديد
         },
       },
-      {
-        'width': 20.w,
-        'icon': 'assets/svgs/svgexport-18 (1) 2.svg',
-        'title': 'تعديل الحساب'.tr(),
-        'ontap': () {
-          _closeDrawer(context);
-          context.pushNamed(AppRoute.signUpScreen, arguments: {'update': true});
-        },
-      },
+      // {
+      //   'width': 20.w,
+      //   'icon': 'assets/svgs/svgexport-18 (1) 2.svg',
+      //   'title': 'تعديل الحساب'.tr(),
+      //   'ontap': () {
+      //     _closeDrawer(context);
+      //     context.pushNamed(AppRoute.signUpScreen, arguments: {'update': true});
+      //   },
+      // },
       {
         'width': 16.w,
         'icon': 'assets/svgs/notification_icon.svg',
@@ -98,15 +98,15 @@ class CustomDrawer extends StatelessWidget {
           context.pushNamed(AppRoute.trainingScreen);
         },
       },
-      {
-        'width': 20.w,
-        'icon': 'assets/svgs/ruler-angular-svgrepo-com.svg',
-        'title': 'القياسات'.tr(),
-        'ontap': () {
-          _closeDrawer(context);
-          context.pushNamed(AppRoute.measurementScreen);
-        },
-      },
+      // {
+      //   'width': 20.w,
+      //   'icon': 'assets/svgs/ruler-angular-svgrepo-com.svg',
+      //   'title': 'القياسات'.tr(),
+      //   'ontap': () {
+      //     _closeDrawer(context);
+      //     context.pushNamed(AppRoute.measurementScreen);
+      //   },
+      // },
       {
         'width': 20.w,
         'icon': 'assets/svgs/lock-svgrepo-com.svg',
@@ -173,7 +173,7 @@ class CustomDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: SingleChildScrollView( 
                   child: Column(
                     children: [
                       ProfileCheckWrapper(

@@ -173,22 +173,22 @@ class AppRouter {
     // ========================================================================
     // MAIN APP
     // ========================================================================
-      case AppRoute.mainScreen:
-        return _fadeTransitionRoute(
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) => getIt<MainCubit>()
-                  ..emitMyProfile()
-                  ..emitCategories(),
-              ),
-              BlocProvider(
-                create: (_) => getIt<RankCubit>()..emitRank(),
-              ),
-            ],
-            child: const MainScreen(),
-          ),
-        );
+    //   case AppRoute.mainScreen:
+    //     return _fadeTransitionRoute(
+    //       MultiBlocProvider(
+    //         providers: [
+    //           BlocProvider(
+    //             create: (_) => getIt<MainCubit>()
+    //               ..emitMyProfile()
+    //               ..emitCategories(),
+    //           ),
+    //           BlocProvider(
+    //             create: (_) => getIt<RankCubit>()..emitRank(),
+    //           ),
+    //         ],
+    //         child: const MainScreen(),
+    //       ),
+    //     );
 
     // ========================================================================
     // PLAYER PROFILE
@@ -269,17 +269,17 @@ class AppRouter {
         );
 
     // ── شاشة تمرين اللاعب — بترفع فيديو ──────────────────────────
-      case AppRoute.trainingDetailsScreen:
-        final args = arguments as Map<String, dynamic>;
-        final exerciseId = args['exerciseId'] as String;
-
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<TrainingDetailsCubit>()
-              ..emitexerciseDetails(exerciseId: exerciseId),
-            child: const TrainingDetailsScreen(),
-          ),
-        );
+    //   case AppRoute.trainingDetailsScreen:
+    //     final args = arguments as Map<String, dynamic>;
+    //     final exerciseId = args['exerciseId'] as String;
+    //
+    //     return MaterialPageRoute(
+    //       builder: (_) => BlocProvider(
+    //         create: (_) => getIt<TrainingDetailsCubit>()
+    //           ..emitexerciseDetails(exerciseId: exerciseId),
+    //         child: const TrainingDetailsScreen(),
+    //       ),
+    //     );
 
     // ── شاشة تمرين النادي — متابعة اللاعبين بدون رفع فيديو ───────
       case AppRoute.clubTrainingDetailsScreen:
@@ -349,12 +349,9 @@ class AppRouter {
     // RANKING
     // ========================================================================
       case AppRoute.rankScreen:
-        final args = arguments as Map<String, dynamic>;
-        final context = args['context'] as BuildContext;
-
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: context.read<RankCubit>(),
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<RankCubit>()..emitRank(),
             child: const RankScreen(),
           ),
         );

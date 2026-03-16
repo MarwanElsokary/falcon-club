@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 
 class SharedPrefHelper {
-  // private constructor as I don't want to allow creating an instance of this class itself.
   SharedPrefHelper._();
 
   /// Removes a value from SharedPreferences with given [key].
@@ -17,7 +16,6 @@ class SharedPrefHelper {
     await sharedPreferences.remove(key);
   }
 
-  // أضف هذه الدالة في LoginCubit
   Future<void> debugPrintSharedPrefs() async {
     final userId = await SharedPrefHelper.getSecuredString(
       SharedPrefKeys.userId,
@@ -117,6 +115,13 @@ class SharedPrefHelper {
     return await flutterSecureStorage.read(key: key) ?? '';
   }
 
+  /// ← جديد: يمسح قيمة معينة من FlutterSecureStorage
+  static Future<void> removeSecuredString(String key) async {
+    const flutterSecureStorage = FlutterSecureStorage();
+    await flutterSecureStorage.delete(key: key);
+    debugPrint('FlutterSecureStorage : removed key : $key');
+  }
+
   static Future<void> clearSpecificSecureData(String key) async {
     try {
       const flutterSecureStorage = FlutterSecureStorage();
@@ -170,5 +175,4 @@ class SharedPrefHelper {
     await prefs.remove(dataKey);
     await prefs.remove(timeKey);
   }
-
 }

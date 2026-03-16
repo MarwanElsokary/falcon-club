@@ -42,42 +42,40 @@ class AllExperimentScreen extends StatelessWidget {
                   mainAxisSpacing: 20.w,
                 ),
                 itemBuilder: (context, index) {
+                  final trial = allTrialsdata.data[index];
+                  final heroTag = 'all_experiance_image_hero_${trial.id}';
+
                   return AnimateBuilder(
                     columnCount: 2,
                     position: index,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(34.r),
                       onTap: () {
+                        // ✅ الـ route الصح هو experianceDetailsScreen
                         context.pushNamed(
                           AppRoute.experianceDetailsScreen,
                           arguments: {
-                            'title': '${allTrialsdata.data[index].title ?? ''}',
-                            'trialId': '${allTrialsdata.data[index].id ?? ''}',
-                            'heroTag':
-                                "all_experiance_image_hero_${allTrialsdata.data[index].id}", // ✅ بدل 1 بـ index
-                            'experianceImage':
-                                allTrialsdata.data[index].photoPath ?? '',
+                            'title': trial.title ?? '',
+                            'trialId': '${trial.id ?? ''}',
+                            'heroTag': heroTag,
+                            'experianceImage': trial.photoPath ?? '',
                           },
                         );
                       },
                       child: Hero(
-                        tag:
-                            "all_experiance_image_hero_${allTrialsdata.data[index].id}",
+                        tag: heroTag,
                         child: Stack(
                           children: [
+                            // ── صورة التجربة ──────────────────────────────
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                34.r,
-                              ), // Using .r for responsive border radius
+                              borderRadius: BorderRadius.circular(34.r),
                               child: SizedBox(
                                 width: 250.w,
                                 height: 295.h,
                                 child: CachedNetworkImage(
                                   width: 250.w,
                                   height: 295.h,
-                                  imageUrl:
-                                      allTrialsdata.data[index].photoPath ?? '',
-
+                                  imageUrl: trial.photoPath ?? '',
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => Skeletonizer(
                                     enabled: true,
@@ -87,7 +85,7 @@ class AllExperimentScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                           34.r,
-                                        ), // Match the border radius
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -100,6 +98,8 @@ class AllExperimentScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
+
+                            // ── Gradient overlay ──────────────────────────
                             PositionedDirectional(
                               start: 0,
                               end: 0,
@@ -112,34 +112,22 @@ class AllExperimentScreen extends StatelessWidget {
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                     colors: [
-                                      Colors.black.withOpacity(
-                                        0.0,
-                                      ), // rgba(0,0,0,0)
-                                      Colors.black, // #000000
+                                      Colors.black.withOpacity(0.0),
+                                      Colors.black,
                                     ],
-                                    stops: [0.5955, 1.0], // 59.55%, 100%
+                                    stops: const [0.5955, 1.0],
                                   ),
                                 ),
                                 child: Container(
                                   padding: paddingUtils(),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(34.r),
-                                    gradient: LinearGradient(
+                                    gradient: const LinearGradient(
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
                                       colors: [
-                                        Color.fromRGBO(
-                                          0,
-                                          0,
-                                          0,
-                                          0.0,
-                                        ), // rgba(0, 0, 0, 0) at 0%
-                                        Color.fromRGBO(
-                                          93,
-                                          43,
-                                          244,
-                                          0.32,
-                                        ), // rgba(93, 43, 244, 0.32) at 75%
+                                        Color.fromRGBO(0, 0, 0, 0.0),
+                                        Color.fromRGBO(93, 43, 244, 0.32),
                                       ],
                                       stops: [0.0, 0.75],
                                     ),
@@ -147,48 +135,42 @@ class AllExperimentScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
+
+                            // ── نص التجربة ────────────────────────────────
                             PositionedDirectional(
                               bottom: 20.w,
                               start: 20.w,
                               end: 20.w,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextUtils(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                      text:
-                                          allTrialsdata.data[index].title ?? '',
-                                    ),
-                                    verticalSpace(10),
-                                    Row(
-                                      children: [
-                                        TextUtils(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.white,
-                                          text:
-                                              allTrialsdata
-                                                  .data[index]
-                                                  .categoryName ??
-                                              '',
-                                        ),
-                                        horizontalSpace(5),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextUtils(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                    text: trial.title ?? '',
+                                  ),
+                                  verticalSpace(8),
+                                  Row(
+                                    children: [
+                                      TextUtils(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                        text: trial.categoryName ?? '',
+                                      ),
+                                      horizontalSpace(5),
+                                      if ((trial.categoryIcon ?? '').isNotEmpty)
                                         ClipOval(
                                           child: SizedBox(
                                             width: 16.w,
                                             height: 16.w,
                                             child: CachedNetworkImage(
                                               imageUrl:
-                                                  allTrialsdata
-                                                      .data[index]
-                                                      .categoryIcon ??
-                                                  '',
+                                                  trial.categoryIcon ?? '',
                                               fit: BoxFit.contain,
-                                              placeholder: (context, url) =>
+                                              placeholder: (c, u) =>
                                                   Skeletonizer(
                                                     enabled: true,
                                                     child: Container(
@@ -201,28 +183,17 @@ class AllExperimentScreen extends StatelessWidget {
                                                           ),
                                                     ),
                                                   ),
-                                              errorWidget:
-                                                  (
-                                                    context,
-                                                    url,
-                                                    error,
-                                                  ) => Container(
-                                                    padding: EdgeInsets.all(
-                                                      3.w,
-                                                    ),
-
-                                                    child: SvgPicture.asset(
-                                                      'assets/svgs/unavailabeImage.svg',
-                                                      width: 16.w,
-                                                    ),
+                                              errorWidget: (c, u, e) =>
+                                                  SvgPicture.asset(
+                                                    'assets/svgs/unavailabeImage.svg',
+                                                    width: 16.w,
                                                   ),
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -233,21 +204,16 @@ class AllExperimentScreen extends StatelessWidget {
                 },
               );
             },
-            orElse: () {
-              return SizedBox(
-                width: context.displayWidth / 1,
-                height: context.displayHeight / 1.3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CupertinoActivityIndicator(
-                      radius: 20.w,
-                      color: Colors.black,
-                    ),
-                  ],
+            orElse: () => SizedBox(
+              width: context.displayWidth,
+              height: context.displayHeight / 1.3,
+              child: Center(
+                child: CupertinoActivityIndicator(
+                  radius: 20.w,
+                  color: Colors.black,
                 ),
-              );
-            },
+              ),
+            ),
           );
         },
       ),

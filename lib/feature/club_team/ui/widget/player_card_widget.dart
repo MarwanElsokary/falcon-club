@@ -126,14 +126,14 @@ class PlayerCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(100.r),
         child: hasPhoto
             ? CachedNetworkImage(
-          imageUrl: player.photoPath!,
-          fit: BoxFit.cover,
-          placeholder: (_, __) => Skeletonizer(
-            enabled: true,
-            child: Container(color: secondMainColor),
-          ),
-          errorWidget: (_, __, ___) => _photoFallback(player.name),
-        )
+                imageUrl: player.photoPath!,
+                fit: BoxFit.cover,
+                placeholder: (_, __) => Skeletonizer(
+                  enabled: true,
+                  child: Container(color: secondMainColor),
+                ),
+                errorWidget: (_, __, ___) => _photoFallback(player.name),
+              )
             : _photoFallback(player.name),
       ),
     );
@@ -163,20 +163,22 @@ class PlayerCardWidget extends StatelessWidget {
       children: [
         Opacity(
           opacity: isRight ? 1.0 : 0.35,
-          child: SvgPicture.asset(_rightFootAsset,
-              width: 16.w,
-              height: 16.w,
-              colorFilter:
-              const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+          child: SvgPicture.asset(
+            _rightFootAsset,
+            width: 16.w,
+            height: 16.w,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          ),
         ),
         SizedBox(width: 4.w),
         Opacity(
           opacity: isLeft ? 1.0 : 0.35,
-          child: SvgPicture.asset(_leftFootAsset,
-              width: 16.w,
-              height: 16.w,
-              colorFilter:
-              const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+          child: SvgPicture.asset(
+            _leftFootAsset,
+            width: 16.w,
+            height: 16.w,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          ),
         ),
       ],
     );
@@ -186,8 +188,11 @@ class PlayerCardWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SvgPicture.asset('assets/svgs/solar_star-bold-duotone.svg',
-            width: 14.w, height: 14.w),
+        SvgPicture.asset(
+          'assets/svgs/solar_star-bold-duotone.svg',
+          width: 14.w,
+          height: 14.w,
+        ),
         SizedBox(width: 4.w),
         TextUtils(
           fontSize: 12,
@@ -201,11 +206,7 @@ class PlayerCardWidget extends StatelessWidget {
 
   Widget _buildReportsButton(BuildContext context) {
     return GestureDetector(
-      onTap: () => showPlayerReportsSheet(
-        context,
-        playerId: player.id,
-        playerName: player.name,
-      ),
+      onTap: () => showPlayerReportsSheet(context, player: player),
       behavior: HitTestBehavior.opaque,
       child: Container(
         width: double.infinity,
@@ -249,8 +250,7 @@ class PlayerCardWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.sports_soccer_rounded,
-                color: Colors.white, size: 16.w),
+            Icon(Icons.sports_soccer_rounded, color: Colors.white, size: 16.w),
             SizedBox(width: 6.w),
             TextUtils(
               fontSize: 12,

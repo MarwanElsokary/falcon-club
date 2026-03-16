@@ -1,53 +1,61 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:falcon/core/di/dependency_injection.dart';
 import 'package:falcon/core/helpers/spacing.dart';
 import 'package:falcon/core/thems/thems.dart';
 import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_state.dart';
-import 'package:falcon/feature/club_team/data/model/player_report_model.dart';
+import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
+import '../../../digital_report/cubit/digitalReportCubit.dart';
+import '../../../digital_report/data/model/digitalReportModel.dart';
+import '../../../digital_report/data/repo/digitalReportRepo.dart';
+import '../../../digital_report/ui/screens/create_digital_report_screen.dart';
+
+/// يقبل [player] كـ object كامل، أو [playerId] + [playerName] للـ backward compat
 void showPlayerReportsSheet(
     BuildContext context, {
-      required String playerId,
-      required String playerName,
+      ClubPlayer? player,
+      String? playerId,
+      String? playerName,
     }) {
-  context.read<ClubTeamCubit>().fetchPlayerReports(playerId);
+  // بنبني ClubPlayer بسيط لو جاء بـ id/name منفردين
+  final effectivePlayer = player ??
+      ClubPlayer(
+        id: playerId ?? '',
+        accountNumber: '',
+        name: playerName ?? '',
+        age: 0,
+        gender: '',
+        position: '',
+        direction: 0,
+        foot: '',
+        tps: 0,
+      );
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => BlocProvider.value(
-      value: context.read<ClubTeamCubit>(),
-      child: PlayerReportsSheet(
-        playerId: playerId,
-        playerName: playerName,
-      ),
+    builder: (_) => BlocProvider(
+      create: (_) => DigitalReportCubit(getIt<DigitalReportRepo>())
+        ..fetchReports(effectivePlayer.id),
+      child: _PlayerReportsSheet(player: effectivePlayer),
     ),
   );
 }
 
-class PlayerReportsSheet extends StatelessWidget {
-  final String playerId;
-  final String playerName;
+class _PlayerReportsSheet extends StatelessWidget {
+  final ClubPlayer player;
 
-  const PlayerReportsSheet({
-    super.key,
-    required this.playerId,
-    required this.playerName,
-  });
+  const _PlayerReportsSheet({required this.player});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.75,
-      ),
+      constraints:
+      BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
       decoration: BoxDecoration(
         color: mainColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
@@ -55,7 +63,7 @@ class PlayerReportsSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // ── Drag indicator ──────────────────────────────────────────────
+          // ── Handle ────────────────────────────────────────────────────
           SizedBox(height: 12.h),
           Container(
             width: 40.w,
@@ -67,7 +75,7 @@ class PlayerReportsSheet extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
 
-          // ── Header ──────────────────────────────────────────────────────
+          // ── Header ────────────────────────────────────────────────────
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Row(
@@ -83,11 +91,8 @@ class PlayerReportsSheet extends StatelessWidget {
                       color: Colors.white.withOpacity(0.15),
                     ),
                     child: Center(
-                      child: Icon(
-                        Icons.close_rounded,
-                        color: Colors.white,
-                        size: 18.w,
-                      ),
+                      child: Icon(Icons.close_rounded,
+                          color: Colors.white, size: 18.w),
                     ),
                   ),
                 ),
@@ -101,7 +106,7 @@ class PlayerReportsSheet extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
-                      text: 'التقارير السابقة'.tr(),
+                      text: 'التقارير الرقمية',
                     ),
                   ],
                 ),
@@ -110,25 +115,21 @@ class PlayerReportsSheet extends StatelessWidget {
           ),
           SizedBox(height: 20.h),
 
-          // ── List ────────────────────────────────────────────────────────
+          // ── List ──────────────────────────────────────────────────────
           Flexible(
-            child: BlocBuilder<ClubTeamCubit, ClubTeamState>(
-              buildWhen: (prev, curr) =>
-              curr is playerReportsLoadingState ||
-                  curr is playerReportsSuccessState ||
-                  curr is playerReportsErrorState,
+            child: BlocBuilder<DigitalReportCubit, DigitalReportState>(
               builder: (context, state) {
-                return state.maybeWhen(
-                  playerReportsLoading: () => Padding(
+                if (state is DigitalReportListLoading) {
+                  return Padding(
                     padding: EdgeInsets.symmetric(vertical: 40.h),
                     child: Center(
                       child: CupertinoActivityIndicator(
-                        color: Colors.white,
-                        radius: 14.w,
-                      ),
+                          color: Colors.white, radius: 14.w),
                     ),
-                  ),
-                  playerReportsError: (error) => Padding(
+                  );
+                }
+                if (state is DigitalReportListError) {
+                  return Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: 40.h, horizontal: 20.w),
                     child: Center(
@@ -136,62 +137,69 @@ class PlayerReportsSheet extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.white70,
-                        text: error,
+                        text: state.error,
                       ),
                     ),
-                  ),
-                  playerReportsSuccess: (reports) {
-                    if (reports.isEmpty) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 40.h),
-                        child: Center(
-                          child: TextUtils(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white70,
-                            text: 'لا توجد تقارير سابقة'.tr(),
-                          ),
+                  );
+                }
+                if (state is DigitalReportListSuccess) {
+                  if (state.reports.isEmpty) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 40.h),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Icon(Icons.description_outlined,
+                                color: Colors.white38, size: 48.w),
+                            verticalSpace(12),
+                            TextUtils(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white60,
+                              text: 'لا توجد تقارير سابقة',
+                            ),
+                          ],
                         ),
-                      );
-                    }
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 16.w, vertical: 4.h),
-                      itemCount: reports.length,
-                      separatorBuilder: (_, __) => SizedBox(height: 10.h),
-                      itemBuilder: (_, i) =>
-                          _ReportItem(report: reports[i]),
+                      ),
                     );
-                  },
-                  orElse: () => const SizedBox.shrink(),
-                );
+                  }
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w, vertical: 4.h),
+                    itemCount: state.reports.length,
+                    separatorBuilder: (_, __) => SizedBox(height: 10.h),
+                    itemBuilder: (_, i) =>
+                        _ReportItem(report: state.reports[i]),
+                  );
+                }
+                return const SizedBox.shrink();
               },
             ),
           ),
 
-          // ── "انشاء تقرير رقمي جديد" button — placeholder for now ──────
+          // ── إنشاء تقرير جديد ─────────────────────────────────────────
           Padding(
-            padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 24.h),
+            padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 28.h),
             child: SizedBox(
               width: double.infinity,
               height: 52.h,
               child: ElevatedButton.icon(
-                onPressed: () {
-                  // TODO: Navigate to create new report screen
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await showCreateDigitalReport(context, player: player);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: mainColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
+                      borderRadius: BorderRadius.circular(16.r)),
                 ),
                 icon: Icon(Icons.edit_note_rounded,
                     color: mainColor, size: 20.w),
                 label: Text(
-                  'انشاء تقرير رقمي جديد'.tr(),
+                  'إنشاء تقرير رقمي جديد',
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w700,
@@ -207,19 +215,14 @@ class PlayerReportsSheet extends StatelessWidget {
   }
 }
 
-// ── Single report row ────────────────────────────────────────────────────────
+// ── Report list item ──────────────────────────────────────────────────────────
 class _ReportItem extends StatelessWidget {
-  final PlayerReport report;
+  final DigitalReportSummary report;
 
   const _ReportItem({required this.report});
 
   @override
   Widget build(BuildContext context) {
-    final hasPhoto =
-        report.captainPhoto != null && report.captainPhoto!.isNotEmpty;
-    final dateStr =
-    DateFormat('dd/MM/yyyy').format(report.date);
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
       decoration: BoxDecoration(
@@ -229,12 +232,28 @@ class _ReportItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Expand arrow — left side in RTL
-          Icon(Icons.expand_more_rounded,
-              color: Colors.white70, size: 20.w),
+          // رقم التقرير
+          Container(
+            width: 36.w,
+            height: 36.w,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                '#${report.id}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
           horizontalSpace(12),
 
-          // Captain name + date
+          // الاسم + التاريخ
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -243,47 +262,39 @@ class _ReportItem extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
-                  text: report.captainName,
+                  text: report.name,
                 ),
                 verticalSpace(4),
                 Text(
-                  dateStr,
+                  report.date,
                   style: TextStyle(
                     color: Colors.white60,
                     fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
             ),
           ),
-          horizontalSpace(12),
-
-          // Captain photo
-          ClipOval(
-            child: hasPhoto
-                ? CachedNetworkImage(
-              imageUrl: report.captainPhoto!,
-              width: 40.w,
-              height: 40.w,
-              fit: BoxFit.cover,
-              errorWidget: (_, __, ___) => _photoFallback(),
-            )
-                : _photoFallback(),
-          ),
+          horizontalSpace(8),
+          Icon(Icons.description_rounded,
+              color: Colors.white38, size: 20.w),
         ],
       ),
     );
   }
+}
 
-  Widget _photoFallback() {
-    return Container(
-      width: 40.w,
-      height: 40.w,
-      color: const Color(0xFF31187D),
-      child: Center(
-        child: Icon(Icons.person, color: Colors.white70, size: 20.w),
+// ── Navigate to create screen ─────────────────────────────────────────────────
+Future<bool?> showCreateDigitalReport(BuildContext context,
+    {required ClubPlayer player}) {
+  return Navigator.of(context).push<bool>(
+    MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) =>
+            DigitalReportCubit(getIt<DigitalReportRepo>()),
+        child: CreateDigitalReportScreen(player: player),
       ),
-    );
-  }
+      fullscreenDialog: true,
+    ),
+  );
 }
