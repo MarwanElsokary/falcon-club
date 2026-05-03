@@ -19,6 +19,10 @@ class ApiConstants {
   //registerClub
   static const String registerClub = "Account/RegisterClub";
 
+  //registerScout
+  static const String registerScout = "Account/RegisterScout";
+  static const String toggleFavPlayer = "Club/ToggleFavPlayer";
+
   //clubUpdateProfile
   static const String clubUpdateProfile = "Club/UpdateProfile";
 
@@ -45,6 +49,7 @@ class ApiConstants {
 
   //myProfile
   static const String myProfile = "Player/GetProfile";
+  static const String clubProfile = "Club/GetProfile";
 
   //Payment/GetAllPackages
   static const String allPackages = "Payment/GetAllPackages";
@@ -53,7 +58,7 @@ class ApiConstants {
   static const String profileById = "Player/GetProfileById";
 
   //
-  static const String rank = "Player/GetTopPlayers";
+  static const String rank = "Club/GetRankingExercise";
 
   //reals
   static const String reals = "Player/GetReels";
@@ -150,7 +155,6 @@ class ApiConstants {
   static const String allMeasurements = '/Account/ResetPassword';
   static const String measurementDetails = '/Account/ResetPassword';
   static const String addMeasurementAttempt = '/Account/ResetPassword';
-
 }
 
 class ApiErrors {

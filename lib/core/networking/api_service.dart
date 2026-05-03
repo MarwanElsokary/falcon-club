@@ -1,17 +1,19 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:falcon/feature/experiance_details_screen/data/model/trial_details_model.dart';
-import 'package:falcon/feature/experiments/data/model/all_trials_model.dart';
-import 'package:falcon/feature/login/data/model/country_model.dart';
-import 'package:falcon/feature/main_screen/data/model/categories_model.dart';
-import 'package:falcon/feature/reals/data/model/real_model.dart';
-import 'package:falcon/feature/training_details/data/model/exercise_details_model.dart';
+import 'package:falconclubapp/feature/experiance_details_screen/data/model/trial_details_model.dart';
+import 'package:falconclubapp/feature/experiments/data/model/all_trials_model.dart';
+import 'package:falconclubapp/feature/login/data/model/country_model.dart';
+import 'package:falconclubapp/feature/main_screen/data/model/categories_model.dart';
+import 'package:falconclubapp/feature/reals/data/model/real_model.dart';
+import 'package:falconclubapp/feature/training_details/data/model/exercise_details_model.dart';
 
 import 'package:retrofit/retrofit.dart';
 
 import '../../feature/forget_password/data/model/forget_password_model.dart';
+import '../../feature/main_screen/data/model/club_profile_model.dart';
 import '../../feature/main_screen/data/model/my_profile_model.dart';
+import '../../feature/main_screen/data/repo/main_repo.dart';
 import '../../feature/rank/data/model/rank_model.dart';
 import '../../feature/training/data/model/all_exercises_model.dart';
 import 'api_constants.dart';
@@ -41,6 +43,10 @@ abstract class ApiService {
   //registerClub
   @POST(ApiConstants.registerClub)
   Future registerClub(@Body() FormData body);
+
+  //registerScout
+  @POST(ApiConstants.registerScout)
+  Future registerScout(@Body() FormData body);
 
   //clubUpdateProfile
   @PUT(ApiConstants.clubUpdateProfile)
@@ -98,12 +104,22 @@ abstract class ApiService {
   //clubsByCountry
   @GET(ApiConstants.clubsByCountry)
   Future<CountriesClubModel> clubsByCountry(
-      @Query('CountryId') String countryId,
-      );
+    @Query('CountryId') String countryId,
+  );
 
   //myProfile
   @GET(ApiConstants.myProfile)
   Future<MyProfileModel> myProfile();
+
+  @POST(ApiConstants.toggleFavPlayer)
+  Future<ToggleFavResponse> toggleFavPlayer(
+    @Query('PlayerId') String playerId,
+    // ← لو Retrofit
+  );
+
+  //myProfile
+  @GET(ApiConstants.clubProfile)
+  Future<ClubProfileModel> clubProfile();
 
   @GET(ApiConstants.allPackages)
   Future allPackages();
@@ -123,10 +139,10 @@ abstract class ApiService {
   //real
   @GET(ApiConstants.reals)
   Future<RealModel> reals(
-      @Query('pageNumber') String pageNumber,
-      @Query('pageSize') String pageSize,
-      @Query('playerId') String playerId,
-      );
+    @Query('pageNumber') String pageNumber,
+    @Query('pageSize') String pageSize,
+    @Query('playerId') String playerId,
+  );
 
   //toggleLikeReel
   @POST(ApiConstants.toggleLikeReel)
@@ -135,9 +151,9 @@ abstract class ApiService {
   //addComment
   @POST(ApiConstants.addComment)
   Future addComment(
-      @Query('ReelId') int reelId,
-      @Query('Comment') String comment,
-      );
+    @Query('ReelId') int reelId,
+    @Query('Comment') String comment,
+  );
 
   //categories
   @GET(ApiConstants.categories)
@@ -146,16 +162,16 @@ abstract class ApiService {
   //allTrials
   @GET(ApiConstants.allTrials)
   Future<AllTrialsModel> allTrials(
-      @Query('CategoryId') String categoryId,
-      @Query('Popular') String popular,
-      );
+    @Query('CategoryId') String categoryId,
+    @Query('Popular') String popular,
+  );
 
   //allExercises
   @GET(ApiConstants.allExercises)
   Future<AllExercisesModel> allExercises(
-      @Query('CategoryId') String categoryId,
-      @Query('Popular') String popular,
-      );
+    @Query('CategoryId') String categoryId,
+    @Query('Popular') String popular,
+  );
 
   //trialDetails
   @GET(ApiConstants.trialDetails)
@@ -164,22 +180,22 @@ abstract class ApiService {
   //trialDetails
   @GET(ApiConstants.exerciseDetails)
   Future<ExerciseDetailsModel> exerciseDetails(
-      @Query('ExerciseId') String exerciseId,
-      );
+    @Query('ExerciseId') String exerciseId,
+  );
 
   @POST(ApiConstants.addAttempt)
   Future addAttempt(
-      @Body() addAttemptBody,
-      @Query('ExerciseId') String exerciseId,
-      );
+    @Body() addAttemptBody,
+    @Query('ExerciseId') String exerciseId,
+  );
 
   // POST /api/Club/AddAttempt — المدرب يرفع فيديو للاعب
   @POST(ApiConstants.clubAddAttempt)
   Future clubAddAttempt(
-      @Body() FormData body,
-      @Query('PlayerId') String playerId,
-      @Query('ExerciseId') int exerciseId,
-      );
+    @Body() FormData body,
+    @Query('PlayerId') String playerId,
+    @Query('ExerciseId') int exerciseId,
+  );
 
   //delete account
   @DELETE(ApiConstants.deleteAccount)
@@ -193,21 +209,21 @@ abstract class ApiService {
   // Forget Password Endpoints
   @POST(ApiConstants.forgetPasswordByPhone)
   Future<ForgetPasswordResponse> forgetPasswordByPhone(
-      @Query('phoneNumber') String phoneNumber,
-      );
+    @Query('phoneNumber') String phoneNumber,
+  );
 
   @POST(ApiConstants.checkOtp)
   @FormUrlEncoded()
   Future<CheckOtpResponse> checkOtp(
-      @Field('otp') String otp,
-      @Field('phoneNumber') String phoneNumber,
-      );
+    @Field('otp') String otp,
+    @Field('phoneNumber') String phoneNumber,
+  );
 
   @POST(ApiConstants.resetPassword)
   @FormUrlEncoded()
   Future<ResetPasswordResponse> resetPassword(
-      @Field('Token') String token,
-      @Field('Password') String password,
-      @Field('ConfirmPassword') String confirmPassword,
-      );
+    @Field('Token') String token,
+    @Field('Password') String password,
+    @Field('ConfirmPassword') String confirmPassword,
+  );
 }

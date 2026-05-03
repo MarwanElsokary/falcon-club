@@ -1,22 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
-import 'package:falcon/feature/club_team/ui/widget/player_reports_sheet.dart';
-import 'package:falcon/feature/player_reels/ui/widget/player_reels_section_widget.dart';
+import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
+import 'package:falconclubapp/feature/club_team/ui/widget/player_reports_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/routing/routes.dart';
+import '../../../../core/thems/thems.dart';
+import '../../../../core/utils/colors.dart';
 import 'assign_exercise_sheet.dart';
-
-const String _rightFootAsset = 'assets/svgs/right.svg';
-const String _leftFootAsset = 'assets/svgs/material-symbols_barefoot.svg';
-const Color _lightBg = Color(0xFFEFF4FF);
 
 class PlayerCardWidget extends StatelessWidget {
   final ClubPlayer player;
@@ -26,7 +19,11 @@ class PlayerCardWidget extends StatelessWidget {
   void _navigateToProfile(BuildContext context) {
     Navigator.of(context).pushNamed(
       AppRoute.playerProfile,
-      arguments: {'isMyProfile': false, 'playerId': player.id},
+      arguments: {
+        'isMyProfile': false,
+        'playerId': player.id,
+        'showFavoriteButton': true,
+      },
     );
   }
 
@@ -35,228 +32,321 @@ class PlayerCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => _navigateToProfile(context),
       child: Container(
-        width: 200.w,
-        height: 351.h,
+        width: 152.w,
         decoration: BoxDecoration(
-          color: mainColor,
-          borderRadius: BorderRadius.circular(20.r),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18.r),
+          border: Border.all(color: const Color(0xFFF0EAF8)),
         ),
-        padding: EdgeInsets.all(8.w),
+        clipBehavior: Clip.antiAlias,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            _buildInfoRow(player),
-            SizedBox(height: 8.h),
-            // ── Reels Section ──────────────────────────────────────
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: _lightBg,
-                  borderRadius: BorderRadius.circular(12.r),
-                  border: const Border(
-                    bottom: BorderSide(color: Color(0xFFCBD5E0), width: 0.5),
-                  ),
-                ),
-                padding: EdgeInsets.all(8.w),
-                child: PlayerReelsSectionWidget(playerId: player.id),
-              ),
-            ),
-            SizedBox(height: 8.h),
-            _buildReportsButton(context),
-            SizedBox(height: 6.h),
-            _buildAssignExerciseButton(context),
+            _CardTopSection(player: player),
+            _CardBottomSection(player: player),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildInfoRow(ClubPlayer player) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        _buildPhoto(player),
-        SizedBox(width: 8.w),
-        Expanded(child: _buildPlayerDetails(player)),
-      ],
-    );
-  }
+// ── Top — purple gradient + avatar ────────────────────────────────────────────
 
-  Widget _buildPlayerDetails(ClubPlayer player) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextUtils(
-          fontSize: 13,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          text: player.name,
-          maxlines: 2,
-        ),
-        SizedBox(height: 4.h),
-        TextUtils(
-          fontSize: 11,
-          fontWeight: FontWeight.w400,
-          color: Colors.white70,
-          text: player.position,
-          maxlines: 1,
-        ),
-        SizedBox(height: 6.h),
-        _buildFootIcons(player.foot),
-        SizedBox(height: 6.h),
-        _buildTpsRow(player.tps),
-      ],
-    );
-  }
+class _CardTopSection extends StatelessWidget {
+  final ClubPlayer player;
 
-  Widget _buildPhoto(ClubPlayer player) {
-    final hasPhoto = player.photoPath != null && player.photoPath!.isNotEmpty;
+  const _CardTopSection({required this.player});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      width: 52.w,
-      height: 74.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.r),
-        border: Border.all(color: secondMainColor, width: 3.w),
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF761CBC), mainColor],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(100.r),
+      padding: EdgeInsets.fromLTRB(12.w, 13.h, 12.w, 0),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // jersey number badge — فقط لو موجود
+
+          // avatar centered + peek out
+          Padding(
+            padding: EdgeInsets.only(top: 6.h),
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 18.h),
+                child: _PlayerAvatar(player: player),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _JerseyBadge extends StatelessWidget {
+  final int number;
+
+  const _JerseyBadge({required this.number});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 2.h),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.18),
+        borderRadius: BorderRadius.circular(30.r),
+      ),
+      child: Text(
+        '#$number',
+        style: TextStyle(
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w700,
+          color: Colors.white.withOpacity(0.9),
+        ),
+      ),
+    );
+  }
+}
+
+class _PlayerAvatar extends StatelessWidget {
+  final ClubPlayer player;
+
+  const _PlayerAvatar({required this.player});
+
+  @override
+  Widget build(BuildContext context) {
+    final hasPhoto = player.photoPath != null && player.photoPath!.isNotEmpty;
+
+    return Container(
+      width: 48.w,
+      height: 48.w,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2.5.w),
+        color: mainColor,
+      ),
+      child: ClipOval(
         child: hasPhoto
             ? CachedNetworkImage(
                 imageUrl: player.photoPath!,
                 fit: BoxFit.cover,
                 placeholder: (_, __) => Skeletonizer(
                   enabled: true,
-                  child: Container(color: secondMainColor),
+                  child: Container(color: mainColor),
                 ),
-                errorWidget: (_, __, ___) => _photoFallback(player.name),
+                errorWidget: (_, __, ___) => _AvatarFallback(name: player.name),
               )
-            : _photoFallback(player.name),
+            : _AvatarFallback(name: player.name),
       ),
     );
   }
+}
 
-  Widget _photoFallback(String name) {
+class _AvatarFallback extends StatelessWidget {
+  final String name;
+
+  const _AvatarFallback({required this.name});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      color: secondMainColor,
+      color:  mainColor,
       alignment: Alignment.center,
       child: Text(
         name.isNotEmpty ? name[0] : '؟',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 20.sp,
+          fontSize: 18.sp,
           fontWeight: FontWeight.w700,
         ),
       ),
     );
   }
+}
 
-  Widget _buildFootIcons(String foot) {
-    final isRight = foot == 'يمين';
-    final isLeft = foot == 'يسار';
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Opacity(
-          opacity: isRight ? 1.0 : 0.35,
-          child: SvgPicture.asset(
-            _rightFootAsset,
-            width: 16.w,
-            height: 16.w,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
-        ),
-        SizedBox(width: 4.w),
-        Opacity(
-          opacity: isLeft ? 1.0 : 0.35,
-          child: SvgPicture.asset(
-            _leftFootAsset,
-            width: 16.w,
-            height: 16.w,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
-        ),
-      ],
-    );
-  }
+// ── Bottom — name, position, tps, buttons ─────────────────────────────────────
 
-  Widget _buildTpsRow(double tps) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SvgPicture.asset(
-          'assets/svgs/solar_star-bold-duotone.svg',
-          width: 14.w,
-          height: 14.w,
-        ),
-        SizedBox(width: 4.w),
-        TextUtils(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-          text: tps.toStringAsFixed(1),
-        ),
-      ],
-    );
-  }
+class _CardBottomSection extends StatelessWidget {
+  final ClubPlayer player;
 
-  Widget _buildReportsButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () => showPlayerReportsSheet(context, player: player),
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: _lightBg,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.bar_chart_rounded, color: mainColor, size: 16.w),
-            SizedBox(width: 6.w),
-            TextUtils(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+  const _CardBottomSection({required this.player});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.fromLTRB(11.w, 22.h, 11.w, 11.h),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            player.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12.5.sp,
+              fontWeight: FontWeight.w700,
               color: mainColor,
-              text: 'التقارير الرقمية'.tr(),
             ),
-          ],
+          ),
+          SizedBox(height: 5.h),
+          _PositionPill(position: player.position),
+          SizedBox(height: 7.h),
+          _TpsRow(tps: player.tps),
+          SizedBox(height: 7.h),
+          const _CardDivider(),
+          SizedBox(height: 7.h),
+          _CardActions(player: player),
+        ],
+      ),
+    );
+  }
+}
+
+class _PositionPill extends StatelessWidget {
+  final String position;
+
+  const _PositionPill({required this.position});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 2.h),
+      decoration: BoxDecoration(
+        color: kLightPurple,
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      child: Text(
+        position,
+        style: TextStyle(
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w600,
+          color: kPrimaryColor,
         ),
       ),
     );
   }
+}
 
-  Widget _buildAssignExerciseButton(BuildContext context) {
+class _TpsRow extends StatelessWidget {
+  final double tps;
+
+  const _TpsRow({required this.tps});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          tps.toStringAsFixed(1),
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w700,
+            color: kPrimaryColor,
+          ),
+        ),
+        SizedBox(width: 4.w),
+        Text(
+          'TPS',
+          style: TextStyle(
+            fontSize: 9.sp,
+            fontWeight: FontWeight.w600,
+            color: kTextGrey,
+            letterSpacing: 0.5,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CardDivider extends StatelessWidget {
+  const _CardDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(height: 1.h, color: kLightPurple);
+  }
+}
+
+class _CardActions extends StatelessWidget {
+  final ClubPlayer player;
+
+  const _CardActions({required this.player});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _ActionButton(
+          label: 'التقارير'.tr(),
+          icon: Icons.bar_chart_rounded,
+          isPrimary: false,
+          onTap: () => showPlayerReportsSheet(context, player: player),
+        ),
+        SizedBox(height: 5.h),
+        _ActionButton(
+          label: 'إضافة تمرين'.tr(),
+          icon: Icons.sports_soccer_rounded,
+          isPrimary: true,
+          onTap: () => showAssignExerciseSheet(context, player: player),
+        ),
+      ],
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final bool isPrimary;
+  final VoidCallback onTap;
+
+  const _ActionButton({
+    required this.label,
+    required this.icon,
+    required this.isPrimary,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => showAssignExerciseSheet(context, player: player),
+      onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
         width: double.infinity,
+        padding: EdgeInsets.symmetric(vertical: 7.h),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [mainColor, secondMainColor],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          borderRadius: BorderRadius.circular(12.r),
+          color: isPrimary ? mainColor : kLightPurple,
+          borderRadius: BorderRadius.circular(9.r),
         ),
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.sports_soccer_rounded, color: Colors.white, size: 16.w),
-            SizedBox(width: 6.w),
-            TextUtils(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              text: 'إضافة تمرين',
+            Icon(
+              icon,
+              size: 13.w,
+              color: isPrimary ? Colors.white : mainColor,
+            ),
+            SizedBox(width: 4.w),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w700,
+                color: isPrimary ? Colors.white : mainColor,
+              ),
             ),
           ],
         ),

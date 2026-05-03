@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
-import 'package:falcon/core/widget/padding_utils.dart';
-import 'package:falcon/core/widget/text_utils.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/widget/padding_utils.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

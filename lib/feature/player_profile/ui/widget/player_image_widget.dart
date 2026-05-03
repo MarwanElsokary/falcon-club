@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
-import 'package:falcon/feature/main_screen/data/model/my_profile_model.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +10,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class PlayerImageWidget extends StatelessWidget {
   const PlayerImageWidget({super.key, required this.playerProfile});
+
   final MyProfileModel playerProfile;
 
   @override

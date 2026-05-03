@@ -1,5 +1,5 @@
-import 'package:falcon/feature/experiance_details_screen/data/model/exerciseWithPlayersModel.dart';
-import 'package:falcon/feature/experiance_details_screen/data/model/trial_details_model.dart';
+import 'package:falconclubapp/feature/experiance_details_screen/data/model/exerciseWithPlayersModel.dart';
+import 'package:falconclubapp/feature/experiance_details_screen/data/model/trial_details_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'experiance_details_state.freezed.dart';
 

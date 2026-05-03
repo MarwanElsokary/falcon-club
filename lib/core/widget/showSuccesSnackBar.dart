@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:falcon/core/thems/thems.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

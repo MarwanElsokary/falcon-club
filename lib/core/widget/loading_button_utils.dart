@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
 
 import 'package:lottie/lottie.dart';
 

@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/di/dependency_injection.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
-import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
-import 'package:falcon/feature/rank/cubit/rank_cubit.dart';
-import 'package:falcon/feature/rank/ui/screen/rank_screen.dart';
-import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
-import 'package:falcon/feature/reals/ui/screen/main_reals_screen.dart';
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/feature/main_screen/cubit/main_cubit.dart';
+import 'package:falconclubapp/feature/rank/cubit/rank_cubit.dart';
+import 'package:falconclubapp/feature/rank/ui/screen/rank_screen.dart';
+import 'package:falconclubapp/feature/reals/cubit/reals_cubit.dart';
+import 'package:falconclubapp/feature/reals/ui/screen/main_reals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,6 +37,20 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
   void initState() {
     super.initState();
     context.read<ClubTeamCubit>().emitMyProfile();
+    context.read<ClubTeamCubit>().currentIndex.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final index = context.read<ClubTeamCubit>().currentIndex.value;
+    if (index == 1) {
+      context.read<ClubTeamCubit>().fetchClubPlayers();
+    }
+  }
+
+  @override
+  void dispose() {
+    context.read<ClubTeamCubit>().currentIndex.removeListener(_onTabChanged);
+    super.dispose();
   }
 
   void _toggleDrawer() {

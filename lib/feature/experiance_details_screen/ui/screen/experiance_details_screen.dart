@@ -1,8 +1,8 @@
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
-import 'package:falcon/feature/experiance_details_screen/ui/widget/experiance_details_app_bar.dart';
-import 'package:falcon/feature/experiance_details_screen/ui/widget/experiance_details_image_widget.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/feature/experiance_details_screen/ui/widget/experiance_details_app_bar.dart';
+import 'package:falconclubapp/feature/experiance_details_screen/ui/widget/experiance_details_image_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/experience_training_info_widget.dart';

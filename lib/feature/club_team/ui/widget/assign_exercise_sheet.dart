@@ -1,9 +1,9 @@
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
-import 'package:falcon/feature/club_team/ui/widget/upload_attempt_sheet.dart';
-import 'package:falcon/feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
+import 'package:falconclubapp/feature/club_team/ui/widget/upload_attempt_sheet.dart';
+import 'package:falconclubapp/feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +12,7 @@ import '../../cubit/club_exercises_cubit.dart';
 import '../../cubit/club_exercises_state.dart';
 import '../../data/model/club_exercises_model.dart';
 import 'exercise_list_item_widget.dart';
-import 'package:falcon/core/di/dependency_injection.dart';
+import 'package:falconclubapp/core/di/dependency_injection.dart';
 
 /// يُستدعى هكذا:
 /// showAssignExerciseSheet(context, player: player);

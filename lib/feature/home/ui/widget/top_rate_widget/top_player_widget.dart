@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/routing/routes.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
-import 'package:falcon/feature/rank/cubit/rank_cubit.dart';
-import 'package:falcon/feature/rank/cubit/rank_state.dart';
-import 'package:falcon/feature/reals/cubit/reals_state.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/routing/routes.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/feature/rank/cubit/rank_cubit.dart';
+import 'package:falconclubapp/feature/rank/cubit/rank_state.dart';
+import 'package:falconclubapp/feature/reals/cubit/reals_state.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +50,7 @@ class TopPlayerWidget extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
-                      text: 'شاهد كيف تتصدر بين اللاعبين الآخرين'.tr(),
+                      text: 'شاهد ترتيب اللاعبين '.tr(),
                     ),
                   ),
                 ],

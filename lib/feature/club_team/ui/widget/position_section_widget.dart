@@ -1,22 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
-import 'package:falcon/feature/club_team/ui/widget/player_card_widget.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
+import 'package:falconclubapp/feature/club_team/ui/widget/player_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/utils/colors.dart';
 
 class PositionSectionWidget extends StatelessWidget {
   final String title;
   final String icon;
   final List<ClubPlayer> players;
+  final bool showDividerAbove;
 
   const PositionSectionWidget({
     super.key,
     required this.title,
     required this.icon,
     required this.players,
+    this.showDividerAbove = false,
   });
 
   @override
@@ -24,50 +26,168 @@ class PositionSectionWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section header — title + emoji aligned to start (right in RTL)
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(icon, style: TextStyle(fontSize: 20.sp)),
-              horizontalSpace(8),
-              TextUtils(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-                text: title.tr(),
-              ),
-              horizontalSpace(6),
-              Text(
-                '(${players.length})',
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  color: greyClr,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-        verticalSpace(12),
+        if (showDividerAbove) const _SectionDivider(),
+        _SectionHeader(title: title, icon: icon, count: players.length),
+        SizedBox(height: 14.h),
+        _PlayersList(players: players),
+        SizedBox(height: 6.h),
+      ],
+    );
+  }
+}
 
-        // Horizontal list of player cards
-        // Height accommodates 200.w wide cards with thumbnails ~80.h + padding
-        SizedBox(
-          height: 320.h,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            itemCount: players.length,
-            itemBuilder: (_, i) => Padding(
-              padding: EdgeInsetsDirectional.only(end: 12.w),
-              child: PlayerCardWidget(player: players[i]),
+// ── Header ────────────────────────────────────────────────────────────────────
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  final String icon;
+  final int count;
+
+  const _SectionHeader({
+    required this.title,
+    required this.icon,
+    required this.count,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Row(
+        children: [
+          Text(icon, style: TextStyle(fontSize: 14.sp)),
+          SizedBox(width: 8.w),
+          Text(
+            title.tr(),
+            style: TextStyle(
+              fontSize: 15.sp,
+              fontWeight: FontWeight.w700,
+              color: mainColor,
             ),
           ),
+          SizedBox(width: 8.w),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+            decoration: BoxDecoration(
+              color: kLightPurple,
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+            child: Text(
+              '$count',
+              style: TextStyle(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+                color: kPrimaryColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Horizontal list ───────────────────────────────────────────────────────────
+
+class _PlayersList extends StatelessWidget {
+  final List<ClubPlayer> players;
+
+  const _PlayersList({required this.players});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 280.h,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        itemCount: players.length,
+        separatorBuilder: (_, __) => SizedBox(width: 12.w),
+        itemBuilder: (_, i) => PlayerCardWidget(player: players[i]),
+      ),
+    );
+  }
+}
+
+// ── Divider بين الـ sections ──────────────────────────────────────────────────
+
+class _SectionDivider extends StatelessWidget {
+  const _SectionDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 1.5.h,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.transparent,
+                    const Color(0xFF761CBC).withOpacity(0.25),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(4.r),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          _DiamondDot(
+            size: 5.w,
+            color: const Color(0xFF9B3DD4).withOpacity(0.45),
+          ),
+          SizedBox(width: 5.w),
+          _DiamondDot(
+            size: 7.w,
+            color: const Color(0xFF761CBC).withOpacity(0.65),
+          ),
+          SizedBox(width: 5.w),
+          _DiamondDot(
+            size: 5.w,
+            color: const Color(0xFF9B3DD4).withOpacity(0.45),
+          ),
+          SizedBox(width: 8.w),
+          Expanded(
+            child: Container(
+              height: 1.5.h,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFF761CBC).withOpacity(0.25),
+                    Colors.transparent,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(4.r),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DiamondDot extends StatelessWidget {
+  final double size;
+  final Color color;
+
+  const _DiamondDot({required this.size, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: 0.785398, // 45 deg
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(1.r),
         ),
-        verticalSpace(20),
-      ],
+      ),
     );
   }
 }

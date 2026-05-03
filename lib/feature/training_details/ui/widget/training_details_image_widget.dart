@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

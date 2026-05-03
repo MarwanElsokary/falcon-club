@@ -1,88 +1,62 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/ui/widget/position_section_widget.dart';
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/feature/club_team/ui/widget/position_section_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../../core/di/dependency_injection.dart';
+import '../../../../core/thems/thems.dart';
+import '../../../../core/utils/colors.dart';
 import '../../cubit/club_exercises_cubit.dart';
 import '../../cubit/club_team_cubit.dart';
 import '../../cubit/club_team_state.dart';
 
-class ClubMyTeamScreen extends StatefulWidget {
+class ClubMyTeamScreen extends StatelessWidget {
   const ClubMyTeamScreen({super.key});
 
-  @override
-  State<ClubMyTeamScreen> createState() => _ClubMyTeamScreenState();
-}
-
-class _ClubMyTeamScreenState extends State<ClubMyTeamScreen> {
   static const List<String> _sectionOrder = [
     'الحارس',
     'الدفاع',
     'خط الوسط',
     'الهجوم',
   ];
-  static const Map<String, String> _sectionEmoji = {
-    'الحارس': '🧤',
-    'الدفاع': '❤️',
-    'خط الوسط': '🔄',
-    'الهجوم': '⚡',
+
+  static const Map<String, String> _sectionIcon = {
+    'الحارس': '',
+    'الدفاع': '️',
+    'خط الوسط': '️',
+    'الهجوم': '',
   };
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<ClubTeamCubit>().fetchClubPlayers();
-  }
+  // بيانات وهمية تتحمل جواها الـ skeleton
+  static final _fakeSections = [('الدفاع', '🛡️', 3), ('خط الوسط', '⚙️', 2)];
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<ClubExercisesCubit>(),
       child: Scaffold(
-        backgroundColor: whiteclr,
+        backgroundColor: const Color(0xFFF7F4FB),
         body: Stack(
           children: [
-            // ── خط الـ background — نفس ExperimentScreen ─────────────────────
             PositionedDirectional(
               start: 0,
               top: 0,
-              child: SvgPicture.asset('assets/svgs/Group 386.svg', width: 120.w),
+              child: SvgPicture.asset(
+                'assets/svgs/Group 386.svg',
+                width: 120.w,
+              ),
             ),
-
-            // ── المحتوى ────────────────────────────────────────────────────────
             SafeArea(
               child: Column(
                 children: [
                   SizedBox(height: 12.h),
                   _buildHeader(),
-                  SizedBox(height: 12.h),
-                  Expanded(
-                    child: BlocBuilder<ClubTeamCubit, ClubTeamState>(
-                      buildWhen: (prev, curr) =>
-                      curr is clubPlayersLoading ||
-                          curr is clubPlayersSuccess ||
-                          curr is clubPlayersError,
-                      builder: (context, state) {
-                        return state.maybeWhen(
-                          clubPlayersloading: () => Center(
-                            child: CupertinoActivityIndicator(radius: 15.w),
-                          ),
-                          clubPlayerserror: (error) => _buildError(error),
-                          clubPlayerssuccess: (_) => _buildContent(),
-                          orElse: () => Center(
-                            child: CupertinoActivityIndicator(radius: 15.w),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  SizedBox(height: 8.h),
+                  Expanded(child: _buildBody()),
                 ],
               ),
             ),
@@ -92,80 +66,390 @@ class _ClubMyTeamScreenState extends State<ClubMyTeamScreen> {
     );
   }
 
-  // ── Header — بدون كلمة "الرجوع"، بس السهم ────────────────────────────────
   Widget _buildHeader() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(Icons.groups, color: mainColor, size: 26.w),
-          SizedBox(width: 6.w),
-          TextUtils(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-            text: 'فريق النادي'.tr(),
+          Icon(Icons.groups_rounded, color: kPrimaryColor, size: 24.w),
+          SizedBox(width: 8.w),
+          Text(
+            'فريق النادي'.tr(),
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+              color: mainColor,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildContent() {
-    final grouped = context.read<ClubTeamCubit>().cachedGroupedPlayers;
+  Widget _buildBody() {
+    return BlocBuilder<ClubTeamCubit, ClubTeamState>(
+      builder: (context, state) {
+        final isLoading = state.maybeWhen(
+          clubPlayersloading: () => true,
+          orElse: () => false,
+        );
+        final isError = state.maybeWhen(
+          clubPlayerserror: (_) => true,
+          orElse: () => false,
+        );
+        final errorMsg = state.maybeWhen(
+          clubPlayerserror: (e) => e,
+          orElse: () => '',
+        );
+
+        if (isError) return _buildError(errorMsg);
+
+        // لو loading أو success — نعرض نفس الـ layout
+        // الـ Skeletonizer هو اللي بيفرق بينهم
+        return _buildScrollView(context, isLoading: isLoading);
+      },
+    );
+  }
+
+  Widget _buildScrollView(BuildContext context, {required bool isLoading}) {
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      slivers: [
+        // ── Pull to refresh ───────────────────────────────────────────────
+        CupertinoSliverRefreshControl(
+          onRefresh: () async {
+            context.read<ClubTeamCubit>().fetchClubPlayers();
+            await Future.delayed(const Duration(milliseconds: 800));
+          },
+          builder: (_, __, ___, ____, _____) => Container(
+            alignment: Alignment.center,
+            child: CupertinoActivityIndicator(radius: 12.w),
+          ),
+        ),
+
+        // ── Content ───────────────────────────────────────────────────────
+        SliverPadding(
+          padding: EdgeInsets.only(top: 4.h, bottom: 100.h),
+          sliver: isLoading
+              ? _buildSkeletonSliver()
+              : _buildRealSliver(context),
+        ),
+      ],
+    );
+  }
+
+  // ── Skeleton — نفس شكل الكروت بالظبط لكن shimmer ─────────────────────────
+  Widget _buildSkeletonSliver() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((_, index) {
+        final section = _fakeSections[index % _fakeSections.length];
+        return Skeletonizer(
+          enabled: true,
+          effect: ShimmerEffect(
+            baseColor: const Color(0xFFE8DCF5),
+            highlightColor: const Color(0xFFF3ECF9),
+          ),
+          child: _SkeletonSection(
+            title: section.$1,
+            icon: section.$2,
+            cardCount: section.$3,
+            showDividerAbove: index != 0,
+          ),
+        );
+      }, childCount: _fakeSections.length),
+    );
+  }
+
+  // ── Real data ─────────────────────────────────────────────────────────────
+  Widget _buildRealSliver(BuildContext context) {
+    final grouped = context.read<ClubTeamCubit>().groupedPlayers;
     final visibleSections = _sectionOrder
-        .where((key) => (grouped[key]?.isNotEmpty ?? false))
+        .where((key) => grouped[key]?.isNotEmpty ?? false)
         .toList();
 
     if (visibleSections.isEmpty) {
-      return Center(
-        child: TextUtils(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: greyClr,
-          text: 'لا يوجد لاعبون في هذا النادي'.tr(),
+      return SliverFillRemaining(
+        child: Center(
+          child: Text(
+            'لا يوجد لاعبون في هذا النادي'.tr(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              color: kTextGrey,
+            ),
+          ),
         ),
       );
     }
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.only(bottom: 100.h),
-      child: Column(
-        children: visibleSections
-            .map(
-              (key) => PositionSectionWidget(
-            title: key,
-            icon: _sectionEmoji[key] ?? '',
-            players: grouped[key]!,
-          ),
-        )
-            .toList(),
-      ),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((_, index) {
+        final key = visibleSections[index];
+        return PositionSectionWidget(
+          title: key,
+          icon: _sectionIcon[key] ?? '',
+          players: grouped[key]!,
+          showDividerAbove: index != 0,
+        );
+      }, childCount: visibleSections.length),
     );
   }
 
   Widget _buildError(String error) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.error_outline, color: redClr, size: 40.w),
-          verticalSpace(10),
-          TextUtils(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-            text: error,
+    return Builder(
+      builder: (context) => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline_rounded,
+              color: Colors.redAccent,
+              size: 40.w,
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              error,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: mainColor,
+              ),
+            ),
+            SizedBox(height: 16.h),
+            ElevatedButton(
+              onPressed: () => context.read<ClubTeamCubit>().fetchClubPlayers(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kPrimaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+              ),
+              child: Text(
+                'إعادة المحاولة'.tr(),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Skeleton section — نفس شكل PositionSectionWidget بس بيانات وهمية ─────────
+
+class _SkeletonSection extends StatelessWidget {
+  final String title;
+  final String icon;
+  final int cardCount;
+  final bool showDividerAbove;
+
+  const _SkeletonSection({
+    required this.title,
+    required this.icon,
+    required this.cardCount,
+    required this.showDividerAbove,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (showDividerAbove) _buildDivider(),
+        // Section header
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 0),
+          child: Row(
+            children: [
+              Text(icon, style: TextStyle(fontSize: 14.sp)),
+              SizedBox(width: 8.w),
+              Container(
+                width: 60.w,
+                height: 14.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6.r),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: 24.w,
+                height: 20.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+              ),
+            ],
           ),
-          verticalSpace(16),
-          ElevatedButton(
-            onPressed: () => context.read<ClubTeamCubit>().fetchClubPlayers(),
-            style: ElevatedButton.styleFrom(backgroundColor: mainColor),
-            child: Text(
-              'إعادة المحاولة'.tr(),
-              style: const TextStyle(color: Colors.white),
+        ),
+        SizedBox(height: 14.h),
+        // Skeleton cards row
+        SizedBox(
+          height: 300.h,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            itemCount: cardCount,
+            separatorBuilder: (_, __) => SizedBox(width: 12.w),
+            itemBuilder: (_, __) => _SkeletonCard(),
+          ),
+        ),
+        SizedBox(height: 6.h),
+      ],
+    );
+  }
+
+  Widget _buildDivider() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 1.5.h,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.transparent,
+                    const Color(0xFF761CBC).withOpacity(0.25),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(4.r),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          _diamond(5.w, const Color(0xFF9B3DD4).withOpacity(0.45)),
+          SizedBox(width: 5.w),
+          _diamond(7.w, const Color(0xFF761CBC).withOpacity(0.65)),
+          SizedBox(width: 5.w),
+          _diamond(5.w, const Color(0xFF9B3DD4).withOpacity(0.45)),
+          SizedBox(width: 8.w),
+          Expanded(
+            child: Container(
+              height: 1.5.h,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFF761CBC).withOpacity(0.25),
+                    Colors.transparent,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(4.r),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _diamond(double size, Color color) {
+    return Transform.rotate(
+      angle: 0.785398,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(1.r),
+        ),
+      ),
+    );
+  }
+}
+
+class _SkeletonCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 152.w,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18.r),
+        border: Border.all(color: const Color(0xFFF0EAF8)),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // top purple
+          Container(
+            width: double.infinity,
+            height: 110.h,
+            color: const Color(0xFF9B3DD4).withOpacity(0.3),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 48.w,
+                  height: 48.w,
+                  margin: EdgeInsets.only(bottom: 18.h),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(0.5),
+                    border: Border.all(color: Colors.white, width: 2.w),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // bottom white
+          Padding(
+            padding: EdgeInsets.fromLTRB(11.w, 22.h, 11.w, 11.h),
+            child: Column(
+              children: [
+                Container(
+                  width: 90.w,
+                  height: 12.h,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(6.r),
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Container(
+                  width: 60.w,
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3ECF9),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Container(
+                  width: 40.w,
+                  height: 12.h,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(6.r),
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Container(height: 1.h, color: const Color(0xFFF3ECF9)),
+                SizedBox(height: 8.h),
+                Container(
+                  width: double.infinity,
+                  height: 30.h,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3ECF9),
+                    borderRadius: BorderRadius.circular(9.r),
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                Container(
+                  width: double.infinity,
+                  height: 30.h,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF761CBC).withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(9.r),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

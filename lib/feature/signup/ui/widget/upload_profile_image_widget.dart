@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:falcon/core/cache/cach_Helper.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/widget/upload_image_widget.dart';
-import 'package:falcon/feature/login/cubit/login_cubit.dart';
+import 'package:falconclubapp/core/cache/cach_Helper.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/widget/upload_image_widget.dart';
+import 'package:falconclubapp/feature/login/cubit/login_cubit.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

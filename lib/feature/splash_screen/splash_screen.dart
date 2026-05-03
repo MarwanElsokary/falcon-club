@@ -5,8 +5,8 @@ import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/thems/thems.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
 
 import '../../core/helpers/constants.dart';
 import '../../core/helpers/shared_pref_helper.dart';
@@ -50,23 +50,23 @@ class _SplashScreenState extends State<SplashScreen>
     // أنيميشن اللوجو
     // ==============================
     scaleController =
-        AnimationController(
-          vsync: this,
-          duration: const Duration(milliseconds: 0),
-        )..addStatusListener((status) async {
-          if (status == AnimationStatus.completed) {
-            setState(() {
-              showText = true;
-            });
-
-            // نشغل أنيميشن النص هنا
-            textController.forward();
-
-            Timer(const Duration(milliseconds: 300), () {
-              scaleController.reset();
-            });
-          }
+    AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 0),
+    )..addStatusListener((status) async {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          showText = true;
         });
+
+        // نشغل أنيميشن النص هنا
+        textController.forward();
+
+        Timer(const Duration(milliseconds: 300), () {
+          scaleController.reset();
+        });
+      }
+    });
 
     scaleAnimation = Tween<double>(
       begin: 0.0,
@@ -185,9 +185,9 @@ class _SplashScreenState extends State<SplashScreen>
                     onEnd: () async {
                       await Future.delayed(const Duration(milliseconds: 1100));
                       String? userToken =
-                          await SharedPrefHelper.getSecuredString(
-                            SharedPrefKeys.userToken,
-                          );
+                      await SharedPrefHelper.getSecuredString(
+                        SharedPrefKeys.userToken,
+                      );
                       log(userToken.toString());
 
                       final userType = await SharedPrefHelper.getSecuredString(
@@ -199,9 +199,13 @@ class _SplashScreenState extends State<SplashScreen>
                         EasyLocalization.of(context)!.locale.toString(),
                       );
                       if (userToken.toString().isNotEmpty) {
-                        final route = userType == 'club'
-                            ? AppRoute.clubMainScreen
-                            : AppRoute.clubMainScreen;
+                        final String route;
+                        if (userType == 'Scout') {
+                          route = AppRoute.scoutMainScreen;
+                        } else {
+                          // Club | MainClub | أي role تاني → clubMainScreen
+                          route = AppRoute.clubMainScreen;
+                        }
                         // ignore: use_build_context_synchronously
                         context.pushNamedAndRemoveUntil(
                           route,
@@ -214,7 +218,6 @@ class _SplashScreenState extends State<SplashScreen>
                           predicate: (route) => false,
                         );
                       }
-
                     },
                     width: showText ? 140.w : 0,
                     child: SingleChildScrollView(
@@ -311,19 +314,19 @@ class ThisIsFadeRoute extends PageRouteBuilder {
   final Widget route;
 
   ThisIsFadeRoute({required this.page, required this.route})
-    : super(
-        pageBuilder:
-            (
-              BuildContext context,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-            ) => page,
-        transitionsBuilder:
-            (
-              BuildContext context,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-              Widget child,
-            ) => FadeTransition(opacity: animation, child: route),
-      );
+      : super(
+    pageBuilder:
+        (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) => page,
+    transitionsBuilder:
+        (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) => FadeTransition(opacity: animation, child: route),
+  );
 }

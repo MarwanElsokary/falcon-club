@@ -4,11 +4,11 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
-import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/feature/club_team/cubit/club_team_cubit.dart';
+import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +21,7 @@ const Color _lightBg = Color(0xFFEFF4FF);
 
 // نفس مسارات الـ assets في PlayerCardWidget
 const String _rightFootAsset = 'assets/svgs/right.svg';
-const String _leftFootAsset  = 'assets/svgs/material-symbols_barefoot.svg';
+const String _leftFootAsset = 'assets/svgs/material-symbols_barefoot.svg';
 
 class FavoritePlayerCardWidget extends StatefulWidget {
   final ClubPlayer player;
@@ -40,21 +40,23 @@ class FavoritePlayerCardWidget extends StatefulWidget {
       _FavoritePlayerCardWidgetState();
 }
 
-class _FavoritePlayerCardWidgetState
-    extends State<FavoritePlayerCardWidget> {
+class _FavoritePlayerCardWidgetState extends State<FavoritePlayerCardWidget> {
   late Future<List<String>> _reelsFuture;
 
   @override
   void initState() {
     super.initState();
-    _reelsFuture =
-        context.read<ClubTeamCubit>().getReelsForPlayer(widget.player.id);
   }
 
   void _navigateToProfile() {
     Navigator.of(context).pushNamed(
       AppRoute.playerProfile,
-      arguments: {'isMyProfile': false, 'playerId': widget.player.id},
+      arguments: {
+        'isMyProfile': false,
+        'playerId': widget.player.id,
+        'showFavoriteButton': true,
+        // ← المدرب والكشاف بس
+      },
     );
   }
 
@@ -160,8 +162,7 @@ class _FavoritePlayerCardWidgetState
 
   // ── الصورة oval — نفس PlayerCardWidget و PlayerImageWidget ───────────────
   Widget _buildPhoto(ClubPlayer player) {
-    final hasPhoto =
-        player.photoPath != null && player.photoPath!.isNotEmpty;
+    final hasPhoto = player.photoPath != null && player.photoPath!.isNotEmpty;
     return Container(
       width: 48.w,
       height: 68.w, // oval: height > width
@@ -173,14 +174,14 @@ class _FavoritePlayerCardWidgetState
         borderRadius: BorderRadius.circular(100.r),
         child: hasPhoto
             ? CachedNetworkImage(
-          imageUrl: player.photoPath!,
-          fit: BoxFit.cover,
-          placeholder: (_, __) => Skeletonizer(
-            enabled: true,
-            child: Container(color: secondMainColor),
-          ),
-          errorWidget: (_, __, ___) => _photoFallback(player.name),
-        )
+                imageUrl: player.photoPath!,
+                fit: BoxFit.cover,
+                placeholder: (_, __) => Skeletonizer(
+                  enabled: true,
+                  child: Container(color: secondMainColor),
+                ),
+                errorWidget: (_, __, ___) => _photoFallback(player.name),
+              )
             : _photoFallback(player.name),
       ),
     );
@@ -203,7 +204,7 @@ class _FavoritePlayerCardWidgetState
 
   Widget _buildFootIcons(String foot) {
     final isRight = foot == 'يمين';
-    final isLeft  = foot == 'يسار';
+    final isLeft = foot == 'يسار';
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -211,9 +212,9 @@ class _FavoritePlayerCardWidgetState
           opacity: isRight ? 1.0 : 0.35,
           child: SvgPicture.asset(
             _rightFootAsset,
-            width: 16.w, height: 16.w,
-            colorFilter:
-            const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            width: 16.w,
+            height: 16.w,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           ),
         ),
         SizedBox(width: 4.w),
@@ -221,9 +222,9 @@ class _FavoritePlayerCardWidgetState
           opacity: isLeft ? 1.0 : 0.35,
           child: SvgPicture.asset(
             _leftFootAsset,
-            width: 16.w, height: 16.w,
-            colorFilter:
-            const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            width: 16.w,
+            height: 16.w,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           ),
         ),
       ],
@@ -236,7 +237,8 @@ class _FavoritePlayerCardWidgetState
       children: [
         SvgPicture.asset(
           'assets/svgs/solar_star-bold-duotone.svg',
-          width: 14.w, height: 14.w,
+          width: 14.w,
+          height: 14.w,
         ),
         SizedBox(width: 4.w),
         TextUtils(
@@ -262,8 +264,7 @@ class _FavoritePlayerCardWidgetState
       child: FutureBuilder<List<String>>(
         future: _reelsFuture,
         builder: (context, snapshot) {
-          final isLoading =
-              snapshot.connectionState == ConnectionState.waiting;
+          final isLoading = snapshot.connectionState == ConnectionState.waiting;
           final urls = snapshot.data ?? [];
           return Row(
             children: [
@@ -276,8 +277,7 @@ class _FavoritePlayerCardWidgetState
               Expanded(
                 child: isLoading
                     ? _thumbShimmer()
-                    : _thumbWidget(
-                    urls.length > 1 ? urls[1] : null),
+                    : _thumbWidget(urls.length > 1 ? urls[1] : null),
               ),
             ],
           );
@@ -311,8 +311,7 @@ class _FavoritePlayerCardWidgetState
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: Center(
-        child: Icon(Icons.play_circle_outline,
-            color: greyClr, size: 22.w),
+        child: Icon(Icons.play_circle_outline, color: greyClr, size: 22.w),
       ),
     );
   }

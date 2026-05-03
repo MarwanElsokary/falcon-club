@@ -32,6 +32,10 @@ import '../../feature/rank/cubit/rank_cubit.dart';
 import '../../feature/rank/ui/screen/rank_screen.dart';
 import '../../feature/reals/cubit/reals_cubit.dart';
 import '../../feature/reals/ui/screen/main_reals_screen.dart';
+import '../../feature/scout/scout_training/cubit/scout_training_cubit.dart';
+import '../../feature/scout/scout_training/cubit/scout_training_details_cubit.dart';
+import '../../feature/scout/scout_training/ui/screen/scout_training_details_screen.dart';
+import '../../feature/scout/scout_training/ui/screen/scout_training_screen.dart';
 import '../../feature/signup/ui/screen/club_sign_up_screen.dart';
 import '../../feature/signup/ui/screen/complete_profile_screen.dart';
 import '../../feature/signup/ui/screen/position_screen.dart';
@@ -39,6 +43,10 @@ import '../../feature/signup/ui/screen/registration_type_screen.dart';
 import '../../feature/signup/ui/screen/sign_up_screen.dart';
 import '../../feature/club_team/cubit/club_team_cubit.dart';
 import '../../feature/club_team/ui/screen/club_main_screen.dart';
+import '../../feature/scout/cubit/scout_register_cubit.dart';
+import '../../feature/scout/data/repo/scout_repo.dart';
+import '../../feature/scout/ui/screen/scout_main_screen.dart';
+import '../../feature/scout/ui/screen/scout_sign_up_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
 import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/ui/screen/training_screen.dart';
@@ -47,12 +55,13 @@ import '../../feature/training_details/data/model/exercise_details_model.dart';
 import '../../feature/training_details/ui/screen/ClubTrainingDetailsScreen.dart';
 import '../../feature/training_details/ui/screen/ai_generate_screen.dart';
 import '../../feature/training_details/ui/screen/training_details_screen.dart';
-// ── Club training details — بدون رفع فيديو ─────────────────────────
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
 import '../../feature/player_attempts/data/model/player_attempts_model.dart';
 import '../../feature/player_attempts/data/repo/player_attempts_repo.dart';
 import '../../feature/player_attempts/ui/screen/player_attempts_screen.dart';
 import '../../feature/player_attempts/ui/screen/player_attempt_detail_screen.dart';
+
+// ── Scout Training (feature منفصلة) ─────────────────────────────────────────
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 
@@ -61,20 +70,18 @@ class AppRouter {
     final arguments = settings.arguments;
 
     switch (settings.name) {
-    // ========================================================================
-    // CORE SCREENS
-    // ========================================================================
+      // ========================================================================
+      // CORE SCREENS
+      // ========================================================================
       case AppRoute.splashScreen:
-        return MaterialPageRoute(
-          builder: (_) => const SplashScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case AppRoute.onBoardingScreen:
         return _fadeTransitionRoute(const OnBoardingScreen());
 
-    // ========================================================================
-    // AUTH SCREENS
-    // ========================================================================
+      // ========================================================================
+      // AUTH SCREENS
+      // ========================================================================
       case AppRoute.loginScreen:
         return _fadeTransitionRoute(
           BlocProvider(
@@ -140,9 +147,9 @@ class AppRouter {
           ),
         );
 
-    // ========================================================================
-    // PASSWORD RECOVERY
-    // ========================================================================
+      // ========================================================================
+      // PASSWORD RECOVERY
+      // ========================================================================
       case AppRoute.forgetPasswordScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -170,45 +177,26 @@ class AppRouter {
           ),
         );
 
-    // ========================================================================
-    // MAIN APP
-    // ========================================================================
-    //   case AppRoute.mainScreen:
-    //     return _fadeTransitionRoute(
-    //       MultiBlocProvider(
-    //         providers: [
-    //           BlocProvider(
-    //             create: (_) => getIt<MainCubit>()
-    //               ..emitMyProfile()
-    //               ..emitCategories(),
-    //           ),
-    //           BlocProvider(
-    //             create: (_) => getIt<RankCubit>()..emitRank(),
-    //           ),
-    //         ],
-    //         child: const MainScreen(),
-    //       ),
-    //     );
-
-    // ========================================================================
-    // PLAYER PROFILE
-    // ========================================================================
+      // ========================================================================
+      // PLAYER PROFILE
+      // ========================================================================
       case AppRoute.playerProfile:
         final args = arguments as Map<String, dynamic>;
         final isMyProfile = args['isMyProfile'] as bool;
         final playerId = args['playerId'] as String;
+        // ✅ جيب الـ flag ده من الـ args — الـ caller هو اللي يعرف نوع اليوزر
+        final showFavoriteButton = args['showFavoriteButton'] as bool? ?? false;
 
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<RealsCubit>()..emitreals(
-                  playerId: playerId,
-                ),
+                create: (_) =>
+                getIt<RealsCubit>()..emitreals(playerId: playerId),
               ),
               BlocProvider(
-                create: (_) => getIt<MainCubit>()
-                  ..emitProfileById(userId: playerId),
+                create: (_) =>
+                getIt<MainCubit>()..emitProfileById(userId: playerId),
               ),
             ],
             child: PlayerProfileScreen(
@@ -218,9 +206,9 @@ class AppRouter {
           ),
         );
 
-    // ========================================================================
-    // REALS/VIDEOS
-    // ========================================================================
+      // ========================================================================
+      // REALS/VIDEOS
+      // ========================================================================
       case AppRoute.mainRealsScreen:
         final args = arguments as Map<String, dynamic>;
         final context = args['context'] as BuildContext;
@@ -238,50 +226,40 @@ class AppRouter {
           ),
         );
 
-      case AppRoute.publishMyVideo:
-        final args = arguments as Map<String, dynamic>;
-        final outputPath = args['outputPath'] as String;
-
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<CreatRealCubit>(),
-            child: PublishMyVideo(videoPath: outputPath),
-          ),
-        );
-
-    // ========================================================================
-    // TRAINING
-    // ========================================================================
+      // ========================================================================
+      // TRAINING
+      // ========================================================================
       case AppRoute.trainingScreen:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<TrainingCubit>()
-                  ..emitallExercises(categoryId: '', popular: false),
+                create: (_) =>
+                    getIt<TrainingCubit>()
+                      ..emitallExercises(categoryId: '', popular: false),
               ),
-              BlocProvider(
-                create: (_) => getIt<MainCubit>()..emitCategories(),
-              ),
+              BlocProvider(create: (_) => getIt<MainCubit>()..emitCategories()),
             ],
             child: const TrainingScreen(),
           ),
         );
+      case AppRoute.scoutTrainingScreen:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              // ✅ ScoutTrainingCubit مش TrainingCubit
+              BlocProvider(
+                create: (_) =>
+                    getIt<ScoutTrainingCubit>()
+                      ..fetchExercises(categoryId: '', popular: false),
+              ),
+              BlocProvider(create: (_) => getIt<MainCubit>()..emitCategories()),
+            ],
+            child: const ScoutTrainingScreen(),
+          ),
+        );
 
-    // ── شاشة تمرين اللاعب — بترفع فيديو ──────────────────────────
-    //   case AppRoute.trainingDetailsScreen:
-    //     final args = arguments as Map<String, dynamic>;
-    //     final exerciseId = args['exerciseId'] as String;
-    //
-    //     return MaterialPageRoute(
-    //       builder: (_) => BlocProvider(
-    //         create: (_) => getIt<TrainingDetailsCubit>()
-    //           ..emitexerciseDetails(exerciseId: exerciseId),
-    //         child: const TrainingDetailsScreen(),
-    //       ),
-    //     );
-
-    // ── شاشة تمرين النادي — متابعة اللاعبين بدون رفع فيديو ───────
+      // ── شاشة تمرين النادي ────────────────────────────────────────────────
       case AppRoute.clubTrainingDetailsScreen:
         final args = arguments as Map<String, dynamic>;
         final exerciseId = args['exerciseId'] as String;
@@ -290,14 +268,32 @@ class AppRouter {
           MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<TrainingDetailsCubit>()
-                  ..emitexerciseDetails(exerciseId: exerciseId),
+                create: (_) =>
+                    getIt<TrainingDetailsCubit>()
+                      ..emitexerciseDetails(exerciseId: exerciseId),
               ),
-              BlocProvider(
-                create: (_) => getIt<ExperianceDetailsCubit>(),
-              ),
+              BlocProvider(create: (_) => getIt<ExperianceDetailsCubit>()),
             ],
             child: const ClubTrainingDetailsScreen(),
+          ),
+        );
+
+      // ── شاشة تفاصيل التمرين للكشاف (view only) ──────────────────────────
+      case AppRoute.scoutTrainingDetailsScreen:
+        final args = arguments as Map<String, dynamic>;
+        final exerciseId = args['exerciseId'] as String;
+
+        return _fadeTransitionRoute(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) =>
+                    getIt<ScoutTrainingDetailsCubit>()
+                      ..fetchExerciseDetails(exerciseId: exerciseId),
+              ),
+              BlocProvider(create: (_) => getIt<ExperianceDetailsCubit>()),
+            ],
+            child: const ScoutTrainingDetailsScreen(),
           ),
         );
 
@@ -310,13 +306,11 @@ class AppRouter {
         );
 
       case AppRoute.aiGenerateScreen:
-        return MaterialPageRoute(
-          builder: (_) => const AiGenerateScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const AiGenerateScreen());
 
-    // ========================================================================
-    // EXPERIMENTS
-    // ========================================================================
+      // ========================================================================
+      // EXPERIMENTS
+      // ========================================================================
       case AppRoute.experianceDetailsScreen:
         final args = arguments as Map<String, dynamic>;
         final heroTag = args['heroTag'] as String;
@@ -326,8 +320,9 @@ class AppRouter {
 
         return _fadeTransitionRoute(
           BlocProvider(
-            create: (_) => getIt<ExperianceDetailsCubit>()
-              ..emittrialsDetails(trialId: trialId),
+            create: (_) =>
+                getIt<ExperianceDetailsCubit>()
+                  ..emittrialsDetails(trialId: trialId),
             child: ExperianceDetailsScreen(
               title: title,
               heroTag: heroTag,
@@ -339,15 +334,15 @@ class AppRouter {
       case AppRoute.allExperimentScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => getIt<ExperimentsCubit>()
-              ..emitallTrials(categoryId: ''),
+            create: (_) =>
+                getIt<ExperimentsCubit>()..emitallTrials(categoryId: ''),
             child: const AllExperimentScreen(),
           ),
         );
 
-    // ========================================================================
-    // RANKING
-    // ========================================================================
+      // ========================================================================
+      // RANKING
+      // ========================================================================
       case AppRoute.rankScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -356,9 +351,9 @@ class AppRouter {
           ),
         );
 
-    // ========================================================================
-    // PACKAGES
-    // ========================================================================
+      // ========================================================================
+      // PACKAGES
+      // ========================================================================
       case AppRoute.packageScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -378,9 +373,9 @@ class AppRouter {
           ),
         );
 
-    // ========================================================================
-    // MEASUREMENT
-    // ========================================================================
+      // ========================================================================
+      // MEASUREMENT
+      // ========================================================================
       case AppRoute.measurementScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -389,19 +384,19 @@ class AppRouter {
           ),
         );
 
-    // ========================================================================
-    // PLAYER ATTEMPTS
-    // ========================================================================
+      // ========================================================================
+      // PLAYER ATTEMPTS
+      // ========================================================================
       case AppRoute.playerAttemptsScreen:
         final args = arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (_) => getIt<PlayerAttemptsCubit>(),
             child: PlayerAttemptsScreen(
-              exerciseId:    args['exerciseId']    as int,
-              playerId:      args['playerId']      as String,
-              playerName:    args['playerName']    as String,
-              playerPhoto:   args['playerPhoto']   as String?,
+              exerciseId: args['exerciseId'] as int,
+              playerId: args['playerId'] as String,
+              playerName: args['playerName'] as String,
+              playerPhoto: args['playerPhoto'] as String?,
               totalAttempts: args['totalAttempts'] as int,
             ),
           ),
@@ -411,20 +406,32 @@ class AppRouter {
         final args = arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => PlayerAttemptDetailScreen(
-            attempt:      args['attempt']      as PlayerAttempt,
+            attempt: args['attempt'] as PlayerAttempt,
             attemptIndex: args['attemptIndex'] as int,
-            playerName:   args['playerName']   as String,
-            exerciseId:   args['exerciseId']   as int,
+            playerName: args['playerName'] as String,
+            exerciseId: args['exerciseId'] as int,
           ),
         );
 
-    // ========================================================================
-    // DEFAULT
-    // ========================================================================
-      default:
-        return MaterialPageRoute(
-          builder: (_) => const SplashScreen(),
+      // ========================================================================
+      // SCOUT
+      // ========================================================================
+      case AppRoute.scoutSignUpScreen:
+        return MaterialWithModalsPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<LoginCubit>()..loadCountries(),
+            child: const ScoutSignUpScreen(),
+          ),
         );
+
+      case AppRoute.scoutMainScreen:
+        return _fadeTransitionRoute(const ScoutMainScreen());
+
+      // ========================================================================
+      // DEFAULT
+      // ========================================================================
+      default:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
   }
 

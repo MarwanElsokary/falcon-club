@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/routing/routes.dart';
-import 'package:falcon/core/widget/showSuccesSnackBar.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/routing/routes.dart';
+import 'package:falconclubapp/core/widget/showSuccesSnackBar.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
 
 import '../../../../core/thems/thems.dart';
 import '../../../../core/widget/button_utils.dart';

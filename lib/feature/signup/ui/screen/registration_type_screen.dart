@@ -26,7 +26,7 @@ class RegistrationTypeScreen extends StatelessWidget {
               fontSize: 26,
               fontWeight: FontWeight.w700,
               color: Colors.black,
-              text: 'هل أنت مدرب في نادي أم كشاف؟'.tr(),
+              text: 'ما نوع حسابك؟'.tr(),
             ),
             verticalSpace(10),
             TextUtils(
@@ -36,26 +36,26 @@ class RegistrationTypeScreen extends StatelessWidget {
               text: 'اختر نوع الحساب للمتابعة'.tr(),
             ),
             verticalSpace(40),
+
+            // ── نادي ────────────────────────────────────────────────────
             _buildOptionCard(
               context: context,
               icon: Icons.sports_soccer,
               title: 'نادي'.tr(),
-              subtitle: 'سجل كمدرب في نادي لاستكشاف اللاعبين'.tr(),
+              subtitle: 'سجل كمدرب في نادي لاستكشاف اللاعبين وإدارة الفريق'.tr(),
               isEnabled: true,
-              onTap: () {
-                context.pushNamed(AppRoute.clubSignUpScreen);
-              },
+              onTap: () => context.pushNamed(AppRoute.clubSignUpScreen),
             ),
             verticalSpace(20),
+
+            // ── كشاف ────────────────────────────────────────────────────
             _buildOptionCard(
               context: context,
-              icon: Icons.search,
+              icon: Icons.search_rounded,
               title: 'كشاف'.tr(),
-              subtitle: 'لم تضاف بعد، سيتم الإضافة قريباً'.tr(),
-              isEnabled: false,
-              onTap: () {
-                _showComingSoonDialog(context);
-              },
+              subtitle: 'اكتشف المواهب وتابع أداء اللاعبين والريلز'.tr(),
+              isEnabled: true,
+              onTap: () => context.pushNamed(AppRoute.scoutSignUpScreen),
             ),
           ],
         ),
@@ -89,7 +89,7 @@ class RegistrationTypeScreen extends StatelessWidget {
           boxShadow: [
             if (isEnabled)
               BoxShadow(
-                color: mainColor.withOpacity(0.1),
+                color: mainColor.withOpacity(0.08),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -101,8 +101,8 @@ class RegistrationTypeScreen extends StatelessWidget {
               padding: EdgeInsets.all(14.w),
               decoration: BoxDecoration(
                 color: isEnabled
-                    ? mainColor.withOpacity(0.15)
-                    : greyClr.withOpacity(0.15),
+                    ? mainColor.withOpacity(0.12)
+                    : greyClr.withOpacity(0.12),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -116,39 +116,16 @@ class RegistrationTypeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      TextUtils(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: isEnabled ? Colors.black : greyClr,
-                        text: title,
-                      ),
-                      if (!isEnabled) ...[
-                        horizontalSpace(8),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8.w,
-                            vertical: 2.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.orange.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(8.r),
-                          ),
-                          child: TextUtils(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.orange,
-                            text: 'قريباً'.tr(),
-                          ),
-                        ),
-                      ],
-                    ],
+                  TextUtils(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: isEnabled ? Colors.black : greyClr,
+                    text: title,
                   ),
                   verticalSpace(4),
                   TextUtils(
                     fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     color: isEnabled ? blackclr : greyClr,
                     text: subtitle,
                   ),
@@ -157,45 +134,11 @@ class RegistrationTypeScreen extends StatelessWidget {
             ),
             Icon(
               Icons.arrow_forward_ios,
-              color: isEnabled ? mainColor : greyClr.withOpacity(0.5),
+              color: isEnabled ? mainColor : greyClr.withOpacity(0.4),
               size: 18.w,
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void _showComingSoonDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        title: TextUtils(
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-          color: mainColor,
-          text: 'كشاف'.tr(),
-        ),
-        content: TextUtils(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: Colors.black87,
-          text: 'لم تضاف بعد، سيتم الإضافة قريباً'.tr(),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: TextUtils(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: mainColor,
-              text: 'حسناً'.tr(),
-            ),
-          ),
-        ],
       ),
     );
   }

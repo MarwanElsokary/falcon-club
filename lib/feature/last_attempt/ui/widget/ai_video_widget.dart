@@ -1,4 +1,4 @@
-import 'package:falcon/core/thems/thems.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';

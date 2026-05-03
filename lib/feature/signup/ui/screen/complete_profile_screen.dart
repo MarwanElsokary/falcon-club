@@ -1,18 +1,18 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/routing/routes.dart';
+import 'package:falconclubapp/core/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/app_bar_utils.dart';
-import 'package:falcon/core/widget/button_utils.dart';
-import 'package:falcon/core/widget/padding_utils.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/login/cubit/login_cubit.dart';
-import 'package:falcon/feature/login/cubit/login_state.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/app_bar_utils.dart';
+import 'package:falconclubapp/core/widget/button_utils.dart';
+import 'package:falconclubapp/core/widget/padding_utils.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/feature/login/cubit/login_cubit.dart';
+import 'package:falconclubapp/feature/login/cubit/login_state.dart';
 
 import '../widget/compact_height_weight_section.dart';
 import '../widget/date_of_birth_widget.dart';

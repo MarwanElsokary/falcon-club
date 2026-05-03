@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:falcon/feature/package/cubit/package_state.dart';
-import 'package:falcon/feature/package/data/model/pakcage_model.dart';
+import 'package:falconclubapp/feature/package/cubit/package_state.dart';
+import 'package:falconclubapp/feature/package/data/model/pakcage_model.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/package_controller.dart';

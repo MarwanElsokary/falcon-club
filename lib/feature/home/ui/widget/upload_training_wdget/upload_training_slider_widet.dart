@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

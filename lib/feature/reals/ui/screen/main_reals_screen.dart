@@ -1,8 +1,8 @@
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
-import 'package:falcon/feature/reals/cubit/reals_cubit.dart';
-import 'package:falcon/feature/reals/ui/screen/reals_screen.dart';
-import 'package:falcon/feature/reals/ui/widget/comment_view_widget.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/feature/main_screen/cubit/main_cubit.dart';
+import 'package:falconclubapp/feature/reals/cubit/reals_cubit.dart';
+import 'package:falconclubapp/feature/reals/ui/screen/reals_screen.dart';
+import 'package:falconclubapp/feature/reals/ui/widget/comment_view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

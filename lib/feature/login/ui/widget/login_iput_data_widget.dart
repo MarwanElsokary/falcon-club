@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/feature/login/ui/widget/show_password_icon_widget.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/feature/login/ui/widget/show_password_icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

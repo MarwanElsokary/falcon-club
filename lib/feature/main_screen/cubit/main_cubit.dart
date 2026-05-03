@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:falcon/core/cache/cach_Helper.dart';
+import 'package:falconclubapp/core/cache/cach_Helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,6 +14,7 @@ class MainCubit extends Cubit<MainState> {
   final MainRepo _repo;
 
   MainCubit(this._repo) : super(const MainState.initial());
+
   bool update = false;
   ValueNotifier<int> currentIndex = ValueNotifier(0);
   bool plyVideo = false;
@@ -21,6 +22,11 @@ class MainCubit extends Cubit<MainState> {
   List<CategoriesList> categoriesList = [];
   ValueNotifier<bool> show = ValueNotifier(true);
   bool openProfile = false;
+
+  // ✅ حفظ حالة المفضلة محلياً
+  final Set<String> _favoritedPlayers = {};
+
+  bool isFavorited(String playerId) => _favoritedPlayers.contains(playerId);
 
   // MARK: - myProfile
   void emitMyProfile() async {
@@ -48,7 +54,6 @@ class MainCubit extends Cubit<MainState> {
         log('succces');
         emit(MainState.playerProfilesuccess(profileByIdResponse));
 
-        // جلب المهارات بعد نجاح جلب البروفايل
         await emitSkills(userId: userId);
       },
       failure: (error) {
@@ -71,23 +76,47 @@ class MainCubit extends Cubit<MainState> {
     response.when(
       success: (apiSkills) {
         log('🎉 المهارات الخام من API: ${apiSkills.length}');
-
-        // فقط استخدم البيانات كما هي بدون أي تحويل
         emit(MainState.playerSkillssuccess(apiSkills));
       },
       failure: (error) {
         log('💥 خطأ في جلب المهارات: ${error.apiErrorModel.message}');
-
-        // في حالة الخطأ، استخدم قائمة فارغة
         emit(MainState.playerSkillssuccess([]));
       },
     );
   }
 
-// احذف الدوال التالية تماماً:
-// 1. _convertApiSkillsToChartSkills
-// 2. _getDefaultSkills
-// 3. أي كود آخر يضيف مهارات إضافية
+  // MARK: - Toggle Favorite Player ⭐
+  Future<void> emitToggleFavorite({required String playerId}) async {
+    emit(const MainState.toggleFavoriteLoading());
+
+    final response = await _repo.toggleFavoritePlayer(playerId: playerId);
+
+    response.when(
+      success: (toggleResponse) {
+        // تحديث الحالة المحلية
+        if (_favoritedPlayers.contains(playerId)) {
+          _favoritedPlayers.remove(playerId);
+        } else {
+          _favoritedPlayers.add(playerId);
+        }
+
+        emit(
+          MainState.toggleFavoriteSuccess(
+            playerId: playerId,
+            isFavorited: _favoritedPlayers.contains(playerId),
+            message: toggleResponse.message,
+          ),
+        );
+      },
+      failure: (error) {
+        emit(
+          MainState.toggleFavoriteError(
+            error: error.apiErrorModel.message ?? 'حدث خطأ',
+          ),
+        );
+      },
+    );
+  }
 
   // MARK: - categories
   void emitCategories() async {

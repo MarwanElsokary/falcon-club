@@ -1,29 +1,28 @@
 import 'dart:developer';
 
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
-import 'package:falcon/feature/main_screen/cubit/main_cubit.dart';
-import 'package:falcon/feature/main_screen/cubit/main_state.dart';
-import 'package:falcon/feature/player_profile/ui/widget/player_more_info_widget.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/feature/main_screen/cubit/main_cubit.dart';
+import 'package:falconclubapp/feature/main_screen/cubit/main_state.dart';
+import 'package:falconclubapp/feature/player_profile/ui/widget/player_more_info_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/routing/routes.dart';
 import '../../../main_screen/data/model/my_profile_model.dart';
 import '../../../player_profile/ui/widget/player_about_me_widget.dart';
-import '../../../player_profile/ui/widget/player_chart_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
-import '../../../player_profile/ui/widget/player_image_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
+import '../widget/player_chart_widget.dart';
+import '../widget/player_image_widget.dart';
+import '../widget/player_image_with_favorite_widget.dart';
 import '../widget/player_measurements_image_widget.dart';
-import '../widget/player_measurements_widget.dart'; // تأكد من الاستيراد
+import '../widget/player_measurements_widget.dart';
 import '../widget/player_videos_widget.dart';
 import '../widget/simple_radar_chart.dart';
 
@@ -32,10 +31,14 @@ class PlayerProfileScreen extends StatefulWidget {
     super.key,
     required this.ismyProfile,
     required this.playerId,
+    this.showFavoriteButton = true,
   });
 
   final bool ismyProfile;
   final String playerId;
+
+  /// true لما يكون المستخدم مدرب أو كشاف
+  final bool showFavoriteButton;
 
   @override
   State<PlayerProfileScreen> createState() => _PlayerProfileScreenState();
@@ -43,80 +46,115 @@ class PlayerProfileScreen extends StatefulWidget {
 
 class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   bool _skillsLoaded = false;
-
-  // Favorites — accessed safely if ClubTeamCubit is in the widget tree
-  ClubTeamCubit? _clubCubit;
   bool _isFavorited = false;
+  bool _isFavLoading = false;
 
   @override
   void initState() {
     super.initState();
     log('🎬 PlayerProfileScreen initialized for playerId: ${widget.playerId}');
-    // Safely try to access ClubTeamCubit (only available in club app context)
-    try {
-      _clubCubit = context.read<ClubTeamCubit>();
-      _isFavorited = _clubCubit!.isFavorited(widget.playerId);
-    } catch (_) {
-      _clubCubit = null;
-    }
+    _isFavorited = context.read<MainCubit>().isFavorited(widget.playerId);
   }
 
   Future<void> _toggleFavorite() async {
-    if (_clubCubit == null) return;
-    setState(() => _isFavorited = !_isFavorited);
-    await _clubCubit!.toggleFavorite(widget.playerId);
+    if (_isFavLoading) return;
+    await context.read<MainCubit>().emitToggleFavorite(
+      playerId: widget.playerId,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size(context.displayWidth / 1, 30.h),
-          child: Container(
-            color: mainColor,
-            child: SafeArea(
-              child: Stack(
-                children: [
-                  PlayerProfileAppBarWidget(),
-                  // Bookmark icon — only shown when ClubTeamCubit is available
-                  if (_clubCubit != null)
-                    PositionedDirectional(
-                      start: 12.w,
-                      top: 0,
-                      bottom: 0,
-                      child: GestureDetector(
-                        onTap: _toggleFavorite,
-                        child: Center(
-                          child: Icon(
-                            _isFavorited
-                                ? Icons.bookmark_rounded
-                                : Icons.bookmark_border_rounded,
-                            color: Colors.white,
-                            size: 24.w,
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
+    return BlocListener<MainCubit, MainState>(
+      listenWhen: (_, current) =>
+          current is toggleFavoriteLoading ||
+          current is toggleFavoriteSuccess ||
+          current is toggleFavoriteError,
+      listener: (context, state) {
+        state.maybeWhen(
+          toggleFavoriteLoading: () {
+            setState(() => _isFavLoading = true);
+          },
+          toggleFavoriteSuccess: (playerId, isFavorited, message) {
+            setState(() {
+              _isFavorited = isFavorited;
+              _isFavLoading = false;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  message,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                backgroundColor: _isFavorited
+                    ? const Color(0xFF1A6B3C)
+                    : const Color(0xFF8B1A1A),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          },
+          toggleFavoriteError: (error) {
+            setState(() => _isFavLoading = false);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error,
+                  style: TextStyle(color: Colors.white, fontSize: 13.sp),
+                  textAlign: TextAlign.center,
+                ),
+                backgroundColor: Colors.red.shade700,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+              ),
+            );
+          },
+          orElse: () {},
+        );
+      },
+      child: PopScope(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(context.displayWidth, 30.h),
+            child: Container(
+              color: mainColor,
+              child: SafeArea(
+                // ✅ AppBar نظيف — بس زرار الرجوع والعنوان
+                child: PlayerProfileAppBarWidget(),
               ),
             ),
           ),
-        ),
-        body: Container(
-          width: context.displayWidth / 1,
-          height: context.displayHeight / 1,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/Frame 1011 1.png'),
-              fit: BoxFit.cover,
+          body: Container(
+            width: context.displayWidth,
+            height: context.displayHeight,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/Frame 1011 1.png'),
+                fit: BoxFit.cover,
+              ),
             ),
+            child: _buildMainContent(),
           ),
-          child: _buildMainContent(),
         ),
       ),
     );
   }
+
+  // ════════════════════════════════════════════════════════════════
+  // MAIN CONTENT
+  // ════════════════════════════════════════════════════════════════
 
   Widget _buildMainContent() {
     return BlocBuilder<MainCubit, MainState>(
@@ -126,21 +164,19 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
           current is playerProfileError,
       builder: (context, state) {
         log('🎯 Main Content State: ${state.runtimeType}');
-
         return state.maybeWhen(
           playerProfileloading: () =>
               _buildFullScreenLoading('جاري تحميل البروفايل...'),
           playerProfileerror: (error) => _buildFullScreenError(error),
-          playerProfilesuccess: (playerProfile) {
-            return _buildProfileWithSkills(playerProfile);
-          },
+          playerProfilesuccess: (playerProfile) =>
+              _buildProfileContent(playerProfile),
           orElse: () => _buildFullScreenLoading('جاري التحميل...'),
         );
       },
     );
   }
 
-  Widget _buildProfileWithSkills(MyProfileModel playerProfile) {
+  Widget _buildProfileContent(MyProfileModel playerProfile) {
     if (!_skillsLoaded) {
       _skillsLoaded = true;
       Future.microtask(() {
@@ -157,27 +193,31 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 verticalSpace(20),
+
+
+                // PlayerImageWithFavoriteWidget(
+                //   playerProfile: playerProfile,
+                //   showFavoriteButton: widget.showFavoriteButton,
+                //   isFavorited: _isFavorited,
+                //   isFavLoading: _isFavLoading,
+                //   onFavoriteTap: _toggleFavorite,
+                // ),
+
                 //user Image
                 PlayerImageWidget(playerProfile: playerProfile),
                 verticalSpace(5),
-                //player chart
                 _buildSkillsChartSection(),
-                // player more info
                 SlideEnimationWidget(
                   index: 0,
                   child: PlayerMoreInfoWidget(playerProfile: playerProfile),
                 ),
-                //about me
                 verticalSpace(10),
                 PlayerAboutMeWidget(playerProfile: playerProfile),
                 verticalSpace(10),
-                // 🆕 Measurements - مباشر من البيانات
-                PlayerMeasurementsWidget(playerProfile: playerProfile), // هنا!
+                PlayerMeasurementsWidget(playerProfile: playerProfile),
                 verticalSpace(10),
-                // 🆕 Bio Image - صورة القياسات
                 PlayerBioImageWidget(playerProfile: playerProfile),
                 verticalSpace(10),
-                //player Videos
                 PlayerVideosWidget(),
                 verticalSpace(10),
                 PlayerExperianceWidget(playerProfile: playerProfile),
@@ -190,6 +230,10 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
     );
   }
 
+  // ════════════════════════════════════════════════════════════════
+  // SKILLS CHART
+  // ════════════════════════════════════════════════════════════════
+
   Widget _buildSkillsChartSection() {
     return BlocBuilder<MainCubit, MainState>(
       buildWhen: (previous, current) =>
@@ -198,45 +242,31 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
           current is playerSkillsError,
       builder: (context, state) {
         log('📊 Skills Section State: ${state.runtimeType}');
-
         return state.maybeWhen(
           playerSkillsloading: () => _buildChartLoading(),
-          playerSkillserror: (error) => _buildChartError(error),
+          playerSkillserror: (error) => _buildChartError(),
           playerSkillssuccess: (skills) {
             log('📊 Skills loaded: ${skills.length} items');
-            return _buildRadarChartWithData(skills);
+            return _buildRadarChart(skills);
           },
-          orElse: () {
-            return _buildChartWaiting();
-          },
+          orElse: () => _buildChartWaiting(),
         );
       },
     );
   }
 
-
-  Widget _buildRadarChartWithData(List<Skill> skills) {
-    log('📊 عدد المهارات المستلمة: ${skills.length}');
-
-    // خريطة المهارات القادمة من الباك إند
-    Map<String, double> incomingSkills = {};
-    for (var skill in skills) {
-      incomingSkills[skill.skillName] = skill.score;
-    }
-
-    log('🎯 المهارات القادمة: $incomingSkills');
-
-    // تحديد حالة الاشتراك (بناءً على عدد المهارات)
-    bool isSubscribed = skills.length >= 5;
+  Widget _buildRadarChart(List<Skill> skills) {
+    final Map<String, double> incomingSkills = {
+      for (final skill in skills) skill.skillName: skill.score,
+    };
+    final bool isSubscribed = skills.length >= 5;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center, // تغيير إلى center
       children: [
         verticalSpace(10),
-        // الرادار في النصف
         Center(
           child: SizedBox(
-            width: 220.w, // حجم مناسب للنصف
+            width: 220.w,
             height: 220.w,
             child: CustomRadarChart(
               incomingSkills: incomingSkills,
@@ -245,90 +275,17 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
           ),
         ),
         verticalSpace(10),
-        // رسالة الترقي مبسطة
-
-        
       ],
     );
   }
 
-
-  // Widget _buildSimpleSubscribeMessage(BuildContext context, int skillsCount) {
-  //   return Container(
-  //     margin: EdgeInsets.symmetric(horizontal: 40.w),
-  //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-  //     decoration: BoxDecoration(
-  //       color: Colors.white.withOpacity(0.08),
-  //       borderRadius: BorderRadius.circular(20.r),
-  //       border: Border.all(color: Colors.white.withOpacity(0.3)),
-  //     ),
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         Icon(Icons.lock_outline, color: Colors.white, size: 16.w),
-  //         horizontalSpace(8),
-  //         Flexible(
-  //           child: Text(
-  //             '${skillsCount}/5 مهارات متاحة - اشترك الآن',
-  //             style: TextStyle(
-  //               color: Colors.white,
-  //               fontSize: 12.sp,
-  //               fontWeight: FontWeight.w600,
-  //             ),
-  //             textAlign: TextAlign.center,
-  //           ),
-  //         ),
-  //         horizontalSpace(8),
-  //         GestureDetector(
-  //           onTap: () {
-  //             context.pushNamed(AppRoute.packageScreen);
-  //           },
-  //           child: Container(
-  //             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
-  //             decoration: BoxDecoration(
-  //               color: mainColor,
-  //               borderRadius: BorderRadius.circular(8.r),
-  //             ),
-  //             child: Text(
-  //               'اشترك',
-  //               style: TextStyle(
-  //                 color: Colors.white,
-  //                 fontSize: 11.sp,
-  //                 fontWeight: FontWeight.w700,
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Widget _buildFeatureItem(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
-      child: Row(
-        children: [
-          Icon(Icons.check_circle, color: mainColor, size: 18.w),
-          horizontalSpace(10),
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // ════════════════════════════════════════════════════════════════
+  // LOADING / ERROR STATES
+  // ════════════════════════════════════════════════════════════════
 
   Widget _buildChartLoading() {
-    return Container(
-      height: 350.w,
+    return SizedBox(
+      height: 240.w,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -346,8 +303,8 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   }
 
   Widget _buildChartWaiting() {
-    return Container(
-      height: 350.w,
+    return SizedBox(
+      height: 240.w,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -371,9 +328,9 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
     );
   }
 
-  Widget _buildChartError(String error) {
-    return Container(
-      height: 350.w,
+  Widget _buildChartError() {
+    return SizedBox(
+      height: 240.w,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -383,11 +340,6 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
             Text(
               'خطأ في تحميل المهارات',
               style: TextStyle(color: Colors.white, fontSize: 14.sp),
-            ),
-            verticalSpace(5),
-            Text(
-              'سيتم استخدام بيانات افتراضية',
-              style: TextStyle(color: Colors.grey, fontSize: 12.sp),
             ),
           ],
         ),

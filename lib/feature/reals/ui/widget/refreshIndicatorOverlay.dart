@@ -1,4 +1,4 @@
-import 'package:falcon/core/widget/text_utils.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -1,8 +1,8 @@
-import 'package:falcon/core/di/dependency_injection.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

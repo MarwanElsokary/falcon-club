@@ -1,7 +1,7 @@
 // file name: wheel_slider_selector.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:falcon/core/thems/thems.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
 
 class WheelSliderSelector extends StatefulWidget {
   final String label;

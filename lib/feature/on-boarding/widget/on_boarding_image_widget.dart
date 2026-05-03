@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
 
 class OnBoardingImageWidget extends StatefulWidget {
   const OnBoardingImageWidget({super.key});

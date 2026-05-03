@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:falcon/feature/main_screen/data/model/my_profile_model.dart';
-import 'package:falcon/feature/training_details/data/model/exercise_details_model.dart';
+import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
+import 'package:falconclubapp/feature/training_details/data/model/exercise_details_model.dart';
 
 import '../../main_screen/data/model/categories_model.dart';
 
@@ -12,42 +12,43 @@ class MainState with _$MainState {
 
   //myProfile
   const factory MainState.myProfileloading() = myProfileLoading;
-
   const factory MainState.myProfilesuccess(MyProfileModel myProfileModel) =
-      myProfileSuccess;
-
+  myProfileSuccess;
   const factory MainState.myProfileerror({required String error}) =
-      myProfileError;
+  myProfileError;
 
   //playerProfile
   const factory MainState.playerProfileloading() = playerProfileLoading;
-
   const factory MainState.playerProfilesuccess(
-    MyProfileModel playerProfileModel,
-  ) = playerProfileSuccess;
-
+      MyProfileModel playerProfileModel,
+      ) = playerProfileSuccess;
   const factory MainState.playerProfileerror({required String error}) =
-      playerProfileError;
+  playerProfileError;
 
   //playerSkills
   const factory MainState.playerSkillsloading() = playerSkillsLoading;
-
   const factory MainState.playerSkillssuccess(List<Skill> skills) =
-      playerSkillsSuccess;
-
+  playerSkillsSuccess;
   const factory MainState.playerSkillserror({required String error}) =
-      playerSkillsError;
+  playerSkillsError;
 
   //categories
   const factory MainState.categoriesloading() = categoriesLoading;
-
   const factory MainState.categoriessuccess(CategoriesModel categoriesModel) =
-      categoriesSuccess;
-
+  categoriesSuccess;
   const factory MainState.categorieserror({required String error}) =
-      categoriesError;
+  categoriesError;
 
   const factory MainState.playVideoloading() = playVideoLoading;
-
   const factory MainState.playVideosuccess() = playVideoSuccess;
+
+  // ✅ Favorite Player States
+  const factory MainState.toggleFavoriteLoading() = toggleFavoriteLoading;
+  const factory MainState.toggleFavoriteSuccess({
+    required String playerId,
+    required bool isFavorited,
+    required String message,
+  }) = toggleFavoriteSuccess;
+  const factory MainState.toggleFavoriteError({required String error}) =
+  toggleFavoriteError;
 }

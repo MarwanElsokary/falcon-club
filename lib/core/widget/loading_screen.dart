@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:falcon/core/widget/app_bar_utils.dart';
+import 'package:falconclubapp/core/widget/app_bar_utils.dart';
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});

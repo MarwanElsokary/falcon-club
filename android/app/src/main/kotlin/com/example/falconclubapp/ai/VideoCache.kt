@@ -1,4 +1,4 @@
-package com.example.falcon
+package com.falconclubapp.ai
 
 import android.content.Context
 import com.google.android.exoplayer2.upstream.cache.SimpleCache

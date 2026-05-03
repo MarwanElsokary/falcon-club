@@ -1,8 +1,8 @@
 // import 'package:easy_localization/easy_localization.dart';
-// import 'package:falcon/core/helpers/extensions.dart';
-// import 'package:falcon/core/routing/routes.dart';
-// import 'package:falcon/core/thems/thems.dart';
-// import 'package:falcon/core/widget/showSuccesSnackBar.dart';
+// import 'package:falconclubapp/core/helpers/extensions.dart';
+// import 'package:falconclubapp/core/routing/routes.dart';
+// import 'package:falconclubapp/core/thems/thems.dart';
+// import 'package:falconclubapp/core/widget/showSuccesSnackBar.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:url_launcher/url_launcher.dart';

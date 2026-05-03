@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:falcon/core/networking/api_result.dart';
-import 'package:falcon/core/networking/api_constants.dart';
-import 'package:falcon/core/networking/api_error_handler.dart';
-import 'package:falcon/core/networking/api_service.dart';
-import 'package:falcon/core/helpers/shared_pref_helper.dart';
-import 'package:falcon/core/helpers/constants.dart';
+import 'package:falconclubapp/core/networking/api_result.dart';
+import 'package:falconclubapp/core/networking/api_constants.dart';
+import 'package:falconclubapp/core/networking/api_error_handler.dart';
+import 'package:falconclubapp/core/networking/api_service.dart';
+import 'package:falconclubapp/core/helpers/shared_pref_helper.dart';
+import 'package:falconclubapp/core/helpers/constants.dart';
 import '../model/player_attempts_model.dart';
 
 class PlayerAttemptsRepo {

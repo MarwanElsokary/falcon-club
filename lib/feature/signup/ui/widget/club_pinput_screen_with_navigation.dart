@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:falcon/feature/pinput/ui/screens/pin_put_screen.dart';
-import 'package:falcon/feature/login/cubit/login_cubit.dart';
-import 'package:falcon/feature/login/cubit/login_state.dart';
+import 'package:falconclubapp/feature/pinput/ui/screens/pin_put_screen.dart';
+import 'package:falconclubapp/feature/login/cubit/login_cubit.dart';
+import 'package:falconclubapp/feature/login/cubit/login_state.dart';
 
 import '../../../../core/routing/routes.dart';
 

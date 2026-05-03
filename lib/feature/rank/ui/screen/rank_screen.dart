@@ -1,5 +1,5 @@
-import 'package:falcon/core/cache/cach_Helper.dart';
-import 'package:falcon/core/thems/thems.dart';
+import 'package:falconclubapp/core/cache/cach_Helper.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,11 +20,9 @@ class _RankScreenState extends State<RankScreen> {
   @override
   void initState() {
     super.initState();
-    // الحصول على حالة الاشتراك من بيانات البروفايل المحفوظة
+    // ✅ isSubscribed دايماً بييجي من الـ API عبر الـ cache اللي اتحفظ بعد اللوجين
     final myProfile = CacheHelper.getmyProfile();
     final isSubscribed = myProfile?.data.isSubscribed ?? false;
-
-    // استدعاء emitRank مع حالة الاشتراك الحقيقية
     context.read<RankCubit>().emitRank(isUserSubscribed: isSubscribed);
   }
 
@@ -35,8 +33,8 @@ class _RankScreenState extends State<RankScreen> {
       appBar: rankAppBar(context),
       body: SingleChildScrollView(
         child: Container(
-          width: context.displayWidth / 1,
-          height: context.displayHeight / 1,
+          width: context.displayWidth,
+          height: context.displayHeight,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/Frame 1011 1.png'),
@@ -49,8 +47,9 @@ class _RankScreenState extends State<RankScreen> {
               children: [
                 const RankHeaderWidget(),
                 SizedBox(
-                  width: context.displayWidth / 1,
+                  width: context.displayWidth,
                   height: context.displayHeight / 1.2,
+                  // ✅ PlayerRankWidget بيتكلف منطق الاشتراك داخلياً
                   child: const PlayerRankWidget(),
                 ),
               ],

@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../scout/ui/widget/talent_slider_scout_widget.dart';
 import 'talent_slider_widget.dart';
 
 class JoinTalentWidget extends StatelessWidget {
@@ -45,7 +46,7 @@ class JoinTalentWidget extends StatelessWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: Colors.black,
-                    text: 'شارك في التدريبات وخلينا نشوف موهبتك'.tr(),
+                    text: 'شاهد مواهب اللاعبين في التدريبات'.tr(),
                   ),
                 ),
               ],

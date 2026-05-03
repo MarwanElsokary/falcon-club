@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/routing/routes.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/padding_utils.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
-import 'package:falcon/core/widget/text_utils.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/routing/routes.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/padding_utils.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +16,9 @@ import '../../data/model/trial_details_model.dart';
 
 class AllTrainingAtExperianceWidget extends StatelessWidget {
   const AllTrainingAtExperianceWidget({super.key, required this.exerciseList});
+
   final List<Exercise> exerciseList;
+
   @override
   Widget build(BuildContext context) {
     List catColor = [Color(0xFF451376), blueClr, Color(0xFF0C4F45)];
@@ -34,7 +36,7 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   context.pushNamed(
-                    AppRoute.trainingDetailsScreen,
+                    AppRoute.scoutTrainingDetailsScreen,
                     arguments: {
                       'exerciseId': '${exerciseList[index].id ?? ''}',
                     },

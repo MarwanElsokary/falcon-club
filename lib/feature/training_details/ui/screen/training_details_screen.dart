@@ -1,7 +1,7 @@
-// import 'package:falcon/core/helpers/extensions.dart';
-// import 'package:falcon/core/thems/thems.dart';
-// import 'package:falcon/feature/training_details/cubit/training_details_cubit.dart';
-// import 'package:falcon/feature/training_details/ui/widget/vidoe_upload_load.dart';
+// import 'package:falconclubapp/core/helpers/extensions.dart';
+// import 'package:falconclubapp/core/thems/thems.dart';
+// import 'package:falconclubapp/feature/training_details/cubit/training_details_cubit.dart';
+// import 'package:falconclubapp/feature/training_details/ui/widget/vidoe_upload_load.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';

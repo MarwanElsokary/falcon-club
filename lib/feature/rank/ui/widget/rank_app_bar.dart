@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 
 PreferredSizeWidget rankAppBar(BuildContext context) {
   return AppBar(
     backgroundColor: mainColor,
-    leading: BackButton(color: Colors.white),
     centerTitle: false,
     title: SecondTextAppBarUtils(
       text: 'الترتيب'.tr(),

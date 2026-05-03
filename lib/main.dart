@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         ),
 
         child: MaterialApp(
-          scrollBehavior:  NoGlowScrollBehavior(),
+          scrollBehavior: NoGlowScrollBehavior(),
           title: 'Winner',
           debugShowCheckedModeBanner: false,
           theme: themsApp.light,

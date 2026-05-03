@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/cache/cach_Helper.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/feature/main_screen/ui/widget/log_out_widget.dart';
+import 'package:falconclubapp/core/cache/cach_Helper.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/feature/main_screen/ui/widget/log_out_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

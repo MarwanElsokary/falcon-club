@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/training/cubit/training_cubit.dart';
-import 'package:falcon/feature/training/cubit/training_state.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/feature/training/cubit/training_cubit.dart';
+import 'package:falconclubapp/feature/training/cubit/training_state.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +36,7 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
       children: [
         BlocBuilder<TrainingCubit, TrainingState>(
           buildWhen: (previous, current) =>
-          current is allExercisesLoading ||
+              current is allExercisesLoading ||
               current is allExercisesSuccess ||
               current is allExercisesError,
           builder: (context, state) {
@@ -50,7 +50,9 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                 }
 
                 // Cap at 4 items for the carousel
-                final displayCount = exercisesToShow.length > 4 ? 4 : exercisesToShow.length;
+                final displayCount = exercisesToShow.length > 4
+                    ? 4
+                    : exercisesToShow.length;
 
                 return Column(
                   children: [
@@ -102,7 +104,7 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -111,8 +113,7 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                             fontSize: 20,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,
-                                            text:
-                                            exercise.title ?? '',
+                                            text: exercise.title ?? '',
                                           ),
                                         ),
                                         horizontalSpace(100),
@@ -124,8 +125,7 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                           fontSize: 10,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.white,
-                                          text:
-                                          exercise.categoryName ?? '',
+                                          text: exercise.categoryName ?? '',
                                         ),
                                         ClipOval(
                                           child: SizedBox(
@@ -133,7 +133,7 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                             height: 16.w,
                                             child: CachedNetworkImage(
                                               imageUrl:
-                                              exercise.categoryIcon ?? '',
+                                                  exercise.categoryIcon ?? '',
                                               fit: BoxFit.contain,
                                               placeholder: (context, url) =>
                                                   Skeletonizer(
@@ -142,26 +142,26 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                                       height: 16.w,
                                                       width: 16.w,
                                                       decoration:
-                                                      const BoxDecoration(
-                                                        shape:
-                                                        BoxShape.circle,
-                                                      ),
+                                                          const BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
                                                     ),
                                                   ),
                                               errorWidget:
                                                   (
-                                                  context,
-                                                  url,
-                                                  error,
+                                                    context,
+                                                    url,
+                                                    error,
                                                   ) => Container(
-                                                padding: EdgeInsets.all(
-                                                  3.w,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  'assets/svgs/unavailabeImage.svg',
-                                                  width: 16.w,
-                                                ),
-                                              ),
+                                                    padding: EdgeInsets.all(
+                                                      3.w,
+                                                    ),
+                                                    child: SvgPicture.asset(
+                                                      'assets/svgs/unavailabeImage.svg',
+                                                      width: 16.w,
+                                                    ),
+                                                  ),
                                             ),
                                           ),
                                         ),
@@ -186,9 +186,9 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                                 decoration: BoxDecoration(
                                                   color: greenClr,
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                    10.r,
-                                                  ),
+                                                      BorderRadius.circular(
+                                                        10.r,
+                                                      ),
                                                 ),
                                                 child: Center(
                                                   child: CenterTextUtils(
@@ -234,14 +234,18 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                                     height: 120.h,
                                                     decoration: BoxDecoration(
                                                       borderRadius:
-                                                      BorderRadius.circular(
-                                                        34.r,
-                                                      ),
+                                                          BorderRadius.circular(
+                                                            34.r,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
-                                            errorWidget: (context, url, error) =>
-                                                Padding(
+                                            errorWidget:
+                                                (
+                                                  context,
+                                                  url,
+                                                  error,
+                                                ) => Padding(
                                                   padding: EdgeInsets.all(20.w),
                                                   child: SvgPicture.asset(
                                                     'assets/svgs/unavailabeImage.svg',
@@ -322,5 +326,4 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
       ],
     );
   }
-
 }

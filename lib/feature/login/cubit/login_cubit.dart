@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../core/cache/cach_Helper.dart';
 import '../../../core/helpers/constants.dart';
 import '../../../core/helpers/shared_pref_helper.dart';
 import '../../../core/networking/dio_factory.dart';
@@ -74,26 +75,37 @@ class LoginCubit extends Cubit<LoginState> {
 
     response.when(
       success: (data) async {
-        // ── تحقق من الـ role قبل أي حاجة ─────────────────────────
+        final status = data['status']?.toString() ?? '';
         final role = data['role']?.toString() ?? '';
+        final message = data['message']?.toString() ?? 'حدث خطأ';
 
-        if (role == 'Player') {
-          // امسح أي بيانات ممكن اتحفظت
-          await SharedPrefHelper.removeSecuredString(SharedPrefKeys.userToken);
-          await SharedPrefHelper.removeSecuredString(SharedPrefKeys.userType);
-          await SharedPrefHelper.removeSecuredString(SharedPrefKeys.userId);
-          emit(const LoginState.error(
-            error: 'هذا التطبيق مخصص للأندية والكشافين فقط.\nإذا كنت لاعباً، يرجى استخدام تطبيق اللاعبين.',
-          ));
+        // لو status مش Accepted: وقّف وورّي الرسالة
+        if (status != 'Accepted') {
+          emit(LoginState.error(error: message));
           return;
         }
 
+        // Player: مش مسموح بالتطبيق ده
+        if (role == 'Player') {
+          emit(
+            const LoginState.error(
+              error:
+                  'هذا التطبيق مخصص للأندية والكشافين فقط.\nإذا كنت لاعباً، يرجى استخدام تطبيق اللاعبين.',
+            ),
+          );
+          return;
+        }
+
+        // Club | MainClub | Scout + status Accepted
         await _saveAuthData(data);
         emit(LoginState.success(data));
       },
       failure: (error) {
-        emit(LoginState.error(
-            error: error.apiErrorModel.message ?? 'فشل تسجيل الدخول'));
+        emit(
+          LoginState.error(
+            error: error.apiErrorModel.message ?? 'فشل تسجيل الدخول',
+          ),
+        );
       },
     );
   }
@@ -118,7 +130,8 @@ class LoginCubit extends Cubit<LoginState> {
         "Email": controller.email.text,
         "CodePhoneNumber": codeCountry,
         "Password": controller.password.text,
-        if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
+        if (imagePath.isNotEmpty)
+          'Photo': await _createMultipartFile(imagePath),
       }),
     );
 
@@ -128,8 +141,11 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginState.registersuccess(data));
       },
       failure: (error) {
-        emit(LoginState.registererror(
-            error: error.apiErrorModel.message ?? 'فشل التسجيل'));
+        emit(
+          LoginState.registererror(
+            error: error.apiErrorModel.message ?? 'فشل التسجيل',
+          ),
+        );
       },
     );
   }
@@ -174,9 +190,45 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginState.registersuccess(data));
       },
       failure: (error) {
-        emit(LoginState.registererror(
-          error: error.apiErrorModel.message ?? 'فشل تسجيل النادي',
-        ));
+        emit(
+          LoginState.registererror(
+            error: error.apiErrorModel.message ?? 'فشل تسجيل النادي',
+          ),
+        );
+      },
+    );
+  }
+
+  // ── تسجيل الكشاف ─────────────────────────────────────────────────────────
+  Future<void> registerScout() async {
+    if (!formKey.currentState!.validate()) return;
+    emit(const LoginState.registerloading());
+
+    final response = await _loginRepo.registerScout(
+      FormData.fromMap({
+        'PlayerId': '1',
+        'FirstName': controller.name.text,
+        'LastName': controller.lastName.text,
+        'Email': controller.email.text,
+        'PhoneNumber': controller.phone.text,
+        'Gender': gender == -1 ? 0 : gender,
+        'Password': controller.password.text,
+        if (imagePath.isNotEmpty)
+          'Photo': await _createMultipartFile(imagePath),
+      }),
+    );
+
+    response.when(
+      success: (data) async {
+        await _saveAuthData(data);
+        emit(LoginState.registersuccess(data));
+      },
+      failure: (error) {
+        emit(
+          LoginState.registererror(
+            error: error.apiErrorModel.message ?? 'فشل تسجيل الكشاف',
+          ),
+        );
       },
     );
   }
@@ -188,13 +240,13 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> verifyOtp() async {
     final code = controller.verifyCode.text.trim();
     if (code.isEmpty) {
-      emit(const LoginState.verificationCodeerror(
-          error: 'يجب إدخال كود التحقق'));
+      emit(
+        const LoginState.verificationCodeerror(error: 'يجب إدخال كود التحقق'),
+      );
       return;
     }
     if (code.length != 6) {
-      emit(const LoginState.verificationCodeerror(
-          error: 'يجب إدخال 6 أرقام'));
+      emit(const LoginState.verificationCodeerror(error: 'يجب إدخال 6 أرقام'));
       return;
     }
 
@@ -205,17 +257,20 @@ class LoginCubit extends Cubit<LoginState> {
     response.when(
       success: (data) async {
         await _saveAuthData(data);
-        emit(LoginState.verificationCodesuccess(data));
+        emit(const LoginState.verificationCodesuccess('success'));
       },
       failure: (error) {
-        emit(LoginState.verificationCodeerror(
-          error: error.apiErrorModel.message ?? 'كود التحقق غير صحيح',
-        ));
+        emit(
+          LoginState.verificationCodeerror(
+            error: error.apiErrorModel.message ?? 'كود التحقق غير صحيح',
+          ),
+        );
       },
     );
   }
 
-  Future<void> emitverifyCodeStates() async => await verifyOtp();
+  // Old method name for backward compatibility
+  void emitverifyCodeStates() => verifyOtp();
 
   // ============================================================================
   // COMPLETE REGISTRATION
@@ -224,53 +279,40 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> completeRegistration() async {
     final validationError = _validateProfileData();
     if (validationError != null) {
-      emit(LoginState.updateProfileerror(error: validationError));
+      emit(LoginState.profileCompleteerror(error: validationError));
       return;
     }
 
-    emit(const LoginState.updateProfileLoading());
+    emit(const LoginState.profileCompleteloading());
 
-    final userId = await _getUserId();
-    if (userId == null) {
-      emit(const LoginState.updateProfileerror(
-        error: 'لم يتم العثور على معرف المستخدم. يرجى إعادة تسجيل الدخول',
-      ));
-      return;
-    }
-
-    final formData = FormData.fromMap({
-      'UserId': userId,
-      'Height': double.tryParse(controller.height.text) ?? 0.0,
-      'Weight': double.tryParse(controller.weight.text) ?? 0.0,
-      'PositionId': positionID.value,
-      'Direction': direction,
-      'BirthDate': birthDate,
-      'Gender': gender,
-      'BranchId': selectedUniversityId ?? 0,
-      'ClubId': selectedCollegesId ?? 0,
-      'ClubJoin': DateTime.now().toIso8601String(),
-      if (imagePath.isNotEmpty) 'Photo': await _createMultipartFile(imagePath),
-    });
-
-    final response = await _loginRepo.completeRegistration(formData);
+    final response = await _loginRepo.completeRegistration(
+      FormData.fromMap({
+        "Height": controller.height.text,
+        "Weight": controller.weight.text,
+        "Gender": gender == -1 ? 0 : gender,
+        "Direction": direction,
+        "BirthDate": birthDate,
+        "PositionId": positionID.value,
+        if (selectedCollegesId != null) "ClubId": selectedCollegesId.toString(),
+        if (selectedUniversityId != null)
+          "UniversityId": selectedUniversityId.toString(),
+        if (imagePath.isNotEmpty)
+          'Photo': await _createMultipartFile(imagePath),
+      }),
+    );
 
     response.when(
-      success: (data) async {
-        await SharedPrefHelper.setBool(SharedPrefKeys.isCompleted, true);
-        emit(LoginState.updateProfilesuccess(data));
-      },
-      failure: (error) {
-        emit(LoginState.updateProfileerror(
-          error: error.apiErrorModel.message ?? 'خطأ في إكمال التسجيل',
-        ));
-      },
+      success: (data) => emit(LoginState.profileCompletesuccess(data)),
+      failure: (error) => emit(
+        LoginState.profileCompleteerror(
+          error: error.apiErrorModel.message ?? 'فشل إكمال التسجيل',
+        ),
+      ),
     );
   }
 
-  void emitCompleteRegistration() => completeRegistration();
-
   // ============================================================================
-  // PROFILE UPDATE
+  // UPDATE PROFILE
   // ============================================================================
 
   Future<void> updateProfile() async {
@@ -278,16 +320,13 @@ class LoginCubit extends Cubit<LoginState> {
 
     final response = await _loginRepo.updateProfile(
       FormData.fromMap({
-        if (controller.height.text.isNotEmpty)
-          "Height": controller.height.text,
-        if (controller.weight.text.isNotEmpty)
-          "Weight": controller.weight.text,
-        "PositionId": positionID.value.toString(),
-        "Direction": direction.toString(),
+        "Height": controller.height.text,
+        "Weight": controller.weight.text,
+        "Gender": gender == -1 ? 0 : gender,
+        "Direction": direction,
         "BirthDate": birthDate,
-        if (gender != -1) "Gender": gender.toString(),
-        if (selectedCollegesId != null)
-          "ClubId": selectedCollegesId.toString(),
+        "PositionId": positionID.value,
+        if (selectedCollegesId != null) "ClubId": selectedCollegesId.toString(),
         if (selectedUniversityId != null)
           "UniversityId": selectedUniversityId.toString(),
         if (imagePath.isNotEmpty)
@@ -297,9 +336,11 @@ class LoginCubit extends Cubit<LoginState> {
 
     response.when(
       success: (data) => emit(LoginState.updateProfilesuccess(data)),
-      failure: (error) => emit(LoginState.updateProfileerror(
-        error: error.apiErrorModel.message ?? 'فشل تحديث الملف الشخصي',
-      )),
+      failure: (error) => emit(
+        LoginState.updateProfileerror(
+          error: error.apiErrorModel.message ?? 'فشل تحديث الملف الشخصي',
+        ),
+      ),
     );
   }
 
@@ -318,9 +359,11 @@ class LoginCubit extends Cubit<LoginState> {
         emit(const LoginState.universitysuccess());
       },
       failure: (error) {
-        emit(LoginState.universityerror(
-          error: error.apiErrorModel.message ?? 'فشل تحميل المدن',
-        ));
+        emit(
+          LoginState.universityerror(
+            error: error.apiErrorModel.message ?? 'فشل تحميل المدن',
+          ),
+        );
       },
     );
   }
@@ -334,16 +377,21 @@ class LoginCubit extends Cubit<LoginState> {
       success: (data) {
         collegesList = data.data;
         if (collegesList.isEmpty) {
-          emit(const LoginState.collegeserror(
-              error: 'لا توجد أندية متاحة في هذه المدينة حالياً'));
+          emit(
+            const LoginState.collegeserror(
+              error: 'لا توجد أندية متاحة في هذه المدينة حالياً',
+            ),
+          );
         } else {
           emit(const LoginState.collegessuccess());
         }
       },
       failure: (error) {
-        emit(LoginState.collegeserror(
-          error: error.apiErrorModel.message ?? 'فشل تحميل الأندية',
-        ));
+        emit(
+          LoginState.collegeserror(
+            error: error.apiErrorModel.message ?? 'فشل تحميل الأندية',
+          ),
+        );
       },
     );
   }
@@ -372,31 +420,36 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   // ============================================================================
-  // SAVE AUTH DATA — يحفظ role من الـ response مباشرة
+  // SAVE AUTH DATA
   // ============================================================================
 
   Future<void> _saveAuthData(Map<String, dynamic> response) async {
+    // ✅ امسح الـ cache القديم عشان ميرجعش profile غلط لـ يوزر جديد
+    await CacheHelper.clearShared();
+
+    final role = response['role']?.toString() ?? '';
+    if (role.isNotEmpty) {
+      await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, role);
+      log('✅ Role saved: $role');
+    }
+
     final token = response['token']?.toString();
-    if (token == null || token.isEmpty) return;
+
+    if (token == null || token.isEmpty) {
+      log('⚠️ No token in response — role only saved: $role');
+      return;
+    }
 
     await SharedPrefHelper.setSecuredString(SharedPrefKeys.userToken, token);
     DioFactory.setTokenIntoHeaderAfterLogin(token);
 
-    // ── userId ────────────────────────────────────────────────────
     String? userId = response['userId']?.toString();
     userId ??= _extractUserIdFromToken(token);
     if (userId != null) {
       await SharedPrefHelper.setSecuredString(SharedPrefKeys.userId, userId);
     }
 
-    // ── isCompleted — دايما true حسب الـ API ─────────────────────
-    await SharedPrefHelper.setBool(SharedPrefKeys.isCompleted, true);
-
-    // ── role — نحفظه مباشرة من الـ response ─────────────────────
-    // الـ API بيرجع: "Club" | "MainClub" | "Scout" | "Player"
-    final role = response['role']?.toString() ?? '';
-    await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, role);
-    log('✅ Role saved: $role');
+    log('✅ Auth data saved — role: $role, userId: $userId');
   }
 
   // ============================================================================
@@ -416,14 +469,16 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<String?> _getUserId() async {
-    String? userId =
-    await SharedPrefHelper.getSecuredString(SharedPrefKeys.userId);
+    String? userId = await SharedPrefHelper.getSecuredString(
+      SharedPrefKeys.userId,
+    );
     if (userId != null && userId.isNotEmpty && _isValidGuid(userId)) {
       return userId;
     }
 
-    final token =
-    await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
+    final token = await SharedPrefHelper.getSecuredString(
+      SharedPrefKeys.userToken,
+    );
     if (token != null && token.isNotEmpty) {
       userId = _extractUserIdFromToken(token);
       if (userId != null && _isValidGuid(userId)) {
@@ -436,7 +491,8 @@ class LoginCubit extends Cubit<LoginState> {
     String? apiUserId;
     response.when(
       success: (data) {
-        apiUserId = data['userId']?.toString() ??
+        apiUserId =
+            data['userId']?.toString() ??
             data['id']?.toString() ??
             data['uid']?.toString();
       },
@@ -446,7 +502,9 @@ class LoginCubit extends Cubit<LoginState> {
 
     if (apiUserId != null && _isValidGuid(apiUserId!)) {
       await SharedPrefHelper.setSecuredString(
-          SharedPrefKeys.userId, apiUserId!);
+        SharedPrefKeys.userId,
+        apiUserId!,
+      );
       return apiUserId;
     }
     return null;
@@ -456,8 +514,9 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final parts = token.split('.');
       if (parts.length != 3) return null;
-      final payloadJson = utf8
-          .decode(base64Url.decode(base64Url.normalize(parts[1])));
+      final payloadJson = utf8.decode(
+        base64Url.decode(base64Url.normalize(parts[1])),
+      );
       final payload = json.decode(payloadJson);
       return payload['uid']?.toString() ??
           payload['userId']?.toString() ??
@@ -479,7 +538,8 @@ class LoginCubit extends Cubit<LoginState> {
     final compressedBytes = await _compressImage(file);
     final tempDir = await getTemporaryDirectory();
     final tempFile = File(
-        '${tempDir.path}/compressed_${DateTime.now().millisecondsSinceEpoch}.jpg');
+      '${tempDir.path}/compressed_${DateTime.now().millisecondsSinceEpoch}.jpg',
+    );
     await tempFile.writeAsBytes(compressedBytes);
     return MultipartFile.fromFile(
       tempFile.path,

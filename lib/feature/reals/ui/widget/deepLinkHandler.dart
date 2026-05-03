@@ -50,8 +50,8 @@ class DeepLinkHandler {
     log('   Host: ${uri.host}');
     log('   Path: ${uri.path}');
 
-    // Handle both custom scheme (fteet://) and universal links (https://falconai.net)
-    if (uri.scheme == 'fteet' || uri.host == 'falconai.net' || uri.host == 'www.falconai.net') {
+    // Handle both custom scheme (fteet://) and universal links (https://falconclubappai.net)
+    if (uri.scheme == 'fteet' || uri.host == 'falconclubappai.net' || uri.host == 'www.falconai.net') {
       // Extract reel ID from path
       // Examples:
       // fteet://reel/123

@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/shared_pref_helper.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/routing/routes.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/core/widget/url-call.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/shared_pref_helper.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/routing/routes.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/core/widget/url-call.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -223,7 +223,7 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                 //   title: 'سياسة الخصوصية'.tr(),
                 //   onTap: () => urlCall(
                 //     context: context,
-                //     url: 'https://falconai.net/api/Website/GetPrivacy',
+                //     url: 'https://falconclubappai.net/api/Website/GetPrivacy',
                 //   ),
                 // ),
                 // _buildDivider(),

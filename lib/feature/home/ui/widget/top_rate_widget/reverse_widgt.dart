@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/feature/home/ui/widget/top_rate_widget/top_three_rate_widget.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/feature/home/ui/widget/top_rate_widget/top_three_rate_widget.dart';
 import 'package:flutter/material.dart';
 
 class ReverseWidgt extends StatelessWidget {

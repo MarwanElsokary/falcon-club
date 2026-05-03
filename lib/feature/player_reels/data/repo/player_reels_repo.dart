@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:falcon/core/networking/api_constants.dart';
-import 'package:falcon/core/networking/api_error_handler.dart';
-import 'package:falcon/core/networking/api_result.dart';
-import 'package:falcon/core/networking/api_service.dart';
-import 'package:falcon/feature/reals/data/model/real_model.dart';
+import 'package:falconclubapp/core/networking/api_constants.dart';
+import 'package:falconclubapp/core/networking/api_error_handler.dart';
+import 'package:falconclubapp/core/networking/api_result.dart';
+import 'package:falconclubapp/core/networking/api_service.dart';
+import 'package:falconclubapp/feature/reals/data/model/real_model.dart';
 
 /// Repo مخصوص لجلب ريلز اللاعب في الكارت
 /// — يستخدم Dio مباشرة عشان نبعت playerId صح

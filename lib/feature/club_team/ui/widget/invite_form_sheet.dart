@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/feature/club_team/ui/screen/invite_success_screen.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/feature/club_team/ui/screen/invite_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart' show DateFormat;

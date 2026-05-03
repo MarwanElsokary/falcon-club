@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:falcon/core/helpers/constants.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/shared_pref_helper.dart';
-import 'package:falcon/core/widget/button_utils.dart';
-import 'package:falcon/core/widget/loading_button_utils.dart';
-import 'package:falcon/core/widget/showSuccesSnackBar.dart';
-import 'package:falcon/core/widget/show_error_snack_bar.dart';
+import 'package:falconclubapp/core/helpers/constants.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/shared_pref_helper.dart';
+import 'package:falconclubapp/core/widget/button_utils.dart';
+import 'package:falconclubapp/core/widget/loading_button_utils.dart';
+import 'package:falconclubapp/core/widget/showSuccesSnackBar.dart';
+import 'package:falconclubapp/core/widget/show_error_snack_bar.dart';
 
 import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';

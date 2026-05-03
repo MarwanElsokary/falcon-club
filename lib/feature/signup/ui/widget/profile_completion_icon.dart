@@ -35,7 +35,7 @@
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text('Falcon'),
+//         title: Text('falconclubapp'),
 //         actions: [
 //           if (_showProfileAlert)
 //             IconButton(

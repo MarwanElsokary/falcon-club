@@ -2,11 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/button_utils.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/core/widget/show_error_snack_bar.dart'; // إضافة الاستيراد
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/button_utils.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/core/widget/show_error_snack_bar.dart'; // إضافة الاستيراد
 import '../../../core/routing/routes.dart';
 import '../../signup/ui/widget/phone_auth_text_from_field.dart';
 import '../cubit/forget_password_cubit.dart';

@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/helpers/shared_pref_helper.dart';
-import 'package:falcon/core/widget/padding_utils.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/login/cubit/login_cubit.dart';
-import 'package:falcon/feature/login/cubit/login_state.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/helpers/shared_pref_helper.dart';
+import 'package:falconclubapp/core/widget/padding_utils.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/feature/login/cubit/login_cubit.dart';
+import 'package:falconclubapp/feature/login/cubit/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,15 +28,32 @@ class LoginScreen extends StatelessWidget {
       listener: (context, state) async {
         state.whenOrNull(
           success: (_) async {
-            final isCompleted =
-                await SharedPrefHelper.getBool(SharedPrefKeys.isCompleted) ??
-                    false;
+            await Future.delayed(const Duration(milliseconds: 1100));
+            String? userToken = await SharedPrefHelper.getSecuredString(
+              SharedPrefKeys.userToken,
+            );
+            log(userToken.toString());
 
-            if (isCompleted) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRoute.clubMainScreen,
-                    (_) => false,
+            final userType = await SharedPrefHelper.getSecuredString(
+              SharedPrefKeys.userType,
+            );
+
+            await SharedPrefHelper.setSecuredString(
+              SharedPrefKeys.lang,
+              EasyLocalization.of(context)!.locale.toString(),
+            );
+            if (userToken.toString().isNotEmpty) {
+              final String route;
+              if (userType == 'Scout') {
+                route = AppRoute.scoutMainScreen;
+              } else {
+                // Club | MainClub | أي role تاني → clubMainScreen
+                route = AppRoute.clubMainScreen;
+              }
+              // ignore: use_build_context_synchronously
+              context.pushNamedAndRemoveUntil(
+                route,
+                predicate: (route) => false,
               );
             } else {
               Navigator.pushNamedAndRemoveUntil(
@@ -44,7 +63,6 @@ class LoginScreen extends StatelessWidget {
               );
             }
           },
-
         );
       },
       child: Scaffold(
@@ -91,9 +109,7 @@ class LoginScreen extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: TextButton(
                           onPressed: () {
-                            context.pushNamed(
-                              AppRoute.forgetPasswordScreen,
-                            );
+                            context.pushNamed(AppRoute.forgetPasswordScreen);
                           },
                           child: Text(
                             'نسيت كلمة المرور؟'.tr(),

@@ -1,4 +1,4 @@
-import 'package:falcon/feature/reals/data/model/real_model.dart';
+import 'package:falconclubapp/feature/reals/data/model/real_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'reals_state.freezed.dart';
 

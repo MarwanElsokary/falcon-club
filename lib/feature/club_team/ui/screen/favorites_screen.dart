@@ -3,14 +3,14 @@
 // ══════════════════════════════════════════════════════════════════
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/thems/thems.dart';
-import 'package:falcon/core/widget/text_utils.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_cubit.dart';
-import 'package:falcon/feature/club_team/cubit/club_team_state.dart';
-import 'package:falcon/feature/club_team/data/model/club_player_model.dart';
-import 'package:falcon/feature/club_team/ui/widget/favorite_player_card_widget.dart';
-import 'package:falcon/feature/club_team/ui/widget/invite_form_sheet.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/text_utils.dart';
+import 'package:falconclubapp/feature/club_team/cubit/club_team_cubit.dart';
+import 'package:falconclubapp/feature/club_team/cubit/club_team_state.dart';
+import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
+import 'package:falconclubapp/feature/club_team/ui/widget/favorite_player_card_widget.dart';
+import 'package:falconclubapp/feature/club_team/ui/widget/invite_form_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

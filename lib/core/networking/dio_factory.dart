@@ -7,84 +7,76 @@ import '../helpers/constants.dart';
 import '../helpers/shared_pref_helper.dart';
 
 class DioFactory {
-  /// Private constructor
   DioFactory._();
 
   static Dio? dio;
   static bool isRefreshing = false;
 
-
   static Dio getDio() {
-    Duration timeOut = const Duration(seconds: 30);
-
     if (dio == null) {
       dio = Dio();
       dio!
-        ..options.connectTimeout = timeOut
-        ..options.receiveTimeout = timeOut;
-      addDioHeaders();
+        ..options.connectTimeout = const Duration(seconds: 30)
+        ..options.receiveTimeout = const Duration(seconds: 30)
+        ..options.headers = {
+          'Accept-Language': 'ar',
+          'Accept': 'application/json',
+        };
+
+      _addTokenInterceptor();   // ← بيجيب الـ token قبل كل request
       addDioInterceptor();
-      addTokenRefreshInterceptor(); // Add token refresh interceptor
-      return dio!;
-    } else {
-      return dio!;
+      addTokenRefreshInterceptor();
     }
+    return dio!;
   }
 
-  static void addDioHeaders() async {
-    dio?.options.headers = {
-      'Accept-Language': 'ar',
-      'Authorization':
-          'Bearer ${await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken)}',
-      "Accept": "application/json",
-    };
+  // ─── Token Interceptor (الحل الجديد) ────────────────────────────────────────
+  // بدل ما نحط الـ token مرة واحدة وقت الـ init (وهو مش موجود بعد)،
+  // بنجيبه من الـ SecureStorage قبل كل request تلقائياً.
+  static void _addTokenInterceptor() {
+    dio?.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = await SharedPrefHelper.getSecuredString(
+            SharedPrefKeys.userToken,
+          );
+          if (token.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+          return handler.next(options);
+        },
+      ),
+    );
   }
 
+  // ─── بعد اللوجين مباشرةً — بنحدث الـ header فوراً بدون ما ننتظر request ──
   static void setTokenIntoHeaderAfterLogin(String token) {
-    dio?.options.headers = {
-      'Accept-Language': 'ar',
-      'Authorization': 'Bearer $token',
-      "Accept": "application/json",
-    };
+    dio?.options.headers['Authorization'] = 'Bearer $token';
+    log('✅ Token set in Dio headers after login');
   }
 
-  static void addLangDioHeaders() async {
-    dio?.options.headers = {
-      'Accept-Language': 'ar',
-      'Authorization':
-          'Bearer ${await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken)}',
-      "Accept": "application/json",
-    };
-  }
-
+  // ─── Logger ─────────────────────────────────────────────────────────────────
   static void addDioInterceptor() {
     if (kDebugMode) {
       dio?.interceptors.add(
-        PrettyDioLogger(
-          requestBody: true,
-          responseBody: false,
-        ),
+        PrettyDioLogger(requestBody: true, responseBody: false),
       );
     }
-
   }
 
-  /// Add token refresh interceptor
+  // ─── Token Refresh (401) ────────────────────────────────────────────────────
   static void addTokenRefreshInterceptor() {
     dio?.interceptors.add(
       InterceptorsWrapper(
         onError: (error, handler) async {
-          // Check if the error is due to an unauthorized request (token expired)
           if (error.response?.statusCode == 401 && !isRefreshing) {
             isRefreshing = true;
             try {
               final newToken = await refreshToken();
               isRefreshing = false;
               if (newToken != null) {
-                // Update the header with the new token
                 setTokenIntoHeaderAfterLogin(newToken);
 
-                // Retry the original request with the new token
                 final options = error.response!.requestOptions;
                 options.headers['Authorization'] = 'Bearer $newToken';
                 final response = await dio!.request(
@@ -99,35 +91,31 @@ class DioFactory {
                 return handler.resolve(response);
               }
             } catch (e) {
-              // If token refresh fails, propagate the error
               isRefreshing = false;
-              return handler.reject(error);            }
+              return handler.reject(error);
+            }
           }
-          // Propagate other errors
           return handler.next(error);
         },
       ),
     );
   }
 
-  /// Function to refresh the token
   static Future<String?> refreshToken() async {
     try {
-      final refreshToken = await SharedPrefHelper.getSecuredString(
+      final storedRefreshToken = await SharedPrefHelper.getSecuredString(
         SharedPrefKeys.refreshToken,
       );
       final response = await dio!.post(
         'http://ec2-3-91-38-73.compute-1.amazonaws.com/api/driver/refresh',
-        options: Options(headers: {'Authorization': 'Bearer $refreshToken'}),
+        options: Options(
+          headers: {'Authorization': 'Bearer $storedRefreshToken'},
+        ),
       );
-
       if (response.statusCode == 200) {
         final newAccessToken = response.data['data']['access_token'];
         final newRefreshToken = response.data['data']['refresh_token'];
-        log('newToken$newAccessToken');
-        log('newRefreshToken$newRefreshToken');
-
-        // Save the new tokens to secure storage
+        log('newToken: $newAccessToken');
         await SharedPrefHelper.setSecuredString(
           SharedPrefKeys.userToken,
           newAccessToken,
@@ -136,7 +124,6 @@ class DioFactory {
           SharedPrefKeys.refreshToken,
           newRefreshToken,
         );
-
         return newAccessToken;
       }
     } catch (e) {
@@ -144,4 +131,16 @@ class DioFactory {
     }
     return null;
   }
+
+  // ─── deprecated — متبقاش تستخدمها ──────────────────────────────────────────
+  @Deprecated('Use _addTokenInterceptor instead — token is now set per-request')
+  static void addDioHeaders() async {
+    final token = await SharedPrefHelper.getSecuredString(
+      SharedPrefKeys.userToken,
+    );
+    dio?.options.headers['Authorization'] = 'Bearer $token';
+  }
+
+  @Deprecated('Use _addTokenInterceptor instead')
+  static void addLangDioHeaders() => addDioHeaders();
 }

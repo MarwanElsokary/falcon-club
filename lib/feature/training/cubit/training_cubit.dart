@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:falcon/feature/training/cubit/training_state.dart';
+import 'package:falconclubapp/feature/training/cubit/training_state.dart';
 
 import '../../../core/cache/cach_Helper.dart';
 import '../data/repo/training_repo.dart';

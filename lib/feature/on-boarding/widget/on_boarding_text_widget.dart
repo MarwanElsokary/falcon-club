@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:falcon/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
 
 class OnBoardingTextWidget extends StatefulWidget {
   const OnBoardingTextWidget({super.key});

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:lottie/lottie.dart';
-import 'package:falcon/core/widget/show_error_snack_bar.dart';
-import 'package:falcon/feature/login/cubit/login_cubit.dart';
+import 'package:falconclubapp/core/widget/show_error_snack_bar.dart';
+import 'package:falconclubapp/feature/login/cubit/login_cubit.dart';
 
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/thems/thems.dart';

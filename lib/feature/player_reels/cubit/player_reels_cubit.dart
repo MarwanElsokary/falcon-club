@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:falcon/feature/reals/data/model/real_model.dart';
+import 'package:falconclubapp/feature/reals/data/model/real_model.dart';
 import '../data/repo/player_reels_repo.dart';
 
 // ── State ─────────────────────────────────────────────────────────────────────

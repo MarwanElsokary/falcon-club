@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/helpers/spacing.dart';
-import 'package:falcon/core/widget/slide_enimation_widget.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/spacing.dart';
+import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -51,21 +51,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     List contact = [
       {
-        'title': 'راقب تصنيفك بين اللاعبين'.tr(),
+        'title': 'اكتشف أفضل المواهب بسهولة'.tr(),
         'desc':
-            'تابع ترتيبك وشوف وين وصلت بين اللاعبين. كل تمرين تنفّذه وكل فيديو ترفعه يرفع درجتك ويقرّبك للمراكز الأولى.'
+            'تصفح لاعبين من مختلف المستويات، شاهد فيديوهاتهم وابدأ في اكتشاف المواهب اللي تناسب ناديك.'
                 .tr(),
       },
       {
-        'title': 'أبرز أفضل لقطاتك'.tr(),
+        'title': 'قيّم اللاعبين بدقة'.tr(),
         'desc':
-            'اختر تمرين، صوّر نفسك وأنت تؤدّيه، وارفع الفيديو، كل فيديو يقرّبك إنك تنشاف من الأندية.'
+            'راجع أداء اللاعبين من خلال التمارين والفيديوهات، وسجّل تقييمك وملاحظاتك بكل سهولة'
                 .tr(),
       },
       {
-        'title': 'اظهر مهاراتك للأندية'.tr(),
+        'title': 'ابنِ فريقك بذكاء'.tr(),
         'desc':
-            'اختر تمرين، صوّر نفسك وأنت تؤدّيه، وارفع الفيديو، كل فيديو يقرّبك إنك تنشاف من الأندية.'
+            'اختار اللاعبين المناسبين وكون قائمة بالمواهب المرشحة، وابدأ في اتخاذ قرارات احترافية لتقوية فريقك.'
                 .tr(),
       },
     ];

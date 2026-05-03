@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:falcon/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:lottie/lottie.dart';
 
 class CloseAnimation extends StatefulWidget {

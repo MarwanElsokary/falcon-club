@@ -1,4 +1,4 @@
-import 'package:falcon/feature/signup/ui/widget/profile_completion_banner.dart';
+import 'package:falconclubapp/feature/signup/ui/widget/profile_completion_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:falcon/core/networking/api_result.dart';
-import 'package:falcon/core/networking/api_error_handler.dart';
-import 'package:falcon/core/networking/api_service.dart';
+import 'package:falconclubapp/core/networking/api_result.dart';
+import 'package:falconclubapp/core/networking/api_error_handler.dart';
+import 'package:falconclubapp/core/networking/api_service.dart';
 
 import '../model/player_report_model.dart';
 

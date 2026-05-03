@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falcon/core/di/dependency_injection.dart';
-import 'package:falcon/core/widget/showSuccesSnackBar.dart';
-import 'package:falcon/feature/signup/ui/widget/club_pinput_screen_with_navigation.dart';
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/core/widget/showSuccesSnackBar.dart';
+import 'package:falconclubapp/feature/signup/ui/widget/club_pinput_screen_with_navigation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

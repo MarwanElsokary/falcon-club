@@ -1,4 +1,4 @@
-package com.example.falcon
+package com.falconclubapp.ai
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine

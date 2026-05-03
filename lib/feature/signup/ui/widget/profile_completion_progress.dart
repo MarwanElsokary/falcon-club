@@ -1,6 +1,6 @@
 // lib/feature/profile/widget/profile_completion_progress.dart
 import 'package:flutter/material.dart';
-import 'package:falcon/core/helpers/shared_pref_helper.dart';
+import 'package:falconclubapp/core/helpers/shared_pref_helper.dart';
 
 import '../../../../core/helpers/constants.dart';
 

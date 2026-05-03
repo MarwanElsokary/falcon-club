@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
-import 'package:falcon/core/helpers/extensions.dart';
-import 'package:falcon/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/helpers/extensions.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
 
 import 'package:skeletonizer/skeletonizer.dart';
 

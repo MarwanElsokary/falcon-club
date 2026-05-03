@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:falcon/feature/reals/data/repo/reals_repo.dart';
+import 'package:falconclubapp/feature/reals/data/repo/reals_repo.dart';
 import 'package:flutter/widgets.dart';
 
 import '../data/model/real_model.dart';
