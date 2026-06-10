@@ -19,6 +19,8 @@ import '../../../club_team/ui/screen/club_my_team_screen.dart';
 import '../../../signup/ui/widget/profile_completion_middleware.dart';
 import '../../cubit/main_cubit.dart';
 import '../../cubit/main_state.dart';
+import '../../data/model/user_role.dart';
+import 'drawer_permissions.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -40,35 +42,57 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> itemData = [
-      {
+    final role = UserRoleHelper.getCurrentRole(
+      CacheHelper.getString('userType'),
+    );
+
+    final List<Map<String, dynamic>> itemData = [];
+    if (DrawerPermissions.canShowProfile(role)) {
+      itemData.add({
         'width': 20.w,
         'icon': 'assets/svgs/profile.svg',
         'title': 'الحساب'.tr(),
         'ontap': () {
-          const ClubMyTeamScreen();
           _closeDrawer(context);
-          context.pushNamed(
-            AppRoute.clubProfileScreen,
-          ); // ✅ استخدم المسار الجديد
+          context.pushNamed(AppRoute.clubProfileScreen);
         },
-      },
-      // {
-      //   'width': 20.w,
-      //   'icon': 'assets/svgs/svgexport-18 (1) 2.svg',
-      //   'title': 'تعديل الحساب'.tr(),
-      //   'ontap': () {
-      //     _closeDrawer(context);
-      //     context.pushNamed(AppRoute.signUpScreen, arguments: {'update': true});
-      //   },
-      // },
-      {
+      });
+    }
+    if (DrawerPermissions.clubInfoScreen(role)) {
+      itemData.add({
+        'width': 20.w,
+        'icon': 'assets/svgs/profile.svg',
+        'title': 'الحساب'.tr(),
+        'ontap': () {
+          _closeDrawer(context);
+          context.pushNamed(AppRoute.clubInfoScreen);
+        },
+      });
+    }
+    if (DrawerPermissions.canShowNotifications(role)) {
+      itemData.add({
         'width': 16.w,
         'icon': 'assets/svgs/notification_icon.svg',
         'title': 'الاشعارات'.tr(),
         'ontap': () {},
-      },
-      {
+      });
+    }
+    if (DrawerPermissions.canShowMyTeam(role)) {
+      itemData.add({
+        'width': 20.w,
+        'icon': 'assets/svgs/rank_icon.svg',
+        'title': 'فريقي'.tr(),
+        'ontap': () {
+          _closeDrawer(context);
+          context.pushNamed(
+            AppRoute.clubMyTeamScreen,
+            arguments: {'context': context},
+          );
+        },
+      });
+    }
+    if (DrawerPermissions.canShowRank(role)) {
+      itemData.add({
         'width': 20.w,
         'icon': 'assets/svgs/rank_icon.svg',
         'title': 'الترتيب'.tr(),
@@ -79,8 +103,10 @@ class CustomDrawer extends StatelessWidget {
             arguments: {'context': context},
           );
         },
-      },
-      {
+      });
+    }
+    if (DrawerPermissions.canShowExperiments(role)) {
+      itemData.add({
         'width': 20.w,
         'icon': 'assets/svgs/Experiments_select.svg',
         'title': 'التجارب'.tr(),
@@ -88,8 +114,10 @@ class CustomDrawer extends StatelessWidget {
           _closeDrawer(context);
           context.pushNamed(AppRoute.allExperimentScreen);
         },
-      },
-      {
+      });
+    }
+    if (DrawerPermissions.canShowTraining(role)) {
+      itemData.add({
         'width': 20.w,
         'icon': 'assets/svgs/Training_select.svg',
         'title': 'التدريبات'.tr(),
@@ -97,47 +125,40 @@ class CustomDrawer extends StatelessWidget {
           _closeDrawer(context);
           context.pushNamed(AppRoute.trainingScreen);
         },
+      });
+    }
+    itemData.add({
+      'width': 20.w,
+      'icon': 'assets/svgs/lock-svgrepo-com.svg',
+      'title': 'سياسة الخصوصية'.tr(),
+      'ontap': () {
+        urlCall(
+          context: context,
+          url: 'https://falconai.net/api/Website/GetPrivacy',
+        );
       },
-      // {
-      //   'width': 20.w,
-      //   'icon': 'assets/svgs/ruler-angular-svgrepo-com.svg',
-      //   'title': 'القياسات'.tr(),
-      //   'ontap': () {
-      //     _closeDrawer(context);
-      //     context.pushNamed(AppRoute.measurementScreen);
-      //   },
-      // },
-      {
-        'width': 20.w,
-        'icon': 'assets/svgs/lock-svgrepo-com.svg',
-        'title': 'سياسة الخصوصية'.tr(),
-        'ontap': () {
-          urlCall(
-            context: context,
-            url: 'https://falconai.net/api/Website/GetPrivacy',
-          );
-        },
+    });
+    itemData.add({
+      'width': 15.w,
+      'icon': 'assets/svgs/logout_icon.svg',
+      'title': 'تسجيل الخروج'.tr(),
+      'ontap': () {
+        _closeDrawer(context);
+        showLogoutDialog(
+          context,
+          () {
+            context.pushNamedAndRemoveUntil(
+              AppRoute.loginScreen,
+              predicate: (route) => false,
+            );
+          },
+          'هل انت متأكد انك تريد تسجيل الخروج من هذا الحساب'.tr(),
+          'assets/lottie/Log out.json',
+        );
       },
-      {
-        'width': 15.w,
-        'icon': 'assets/svgs/logout_icon.svg',
-        'title': 'تسجيل الخروج'.tr(),
-        'ontap': () {
-          _closeDrawer(context);
-          showLogoutDialog(
-            context,
-            () {
-              context.pushNamedAndRemoveUntil(
-                AppRoute.loginScreen,
-                predicate: (route) => false,
-              );
-            },
-            'هل انت متأكد انك تريد تسجيل الخروج من هذا الحساب'.tr(),
-            'assets/lottie/Log out.json',
-          );
-        },
-      },
-      {
+    });
+    if (DrawerPermissions.canDeleteAccount(role)) {
+      itemData.add({
         'width': 20.w,
         'icon': 'assets/svgs/delete-02.svg',
         'title': 'حذف الحساب'.tr(),
@@ -155,8 +176,8 @@ class CustomDrawer extends StatelessWidget {
             'assets/lottie/Log out.json',
           );
         },
-      },
-    ];
+      });
+    }
 
     return Drawer(
       width: context.displayWidth,
@@ -173,7 +194,7 @@ class CustomDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: SingleChildScrollView( 
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       ProfileCheckWrapper(

@@ -5,6 +5,7 @@ class AppRoute {
   static const String welcomeScreen = '/welcomeScreen'; //welcomeScreen
   static const String scoutTrainingDetailsScreen = '/scoutTrainingDetailsScreen'; //welcomeScreen
   static const String completeProfileScreen = '/completeProfileScreen';
+  static const String clubInfoScreen = '/clubInfoScreen';
 
   static const String measurementsScreen = '/measurementsScreen';
   static const String measurementDetailsScreen = '/measurementDetailsScreen';
@@ -19,6 +20,7 @@ class AppRoute {
   //welcomeScreen
   static const String resetPasswordScreen = '/resetPassword';
   static const String scoutMainScreen = '/scoutMainScreen';
+  static const String mainClubScreen = '/mainClubScreen';
   static const String clubProfileScreen = '/clubMyTeamScreen';
   static const String scoutTrainingScreen = '/scoutTrainingScreen';
 
@@ -54,6 +56,7 @@ class AppRoute {
 
   //completeProfileScreen
   static const String pinputScreen = '/pinputScreen';
+  static const String clubMyTeamScreen = '/ClubMyTeamScreen';
 
   // //mainScreen
   // static const String mainScreen = '/mainScreen';

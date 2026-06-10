@@ -19,6 +19,8 @@ import '../../feature/Measurement/cubit/MeasurementCubit.dart';
 import '../../feature/Measurement/data/repo/MeasurementRepo.dart';
 import '../../feature/club_team/cubit/club_exercises_cubit.dart';
 import '../../feature/digital_report/cubit/digitalReportCubit.dart';
+import '../../feature/main_club/cubit/requests_cubit.dart';
+import '../../feature/main_club/data/repo/requests_repo.dart';
 import '../../feature/scout/cubit/scout_register_cubit.dart';
 import '../../feature/scout/data/repo/scout_repo.dart';
 import '../../feature/club_team/data/repo/club_exercises_repo.dart';
@@ -42,6 +44,7 @@ import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/data/repo/training_repo.dart';
 import '../../feature/training_details/cubit/training_details_cubit.dart';
 import '../../feature/training_details/data/repo/training_details_repo.dart';
+
 // ── Scout Training (feature منفصلة) ─────────────────────────────────────────
 // ────────────────────────────────────────────────────────────────────────────
 import '../networking/api_service.dart';
@@ -81,32 +84,30 @@ Future<void> setupGetIt() async {
 
   // MARK: - Scout Training (مستقل — لا يؤثر على Training النادي)
   getIt.registerLazySingleton<ScoutTrainingRepo>(
-        () => ScoutTrainingRepo(getIt()),
+    () => ScoutTrainingRepo(getIt()),
   );
-  getIt.registerFactory<ScoutTrainingCubit>(
-        () => ScoutTrainingCubit(getIt()),
-  );
+  getIt.registerFactory<ScoutTrainingCubit>(() => ScoutTrainingCubit(getIt()));
   getIt.registerLazySingleton<ScoutTrainingDetailsRepo>(
-        () => ScoutTrainingDetailsRepo(getIt()),
+    () => ScoutTrainingDetailsRepo(getIt()),
   );
   getIt.registerFactory<ScoutTrainingDetailsCubit>(
-        () => ScoutTrainingDetailsCubit(getIt()),
+    () => ScoutTrainingDetailsCubit(getIt()),
   );
 
   // MARK: - ExperianceDetails
   getIt.registerLazySingleton<ExperianceDetailsRepo>(
-        () => ExperianceDetailsRepo(getIt()),
+    () => ExperianceDetailsRepo(getIt()),
   );
   getIt.registerFactory<ExperianceDetailsCubit>(
-        () => ExperianceDetailsCubit(getIt()),
+    () => ExperianceDetailsCubit(getIt()),
   );
 
   // MARK: - TrainingDetails (النادي)
   getIt.registerLazySingleton<TrainingDetailsRepo>(
-        () => TrainingDetailsRepo(getIt()),
+    () => TrainingDetailsRepo(getIt()),
   );
   getIt.registerFactory<TrainingDetailsCubit>(
-        () => TrainingDetailsCubit(getIt()),
+    () => TrainingDetailsCubit(getIt()),
   );
 
   // MARK: - Reals
@@ -119,10 +120,10 @@ Future<void> setupGetIt() async {
 
   // MARK: - PlayerProfile
   getIt.registerLazySingleton<PlayerProfileRepo>(
-        () => PlayerProfileRepo(getIt<ApiService>()),
+    () => PlayerProfileRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<PlayerProfileCubit>(
-        () => PlayerProfileCubit(getIt<PlayerProfileRepo>()),
+    () => PlayerProfileCubit(getIt<PlayerProfileRepo>()),
   );
 
   // MARK: - Package
@@ -131,49 +132,49 @@ Future<void> setupGetIt() async {
 
   // MARK: - Forget Password
   getIt.registerLazySingleton<ForgetPasswordRepo>(
-        () => ForgetPasswordRepo(getIt<ApiService>()),
+    () => ForgetPasswordRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<ForgetPasswordCubit>(
-        () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
+    () => ForgetPasswordCubit(getIt<ForgetPasswordRepo>()),
   );
 
   // MARK: - PlayerAttempts
   getIt.registerLazySingleton<PlayerAttemptsRepo>(
-        () => PlayerAttemptsRepo(getIt<ApiService>()),
+    () => PlayerAttemptsRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<PlayerAttemptsCubit>(
-        () => PlayerAttemptsCubit(getIt<PlayerAttemptsRepo>()),
+    () => PlayerAttemptsCubit(getIt<PlayerAttemptsRepo>()),
   );
 
   // MARK: - ClubExercises
   getIt.registerLazySingleton<ClubExercisesRepo>(
-        () => ClubExercisesRepo(getIt<ApiService>()),
+    () => ClubExercisesRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<ClubExercisesCubit>(
-        () => ClubExercisesCubit(getIt<ClubExercisesRepo>()),
+    () => ClubExercisesCubit(getIt<ClubExercisesRepo>()),
   );
 
   // MARK: - PlayerReels
   getIt.registerLazySingleton<PlayerReelsRepo>(
-        () => PlayerReelsRepo(getIt<ApiService>(), getIt<Dio>()),
+    () => PlayerReelsRepo(getIt<ApiService>(), getIt<Dio>()),
   );
   getIt.registerFactory<PlayerReelsCubit>(
-        () => PlayerReelsCubit(getIt<PlayerReelsRepo>()),
+    () => PlayerReelsCubit(getIt<PlayerReelsRepo>()),
   );
 
   // MARK: - DigitalReport
   getIt.registerLazySingleton<DigitalReportRepo>(
-        () => DigitalReportRepo(getIt<Dio>()),
+    () => DigitalReportRepo(getIt<Dio>()),
   );
   getIt.registerFactory<DigitalReportCubit>(
-        () => DigitalReportCubit(getIt<DigitalReportRepo>()),
+    () => DigitalReportCubit(getIt<DigitalReportRepo>()),
   );
 
   // MARK: - Scout
-  getIt.registerLazySingleton<ScoutRepo>(
-        () => ScoutRepo(getIt<Dio>()),
-  );
+  getIt.registerLazySingleton<ScoutRepo>(() => ScoutRepo(getIt<Dio>()));
   getIt.registerFactory<ScoutRegisterCubit>(
-        () => ScoutRegisterCubit(getIt<ScoutRepo>()),
+    () => ScoutRegisterCubit(getIt<ScoutRepo>()),
   );
+  getIt.registerLazySingleton(() => RequestsRepo(getIt<ApiService>()));
+  getIt.registerFactory(() => RequestsCubit(getIt<RequestsRepo>()));
 }

@@ -232,7 +232,7 @@ class _SelectUniWidgetState extends State<SelectUniWidget> {
                             ),
                           );
                         }).toList(),
-                        onChanged: (int? newId) {
+                        onChanged: (dynamic ? newId) {
                           if (newId != null) {
                             final loginCubit = context.read<LoginCubit>();
 

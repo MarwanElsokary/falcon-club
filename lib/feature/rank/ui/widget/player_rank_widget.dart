@@ -1,19 +1,22 @@
 import 'dart:developer';
+import 'dart:math' hide log;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falconclubapp/core/helpers/extensions.dart';
-import 'package:falconclubapp/core/helpers/spacing.dart';
-import 'package:falconclubapp/core/routing/routes.dart';
-import 'package:falconclubapp/core/thems/thems.dart';
-import 'package:falconclubapp/core/widget/text_utils.dart';
-import 'package:falconclubapp/feature/rank/cubit/rank_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../core/helpers/extensions.dart';
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/thems/thems.dart';
 import '../../../../core/widget/show_photo_widget.dart';
+import '../../../../core/widget/text_utils.dart';
+import '../../cubit/rank_cubit.dart';
+import '../../cubit/rank_state.dart';
 import '../../data/model/rank_model.dart';
 
 class PlayerRankWidget extends StatefulWidget {
@@ -26,21 +29,14 @@ class PlayerRankWidget extends StatefulWidget {
 class _PlayerRankWidgetState extends State<PlayerRankWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  bool showAllData = false;
 
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     );
-
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted) _controller.forward();
-    });
-    showAllDataFun();
   }
 
   @override
@@ -49,21 +45,17 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
     super.dispose();
   }
 
-  showAllDataFun() async {
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      if (mounted) {
-        setState(() {
-          showAllData = true;
-          log('$showAllData');
-        });
-      }
+  void _startAnimation() {
+    _controller.reset();
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted) _controller.forward();
     });
   }
 
   Animation<double> _buildStagger(int index, int total) {
-    final start = (index / total) * 0.6;
+    final safeTotal = total == 0 ? 1 : total;
+    final start = (index / safeTotal) * 0.6;
     final end = start + 0.4;
-
     return CurvedAnimation(
       parent: _controller,
       curve: Interval(start, end, curve: Curves.easeOutBack),
@@ -72,45 +64,221 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<RankCubit>();
-    final items = cubit.rankList;
+    return BlocBuilder<RankCubit, RankState>(
+      builder: (context, state) {
+        if (state is rankLoading) {
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          );
+        }
 
-    // ✅ isSubscribed بيجي من الـ cubit اللي اتبعتله من الـ API
-    // سواء نادي أو كشاف — نفس الـ widget، نفس المنطق
-    final isSubscribed = cubit.isSubscribed;
+        if (state is rankError) {
+          return Center(
+            child: TextUtils(
+              text: (state as rankError).error,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          );
+        }
 
-    final displayCount = isSubscribed ? items.length : items.length.clamp(0, 3);
+        final cubit = context.read<RankCubit>();
+        final items = cubit.rankList;
+        final isSubscribed = cubit.isSubscribed;
 
-    if (!isSubscribed) {
-      return Column(
+        log('RANK LENGTH => ${items.length}');
+        log('IS SUBSCRIBED => $isSubscribed');
+
+        if (items.isEmpty) {
+          return Center(
+            child: TextUtils(
+              text: 'No Players'.tr(),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          );
+        }
+
+        _startAnimation();
+
+        return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          // ✅ لو مش مشترك: اللاعبين + عنصر إضافي لكارت الاشتراك
+          itemCount: isSubscribed ? items.length : items.length + 1,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          itemBuilder: (context, index) {
+            if (!isSubscribed && index == items.length) {
+              return _buildSubscribeCard(context);
+            }
+            return _buildPlayerItem(items, index);
+          },
+        );
+      },
+    );
+  }
+
+  // ✅ نفس شكل _buildSubscribeMessage من ScoutPlayersSection بالظبط
+  Widget _buildSubscribeCard(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 8.h, bottom: 20.h),
+      child: Stack(
         children: [
-          // أول 3 عناصر دايماً ظاهرين
-          Expanded(
-            flex: 1,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: displayCount,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-              itemBuilder: (context, index) {
-                return _buildPlayerItem(items, index);
-              },
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(
+              color: whiteclr,
+              borderRadius: BorderRadius.circular(30.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // أيقونة القفل
+                Container(
+                  width: 80.w,
+                  height: 80.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [mainColor.withOpacity(0.1), mainColor],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.lock_outline_rounded,
+                      color: Colors.white,
+                      size: 40.w,
+                    ),
+                  ),
+                ),
+                verticalSpace(20),
+
+                // العنوان
+                TextUtils(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black,
+                  text: 'الترتيب الكامل مغلق'.tr(),
+                ),
+                verticalSpace(12),
+
+                // الوصف
+                TextUtils(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black54,
+                  text:
+                  'اشترك الآن لتكتشف مراكز جميع اللاعبين وتتابع المواهب الأبرز في المنافسة'
+                      .tr(),
+                  maxlines: 3,
+                ),
+                verticalSpace(20),
+
+                // المزايا
+                Container(
+                  padding: EdgeInsets.all(16.w),
+                  decoration: BoxDecoration(
+                    color: mainColor.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(15.r),
+                    border: Border.all(color: mainColor.withOpacity(0.2)),
+                  ),
+                  child: Column(
+                    children: [
+                      _buildFeatureItem('عرض ترتيب جميع اللاعبين'),
+                      _buildFeatureItem('متابعة المواهب الصاعدة'),
+                      _buildFeatureItem('مقارنة النقاط والأداء'),
+                      _buildFeatureItem('تحديث فوري للترتيب'),
+                    ],
+                  ),
+                ),
+                verticalSpace(25),
+
+                // زر الاشتراك
+                ElevatedButton(
+                  onPressed: () => context.pushNamed(AppRoute.packageScreen),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: mainColor,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40.w,
+                      vertical: 16.h,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.r),
+                    ),
+                    elevation: 4,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextUtils(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        text: 'اشترك الآن'.tr(),
+                      ),
+                      horizontalSpace(8),
+                      Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 16.w,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                verticalSpace(10),
+              ],
             ),
           ),
-          // رسالة الاشتراك
-          SingleChildScrollView(
-            child: _buildSubscribeMessage(context),
+
+          // زخرفة يسار
+          PositionedDirectional(
+            top: 0,
+            start: 0,
+            child: SvgPicture.asset('assets/svgs/Group 385.svg', width: 60.w),
+          ),
+          // زخرفة يمين
+          PositionedDirectional(
+            end: 0,
+            bottom: 0,
+            child:
+            SvgPicture.asset('assets/svgs/Group 386-2.svg', width: 80.w),
           ),
         ],
-      );
-    }
+      ),
+    );
+  }
 
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: displayCount,
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      itemBuilder: (context, index) {
-        return _buildPlayerItem(items, index);
-      },
+  Widget _buildFeatureItem(String text) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 6.h),
+      child: Row(
+        children: [
+          Icon(Icons.check_circle, color: mainColor, size: 18.w),
+          horizontalSpace(10),
+          Expanded(
+            child: TextUtils(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+              text: text.tr(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -121,7 +289,6 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
       animation: anim,
       builder: (context, child) {
         final v = anim.value.clamp(0.0, 1.0);
-
         return Opacity(
           opacity: v,
           child: Transform.translate(
@@ -138,20 +305,14 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                 width: 36.w,
                 child: Center(
                   child: index == 0
-                      ? SvgPicture.asset(
-                    'assets/svgs/Group 432.svg',
-                    width: 30.w,
-                  )
+                      ? SvgPicture.asset('assets/svgs/Group 432.svg',
+                      width: 30.w)
                       : index == 1
-                      ? SvgPicture.asset(
-                    'assets/svgs/Group 430.svg',
-                    width: 30.w,
-                  )
+                      ? SvgPicture.asset('assets/svgs/Group 430.svg',
+                      width: 30.w)
                       : index == 2
-                      ? SvgPicture.asset(
-                    'assets/svgs/Group 431.svg',
-                    width: 30.w,
-                  )
+                      ? SvgPicture.asset('assets/svgs/Group 431.svg',
+                      width: 30.w)
                       : TextUtils(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -168,9 +329,6 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                       arguments: {
                         'isMyProfile': true,
                         'playerId': '${items[index].id}',
-                        'showFavoriteButton': true, // ← المدرب والكشاف بس
-
-
                       },
                     );
                   },
@@ -221,7 +379,8 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                               child: SizedBox(
                                 width: 26.w,
                                 height: 26.w,
-                                child: _buildPlayerImage(items[index].photoPath),
+                                child:
+                                _buildPlayerImage(items[index].photoPath),
                               ),
                             ),
                           ],
@@ -255,166 +414,11 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
     );
   }
 
-  Widget _buildSubscribeMessage(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              color: whiteclr,
-              borderRadius: BorderRadius.circular(30.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 80.w,
-                  height: 80.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [mainColor.withOpacity(0.1), mainColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.lock_outline_rounded,
-                      color: Colors.white,
-                      size: 40.w,
-                    ),
-                  ),
-                ),
-                verticalSpace(20),
-                TextUtils(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                  text: 'الترتيب الكامل مغلق'.tr(),
-                ),
-                verticalSpace(12),
-                TextUtils(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black54,
-                  text:
-                  'اشترك الآن للوصول إلى قائمة الترتيب الكاملة ومعرفة موقعك بين اللاعبين'
-                      .tr(),
-                  maxlines: 3,
-                ),
-                verticalSpace(20),
-                Container(
-                  padding: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                    color: mainColor.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(15.r),
-                    border: Border.all(color: mainColor.withOpacity(0.2)),
-                  ),
-                  child: Column(
-                    children: [
-                      _buildFeatureItem('عرض الترتيب الكامل'),
-                      _buildFeatureItem('مقارنة أدائك باللاعبين'),
-                      _buildFeatureItem('تتبع تقدمك'),
-                      _buildFeatureItem('احصائيات مفصلة'),
-                    ],
-                  ),
-                ),
-                verticalSpace(25),
-                ElevatedButton(
-                  onPressed: () => context.pushNamed(AppRoute.packageScreen),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mainColor,
-                    foregroundColor: Colors.white,
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 40.w, vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
-                    elevation: 4,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        text: 'اشترك الآن'.tr(),
-                      ),
-                      horizontalSpace(8),
-                      Icon(Icons.arrow_back_ios_new,
-                          size: 16.w, color: Colors.white),
-                    ],
-                  ),
-                ),
-                verticalSpace(10),
-              ],
-            ),
-          ),
-          PositionedDirectional(
-            top: 0,
-            start: 0,
-            child: SvgPicture.asset(
-              'assets/svgs/Group 385.svg',
-              width: 60.w,
-            ),
-          ),
-          PositionedDirectional(
-            end: 0,
-            bottom: 0,
-            child: SvgPicture.asset(
-              'assets/svgs/Group 386-2.svg',
-              width: 80.w,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFeatureItem(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
-      child: Row(
-        children: [
-          Icon(Icons.check_circle, color: mainColor, size: 18.w),
-          horizontalSpace(10),
-          Expanded(
-            child: TextUtils(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-              text: text.tr(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildPlayerImage(String? photoPath) {
+    log('IMAGE => $photoPath');
+
     if (photoPath == null || photoPath.isEmpty) {
-      return Container(
-        width: 26.w,
-        height: 26.w,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: offWhiteClr,
-        ),
-        child: Image.asset('assets/images/Mask group.png', width: 26.w),
-      );
+      return _defaultImage();
     }
 
     return CachedNetworkImage(
@@ -428,13 +432,23 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
           decoration: const BoxDecoration(shape: BoxShape.circle),
         ),
       ),
-      errorWidget: (_, __, ___) => Container(
-        padding: EdgeInsets.all(4.w),
-        decoration: const BoxDecoration(
-          color: offWhiteClr,
-          shape: BoxShape.circle,
-        ),
-        child: Image.asset('assets/images/Mask group.png', width: 26.w),
+      errorWidget: (_, __, error) {
+        log('IMAGE ERROR => $error');
+        return _defaultImage();
+      },
+    );
+  }
+
+  Widget _defaultImage() {
+    return Container(
+      width: 26.w,
+      height: 26.w,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: offWhiteClr,
+      ),
+      child: ClipOval(
+        child: Image.asset('assets/images/Mask group.png', fit: BoxFit.cover),
       ),
     );
   }

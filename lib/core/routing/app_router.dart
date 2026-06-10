@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
 import '../../feature/Measurement/cubit/MeasurementCubit.dart';
 import '../../feature/Measurement/ui/MeasurementScreen.dart';
 import '../../feature/Player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
 import '../../feature/club_team/ui/screen/club_profile_screen.dart';
-import '../../feature/creat_real/cubit/creat_real_cubit.dart';
-import '../../feature/creat_real/ui/screen/publish_my_video.dart';
 import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
 import '../../feature/experiance_details_screen/ui/screen/experiance_details_screen.dart';
 import '../../feature/experiments/cubit/experiments_cubit.dart';
@@ -20,14 +17,14 @@ import '../../feature/forget_password/ui/send_otp.dart';
 import '../../feature/last_attempt/ui/screen/last_attempt_screen.dart';
 import '../../feature/login/cubit/login_cubit.dart';
 import '../../feature/login/ui/screen/login_screen.dart';
+import '../../feature/main_club/ui/screens/club_info_screen.dart';
+import '../../feature/main_club/ui/screens/mainClubScreen.dart';
 import '../../feature/main_screen/cubit/main_cubit.dart';
-import '../../feature/main_screen/ui/screen/main_screen.dart';
 import '../../feature/on-boarding/screen/on_boarding_screen.dart';
 import '../../feature/package/cubit/package_cubit.dart';
 import '../../feature/package/data/model/pakcage_model.dart';
 import '../../feature/package/ui/screen/package_pay_ment_screen.dart';
 import '../../feature/package/ui/screen/package_screen.dart';
-import '../../feature/package/ui/widget/verification_webview_screen.dart';
 import '../../feature/rank/cubit/rank_cubit.dart';
 import '../../feature/rank/ui/screen/rank_screen.dart';
 import '../../feature/reals/cubit/reals_cubit.dart';
@@ -43,8 +40,6 @@ import '../../feature/signup/ui/screen/registration_type_screen.dart';
 import '../../feature/signup/ui/screen/sign_up_screen.dart';
 import '../../feature/club_team/cubit/club_team_cubit.dart';
 import '../../feature/club_team/ui/screen/club_main_screen.dart';
-import '../../feature/scout/cubit/scout_register_cubit.dart';
-import '../../feature/scout/data/repo/scout_repo.dart';
 import '../../feature/scout/ui/screen/scout_main_screen.dart';
 import '../../feature/scout/ui/screen/scout_sign_up_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
@@ -54,10 +49,8 @@ import '../../feature/training_details/cubit/training_details_cubit.dart';
 import '../../feature/training_details/data/model/exercise_details_model.dart';
 import '../../feature/training_details/ui/screen/ClubTrainingDetailsScreen.dart';
 import '../../feature/training_details/ui/screen/ai_generate_screen.dart';
-import '../../feature/training_details/ui/screen/training_details_screen.dart';
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
 import '../../feature/player_attempts/data/model/player_attempts_model.dart';
-import '../../feature/player_attempts/data/repo/player_attempts_repo.dart';
 import '../../feature/player_attempts/ui/screen/player_attempts_screen.dart';
 import '../../feature/player_attempts/ui/screen/player_attempt_detail_screen.dart';
 
@@ -119,6 +112,13 @@ class AppRouter {
             child: const ClubMainScreen(),
           ),
         );
+      case AppRoute.mainClubScreen:
+        return _fadeTransitionRoute(
+          BlocProvider(
+            create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
+            child: const MainClubScreen(),
+          ),
+        );
 
       case AppRoute.completeProfileScreen:
         return MaterialPageRoute(
@@ -133,6 +133,22 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
             child: const ClubProfileScreen(),
+          ),
+        );
+      case AppRoute.clubMyTeamScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<ClubTeamCubit>()
+              ..emitMyProfile()
+              ..fetchClubPlayers(),
+            child: const ClubMyTeamScreen(),
+          ),
+        );
+      case AppRoute.clubInfoScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
+            child: const ClubInfoScreen(),
           ),
         );
 
@@ -192,11 +208,11 @@ class AppRouter {
             providers: [
               BlocProvider(
                 create: (_) =>
-                getIt<RealsCubit>()..emitreals(playerId: playerId),
+                    getIt<RealsCubit>()..emitreals(playerId: playerId),
               ),
               BlocProvider(
                 create: (_) =>
-                getIt<MainCubit>()..emitProfileById(userId: playerId),
+                    getIt<MainCubit>()..emitProfileById(userId: playerId),
               ),
             ],
             child: PlayerProfileScreen(

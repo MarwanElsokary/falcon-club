@@ -2,10 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/di/dependency_injection.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
-import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
-import 'package:falconclubapp/feature/experiments/cubit/experiments_cubit.dart';
+import 'package:falconclubapp/feature/main_club/ui/screens/requests_screen.dart';
 import 'package:falconclubapp/feature/main_screen/cubit/main_cubit.dart';
 import 'package:falconclubapp/feature/rank/cubit/rank_cubit.dart';
 import 'package:falconclubapp/feature/rank/ui/screen/rank_screen.dart';
@@ -14,25 +13,48 @@ import 'package:falconclubapp/feature/reals/ui/screen/main_reals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../../../../core/thems/thems.dart';
+import '../../../club_team/cubit/club_team_cubit.dart';
+import '../../../club_team/ui/screen/club_my_team_screen.dart';
+import '../../../experiments/cubit/experiments_cubit.dart';
+import '../../../home/ui/screen/home_screen.dart';
+import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
 import '../../../training/cubit/training_cubit.dart';
-import '../../scout_training/cubit/scout_training_cubit.dart';
-import '../../scout_training/ui/screen/scout_training_screen.dart';
-import 'ScoutHomeScreen.dart';
-import 'custom_drawer_widget_scout.dart';
+import '../../cubit/requests_cubit.dart';
 
-class ScoutMainScreen extends StatefulWidget {
-  const ScoutMainScreen({super.key});
+class MainClubScreen extends StatefulWidget {
+  const MainClubScreen({super.key});
 
   @override
-  State<ScoutMainScreen> createState() => _ScoutMainScreenState();
+  State<MainClubScreen> createState() => _ClubMainScreenState();
 }
 
-class _ScoutMainScreenState extends State<ScoutMainScreen> {
+class _ClubMainScreenState extends State<MainClubScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ValueNotifier<int> _currentIndex = ValueNotifier(0);
-  final ValueNotifier<bool> _show = ValueNotifier(true);
+
+  late final ClubTeamCubit _clubTeamCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _clubTeamCubit = context.read<ClubTeamCubit>();
+    _clubTeamCubit.emitMyProfile();
+    _clubTeamCubit.currentIndex.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    if (_clubTeamCubit.currentIndex.value == 1) {
+      _clubTeamCubit.fetchClubPlayers();
+    }
+  }
+
+  @override
+  void dispose() {
+    _clubTeamCubit.currentIndex.removeListener(_onTabChanged);
+    super.dispose();
+  }
 
   void _toggleDrawer() {
     if (_scaffoldKey.currentState?.isDrawerOpen == true) {
@@ -43,107 +65,84 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
   }
 
   @override
-  void dispose() {
-    _currentIndex.dispose();
-    _show.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // ✅ RankCubit واحد على مستوى الـ ScoutMainScreen كله
-    // بيشارك بين ScoutHomeScreen (index 0) و RankScreen (index 4)
     return BlocProvider(
+      // ✅ مفيش isUserSubscribed — الـ cubit بيجيب isSubscribed من الـ cache بعد الـ API
       create: (_) => getIt<RankCubit>()..emitRank(),
       child: Scaffold(
         key: _scaffoldKey,
+
         drawer: BlocProvider(
           create: (_) => getIt<MainCubit>()..emitMyProfile(),
-          child: const CustomDrawerScout(),
+          child: const CustomDrawer(),
         ),
+
         body: Stack(
           children: [
             ValueListenableBuilder<int>(
-              valueListenable: _currentIndex,
-              builder: (context, index, _) {
+              valueListenable: context.read<ClubTeamCubit>().currentIndex,
+              builder: (context, currentIndex, _) {
                 return IndexedStack(
-                  index: index,
+                  index: currentIndex,
                   children: [
                     // 0 — الرئيسية
                     MultiBlocProvider(
                       providers: [
                         BlocProvider(
                           create: (_) =>
-                          getIt<ExperimentsCubit>()
-                            ..emitbestTrials(categoryId: ''),
+                              getIt<ExperimentsCubit>()
+                                ..emitbestTrials(categoryId: ''),
                         ),
-                        BlocProvider(
-                          create: (_) => getIt<ScoutTrainingCubit>()
-                            ..fetchExercises(categoryId: '', popular: true),
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<MainCubit>()
-                            ..emitMyProfile()
-                            ..emitCategories(),
-                        ),
-                        // ❌ مفيش RankCubit هنا — بيجيه من فوق
                         BlocProvider(
                           create: (_) => getIt<TrainingCubit>()
                             ..emitallExercises(categoryId: '', popular: true),
                         ),
-                      ],
-                      child: ScoutHomeScreen(onDrawerTap: _toggleDrawer),
-                    ),
-
-                    // 1 — التمارين
-                    MultiBlocProvider(
-                      providers: [
                         BlocProvider(
-                          create: (_) => getIt<ScoutTrainingCubit>()
-                            ..fetchExercises(categoryId: '', popular: false),
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<MainCubit>()..emitCategories(),
+                          create: (_) => getIt<MainCubit>()..emitMyProfile(),
                         ),
                       ],
-                      child: const ScoutTrainingScreen(),
+                      child: HomeScreen(onDrawerTap: _toggleDrawer),
                     ),
 
-                    // 2 — الريلز
+                    // 1 — فريقي
+                    const ClubMyTeamScreen(),
+
+                    // 2 — اللاعيبين (Reels)
                     MultiBlocProvider(
                       providers: [
                         BlocProvider(
                           create: (_) =>
-                          getIt<RealsCubit>()..emitreals(playerId: ''),
+                              getIt<RealsCubit>()..emitreals(playerId: ''),
                         ),
                       ],
                       child: MainRealsScreen(
                         playerProfile: false,
-                        playnowOrNot: index == 2,
+                        playnowOrNot: currentIndex == 2,
                       ),
                     ),
 
-                    // 3 — اللاعبين المفضلين
-                    const _ScoutFavoritesTab(),
-
+                    // 3 — قائمة الاهتمامات
+                    BlocProvider(
+                      create: (_) => getIt<RequestsCubit>()..fetchRequests(),
+                      child: const RequestsScreen(),
+                    ),
                     // 4 — الرتب
-                    // ❌ مفيش BlocProvider هنا — بيجيه من فوق
                     const RankScreen(),
                   ],
                 );
               },
             ),
 
-            // ── Bottom Nav ──────────────────────────────────────────────────
+            // ── Bottom navigation bar ──────────────────────────────────────
             PositionedDirectional(
               bottom: 0,
               start: 0,
               end: 0,
               child: ValueListenableBuilder<int>(
-                valueListenable: _currentIndex,
-                builder: (context, index, _) {
+                valueListenable: context.read<ClubTeamCubit>().currentIndex,
+                builder: (context, currentIndex, _) {
                   return ValueListenableBuilder<bool>(
-                    valueListenable: _show,
+                    valueListenable: context.read<ClubTeamCubit>().show,
                     builder: (context, show, _) {
                       return AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
@@ -169,24 +168,30 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                                 top: false,
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: List.generate(5, (i) {
-                                    final isSelected = index == i;
+                                      MainAxisAlignment.spaceAround,
+                                  children: List.generate(5, (index) {
+                                    final isSelected = currentIndex == index;
                                     return Expanded(
                                       child: InkWell(
-                                        onTap: () => _currentIndex.value = i,
+                                        onTap: () {
+                                          context
+                                                  .read<ClubTeamCubit>()
+                                                  .currentIndex
+                                                  .value =
+                                              index;
+                                        },
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             SizedBox(
                                               height: isSelected ? 26.h : 24.h,
                                               width: isSelected ? 26.h : 24.h,
                                               child: isSelected
-                                                  ? _activeIcons[i]
-                                                  : _inactiveIcons[i],
+                                                  ? _activeIcons[index]
+                                                  : _inactiveIcons[index],
                                             ),
                                             CenterTextUtils(
                                               fontSize: 9,
@@ -196,7 +201,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                                               color: isSelected
                                                   ? mainColor
                                                   : mainColor.withOpacity(0.5),
-                                              text: _titles[i],
+                                              text: _titles[index],
                                             ),
                                             verticalSpace(4),
                                             AnimatedContainer(
@@ -237,19 +242,13 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
       'assets/svgs/home_unSelect.svg',
       color: mainColor.withOpacity(0.5),
     ),
-    Icon(
-      Icons.sports_soccer_outlined,
-      color: mainColor.withOpacity(0.5),
-      size: 24.h,
-    ),
+    Icon(Icons.groups_outlined, color: mainColor.withOpacity(0.5), size: 24.h),
     SvgPicture.asset(
       'assets/svgs/reals_un_select.svg',
       color: mainColor.withOpacity(0.5),
     ),
-    SvgPicture.asset(
-      'assets/svgs/solar_clipboard-linear.svg',
-      color: mainColor.withOpacity(0.5),
-    ),
+    Icon(Icons.inbox_outlined, color: mainColor.withOpacity(0.5), size: 24.h),
+
     SvgPicture.asset(
       'assets/svgs/rank_icon.svg',
       color: mainColor.withOpacity(0.5),
@@ -258,26 +257,17 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
 
   List<Widget> get _activeIcons => [
     SvgPicture.asset('assets/svgs/home_select.svg'),
-    Icon(Icons.sports_soccer, color: mainColor, size: 26.h),
+    Icon(Icons.groups, color: mainColor, size: 26.h),
     SvgPicture.asset('assets/svgs/reals_select.svg'),
-    SvgPicture.asset('assets/svgs/solar_clipboard-linear1.svg'),
+    Icon(Icons.inbox_rounded, color: mainColor, size: 26.h),
     SvgPicture.asset('assets/svgs/rank_icon.svg', color: mainColor),
   ];
 
   List<String> get _titles => [
     'الرئيسية'.tr(),
-    'التمارين'.tr(),
-    'الريلز'.tr(),
-    'اللاعبين'.tr(),
+    'فريقي'.tr(),
+    'اللاعيبين'.tr(),
+    'الطلبات'.tr(),
     'الرتب'.tr(),
   ];
-}
-
-class _ScoutFavoritesTab extends StatelessWidget {
-  const _ScoutFavoritesTab();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('قريباً — قائمة اللاعبين'));
-  }
 }

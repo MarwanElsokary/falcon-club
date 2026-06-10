@@ -36,6 +36,7 @@ class ExperianceDetailsScreen extends StatelessWidget {
                 //ExperienceTrainingInfoWidget
                 SlideEnimationWidget(
                   index: 0,
+
                   child: ExperienceTrainingInfoWidget(),
                 ),
               ],

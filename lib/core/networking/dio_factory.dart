@@ -23,7 +23,7 @@ class DioFactory {
           'Accept': 'application/json',
         };
 
-      _addTokenInterceptor();   // ← بيجيب الـ token قبل كل request
+      _addTokenInterceptor(); // ← بيجيب الـ token قبل كل request
       addDioInterceptor();
       addTokenRefreshInterceptor();
     }
@@ -59,7 +59,7 @@ class DioFactory {
   static void addDioInterceptor() {
     if (kDebugMode) {
       dio?.interceptors.add(
-        PrettyDioLogger(requestBody: true, responseBody: false),
+        PrettyDioLogger(requestBody: true, responseBody: true),
       );
     }
   }

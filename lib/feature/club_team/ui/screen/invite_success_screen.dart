@@ -3,8 +3,6 @@ import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Full-screen success overlay shown after sending a player invitation.
-/// Animated: scale + fade, bounce curve, 600 ms.
 class InviteSuccessScreen extends StatefulWidget {
   const InviteSuccessScreen({super.key});
 

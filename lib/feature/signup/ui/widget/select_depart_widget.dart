@@ -112,7 +112,7 @@ class _SelectCollageWidgetState extends State<SelectDepartWidget> {
                     ),
                   );
                 }).toList(),
-                onChanged: (int? newId) {
+                onChanged: (dynamic ? newId) {
                   if (newId != null) {
                     setState(() {
                       loginCubit.selectedDepartmentsId = newId;

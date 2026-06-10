@@ -39,13 +39,13 @@ class LoginButtonWidget extends StatelessWidget {
             switch (role) {
               case 'Club':
               case 'MainClub':
-                route = AppRoute.clubMainScreen;
+                route = AppRoute.mainClubScreen;
                 break;
               case 'Scout':
                 route = AppRoute.scoutMainScreen;
                 break;
               default:
-              // fallback — مفروض ما يوصلش هنا
+                // fallback — مفروض ما يوصلش هنا
                 route = AppRoute.clubMainScreen;
             }
 
@@ -54,15 +54,13 @@ class LoginButtonWidget extends StatelessWidget {
               title: 'أهلاً، تم تسجيل دخولك بنجاح'.tr(),
             );
 
-            context.pushNamedAndRemoveUntil(
-              route,
-              predicate: (route) => false,
-            );
+            context.pushNamedAndRemoveUntil(route, predicate: (route) => false);
           }
 
           if (state is Error) {
             // لو الخطأ بسبب Player نعرض dialog مختلف
-            final isPlayerError = state.error.contains('لاعباً') ||
+            final isPlayerError =
+                state.error.contains('لاعباً') ||
                 state.error.contains('اللاعبين');
 
             if (isPlayerError) {
@@ -80,59 +78,59 @@ class LoginButtonWidget extends StatelessWidget {
               child: state is Loading
                   ? LoadButtonUtils()
                   : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ButtonUtils(
-                    text: 'تسجيل الدخول'.tr(),
-                    onPressed: () {
-                      if (context
-                          .read<LoginCubit>()
-                          .loginformKey
-                          .currentState!
-                          .validate()) {
-                        context.read<LoginCubit>().emitloginStates();
-                      } else {
-                        showErrorSnackBar(
-                          context: context,
-                          title: 'من فضلك ادخل بياناتك'.tr(),
-                        );
-                      }
-                    },
-                    colorstext: Colors.white,
-                    background: mainColor,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      context.pushNamed(AppRoute.registrationTypeScreen);
-                    },
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'ليس لديك حساب؟'.tr(),
-                            style: GoogleFonts.cairo(
-                              color: blackclr,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: -0.30,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ButtonUtils(
+                          text: 'تسجيل الدخول'.tr(),
+                          onPressed: () {
+                            if (context
+                                .read<LoginCubit>()
+                                .loginformKey
+                                .currentState!
+                                .validate()) {
+                              context.read<LoginCubit>().emitloginStates();
+                            } else {
+                              showErrorSnackBar(
+                                context: context,
+                                title: 'من فضلك ادخل بياناتك'.tr(),
+                              );
+                            }
+                          },
+                          colorstext: Colors.white,
+                          background: mainColor,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            context.pushNamed(AppRoute.registrationTypeScreen);
+                          },
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'ليس لديك حساب؟'.tr(),
+                                  style: GoogleFonts.cairo(
+                                    color: blackclr,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: -0.30,
+                                  ),
+                                ),
+                                const TextSpan(text: ' '),
+                                TextSpan(
+                                  text: 'اشتراك'.tr(),
+                                  style: GoogleFonts.cairo(
+                                    color: mainColor,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: -0.30,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const TextSpan(text: ' '),
-                          TextSpan(
-                            text: 'اشتراك'.tr(),
-                            style: GoogleFonts.cairo(
-                              color: mainColor,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: -0.30,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ),
           );
         },

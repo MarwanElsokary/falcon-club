@@ -41,7 +41,6 @@ mixin _$MainState {
     toggleFavoriteSuccess,
     required TResult Function(String error) toggleFavoriteError,
   }) => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -67,45 +66,26 @@ mixin _$MainState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-
     TResult Function()? myProfileloading,
-
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-
     TResult Function(String error)? myProfileerror,
-
     TResult Function()? playerProfileloading,
-
     TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-
     TResult Function(String error)? playerProfileerror,
-
     TResult Function()? playerSkillsloading,
-
     TResult Function(List<Skill> skills)? playerSkillssuccess,
-
     TResult Function(String error)? playerSkillserror,
-
     TResult Function()? categoriesloading,
-
     TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
-
     TResult Function(String error)? categorieserror,
-
     TResult Function()? playVideoloading,
-
     TResult Function()? playVideosuccess,
-
     TResult Function()? toggleFavoriteLoading,
-
     TResult Function(String playerId, bool isFavorited, String message)?
     toggleFavoriteSuccess,
-
     TResult Function(String error)? toggleFavoriteError,
-
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
@@ -129,7 +109,6 @@ mixin _$MainState {
     toggleFavoriteSuccess,
     required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,

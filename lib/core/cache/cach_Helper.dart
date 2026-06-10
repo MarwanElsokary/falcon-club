@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../feature/main_screen/data/model/my_profile_model.dart';
+import '../helpers/constants.dart';
 
 class CacheHelper {
   static SharedPreferences? _prefs;
@@ -15,13 +16,41 @@ class CacheHelper {
     _prefs = await SharedPreferences.getInstance();
   }
 
+  static Future<bool> removeData(String key) async {
+    try {
+      return await _prefs?.remove(key) ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<void> clearDataCache() async {
+    // احتفظ بالـ token والـ FCM
+    final token = getString('userToken');
+    final securedToken = getString('secured_userToken');
+    final refreshToken = getString('refreshToken');
+    final fcm = getFcmTokn();
+
+    // امسح كل حاجة
+    await _prefs?.clear();
+
+    // رجّع الـ token والـ FCM بس
+    if (token.isNotEmpty) await setString('userToken', token);
+    if (securedToken.isNotEmpty)
+      await setString('secured_userToken', securedToken);
+    if (refreshToken.isNotEmpty) await setString('refreshToken', refreshToken);
+    if (fcm.isNotEmpty) await saveFcmTokn(fcm);
+  }
+
   // =======================
   // 🔹 MY PROFILE (WITH TIME)
   // =======================
   static Future<bool> savemyProfile(MyProfileModel myProfile) async {
     try {
       final data = {
-        "time": DateTime.now().millisecondsSinceEpoch,
+        "time": DateTime
+            .now()
+            .millisecondsSinceEpoch,
         "data": myProfile.toJson(),
       };
 
@@ -53,7 +82,9 @@ class CacheHelper {
       final decoded = jsonDecode(raw);
       final cachedTime = decoded['time'];
 
-      final now = DateTime.now().millisecondsSinceEpoch;
+      final now = DateTime
+          .now()
+          .millisecondsSinceEpoch;
       return (now - cachedTime) <= minutes.inMilliseconds;
     } catch (_) {
       return false;
@@ -101,6 +132,7 @@ class CacheHelper {
   static String? getHomeTrials() {
     return _prefs?.getString('home_trials');
   }
+
   // دالة عامة لحفظ أي String
   static Future<bool> setString(String key, String value) async {
     try {

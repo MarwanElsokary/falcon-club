@@ -10,11 +10,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../../core/helpers/constants.dart';
+import '../../../../core/helpers/shared_pref_helper.dart';
 
 class HomeAppBarWidget extends StatelessWidget {
   final VoidCallback? onDrawerTap;
 
   const HomeAppBarWidget({super.key, this.onDrawerTap});
+
+  String getWelcomeText(String role) {
+    switch (role) {
+      case 'MainClub':
+        return 'أهلاً بنادي';
+
+      case 'Club':
+        return 'حياك الله';
+
+      case 'Scout':
+        return 'حياك الله';
+
+      default:
+        return 'حياك الله';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +54,30 @@ class HomeAppBarWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextUtils(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      color: blackclr,
-                      text: 'حياك الله'.tr(),
+                    FutureBuilder<dynamic>(
+                      future: SharedPrefHelper.getSecuredString(
+                        SharedPrefKeys.userType,
+                      ),
+                      builder: (context, snapshot) {
+                        return TextUtils(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: blackclr,
+                          text: getWelcomeText(
+                            snapshot.data?.toString() ?? '',
+                          ).tr(),
+                        );
+                      },
                     ),
                     verticalSpace(1),
                     BlocBuilder<MainCubit, MainState>(
                       buildWhen: (previous, current) =>
-                      current is myProfileLoading ||
+                          current is myProfileLoading ||
                           current is myProfileSuccess ||
                           current is myProfileError,
                       builder: (context, state) {
                         return state.maybeWhen(
-                          myProfilesuccess: (myProfiledata) {
+                          myProfilesuccess: (clubProfile) {
                             return AnimateBuilder(
                               columnCount: 1,
                               position: 0,
@@ -58,7 +85,7 @@ class HomeAppBarWidget extends StatelessWidget {
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
-                                text: myProfiledata.data.firstName ?? '',
+                                text: clubProfile.data.firstName ?? '',
                               ),
                             );
                           },

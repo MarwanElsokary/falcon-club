@@ -93,9 +93,12 @@ class _RealsScreenState extends State<RealsScreen> {
   void _onViewCreated(int index, int viewId) {
     _videoManager.registerView(index, viewId);
 
-    if (index == 0 && _currentIndex == 0) {
+    if (index == 0 && _currentIndex == 0 && widget.playnowOrNot) {
       Future.delayed(const Duration(milliseconds: 300), () {
-        _videoManager.playVideo(index);
+        if (mounted && widget.playnowOrNot) {
+          _videoManager.playVideo(index);
+          setState(() => _isPlayNow = true);
+        }
       });
     }
   }
@@ -294,32 +297,26 @@ class _RealsScreenState extends State<RealsScreen> {
     );
   }
 
-  // 🔥 الحل: تعديل _buildPlayPauseOverlay عشان ما يغطيش على الأزرار
-  // 🔥 التعديل في reals_screen.dart - دالة _buildPlayPauseOverlay
   Widget _buildPlayPauseOverlay(int index) {
+    final isPlaying = _videoManager.isPlaying[index] ?? false;
+    final isMuted = _videoManager.muted[index] ?? false;
+
     return PositionedDirectional(
-      // 🔥 جعل المنطقة اليمين أصغر لتجنب تغطية الأزرار
       end: 100.w,
-      // ⬅️ زيادة المساحة
       top: 0,
       bottom: 200.h,
-      // ⬅️ تأكد من عدم تغطية منطقة الأزرار السفلية
       start: 0,
-      child: IgnorePointer(
-        // ⬅️ إضافة IgnorePointer لمنع التقاط النقرات
-        ignoring: !_isPlayNow, // ⬅️ يتجاهل النقرات عندما تكون visible
-        child: Visibility(
-          visible: !_isPlayNow,
-          child: Container(
-            color: Colors.transparent, // ⬅️ لون شفاف
-            child: StopAndMuteWidget(
-              isPlaying: _videoManager.isPlaying[index] ?? false,
-              muted: _videoManager.muted[index] ?? false,
-              toggleMute: () => _onMuteTap(index),
-              togglePlay: () => _onVideoTap(index),
-            ),
-          ),
-        ),
+      child: GestureDetector(
+        onTap: () => _onVideoTap(index),
+        behavior: HitTestBehavior.translucent,
+        child: _isPlayNow
+            ? const SizedBox.expand()
+            : StopAndMuteWidget(
+                isPlaying: isPlaying,
+                muted: isMuted,
+                toggleMute: () => _onMuteTap(index),
+                togglePlay: () => _onVideoTap(index),
+              ),
       ),
     );
   }

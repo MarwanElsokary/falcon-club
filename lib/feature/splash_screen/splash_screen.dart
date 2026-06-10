@@ -50,23 +50,23 @@ class _SplashScreenState extends State<SplashScreen>
     // أنيميشن اللوجو
     // ==============================
     scaleController =
-    AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 0),
-    )..addStatusListener((status) async {
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          showText = true;
-        });
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 0),
+        )..addStatusListener((status) async {
+          if (status == AnimationStatus.completed) {
+            setState(() {
+              showText = true;
+            });
 
-        // نشغل أنيميشن النص هنا
-        textController.forward();
+            // نشغل أنيميشن النص هنا
+            textController.forward();
 
-        Timer(const Duration(milliseconds: 300), () {
-          scaleController.reset();
+            Timer(const Duration(milliseconds: 300), () {
+              scaleController.reset();
+            });
+          }
         });
-      }
-    });
 
     scaleAnimation = Tween<double>(
       begin: 0.0,
@@ -185,9 +185,9 @@ class _SplashScreenState extends State<SplashScreen>
                     onEnd: () async {
                       await Future.delayed(const Duration(milliseconds: 1100));
                       String? userToken =
-                      await SharedPrefHelper.getSecuredString(
-                        SharedPrefKeys.userToken,
-                      );
+                          await SharedPrefHelper.getSecuredString(
+                            SharedPrefKeys.userToken,
+                          );
                       log(userToken.toString());
 
                       final userType = await SharedPrefHelper.getSecuredString(
@@ -202,8 +202,10 @@ class _SplashScreenState extends State<SplashScreen>
                         final String route;
                         if (userType == 'Scout') {
                           route = AppRoute.scoutMainScreen;
+                        } else if (userType == 'MainClub') {
+                          route = AppRoute
+                              .mainClubScreen; // ← route الـ MainClub الصح
                         } else {
-                          // Club | MainClub | أي role تاني → clubMainScreen
                           route = AppRoute.clubMainScreen;
                         }
                         // ignore: use_build_context_synchronously
@@ -314,19 +316,19 @@ class ThisIsFadeRoute extends PageRouteBuilder {
   final Widget route;
 
   ThisIsFadeRoute({required this.page, required this.route})
-      : super(
-    pageBuilder:
-        (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) => page,
-    transitionsBuilder:
-        (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) => FadeTransition(opacity: animation, child: route),
-  );
+    : super(
+        pageBuilder:
+            (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) => page,
+        transitionsBuilder:
+            (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child,
+            ) => FadeTransition(opacity: animation, child: route),
+      );
 }

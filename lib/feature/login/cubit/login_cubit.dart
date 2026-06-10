@@ -51,11 +51,11 @@ class LoginCubit extends Cubit<LoginState> {
   List<CountiesList> departmentsList = [];
 
   String? selectedUniversity;
-  int? selectedUniversityId;
   String? selectedColleges;
-  int? selectedCollegesId;
   String? selectedDepartments;
-  int? selectedDepartmentsId;
+  dynamic selectedUniversityId;
+  dynamic selectedCollegesId;
+  dynamic selectedDepartmentsId;
 
   // ============================================================================
   // AUTH METHODS
@@ -430,6 +430,8 @@ class LoginCubit extends Cubit<LoginState> {
     final role = response['role']?.toString() ?? '';
     if (role.isNotEmpty) {
       await SharedPrefHelper.setSecuredString(SharedPrefKeys.userType, role);
+
+      await CacheHelper.setString('userType', role);
       log('✅ Role saved: $role');
     }
 

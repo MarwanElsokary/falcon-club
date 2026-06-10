@@ -124,7 +124,31 @@ abstract class ApiService {
   @GET(ApiConstants.allPackages)
   Future allPackages();
 
+  @GET(ApiConstants.getClubRequests)
+  Future<dynamic> getClubRequests();
+
   //
+  @GET(ApiConstants.getPlayerRequests)
+  Future<dynamic> getPlayerRequests();
+
+  @PUT(ApiConstants.acceptClub)
+  Future<dynamic> acceptClub(@Query('ClubId') String clubId);
+
+  @PUT(ApiConstants.rejectClub)
+  Future<dynamic> rejectClub(@Query('ClubId') String clubId);
+
+  @DELETE(ApiConstants.deleteClub)
+  Future<dynamic> deleteClub(@Query('ClubId') String clubId);
+
+  @PUT(ApiConstants.acceptPlayer)
+  Future<dynamic> acceptPlayer(@Query('PlayerId') String playerId);
+
+  @PUT(ApiConstants.rejectPlayer)
+  Future<dynamic> rejectPlayer(@Query('PlayerId') String playerId);
+
+  @DELETE(ApiConstants.deletePlayer)
+  Future<dynamic> deletePlayer(@Query('PlayerId') String playerId);
+
   @POST(ApiConstants.payPackage)
   Future payPackage(@Body() payPackageBody);
 

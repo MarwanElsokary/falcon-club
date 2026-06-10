@@ -27,7 +27,8 @@ mixin _$ClubTeamState {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -50,7 +51,8 @@ mixin _$ClubTeamState {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -73,7 +75,7 @@ mixin _$ClubTeamState {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -236,7 +238,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -263,7 +266,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -290,7 +294,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -455,7 +459,8 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -482,7 +487,8 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -509,7 +515,7 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -705,7 +711,8 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -732,7 +739,8 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -759,7 +767,7 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -963,7 +971,8 @@ class _$clubProfileErrorImpl implements clubProfileError {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -990,7 +999,8 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -1017,7 +1027,7 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -1192,7 +1202,8 @@ class _$clubUpdateProfileLoadingImpl implements clubUpdateProfileLoading {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -1219,7 +1230,8 @@ class _$clubUpdateProfileLoadingImpl implements clubUpdateProfileLoading {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -1246,7 +1258,7 @@ class _$clubUpdateProfileLoadingImpl implements clubUpdateProfileLoading {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -1442,7 +1454,8 @@ class _$clubUpdateProfileSuccessImpl implements clubUpdateProfileSuccess {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -1469,7 +1482,8 @@ class _$clubUpdateProfileSuccessImpl implements clubUpdateProfileSuccess {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -1496,7 +1510,7 @@ class _$clubUpdateProfileSuccessImpl implements clubUpdateProfileSuccess {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -1701,7 +1715,8 @@ class _$clubUpdateProfileErrorImpl implements clubUpdateProfileError {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -1728,7 +1743,8 @@ class _$clubUpdateProfileErrorImpl implements clubUpdateProfileError {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -1755,7 +1771,7 @@ class _$clubUpdateProfileErrorImpl implements clubUpdateProfileError {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -1929,7 +1945,8 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -1956,7 +1973,8 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -1983,7 +2001,7 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -2104,7 +2122,7 @@ abstract class _$$clubPlayersSuccessImplCopyWith<$Res> {
     $Res Function(_$clubPlayersSuccessImpl) then,
   ) = __$$clubPlayersSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({dynamic players});
+  $Res call({Map<String, List<ClubPlayer>> players});
 }
 
 /// @nodoc
@@ -2120,13 +2138,13 @@ class __$$clubPlayersSuccessImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? players = freezed}) {
+  $Res call({Object? players = null}) {
     return _then(
       _$clubPlayersSuccessImpl(
-        freezed == players
-            ? _value.players
+        null == players
+            ? _value._players
             : players // ignore: cast_nullable_to_non_nullable
-                  as dynamic,
+                  as Map<String, List<ClubPlayer>>,
       ),
     );
   }
@@ -2135,10 +2153,16 @@ class __$$clubPlayersSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
-  const _$clubPlayersSuccessImpl(this.players);
+  const _$clubPlayersSuccessImpl(final Map<String, List<ClubPlayer>> players)
+    : _players = players;
 
+  final Map<String, List<ClubPlayer>> _players;
   @override
-  final dynamic players;
+  Map<String, List<ClubPlayer>> get players {
+    if (_players is EqualUnmodifiableMapView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_players);
+  }
 
   @override
   String toString() {
@@ -2150,12 +2174,12 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$clubPlayersSuccessImpl &&
-            const DeepCollectionEquality().equals(other.players, players));
+            const DeepCollectionEquality().equals(other._players, _players));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(players));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_players));
 
   /// Create a copy of ClubTeamState
   /// with the given fields replaced by the non-null parameter values.
@@ -2179,7 +2203,8 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -2206,7 +2231,8 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -2233,7 +2259,7 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -2344,10 +2370,11 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
 }
 
 abstract class clubPlayersSuccess implements ClubTeamState {
-  const factory clubPlayersSuccess(final dynamic players) =
-      _$clubPlayersSuccessImpl;
+  const factory clubPlayersSuccess(
+    final Map<String, List<ClubPlayer>> players,
+  ) = _$clubPlayersSuccessImpl;
 
-  dynamic get players;
+  Map<String, List<ClubPlayer>> get players;
 
   /// Create a copy of ClubTeamState
   /// with the given fields replaced by the non-null parameter values.
@@ -2437,7 +2464,8 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -2464,7 +2492,8 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -2491,7 +2520,7 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -2665,7 +2694,8 @@ class _$favLoadingImpl implements favLoading {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -2692,7 +2722,8 @@ class _$favLoadingImpl implements favLoading {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -2719,7 +2750,7 @@ class _$favLoadingImpl implements favLoading {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -2912,7 +2943,8 @@ class _$favSuccessImpl implements favSuccess {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -2939,7 +2971,8 @@ class _$favSuccessImpl implements favSuccess {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -2966,7 +2999,7 @@ class _$favSuccessImpl implements favSuccess {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -3166,7 +3199,8 @@ class _$favErrorImpl implements favError {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -3193,7 +3227,8 @@ class _$favErrorImpl implements favError {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -3220,7 +3255,7 @@ class _$favErrorImpl implements favError {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -3393,7 +3428,8 @@ class _$addFavSuccessImpl implements addFavSuccess {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -3420,7 +3456,8 @@ class _$addFavSuccessImpl implements addFavSuccess {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -3447,7 +3484,7 @@ class _$addFavSuccessImpl implements addFavSuccess {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -3639,7 +3676,8 @@ class _$addFavErrorImpl implements addFavError {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -3666,7 +3704,8 @@ class _$addFavErrorImpl implements addFavError {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -3693,7 +3732,7 @@ class _$addFavErrorImpl implements addFavError {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -3866,7 +3905,8 @@ class _$removeFavSuccessImpl implements removeFavSuccess {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -3893,7 +3933,8 @@ class _$removeFavSuccessImpl implements removeFavSuccess {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -3920,7 +3961,7 @@ class _$removeFavSuccessImpl implements removeFavSuccess {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -4115,7 +4156,8 @@ class _$removeFavErrorImpl implements removeFavError {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -4142,7 +4184,8 @@ class _$removeFavErrorImpl implements removeFavError {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -4169,7 +4212,7 @@ class _$removeFavErrorImpl implements removeFavError {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -4344,7 +4387,8 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -4371,7 +4415,8 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -4398,7 +4443,7 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -4600,7 +4645,8 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -4627,7 +4673,8 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -4654,7 +4701,7 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,
@@ -4858,7 +4905,8 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     required TResult Function(dynamic response) updateProfilesuccess,
     required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
-    required TResult Function(dynamic players) clubPlayerssuccess,
+    required TResult Function(Map<String, List<ClubPlayer>> players)
+    clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
     required TResult Function() favloading,
     required TResult Function(dynamic players) favsuccess,
@@ -4885,7 +4933,8 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult? Function(dynamic response)? updateProfilesuccess,
     TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
-    TResult? Function(dynamic players)? clubPlayerssuccess,
+    TResult? Function(Map<String, List<ClubPlayer>> players)?
+    clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
     TResult? Function()? favloading,
     TResult? Function(dynamic players)? favsuccess,
@@ -4912,7 +4961,7 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult Function(dynamic response)? updateProfilesuccess,
     TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
-    TResult Function(dynamic players)? clubPlayerssuccess,
+    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
     TResult Function()? favloading,
     TResult Function(dynamic players)? favsuccess,

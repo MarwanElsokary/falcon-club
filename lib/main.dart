@@ -12,27 +12,26 @@ import 'feature/home/ui/screen/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // منع الدوران وخلي التطبيق في الوضع العمودي فقط
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation
-        .portraitDown, // اختياري لو عايز يسمح بالوضع العمودي المقلوب
+    DeviceOrientation.portraitDown,
   ]);
   await CacheHelper.init();
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
 
-  WidgetsFlutterBinding.ensureInitialized();
+  EasyLocalization.logger.enableBuildModes = [];
 
+  await CacheHelper.clearDataCache();
   await setupGetIt();
-
-  await Future.wait([CacheHelper.init()]);
 
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],
-      path: 'assets/translations', // مسار الملفات المترجمة
+      path: 'assets/translations',
       fallbackLocale: const Locale('ar'),
+      startLocale: const Locale('ar'),
       child: Phoenix(child: const MyApp()),
     ),
   );
@@ -41,10 +40,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    EasyLocalization.of(context)!.setLocale(Locale('ar'));
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
@@ -53,19 +50,14 @@ class MyApp extends StatelessWidget {
           statusBarBrightness: Brightness.light,
           statusBarColor: Colors.transparent,
         ),
-
         child: MaterialApp(
           scrollBehavior: NoGlowScrollBehavior(),
-          title: 'Winner',
+          title: 'Fteet AI Club',
           debugShowCheckedModeBanner: false,
           theme: themsApp.light,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: const Locale('ar'),
-          // context.locale,
-          localeResolutionCallback: (locale, supportedLocales) {
-            return locale;
-          },
           onGenerateRoute: (settings) {
             final appRouter = AppRouter();
             return appRouter.generateRoute(settings);

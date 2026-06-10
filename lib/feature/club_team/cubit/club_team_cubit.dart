@@ -126,6 +126,7 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   // CLUB PLAYERS — fetch every time, no cache
   // ============================================================================
   Future<void> fetchClubPlayers() async {
+    log('🔥 fetchClubPlayers called');
 
     emit(const ClubTeamState.clubPlayersloading());
     await Future.microtask(() {}); // ← ده بيخلي الـ loading يتبني الأول

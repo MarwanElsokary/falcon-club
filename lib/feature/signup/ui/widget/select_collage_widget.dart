@@ -21,10 +21,11 @@ class SelectCollageWidget extends StatefulWidget {
 class _SelectCollageWidgetState extends State<SelectCollageWidget> {
   final TextEditingController _searchController = TextEditingController();
 
-  int? getValidSelectedValue(LoginCubit cubit) {
+  // ✅ بعد
+  dynamic getValidSelectedValue(LoginCubit cubit) {
     if (cubit.selectedCollegesId != null) {
-      // تحقق من أن القيمة المختارة موجودة في القائمة الحالية
-      bool exists = cubit.collegesList.any((college) => college.id == cubit.selectedCollegesId);
+      bool exists = cubit.collegesList.any((college) =>
+      college.id.toString() == cubit.selectedCollegesId.toString());
       return exists ? cubit.selectedCollegesId : null;
     }
     return null;
@@ -76,7 +77,7 @@ class _SelectCollageWidgetState extends State<SelectCollageWidget> {
                   ],
                 ),
                 child: DropdownButtonHideUnderline(
-                  child: DropdownButton2<int>(
+                  child: DropdownButton2<dynamic>(
                     value: getValidSelectedValue(loginCubit), // استخدام الدالة للتحقق
                     hint: state is collegesLoading
                         ? Container(
@@ -208,7 +209,7 @@ class _SelectCollageWidgetState extends State<SelectCollageWidget> {
                     )
                         : null,
                     items: loginCubit.collegesList.map((college) {
-                      return DropdownMenuItem<int>(
+                      return DropdownMenuItem<dynamic>(
                         value: college.id,
                         child: Row(
                           children: [
@@ -240,7 +241,7 @@ class _SelectCollageWidgetState extends State<SelectCollageWidget> {
                       );
                     }).toList(),
                     onChanged: isEnabled && loginCubit.collegesList.isNotEmpty
-                        ? (int? newId) {
+                        ? (dynamic ? newId) {
                       if (newId != null) {
                         setState(() {
                           loginCubit.selectedCollegesId = newId;

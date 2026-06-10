@@ -7,6 +7,7 @@ import 'reals_state.dart';
 
 class RealsCubit extends Cubit<RealsState> {
   final RealsRepo _repo;
+
   RealsCubit(this._repo) : super(RealsState.initial());
 
   List<RealsVide> realsVide = [];
@@ -63,7 +64,9 @@ class RealsCubit extends Cubit<RealsState> {
         hasMoreData = realsResponse.data.length >= pageSize;
 
         // تهيئة الـ Notifiers للبيانات الجديدة فقط
-        initializeNotifiers(startIndex: realsVide.length - realsResponse.data.length);
+        initializeNotifiers(
+          startIndex: realsVide.length - realsResponse.data.length,
+        );
 
         emit(RealsState.realssuccess(realsResponse));
       },
@@ -184,22 +187,51 @@ class RealsCubit extends Cubit<RealsState> {
   }
 
   // Toggle Like مع تحديث فوري
-  void toggleLikeWithNotifier({required int reelId}) {
+  Future<void> toggleLikeWithNotifier({required int reelId}) async {
+    final index = realsVide.indexWhere((reel) => reel.id == reelId);
+    if (index == -1) return;
+
+    final reel = realsVide[index];
     final isLikedNotifier = likeNotifiers[reelId];
     final likeCountNotifier = likeCountNotifiers[reelId];
 
     if (isLikedNotifier == null || likeCountNotifier == null) return;
 
-    // Toggle الحالة فوراً في الـ UI
-    isLikedNotifier.value = !isLikedNotifier.value;
-    likeCountNotifier.value += isLikedNotifier.value ? 1 : -1;
+    // حفظ القيم القديمة للـ rollback
+    final oldIsLiked = reel.isLiked == true;
+    final oldLikesCount = (reel.likesCount ?? 0) as int;
 
-    // تحديث الموديل
-    final index = realsVide.indexWhere((reel) => reel.id == reelId);
-    if (index != -1) {
-      realsVide[index].isLiked = isLikedNotifier.value;
-      realsVide[index].likesCount = likeCountNotifier.value;
-    }
+    // Optimistic update فوراً
+    final newIsLiked = !oldIsLiked;
+    final newLikesCount = newIsLiked ? oldLikesCount + 1 : oldLikesCount - 1;
+
+    reel.isLiked = newIsLiked;
+    reel.likesCount = newLikesCount;
+    isLikedNotifier.value = newIsLiked;
+    likeCountNotifier.value = newLikesCount;
+
+    emit(const RealsState.toggleLikeReelloading());
+
+    final response = await _repo.toggleLikeReel(reelId: reelId);
+
+    response.when(
+      success: (_) {
+        emit(const RealsState.toggleLikeReelsuccess());
+      },
+      failure: (error) {
+        // Rollback لو فشل
+        reel.isLiked = oldIsLiked;
+        reel.likesCount = oldLikesCount;
+        isLikedNotifier.value = oldIsLiked;
+        likeCountNotifier.value = oldLikesCount;
+
+        emit(
+          RealsState.toggleLikeReelerror(
+            error: error.apiErrorModel.message ?? '',
+          ),
+        );
+      },
+    );
   }
 
   // تنظيف كل الـ notifiers

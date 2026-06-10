@@ -36,9 +36,13 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   context.pushNamed(
-                    AppRoute.scoutTrainingDetailsScreen,
+                    AppRoute.clubTrainingDetailsScreen,
                     arguments: {
-                      'exerciseId': '${exerciseList[index].id ?? ''}',
+                      'exerciseId': '${exerciseList[index].id}',
+                      'exerciseTitle': exerciseList[index].title,
+                      'exerciseDescription': exerciseList[index].description,
+                      'exerciseSkills': exerciseList[index].skills,
+                      'exercisePhotoPath': exerciseList[index].photoPath,
                     },
                   );
                 },

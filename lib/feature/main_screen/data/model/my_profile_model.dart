@@ -93,11 +93,13 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    userId: json["userId"],
-    isCompleted: json["isCompleted"],
+    // 🔥 Club بيرجع "id" مش "userId"
+    userId: json["userId"] ?? json["id"],
+    isCompleted: json["isCompleted"] ?? false,
     bioImage: json["bioImage"],
     accountNumber: json["accountNumber"],
     firstName: json["firstName"],
+    // 🔥 تأكد إنها بتتقرأ صح
     isSubscribed: json["isSubscribed"] ?? false,
     lastName: json["lastName"],
     email: json["email"],
@@ -116,7 +118,8 @@ class Data {
     positionId: json["positionId"],
     positionName: json["positionName"],
     clubJoinDate: json["clubJoinDate"],
-    remainingSubscriptionDays: json["remainingSubscriptionDays"],
+    // 🔥 لو مش موجود في Club profile، نعتبرها كبيرة عشان مش المشكلة
+    remainingSubscriptionDays: json["remainingSubscriptionDays"] ?? 999,
     joinDate: json["joinDate"],
     position: json["position"],
     tps: json["tps"],
@@ -154,7 +157,7 @@ class Data {
     "bioAvgLegAngle": bioAvgLegAngle,
     "bioHeight": bioHeight,
     "bioShoulderWidth": bioShoulderWidth,
-    "bioArmLength" : bioArmLength,
+    "bioArmLength": bioArmLength,
     "positionName": positionName,
     "clubJoinDate": clubJoinDate,
     "joinDate": joinDate,

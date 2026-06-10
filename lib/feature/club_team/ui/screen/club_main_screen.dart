@@ -33,23 +33,25 @@ class ClubMainScreen extends StatefulWidget {
 class _ClubMainScreenState extends State<ClubMainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late final ClubTeamCubit _clubTeamCubit;
+
   @override
   void initState() {
     super.initState();
-    context.read<ClubTeamCubit>().emitMyProfile();
-    context.read<ClubTeamCubit>().currentIndex.addListener(_onTabChanged);
+    _clubTeamCubit = context.read<ClubTeamCubit>();
+    _clubTeamCubit.emitMyProfile();
+    _clubTeamCubit.currentIndex.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
-    final index = context.read<ClubTeamCubit>().currentIndex.value;
-    if (index == 1) {
-      context.read<ClubTeamCubit>().fetchClubPlayers();
+    if (_clubTeamCubit.currentIndex.value == 1) {
+      _clubTeamCubit.fetchClubPlayers();
     }
   }
 
   @override
   void dispose() {
-    context.read<ClubTeamCubit>().currentIndex.removeListener(_onTabChanged);
+    _clubTeamCubit.currentIndex.removeListener(_onTabChanged);
     super.dispose();
   }
 
@@ -63,176 +65,170 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
+    return BlocProvider(
+      // ✅ مفيش isUserSubscribed — الـ cubit بيجيب isSubscribed من الـ cache بعد الـ API
+      create: (_) => getIt<RankCubit>()..emitRank(),
+      child: Scaffold(
+        key: _scaffoldKey,
 
-      // ── Drawer ────────────────────────────────────────────────────────────
-      drawer: BlocProvider(
-        create: (_) => getIt<MainCubit>()..emitMyProfile(),
-        child: const CustomDrawer(),
-      ),
+        drawer: BlocProvider(
+          create: (_) => getIt<MainCubit>()..emitMyProfile(),
+          child: const CustomDrawer(),
+        ),
 
-      body: Stack(
-        children: [
-          // ── Main content ──────────────────────────────────────────────────
-          ValueListenableBuilder<int>(
-            valueListenable: context.read<ClubTeamCubit>().currentIndex,
-            builder: (context, currentIndex, _) {
-              return IndexedStack(
-                index: currentIndex,
-                children: [
-                  // 0 — الرئيسية
-                  MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (_) =>
-                            getIt<ExperimentsCubit>()
-                              ..emitbestTrials(categoryId: ''),
-                      ),
-                      BlocProvider(
-                        create: (_) =>
-                            getIt<TrainingCubit>()
-                              ..emitallExercises(categoryId: '', popular: true),
-                      ),
-                      BlocProvider(
-                        create: (_) => getIt<MainCubit>()..emitMyProfile(),
-                      ),
-                      BlocProvider(
-                        create: (_) => getIt<RankCubit>()..emitRank(),
-                      ),
-                    ],
-                    child: HomeScreen(onDrawerTap: _toggleDrawer),
-                  ),
-
-                  // 1 — فريقي
-                  const ClubMyTeamScreen(),
-
-                  // 2 — اللاعيبين (Reels)
-                  MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (_) =>
-                            getIt<RealsCubit>()..emitreals(playerId: ''),
-                      ),
-                    ],
-                    child: MainRealsScreen(
-                      playerProfile: false,
-                      playnowOrNot: currentIndex == 2,
-                    ),
-                  ),
-
-                  // 3 — قائمة الاهتمامات (Favorites)
-                  const FavoritesScreen(),
-
-                  // 4 — الرتب (Rank)
-                  BlocProvider(
-                    create: (_) => getIt<RankCubit>()..emitRank(),
-                    child: const RankScreen(),
-                  ),
-                ],
-              );
-            },
-          ),
-
-          // ── Bottom navigation bar ─────────────────────────────────────────
-          PositionedDirectional(
-            bottom: 0,
-            start: 0,
-            end: 0,
-            child: ValueListenableBuilder<int>(
+        body: Stack(
+          children: [
+            ValueListenableBuilder<int>(
               valueListenable: context.read<ClubTeamCubit>().currentIndex,
               builder: (context, currentIndex, _) {
-                return ValueListenableBuilder<bool>(
-                  valueListenable: context.read<ClubTeamCubit>().show,
-                  builder: (context, show, _) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      width: context.displayWidth,
-                      height: show ? 80.h : 0,
-                      child: SingleChildScrollView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        child: SlideEnimationWidget(
-                          index: 0,
-                          child: Container(
-                            height: 80.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, -2),
-                                ),
-                              ],
-                            ),
-                            child: SafeArea(
-                              top: false,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: List.generate(5, (index) {
-                                  final isSelected = currentIndex == index;
-                                  return Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        context
-                                                .read<ClubTeamCubit>()
-                                                .currentIndex
-                                                .value =
-                                            index;
-                                      },
-                                      splashColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: isSelected ? 26.h : 24.h,
-                                            width: isSelected ? 26.h : 24.h,
-                                            child: isSelected
-                                                ? _activeIcons[index]
-                                                : _inactiveIcons[index],
-                                          ),
-                                          CenterTextUtils(
-                                            fontSize: 9,
-                                            fontWeight: isSelected
-                                                ? FontWeight.w700
-                                                : FontWeight.w500,
-                                            color: isSelected
-                                                ? mainColor
-                                                : mainColor.withOpacity(0.5),
-                                            text: _titles[index],
-                                          ),
-                                          verticalSpace(4),
-                                          AnimatedContainer(
-                                            duration: const Duration(
-                                              milliseconds: 300,
+                return IndexedStack(
+                  index: currentIndex,
+                  children: [
+                    // 0 — الرئيسية
+                    MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (_) =>
+                          getIt<ExperimentsCubit>()
+                            ..emitbestTrials(categoryId: ''),
+                        ),
+                        BlocProvider(
+                          create: (_) => getIt<TrainingCubit>()
+                            ..emitallExercises(categoryId: '', popular: true),
+                        ),
+                        BlocProvider(
+                          create: (_) => getIt<MainCubit>()..emitMyProfile(),
+                        ),
+                      ],
+                      child: HomeScreen(onDrawerTap: _toggleDrawer),
+                    ),
+
+                    // 1 — فريقي
+                    const ClubMyTeamScreen(),
+
+                    // 2 — اللاعيبين (Reels)
+                    MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (_) =>
+                          getIt<RealsCubit>()..emitreals(playerId: ''),
+                        ),
+                      ],
+                      child: MainRealsScreen(
+                        playerProfile: false,
+                        playnowOrNot: currentIndex == 2,
+                      ),
+                    ),
+
+                    // 3 — قائمة الاهتمامات
+                    const FavoritesScreen(),
+
+                    // 4 — الرتب
+                    const RankScreen(),
+                  ],
+                );
+              },
+            ),
+
+            // ── Bottom navigation bar ──────────────────────────────────────
+            PositionedDirectional(
+              bottom: 0,
+              start: 0,
+              end: 0,
+              child: ValueListenableBuilder<int>(
+                valueListenable: context.read<ClubTeamCubit>().currentIndex,
+                builder: (context, currentIndex, _) {
+                  return ValueListenableBuilder<bool>(
+                    valueListenable: context.read<ClubTeamCubit>().show,
+                    builder: (context, show, _) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: context.displayWidth,
+                        height: show ? 80.h : 0,
+                        child: SingleChildScrollView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          child: SlideEnimationWidget(
+                            index: 0,
+                            child: Container(
+                              height: 80.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.08),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, -2),
+                                  ),
+                                ],
+                              ),
+                              child: SafeArea(
+                                top: false,
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceAround,
+                                  children: List.generate(5, (index) {
+                                    final isSelected = currentIndex == index;
+                                    return Expanded(
+                                      child: InkWell(
+                                        onTap: () {
+                                          context
+                                              .read<ClubTeamCubit>()
+                                              .currentIndex
+                                              .value = index;
+                                        },
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: isSelected ? 26.h : 24.h,
+                                              width: isSelected ? 26.h : 24.h,
+                                              child: isSelected
+                                                  ? _activeIcons[index]
+                                                  : _inactiveIcons[index],
                                             ),
-                                            height: isSelected ? 6.h : 0,
-                                            width: 6.w,
-                                            decoration: BoxDecoration(
-                                              color: mainColor,
-                                              shape: BoxShape.circle,
+                                            CenterTextUtils(
+                                              fontSize: 9,
+                                              fontWeight: isSelected
+                                                  ? FontWeight.w700
+                                                  : FontWeight.w500,
+                                              color: isSelected
+                                                  ? mainColor
+                                                  : mainColor.withOpacity(0.5),
+                                              text: _titles[index],
                                             ),
-                                          ),
-                                        ],
+                                            verticalSpace(4),
+                                            AnimatedContainer(
+                                              duration: const Duration(
+                                                milliseconds: 300,
+                                              ),
+                                              height: isSelected ? 6.h : 0,
+                                              width: 6.w,
+                                              decoration: BoxDecoration(
+                                                color: mainColor,
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  }),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

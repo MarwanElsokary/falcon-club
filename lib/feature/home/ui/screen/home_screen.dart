@@ -29,11 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh() async {
     // امسح الـ cache عشان يجيب البيانات من جديد
 
-
-
     // أعد الـ fetch
     context.read<ExperimentsCubit>().emitbestTrials(categoryId: '');
-    context.read<TrainingCubit>().emitallExercises(categoryId: '', popular: true);
+    context.read<TrainingCubit>().emitallExercises(
+      categoryId: '',
+      popular: true,
+    );
     context.read<MainCubit>().emitCategories();
 
     await Future.delayed(const Duration(milliseconds: 800));
@@ -60,20 +61,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 slivers: [
                   CupertinoSliverRefreshControl(
                     onRefresh: _onRefresh,
-                    builder: (context, refreshState, pulledExtent,
-                        refreshTriggerPullDistance, refreshIndicatorExtent) {
-                      return Container(
-                        alignment: Alignment.center,
-                        child: const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: whiteclr,
-                          ),
-                        ),
-                      );
-                    },
+                    builder:
+                        (
+                          context,
+                          refreshState,
+                          pulledExtent,
+                          refreshTriggerPullDistance,
+                          refreshIndicatorExtent,
+                        ) {
+                          return Container(
+                            alignment: Alignment.center,
+                            child: const SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: whiteclr,
+                              ),
+                            ),
+                          );
+                        },
                   ),
                   SliverToBoxAdapter(
                     child: Column(
@@ -117,10 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
 class NoGlowScrollBehavior extends ScrollBehavior {
   @override
   Widget buildOverscrollIndicator(
-      BuildContext context,
-      Widget child,
-      ScrollableDetails details,
-      ) {
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     return child;
   }
 }

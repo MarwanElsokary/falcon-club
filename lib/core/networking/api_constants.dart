@@ -48,7 +48,7 @@ class ApiConstants {
   static const String clubsByCountry = "Player/GetClubsByCountry";
 
   //myProfile
-  static const String myProfile = "Player/GetProfile";
+  static const String myProfile = "Club/GetProfile";
   static const String clubProfile = "Club/GetProfile";
 
   //Payment/GetAllPackages
@@ -59,6 +59,18 @@ class ApiConstants {
 
   //
   static const String rank = "Club/GetRankingExercise";
+
+  static const String getClubRequests = 'Club/GetClubRequests';
+  static const String getPlayerRequests = 'Player/GetPlayerRequests';
+  // Club Requests
+  static const String acceptClub = '/Club/AcceptClub';
+  static const String rejectClub = '/Club/RejectClub';
+  static const String deleteClub = '/Club/DeleteClub';
+
+// Player Requests
+  static const String acceptPlayer = '/Player/AcceptPlayer';
+  static const String rejectPlayer = '/Player/RejectPlayer';
+  static const String deletePlayer = '/Player/DeletePlayer';
 
   //reals
   static const String reals = "Player/GetReels";
