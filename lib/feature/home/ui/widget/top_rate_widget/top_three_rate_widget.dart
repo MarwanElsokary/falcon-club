@@ -21,7 +21,7 @@ class TopThreeRateWidget extends StatelessWidget {
     final rankList = context.read<RankCubit>().rankList;
 
     // ✅ دالة مساعدة لبناء صورة اللاعب
-    Widget _buildPlayerImage(String? photoPath, double width, double height) {
+    Widget buildPlayerImage(String? photoPath, double width, double height) {
       if (photoPath == null || photoPath.isEmpty) {
         return Padding(
           padding: EdgeInsets.all(20.w),
@@ -73,7 +73,6 @@ class TopThreeRateWidget extends StatelessWidget {
                             'isMyProfile': true,
                             'playerId': '${rankList[1].id}',
                             'showFavoriteButton': true, // ← المدرب والكشاف بس
-
                           },
                         );
                       }
@@ -83,10 +82,7 @@ class TopThreeRateWidget extends StatelessWidget {
                         gradient: const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFFF4F7FF),
-                            Color(0xFFCBD5EC),
-                          ],
+                          colors: [Color(0xFFF4F7FF), Color(0xFFCBD5EC)],
                         ),
                         borderRadius: BorderRadius.circular(20.r),
                       ),
@@ -103,15 +99,19 @@ class TopThreeRateWidget extends StatelessWidget {
                                 height: 75.h,
                                 child: ClipRRect(
                                   borderRadius:
-                                  BorderRadiusDirectional.circular(14.r),
+                                      BorderRadiusDirectional.circular(14.r),
                                   child: rankList.length > 1
-                                      ? _buildPlayerImage(
-                                      rankList[1].photoPath, 90.w, 75.h)
+                                      ? buildPlayerImage(
+                                          rankList[1].photoPath,
+                                          90.w,
+                                          75.h,
+                                        )
                                       : Padding(
-                                    padding: EdgeInsets.all(20.w),
-                                    child: SvgPicture.asset(
-                                        'assets/svgs/unavailabeImage.svg'),
-                                  ),
+                                          padding: EdgeInsets.all(20.w),
+                                          child: SvgPicture.asset(
+                                            'assets/svgs/unavailabeImage.svg',
+                                          ),
+                                        ),
                                 ),
                               ),
                               verticalSpace(10),
@@ -171,7 +171,6 @@ class TopThreeRateWidget extends StatelessWidget {
                             'isMyProfile': true,
                             'playerId': '${rankList[0].id}',
                             'showFavoriteButton': true, // ← المدرب والكشاف بس
-
                           },
                         );
                       }
@@ -181,10 +180,7 @@ class TopThreeRateWidget extends StatelessWidget {
                         gradient: const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFFF4F7FF),
-                            Color(0xFFCBD5EC),
-                          ],
+                          colors: [Color(0xFFF4F7FF), Color(0xFFCBD5EC)],
                         ),
                         borderRadius: BorderRadius.circular(30.r),
                       ),
@@ -201,15 +197,19 @@ class TopThreeRateWidget extends StatelessWidget {
                                 height: 100.h,
                                 child: ClipRRect(
                                   borderRadius:
-                                  BorderRadiusDirectional.circular(16.r),
+                                      BorderRadiusDirectional.circular(16.r),
                                   child: rankList.isNotEmpty
-                                      ? _buildPlayerImage(
-                                      rankList[0].photoPath, 90.w, 100.h)
+                                      ? buildPlayerImage(
+                                          rankList[0].photoPath,
+                                          90.w,
+                                          100.h,
+                                        )
                                       : Padding(
-                                    padding: EdgeInsets.all(20.w),
-                                    child: SvgPicture.asset(
-                                        'assets/svgs/unavailabeImage.svg'),
-                                  ),
+                                          padding: EdgeInsets.all(20.w),
+                                          child: SvgPicture.asset(
+                                            'assets/svgs/unavailabeImage.svg',
+                                          ),
+                                        ),
                                 ),
                               ),
                               verticalSpace(10),
@@ -269,7 +269,6 @@ class TopThreeRateWidget extends StatelessWidget {
                             'isMyProfile': true,
                             'playerId': '${rankList[2].id}',
                             'showFavoriteButton': true, // ← المدرب والكشاف بس
-
                           },
                         );
                       }
@@ -279,10 +278,7 @@ class TopThreeRateWidget extends StatelessWidget {
                         gradient: const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFFF4F7FF),
-                            Color(0xFFCBD5EC),
-                          ],
+                          colors: [Color(0xFFF4F7FF), Color(0xFFCBD5EC)],
                         ),
                         borderRadius: BorderRadius.circular(20.r),
                       ),
@@ -299,15 +295,19 @@ class TopThreeRateWidget extends StatelessWidget {
                                 height: 75.h,
                                 child: ClipRRect(
                                   borderRadius:
-                                  BorderRadiusDirectional.circular(14.r),
+                                      BorderRadiusDirectional.circular(14.r),
                                   child: rankList.length > 2
-                                      ? _buildPlayerImage(
-                                      rankList[2].photoPath, 90.w, 75.h)
+                                      ? buildPlayerImage(
+                                          rankList[2].photoPath,
+                                          90.w,
+                                          75.h,
+                                        )
                                       : Padding(
-                                    padding: EdgeInsets.all(20.w),
-                                    child: SvgPicture.asset(
-                                        'assets/svgs/unavailabeImage.svg'),
-                                  ),
+                                          padding: EdgeInsets.all(20.w),
+                                          child: SvgPicture.asset(
+                                            'assets/svgs/unavailabeImage.svg',
+                                          ),
+                                        ),
                                 ),
                               ),
                               verticalSpace(10),

@@ -50,7 +50,6 @@ class RankList {
     photoPath: json["photoPath"],
     name: json["name"],
     age: json["age"],
-
     position: json["position"],
   );
 

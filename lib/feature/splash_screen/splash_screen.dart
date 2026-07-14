@@ -1,16 +1,21 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 
-import '../../core/helpers/constants.dart';
-import '../../core/helpers/shared_pref_helper.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../core/di/dependency_injection.dart';
+import '../../core/error/failures.dart';
 import '../../core/routing/routes.dart';
+import '../../shared/presentation/routing/role_router.dart';
+import '../auth/domain/entities/auth_session.dart';
+import '../auth/domain/entities/session_diagnostics.dart';
+import '../auth/domain/usecases/describe_session.dart';
+import '../auth/domain/usecases/read_session.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,6 +46,49 @@ class _SplashScreenState extends State<SplashScreen>
   double _opacity = 0;
   bool _value = true;
   bool showText = false;
+
+  static const Duration _splashHold = Duration(milliseconds: 1100);
+
+  /// Decides where to go once the splash animation finishes.
+  ///
+  /// Previously this read the token and the role straight out of secure storage
+  /// and re-derived the role→route mapping inline — one of three such
+  /// dispatchers in the app, which disagreed with each other. It now asks the
+  /// domain (`ReadSession`) and defers the mapping to [RoleRouter], so there is
+  /// exactly one definition of "where does a Club user land?".
+  Future<void> _routeOnwards() async {
+    await Future.delayed(_splashHold);
+    if (!mounted) return;
+
+    await _logStoredSession();
+
+    final session = await getIt<ReadSession>()();
+    if (!mounted) return;
+
+    final String route = session.fold(
+      // A storage failure is not a reason to strand the user on the splash —
+      // send them to sign in and let them recover.
+      (_) => AppRoute.onBoardingScreen,
+      (AuthSession? current) => current == null
+          ? AppRoute.onBoardingScreen
+          : RoleRouter.homeRouteFor(current.role),
+    );
+
+    context.pushNamedAndRemoveUntil(route, predicate: (_) => false);
+  }
+
+  /// Debug-only: prints what is actually in session storage, so a session that
+  /// exists when it should not can be diagnosed instead of guessed at.
+  ///
+  /// Redacted — it reports the token's length and expiry, never its value.
+  Future<void> _logStoredSession() async {
+    if (!kDebugMode) return;
+    final diagnostics = await getIt<DescribeSession>()();
+    diagnostics.fold(
+      (Failure failure) => debugPrint('🔐 session probe failed: ${failure.message}'),
+      (SessionDiagnostics stored) => debugPrint('🔐 $stored'),
+    );
+  }
 
   @override
   void initState() {
@@ -182,45 +230,7 @@ class _SplashScreenState extends State<SplashScreen>
                 children: [
                   AnimatedContainer(
                     duration: Duration(milliseconds: 300),
-                    onEnd: () async {
-                      await Future.delayed(const Duration(milliseconds: 1100));
-                      String? userToken =
-                          await SharedPrefHelper.getSecuredString(
-                            SharedPrefKeys.userToken,
-                          );
-                      log(userToken.toString());
-
-                      final userType = await SharedPrefHelper.getSecuredString(
-                        SharedPrefKeys.userType,
-                      );
-
-                      await SharedPrefHelper.setSecuredString(
-                        SharedPrefKeys.lang,
-                        EasyLocalization.of(context)!.locale.toString(),
-                      );
-                      if (userToken.toString().isNotEmpty) {
-                        final String route;
-                        if (userType == 'Scout') {
-                          route = AppRoute.scoutMainScreen;
-                        } else if (userType == 'MainClub') {
-                          route = AppRoute
-                              .mainClubScreen; // ← route الـ MainClub الصح
-                        } else {
-                          route = AppRoute.clubMainScreen;
-                        }
-                        // ignore: use_build_context_synchronously
-                        context.pushNamedAndRemoveUntil(
-                          route,
-                          predicate: (route) => false,
-                        );
-                      } else {
-                        // ignore: use_build_context_synchronously
-                        context.pushNamedAndRemoveUntil(
-                          AppRoute.onBoardingScreen,
-                          predicate: (route) => false,
-                        );
-                      }
-                    },
+                    onEnd: _routeOnwards,
                     width: showText ? 140.w : 0,
                     child: SingleChildScrollView(
                       child: Column(

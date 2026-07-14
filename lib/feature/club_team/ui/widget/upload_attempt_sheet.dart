@@ -4,30 +4,26 @@ import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/cubit/experiance_details_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../data/model/club_exercises_model.dart';
 
-/// يُستدعى هكذا:
-/// showUploadAttemptSheet(context, exercise: ex, player: player, cubit: cubit);
 void showUploadAttemptSheet(
-    BuildContext context, {
-      required ClubExercise exercise,
-      required ClubPlayer player,
-      required ExperianceDetailsCubit cubit,
-    }) {
+  BuildContext context, {
+  required ClubExercise exercise,
+  required ClubPlayer player,
+  required Future<void> Function(String videoPath) onUpload, // ✅ argument واحد
+}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => BlocProvider.value(
-      value: cubit,
-      child: _UploadAttemptSheet(exercise: exercise, player: player),
+    builder: (_) => _UploadAttemptSheet(
+      exercise: exercise,
+      player: player,
+      onUpload: onUpload, // ✅ argument واحد
     ),
   );
 }
@@ -35,10 +31,12 @@ void showUploadAttemptSheet(
 class _UploadAttemptSheet extends StatefulWidget {
   final ClubExercise exercise;
   final ClubPlayer player;
+  final Future<void> Function(String videoPath) onUpload;
 
   const _UploadAttemptSheet({
     required this.exercise,
     required this.player,
+    required this.onUpload,
   });
 
   @override
@@ -54,107 +52,104 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
   Future<void> _pickVideo(ImageSource source) async {
     final XFile? video = await _picker.pickVideo(source: source);
     if (video == null) return;
+    if (!mounted) return;
+
     setState(() {
       _selectedVideo = File(video.path);
       _isUploading = true;
       _progress = 0;
     });
-    await context.read<ExperianceDetailsCubit>().addAttemptForPlayer(
-      playerId: widget.player.id,
-      exerciseId: widget.exercise.id.toString(),
-      videoPath: video.path,
-    );
+
+    try {
+      await widget.onUpload(video.path); // ✅ argument واحد بس
+      if (!mounted) return;
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: greenClr,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          content: Row(
+            children: [
+              Icon(Icons.check_circle_rounded, color: Colors.white, size: 20.w),
+              SizedBox(width: 8.w),
+              const Text(
+                'تمت إضافة المحاولة بنجاح ✓',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isUploading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redClr,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          content: Text(
+            e.toString().replaceAll('Exception: ', ''),
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ExperianceDetailsCubit, ExperianceDetailsState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          addAttemptsuccess: () {
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: greenClr,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r)),
-                content: Row(children: [
-                  Icon(Icons.check_circle_rounded,
-                      color: Colors.white, size: 20.w),
-                  SizedBox(width: 8.w),
-                  const Text('تمت إضافة المحاولة بنجاح ✓',
-                      style: TextStyle(color: Colors.white)),
-                ]),
-              ),
-            );
-          },
-          addAttempterror: (err) {
-            setState(() => _isUploading = false);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: redClr,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r)),
-                content:
-                Text(err, style: const TextStyle(color: Colors.white)),
-              ),
-            );
-          },
-          addAttemptProgress: (progress) {
-            setState(() => _progress = progress);
-          },
-          orElse: () {},
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
-        ),
-        padding: EdgeInsets.only(
-          top: 16.h,
-          left: 20.w,
-          right: 20.w,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 32.h,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // ── Handle ────────────────────────────────────────────
-            Center(
-              child: Container(
-                width: 40.w,
-                height: 4.h,
-                decoration: BoxDecoration(
-                  color: greyClr.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
+      ),
+      padding: EdgeInsets.only(
+        top: 16.h,
+        left: 20.w,
+        right: 20.w,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 32.h,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // ── Handle ────────────────────────────────────────────
+          Center(
+            child: Container(
+              width: 40.w,
+              height: 4.h,
+              decoration: BoxDecoration(
+                color: greyClr.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(10.r),
               ),
             ),
-            verticalSpace(16),
+          ),
+          verticalSpace(16),
 
-            // ── Exercise header ───────────────────────────────────
-            _buildExerciseHeader(),
-            verticalSpace(16),
+          // ── Exercise header ───────────────────────────────────
+          _buildExerciseHeader(),
+          verticalSpace(16),
 
-            Divider(color: greyClr.withOpacity(0.15), height: 1),
-            verticalSpace(16),
+          Divider(color: greyClr.withOpacity(0.15), height: 1),
+          verticalSpace(16),
 
-            // ── Player row ────────────────────────────────────────
-            _buildPlayerRow(),
-            verticalSpace(24),
+          // ── Player row ────────────────────────────────────────
+          _buildPlayerRow(),
+          verticalSpace(24),
 
-            // ── Progress / Buttons ────────────────────────────────
-            if (_isUploading)
-              _buildProgress()
-            else ...[
-              if (_selectedVideo != null) _buildSelectedFile(),
-              _buildActionButtons(),
-            ],
+          // ── Progress / Buttons ────────────────────────────────
+          if (_isUploading)
+            _buildProgress()
+          else ...[
+            if (_selectedVideo != null) _buildSelectedFile(),
+            _buildActionButtons(),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -170,12 +165,12 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
             height: 64.w,
             child: hasPhoto
                 ? CachedNetworkImage(
-              imageUrl: widget.exercise.photoPath!,
-              fit: BoxFit.cover,
-              placeholder: (_, __) =>
-                  Container(color: mainColor.withOpacity(0.08)),
-              errorWidget: (_, __, ___) => _exerciseFallback(),
-            )
+                    imageUrl: widget.exercise.photoPath!,
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) =>
+                        Container(color: mainColor.withOpacity(0.08)),
+                    errorWidget: (_, __, ___) => _exerciseFallback(),
+                  )
                 : _exerciseFallback(),
           ),
         ),
@@ -199,7 +194,9 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
                   children: widget.exercise.skills.take(3).map((s) {
                     return Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 8.w, vertical: 3.h),
+                        horizontal: 8.w,
+                        vertical: 3.h,
+                      ),
                       decoration: BoxDecoration(
                         color: fillColor,
                         borderRadius: BorderRadius.circular(20.r),
@@ -224,8 +221,7 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
   Widget _exerciseFallback() {
     return Container(
       color: mainColor.withOpacity(0.08),
-      child:
-      Icon(Icons.sports_soccer_rounded, color: mainColor, size: 28.w),
+      child: Icon(Icons.sports_soccer_rounded, color: mainColor, size: 28.w),
     );
   }
 
@@ -249,10 +245,10 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
             child: ClipOval(
               child: hasPhoto
                   ? CachedNetworkImage(
-                imageUrl: widget.player.photoPath!,
-                fit: BoxFit.cover,
-                errorWidget: (_, __, ___) => _playerFallback(),
-              )
+                      imageUrl: widget.player.photoPath!,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) => _playerFallback(),
+                    )
                   : _playerFallback(),
             ),
           ),
@@ -285,8 +281,7 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
               color: mainColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(10.r),
             ),
-            child:
-            Icon(Icons.upload_rounded, color: mainColor, size: 20.w),
+            child: Icon(Icons.upload_rounded, color: mainColor, size: 20.w),
           ),
         ],
       ),
@@ -358,8 +353,11 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.camera_alt_rounded,
-                      color: Colors.white, size: 18.w),
+                  Icon(
+                    Icons.camera_alt_rounded,
+                    color: Colors.white,
+                    size: 18.w,
+                  ),
                   horizontalSpace(6),
                   TextUtils(
                     fontSize: 13,
@@ -386,8 +384,11 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.photo_library_rounded,
-                      color: mainColor, size: 18.w),
+                  Icon(
+                    Icons.photo_library_rounded,
+                    color: mainColor,
+                    size: 18.w,
+                  ),
                   horizontalSpace(6),
                   TextUtils(
                     fontSize: 13,
@@ -411,7 +412,9 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
       child: Text(
         widget.player.name.isNotEmpty ? widget.player.name[0] : '؟',
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.w700),
+          color: Colors.white,
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }

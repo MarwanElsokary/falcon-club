@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/routing/routes.dart';
 import '../../../main_screen/data/model/my_profile_model.dart';
 import '../../../player_profile/ui/widget/player_about_me_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
@@ -20,11 +19,9 @@ import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
 import '../widget/player_chart_widget.dart';
 import '../widget/player_image_widget.dart';
-import '../widget/player_image_with_favorite_widget.dart';
 import '../widget/player_measurements_image_widget.dart';
 import '../widget/player_measurements_widget.dart';
 import '../widget/player_videos_widget.dart';
-import '../widget/simple_radar_chart.dart';
 
 class PlayerProfileScreen extends StatefulWidget {
   const PlayerProfileScreen({
@@ -193,7 +190,6 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 verticalSpace(20),
-
 
                 // PlayerImageWithFavoriteWidget(
                 //   playerProfile: playerProfile,

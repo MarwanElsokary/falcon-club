@@ -25,21 +25,21 @@ class CacheHelper {
   }
 
   static Future<void> clearDataCache() async {
-    // احتفظ بالـ token والـ FCM
     final token = getString('userToken');
     final securedToken = getString('secured_userToken');
     final refreshToken = getString('refreshToken');
     final fcm = getFcmTokn();
+    final userType = getString('userType'); // ✅ أضف ده
 
-    // امسح كل حاجة
     await _prefs?.clear();
 
-    // رجّع الـ token والـ FCM بس
     if (token.isNotEmpty) await setString('userToken', token);
-    if (securedToken.isNotEmpty)
+    if (securedToken.isNotEmpty) {
       await setString('secured_userToken', securedToken);
+    }
     if (refreshToken.isNotEmpty) await setString('refreshToken', refreshToken);
     if (fcm.isNotEmpty) await saveFcmTokn(fcm);
+    if (userType.isNotEmpty) await setString('userType', userType); // ✅ أضف ده
   }
 
   // =======================
@@ -48,9 +48,7 @@ class CacheHelper {
   static Future<bool> savemyProfile(MyProfileModel myProfile) async {
     try {
       final data = {
-        "time": DateTime
-            .now()
-            .millisecondsSinceEpoch,
+        "time": DateTime.now().millisecondsSinceEpoch,
         "data": myProfile.toJson(),
       };
 
@@ -82,9 +80,7 @@ class CacheHelper {
       final decoded = jsonDecode(raw);
       final cachedTime = decoded['time'];
 
-      final now = DateTime
-          .now()
-          .millisecondsSinceEpoch;
+      final now = DateTime.now().millisecondsSinceEpoch;
       return (now - cachedTime) <= minutes.inMilliseconds;
     } catch (_) {
       return false;

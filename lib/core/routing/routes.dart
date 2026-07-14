@@ -1,27 +1,17 @@
 class AppRoute {
   static const String splashScreen = '/';
 
-  //welcomeScreen
-  static const String welcomeScreen = '/welcomeScreen'; //welcomeScreen
-  static const String scoutTrainingDetailsScreen = '/scoutTrainingDetailsScreen'; //welcomeScreen
-  static const String completeProfileScreen = '/completeProfileScreen';
+  static const String scoutTrainingDetailsScreen =
+      '/scoutTrainingDetailsScreen';
   static const String clubInfoScreen = '/clubInfoScreen';
-
-  static const String measurementsScreen = '/measurementsScreen';
-  static const String measurementDetailsScreen = '/measurementDetailsScreen';
-  static const String measurementResultScreen = '/measurementResultScreen';
-  static const String lastMeasurementAttemptScreen =
-      '/lastMeasurementAttemptScreen';
-  static const String measurementScreen = '/measurementScreen';
-  static const String paymentVerificationScreen = '/paymentVerificationScreen';
 
   static const String clubTrainingDetailsScreen = '/clubTrainingDetailsScreen';
 
-  //welcomeScreen
   static const String resetPasswordScreen = '/resetPassword';
   static const String scoutMainScreen = '/scoutMainScreen';
   static const String mainClubScreen = '/mainClubScreen';
   static const String clubProfileScreen = '/clubMyTeamScreen';
+  static const String requestsScreen = '/requestsScreen';
   static const String scoutTrainingScreen = '/scoutTrainingScreen';
 
   //forgetPasswordScreen
@@ -36,9 +26,6 @@ class AppRoute {
   //login
   static const String loginScreen = '/loginScreen';
 
-  //signUpScreen
-  static const String signUpScreen = '/signUpScreen';
-
   //registrationTypeScreen
   static const String registrationTypeScreen = '/registrationTypeScreen';
 
@@ -48,18 +35,11 @@ class AppRoute {
   //clubMainScreen
   static const String clubMainScreen = '/clubMainScreen';
 
-  //positionScreen
-  static const String positionScreen = '/positionScreen';
-
-  //registerScreen
-  static const String registerScreen = '/registerScreen';
-
-  //completeProfileScreen
-  static const String pinputScreen = '/pinputScreen';
   static const String clubMyTeamScreen = '/ClubMyTeamScreen';
 
-  // //mainScreen
-  // static const String mainScreen = '/mainScreen';
+  /// Phone confirmation. One screen for every entry point — after registration,
+  /// and from the login screen when an unconfirmed account tries to sign in.
+  static const String otpScreen = '/otpScreen';
 
   //playerProfile
   static const String playerProfile = '/playerProfile';
@@ -72,18 +52,6 @@ class AppRoute {
 
   //experianceDetailsScreen
   static const String experianceDetailsScreen = '/experianceDetailsScreen';
-
-  //trainingDetailsScreen
-  static const String trainingDetailsScreen = '/trainingDetailsScreen';
-
-  //publishMyVideo
-  static const String publishMyVideo = '/publishMyVideo';
-
-  //lastAttemptScreen
-  static const String lastAttemptScreen = '/lastAttemptScreen';
-
-  //aiGenerateScreen
-  static const String aiGenerateScreen = '/aiGenerateScreen';
 
   //rankScreen
   static const String rankScreen = '/rankScreen';

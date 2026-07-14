@@ -75,7 +75,7 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
         if (state is rankError) {
           return Center(
             child: TextUtils(
-              text: (state as rankError).error,
+              text: (state).error,
               fontSize: 14,
               fontWeight: FontWeight.w500,
               color: Colors.white,
@@ -181,8 +181,8 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                   fontWeight: FontWeight.w500,
                   color: Colors.black54,
                   text:
-                  'اشترك الآن لتكتشف مراكز جميع اللاعبين وتتابع المواهب الأبرز في المنافسة'
-                      .tr(),
+                      'اشترك الآن لتكتشف مراكز جميع اللاعبين وتتابع المواهب الأبرز في المنافسة'
+                          .tr(),
                   maxlines: 3,
                 ),
                 verticalSpace(20),
@@ -254,8 +254,7 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
           PositionedDirectional(
             end: 0,
             bottom: 0,
-            child:
-            SvgPicture.asset('assets/svgs/Group 386-2.svg', width: 80.w),
+            child: SvgPicture.asset('assets/svgs/Group 386-2.svg', width: 80.w),
           ),
         ],
       ),
@@ -305,20 +304,26 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                 width: 36.w,
                 child: Center(
                   child: index == 0
-                      ? SvgPicture.asset('assets/svgs/Group 432.svg',
-                      width: 30.w)
+                      ? SvgPicture.asset(
+                          'assets/svgs/Group 432.svg',
+                          width: 30.w,
+                        )
                       : index == 1
-                      ? SvgPicture.asset('assets/svgs/Group 430.svg',
-                      width: 30.w)
+                      ? SvgPicture.asset(
+                          'assets/svgs/Group 430.svg',
+                          width: 30.w,
+                        )
                       : index == 2
-                      ? SvgPicture.asset('assets/svgs/Group 431.svg',
-                      width: 30.w)
+                      ? SvgPicture.asset(
+                          'assets/svgs/Group 431.svg',
+                          width: 30.w,
+                        )
                       : TextUtils(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    text: '${index + 1}',
-                  ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          text: '${index + 1}',
+                        ),
                 ),
               ),
               Expanded(
@@ -379,8 +384,9 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
                               child: SizedBox(
                                 width: 26.w,
                                 height: 26.w,
-                                child:
-                                _buildPlayerImage(items[index].photoPath),
+                                child: _buildPlayerImage(
+                                  items[index].photoPath,
+                                ),
                               ),
                             ),
                           ],

@@ -30,6 +30,26 @@ class ClubTeamRepo {
     }
   }
 
+  // ── أضف الدالتين دول جوه ClubTeamRepo ───────────────────────────────────────
+
+  Future<ApiResult> getClubTrainees() async {
+    try {
+      final response = await _apiService.getClubTrainees();
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
+
+  Future<ApiResult> deleteTrainee(String playerId) async {
+    try {
+      final response = await _apiService.deleteTrainee(playerId);
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
+
   //clubGetProfile
   Future<ApiResult> clubGetProfile() async {
     try {
@@ -80,7 +100,8 @@ class ClubTeamRepo {
         if (data is List) {
           for (final item in data) {
             if (item is Map<String, dynamic>) {
-              final url = item['thumbnailUrl'] ??
+              final url =
+                  item['thumbnailUrl'] ??
                   item['videoUrl'] ??
                   item['video'] ??
                   item['photoPath'];
@@ -101,7 +122,9 @@ class ClubTeamRepo {
 
   // endpoint: GET /api/reports/player/{playerId}  ← عدّل حسب الـ API بتاعك
 
-  Future<ApiResult<List<PlayerReport>>> getPlayerReports(String playerId) async {
+  Future<ApiResult<List<PlayerReport>>> getPlayerReports(
+    String playerId,
+  ) async {
     try {
       final response = await _apiService.getPlayerReports(playerId);
       final reports = <PlayerReport>[];

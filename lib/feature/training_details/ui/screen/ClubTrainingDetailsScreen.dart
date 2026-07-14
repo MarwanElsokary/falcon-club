@@ -242,24 +242,29 @@ class _ClubTrainingDetailsScreenState extends State<ClubTrainingDetailsScreen> {
             final cached = context
                 .read<ExperianceDetailsCubit>()
                 .getCachedExercisePlayers(exerciseId);
-            if (cached != null)
+            if (cached != null) {
               return _buildPlayersList(
                 context,
                 cached.data.players,
                 exerciseId,
               );
+            }
             if (state is exercisePlayersLoading &&
-                state.exerciseId == exerciseId)
+                state.exerciseId == exerciseId) {
               return _buildSkeleton();
+            }
             if (state is exercisePlayersSuccess &&
-                state.exerciseId == exerciseId)
+                state.exerciseId == exerciseId) {
               return _buildPlayersList(
                 context,
                 state.data.data.players,
                 exerciseId,
               );
-            if (state is exercisePlayersError && state.exerciseId == exerciseId)
+            }
+            if (state is exercisePlayersError &&
+                state.exerciseId == exerciseId) {
               return _buildError(context, exerciseId);
+            }
             return _buildSkeleton();
           },
         ),

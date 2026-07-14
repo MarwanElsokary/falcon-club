@@ -49,7 +49,7 @@ class _RankHeaderWidgetState extends State<RankHeaderWidget> {
             Row(
               children: [
                 // الرتبة
-                Container(
+                SizedBox(
                   width: 50.w, // ✅ زيادة العرض قليلاً
                   child: header(
                     icon: 'assets/svgs/stash_trophy-solid.svg',
@@ -57,7 +57,6 @@ class _RankHeaderWidgetState extends State<RankHeaderWidget> {
                   ),
                 ),
                 horizontalSpace(15.w), // ✅ تقليل المسافة
-
                 // الاسم
                 Expanded(
                   flex: 3,
@@ -108,7 +107,8 @@ class _RankHeaderWidgetState extends State<RankHeaderWidget> {
           child: SvgPicture.asset(icon),
         ),
         horizontalSpace(4.w), // ✅ تقليل المسافة
-        Flexible( // ✅ استخدام Flexible بدلاً من Expanded
+        Flexible(
+          // ✅ استخدام Flexible بدلاً من Expanded
           child: TextUtils(
             fontSize: 12.sp, // ✅ تقليل حجم الخط قليلاً
             fontWeight: FontWeight.w700,

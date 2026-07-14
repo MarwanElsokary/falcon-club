@@ -12,12 +12,12 @@ class VideoPlayerWidget extends StatefulWidget {
   final VoidCallback onTap;
 
   const VideoPlayerWidget({
-    Key? key,
+    super.key,
     required this.videoUrl,
     required this.index,
     required this.onPlatformViewCreated,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -25,7 +25,6 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
     with AutomaticKeepAliveClientMixin {
-
   @override
   bool get wantKeepAlive => true;
 
@@ -56,23 +55,23 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
             width: MediaQuery.of(context).size.width,
             child: Platform.isAndroid
                 ? AndroidView(
-              viewType: 'native-video-view',
-              creationParams: {
-                'url': widget.videoUrl,
-                'index': widget.index,
-              },
-              creationParamsCodec: const StandardMessageCodec(),
-              onPlatformViewCreated: widget.onPlatformViewCreated,
-            )
+                    viewType: 'native-video-view',
+                    creationParams: {
+                      'url': widget.videoUrl,
+                      'index': widget.index,
+                    },
+                    creationParamsCodec: const StandardMessageCodec(),
+                    onPlatformViewCreated: widget.onPlatformViewCreated,
+                  )
                 : UiKitView(
-              viewType: 'native-video-view',
-              creationParams: {
-                'url': widget.videoUrl,
-                'index': widget.index,
-              },
-              creationParamsCodec: const StandardMessageCodec(),
-              onPlatformViewCreated: widget.onPlatformViewCreated,
-            ),
+                    viewType: 'native-video-view',
+                    creationParams: {
+                      'url': widget.videoUrl,
+                      'index': widget.index,
+                    },
+                    creationParamsCodec: const StandardMessageCodec(),
+                    onPlatformViewCreated: widget.onPlatformViewCreated,
+                  ),
           ),
         ),
       ],

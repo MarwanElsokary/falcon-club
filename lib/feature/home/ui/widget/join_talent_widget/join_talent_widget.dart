@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../scout/ui/widget/talent_slider_scout_widget.dart';
 import 'talent_slider_widget.dart';
 
 class JoinTalentWidget extends StatelessWidget {

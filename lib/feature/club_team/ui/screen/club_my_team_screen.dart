@@ -289,7 +289,7 @@ class _SkeletonSection extends StatelessWidget {
         SizedBox(height: 14.h),
         // Skeleton cards row
         SizedBox(
-          height: 300.h,
+          height: MediaQuery.sizeOf(context).height * 0.42,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 20.w),

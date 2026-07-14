@@ -11,7 +11,6 @@ import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../main_screen/cubit/main_cubit.dart';
 import '../../../home/ui/widget/find_your_direction_widget.dart';
 import '../../../home/ui/widget/home_app_bar_widget.dart';
-import '../../../home/ui/widget/join_talent_widget/join_talent_widget.dart';
 import '../../../home/ui/widget/top_rate_widget/top_player_widget.dart';
 import '../../scout_training/cubit/scout_training_cubit.dart';
 import '../widget/join_talent_widget_scout.dart';

@@ -41,6 +41,48 @@ class _ApiService implements ApiService {
   }
 
   @override
+  Future<dynamic> getClubTrainees() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/Club/GetClubTrainees',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
+  Future<dynamic> deleteTrainee(String playerId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'PlayerId': playerId};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'DELETE', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/Club/DeletePlayer',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
   Future<dynamic> verifyPayment(int packageId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -71,7 +113,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Account/Login',
+            'Account/LoginClub',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -377,6 +419,50 @@ class _ApiService implements ApiService {
   }
 
   @override
+  Future<dynamic> confirmPhoneByOtp(String bearer, String otp) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'otp': otp};
+    final _headers = <String, dynamic>{r'Authorization': bearer};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'Account/ConfirmPhoneByOtp',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
+  Future<dynamic> resendPhoneOtp(String bearer) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': bearer};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'Account/ResendPhoneOtp',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
   Future<dynamic> getTermsAndPolicies() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -398,12 +484,12 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<CountriesClubModel> countries() async {
+  Future<dynamic> countries() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CountriesClubModel>(
+    final _options = _setStreamType<dynamic>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -413,24 +499,18 @@ class _ApiService implements ApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CountriesClubModel _value;
-    try {
-      _value = CountriesClubModel.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 
   @override
-  Future<CountriesClubModel> clubsByCountry(String countryId) async {
+  Future<dynamic> clubsByCountry(String countryId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'CountryId': countryId};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CountriesClubModel>(
+    final _options = _setStreamType<dynamic>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -440,14 +520,8 @@ class _ApiService implements ApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CountriesClubModel _value;
-    try {
-      _value = CountriesClubModel.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 
@@ -1118,14 +1192,12 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<ForgetPasswordResponse> forgetPasswordByPhone(
-    String phoneNumber,
-  ) async {
+  Future<dynamic> forgetPasswordByPhone(String phoneNumber) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'phoneNumber': phoneNumber};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ForgetPasswordResponse>(
+    final _options = _setStreamType<dynamic>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -1135,24 +1207,18 @@ class _ApiService implements ApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ForgetPasswordResponse _value;
-    try {
-      _value = ForgetPasswordResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 
   @override
-  Future<CheckOtpResponse> checkOtp(String otp, String phoneNumber) async {
+  Future<dynamic> checkOtp(String otp, String phoneNumber) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {'otp': otp, 'phoneNumber': phoneNumber};
-    final _options = _setStreamType<CheckOtpResponse>(
+    final _options = _setStreamType<dynamic>(
       Options(
             method: 'POST',
             headers: _headers,
@@ -1167,19 +1233,13 @@ class _ApiService implements ApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CheckOtpResponse _value;
-    try {
-      _value = CheckOtpResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 
   @override
-  Future<ResetPasswordResponse> resetPassword(
+  Future<dynamic> resetPassword(
     String token,
     String password,
     String confirmPassword,
@@ -1192,7 +1252,7 @@ class _ApiService implements ApiService {
       'Password': password,
       'ConfirmPassword': confirmPassword,
     };
-    final _options = _setStreamType<ResetPasswordResponse>(
+    final _options = _setStreamType<dynamic>(
       Options(
             method: 'POST',
             headers: _headers,
@@ -1207,14 +1267,8 @@ class _ApiService implements ApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ResetPasswordResponse _value;
-    try {
-      _value = ResetPasswordResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 

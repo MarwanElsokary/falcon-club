@@ -16,8 +16,10 @@ import 'package:falconclubapp/core/di/dependency_injection.dart';
 
 /// يُستدعى هكذا:
 /// showAssignExerciseSheet(context, player: player);
-void showAssignExerciseSheet(BuildContext context,
-    {required ClubPlayer player}) {
+void showAssignExerciseSheet(
+  BuildContext context, {
+  required ClubPlayer player,
+}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -28,9 +30,7 @@ void showAssignExerciseSheet(BuildContext context,
           value: context.read<ClubExercisesCubit>()..fetchExercises(),
         ),
         // ← getIt مباشرة — مش محتاجين ExperianceDetailsCubit في الـ context بتاع الشاشة
-        BlocProvider(
-          create: (_) => getIt<ExperianceDetailsCubit>(),
-        ),
+        BlocProvider(create: (_) => getIt<ExperianceDetailsCubit>()),
       ],
       child: _AssignExerciseSheet(player: player),
     ),
@@ -60,22 +60,29 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
     if (_query.isEmpty) return all;
     final q = _query.toLowerCase();
     return all
-        .where((e) =>
-    e.title.toLowerCase().contains(q) ||
-        e.description.toLowerCase().contains(q) ||
-        e.skills.any((s) => s.toLowerCase().contains(q)))
+        .where(
+          (e) =>
+              e.title.toLowerCase().contains(q) ||
+              e.description.toLowerCase().contains(q) ||
+              e.skills.any((s) => s.toLowerCase().contains(q)),
+        )
         .toList();
   }
 
   void _onExerciseTap(BuildContext ctx, ClubExercise ex) {
-    // احفظ الـ cubit قبل ما نعمل pop — لأن بعد pop الـ context ممكن يتشال
     final cubit = ctx.read<ExperianceDetailsCubit>();
     Navigator.pop(ctx);
     showUploadAttemptSheet(
-      ctx,
-      exercise: ex,
-      player: widget.player,
-      cubit: cubit,
+      context,
+      exercise: ex, // ✅ ex مش exercise
+      player: widget.player, // ✅ widget.player مش player
+      onUpload: (videoPath) async { // ✅ parameter واحد بس
+        await cubit.addAttemptForPlayer(
+          playerId: widget.player.id,
+          exerciseId: ex.id.toString(),
+          videoPath: videoPath,
+        );
+      },
     );
   }
 
@@ -165,8 +172,11 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
                     decoration: InputDecoration(
                       hintText: 'ابحث عن تمرين...',
                       hintStyle: TextStyle(fontSize: 13.sp, color: greyClr),
-                      prefixIcon:
-                      Icon(Icons.search, color: greyClr, size: 18.w),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: greyClr,
+                        size: 18.w,
+                      ),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(vertical: 12.h),
                     ),
@@ -191,8 +201,11 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.error_outline,
-                                color: redClr, size: 40.w),
+                            Icon(
+                              Icons.error_outline,
+                              color: redClr,
+                              size: 40.w,
+                            ),
                             verticalSpace(10),
                             TextUtils(
                               fontSize: 13,
@@ -206,9 +219,12 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
                                   .read<ClubExercisesCubit>()
                                   .fetchExercises(),
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: mainColor),
-                              child: const Text('إعادة المحاولة',
-                                  style: TextStyle(color: Colors.white)),
+                                backgroundColor: mainColor,
+                              ),
+                              child: const Text(
+                                'إعادة المحاولة',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ],
                         ),
@@ -220,8 +236,11 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.search_off_rounded,
-                                    color: greyClr, size: 48.w),
+                                Icon(
+                                  Icons.search_off_rounded,
+                                  color: greyClr,
+                                  size: 48.w,
+                                ),
                                 verticalSpace(12),
                                 TextUtils(
                                   fontSize: 14,
@@ -235,8 +254,9 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
                         }
                         return ListView.builder(
                           controller: scrollController,
-                          padding: EdgeInsets.symmetric(horizontal: 20.w)
-                              .copyWith(bottom: 40.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                          ).copyWith(bottom: 40.h),
                           itemCount: filtered.length,
                           itemBuilder: (_, index) {
                             final ex = filtered[index];
@@ -275,10 +295,10 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
       child: ClipOval(
         child: hasPhoto
             ? Image.network(
-          widget.player.photoPath!,
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => _avatarFallback(),
-        )
+                widget.player.photoPath!,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => _avatarFallback(),
+              )
             : _avatarFallback(),
       ),
     );

@@ -15,8 +15,6 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/widget/show_photo_widget.dart';
 import '../../../../core/widget/text_utils.dart';
 import '../../../../core/widget/url-call.dart';
-import '../../../club_team/ui/screen/club_my_team_screen.dart';
-import '../../../signup/ui/widget/profile_completion_middleware.dart';
 import '../../cubit/main_cubit.dart';
 import '../../cubit/main_state.dart';
 import '../../data/model/user_role.dart';
@@ -80,7 +78,7 @@ class CustomDrawer extends StatelessWidget {
     if (DrawerPermissions.canShowMyTeam(role)) {
       itemData.add({
         'width': 20.w,
-        'icon': 'assets/svgs/rank_icon.svg',
+        'icon': 'assets/svgs/mage_users.svg',
         'title': 'فريقي'.tr(),
         'ontap': () {
           _closeDrawer(context);
@@ -91,6 +89,21 @@ class CustomDrawer extends StatelessWidget {
         },
       });
     }
+    if (DrawerPermissions.canShowRequests(role)) {
+      itemData.add({
+        'width': 20.w,
+        'icon': 'assets/svgs/solar_clipboard-linear.svg',
+        'title': 'الطلبات'.tr(),
+        'ontap': () {
+          _closeDrawer(context);
+          context.pushNamed(
+            AppRoute.requestsScreen,
+            arguments: {'context': context},
+          );
+        },
+      });
+    }
+
     if (DrawerPermissions.canShowRank(role)) {
       itemData.add({
         'width': 20.w,
@@ -197,11 +210,6 @@ class CustomDrawer extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ProfileCheckWrapper(
-                        showInHome: false,
-                        child: const SizedBox.shrink(),
-                      ),
-
                       // ── بيانات المستخدم ──────────────────────────────
                       BlocBuilder<MainCubit, MainState>(
                         builder: (context, state) {

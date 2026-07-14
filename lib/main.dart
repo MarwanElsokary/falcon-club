@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/cache/cach_Helper.dart';
 import 'core/di/dependency_injection.dart';
+import 'core/di/injection.dart';
 import 'core/routing/app_router.dart';
 import 'core/thems/thems.dart';
 import 'feature/home/ui/screen/home_screen.dart';
@@ -24,6 +25,10 @@ void main() async {
   EasyLocalization.logger.enableBuildModes = [];
 
   await CacheHelper.clearDataCache();
+
+  // Clean Architecture container first: it owns Dio and ApiService, which the
+  // legacy registrations below resolve from the same GetIt instance.
+  await configureDependencies();
   await setupGetIt();
 
   runApp(

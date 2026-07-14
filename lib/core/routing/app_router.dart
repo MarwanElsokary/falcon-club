@@ -1,24 +1,34 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '../../feature/Measurement/cubit/MeasurementCubit.dart';
-import '../../feature/Measurement/ui/MeasurementScreen.dart';
-import '../../feature/Player_profile/ui/screen/player_profile_screen.dart';
+import '../../feature/auth/domain/entities/password_reset_ticket.dart';
+import '../../feature/auth/domain/entities/registration_credential.dart';
+import '../../feature/auth/presentation/cubit/password_reset_cubit.dart';
+import '../../feature/auth/presentation/screens/new_password_screen.dart';
+import '../../feature/auth/presentation/screens/request_reset_screen.dart';
+import '../../feature/auth/presentation/screens/verify_reset_otp_screen.dart';
+import '../../feature/auth/presentation/cubit/club_directory_cubit.dart';
+import '../../feature/auth/presentation/cubit/club_registration_cubit.dart';
+import '../../feature/auth/presentation/cubit/otp_cubit.dart';
+import '../../feature/auth/presentation/cubit/registration_cubit.dart';
+import '../../feature/auth/presentation/cubit/scout_registration_cubit.dart';
+import '../../feature/auth/presentation/cubit/terms_cubit.dart';
+import '../../feature/auth/presentation/screens/otp_screen.dart';
+import '../../feature/auth/presentation/screens/registration_screen.dart';
+import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
 import '../../feature/club_team/ui/screen/club_profile_screen.dart';
 import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
 import '../../feature/experiance_details_screen/ui/screen/experiance_details_screen.dart';
 import '../../feature/experiments/cubit/experiments_cubit.dart';
-import '../../feature/forget_password/cubit/forget_password_cubit.dart';
-import '../../feature/forget_password/ui/forget_password_screen.dart';
-import '../../feature/forget_password/ui/reset_password_screen.dart';
-import '../../feature/forget_password/ui/send_otp.dart';
-import '../../feature/last_attempt/ui/screen/last_attempt_screen.dart';
-import '../../feature/login/cubit/login_cubit.dart';
-import '../../feature/login/ui/screen/login_screen.dart';
+import '../../feature/auth/presentation/cubit/sign_in_cubit.dart';
+import '../../feature/auth/presentation/screens/sign_in_screen.dart';
+import '../../feature/main_club/cubit/requests_cubit.dart';
 import '../../feature/main_club/ui/screens/club_info_screen.dart';
 import '../../feature/main_club/ui/screens/mainClubScreen.dart';
+import '../../feature/main_club/ui/screens/requests_screen.dart';
 import '../../feature/main_screen/cubit/main_cubit.dart';
 import '../../feature/on-boarding/screen/on_boarding_screen.dart';
 import '../../feature/package/cubit/package_cubit.dart';
@@ -33,22 +43,15 @@ import '../../feature/scout/scout_training/cubit/scout_training_cubit.dart';
 import '../../feature/scout/scout_training/cubit/scout_training_details_cubit.dart';
 import '../../feature/scout/scout_training/ui/screen/scout_training_details_screen.dart';
 import '../../feature/scout/scout_training/ui/screen/scout_training_screen.dart';
-import '../../feature/signup/ui/screen/club_sign_up_screen.dart';
-import '../../feature/signup/ui/screen/complete_profile_screen.dart';
-import '../../feature/signup/ui/screen/position_screen.dart';
-import '../../feature/signup/ui/screen/registration_type_screen.dart';
-import '../../feature/signup/ui/screen/sign_up_screen.dart';
+import '../../feature/auth/presentation/screens/registration_type_screen.dart';
 import '../../feature/club_team/cubit/club_team_cubit.dart';
 import '../../feature/club_team/ui/screen/club_main_screen.dart';
 import '../../feature/scout/ui/screen/scout_main_screen.dart';
-import '../../feature/scout/ui/screen/scout_sign_up_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
 import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/ui/screen/training_screen.dart';
 import '../../feature/training_details/cubit/training_details_cubit.dart';
-import '../../feature/training_details/data/model/exercise_details_model.dart';
 import '../../feature/training_details/ui/screen/ClubTrainingDetailsScreen.dart';
-import '../../feature/training_details/ui/screen/ai_generate_screen.dart';
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
 import '../../feature/player_attempts/data/model/player_attempts_model.dart';
 import '../../feature/player_attempts/ui/screen/player_attempts_screen.dart';
@@ -78,30 +81,47 @@ class AppRouter {
       case AppRoute.loginScreen:
         return _fadeTransitionRoute(
           BlocProvider(
-            create: (_) => getIt<LoginCubit>(),
-            child: const LoginScreen(),
-          ),
-        );
-
-      case AppRoute.signUpScreen:
-        final args = arguments as Map<String, dynamic>?;
-        final update = args?['update'] ?? false;
-
-        return MaterialWithModalsPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<LoginCubit>()..loadCountries(),
-            child: SignUpScreen(update: update),
+            create: (_) => getIt<SignInCubit>(),
+            child: const SignInScreen(),
           ),
         );
 
       case AppRoute.registrationTypeScreen:
         return _fadeTransitionRoute(const RegistrationTypeScreen());
 
+      case AppRoute.otpScreen:
+        final args = arguments as Map<String, dynamic>;
+        final credential = args['credential'] as RegistrationCredential;
+        final phoneNumber = args['phoneNumber'] as String;
+
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            // The credential authenticates both OTP calls — it is the only thing
+            // that tells the backend whose phone this is.
+            create: (_) => getIt<OtpCubit>(param1: credential),
+            child: OtpScreen(phoneNumber: phoneNumber),
+          ),
+        );
+
       case AppRoute.clubSignUpScreen:
         return MaterialWithModalsPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<LoginCubit>()..loadCountries(),
-            child: const ClubSignUpScreen(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              // The abstract base is what the screen depends on — the concrete
+              // cubit is chosen here. One screen, two roles.
+              BlocProvider<RegistrationCubit>(
+                create: (_) => getIt<ClubRegistrationCubit>(),
+              ),
+              BlocProvider(
+                create: (_) => getIt<ClubDirectoryCubit>()..loadCities(),
+              ),
+              // Consent is mandatory before an account can be created.
+              BlocProvider(create: (_) => getIt<TermsCubit>()..load()),
+            ],
+            child: RegistrationScreen(
+              title: 'تسجيل نادي'.tr(),
+              requiresClub: true,
+            ),
           ),
         );
 
@@ -117,14 +137,6 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
             child: const MainClubScreen(),
-          ),
-        );
-
-      case AppRoute.completeProfileScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<LoginCubit>()..loadCountries(),
-            child: const CompleteProfileScreen(),
           ),
         );
 
@@ -144,6 +156,13 @@ class AppRouter {
             child: const ClubMyTeamScreen(),
           ),
         );
+      case AppRoute.requestsScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<RequestsCubit>()..fetchRequests(),
+            child: const RequestsScreen(),
+          ),
+        );
       case AppRoute.clubInfoScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -152,44 +171,42 @@ class AppRouter {
           ),
         );
 
-      case AppRoute.positionScreen:
-        final args = arguments as Map<String, dynamic>;
-        final context = args['context'] as BuildContext;
-
-        return MaterialWithModalsPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: BlocProvider.of<LoginCubit>(context),
-            child: const PositionScreen(),
-          ),
-        );
-
       // ========================================================================
       // PASSWORD RECOVERY
       // ========================================================================
+      // ── Password reset: phone → code → new password ──────────────────────
+      // Each step gets its own PasswordResetCubit; the phone and the ticket are
+      // carried forward as route arguments, so no state has to survive between
+      // them.
       case AppRoute.forgetPasswordScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => getIt<ForgetPasswordCubit>(),
-            child: const ForgetPasswordScreen(),
+            create: (_) => getIt<PasswordResetCubit>(),
+            child: const RequestResetScreen(),
           ),
         );
 
       case AppRoute.sendOtp:
         final args = arguments as Map<String, dynamic>;
-        final phoneNumber = args['phoneNumber'] ?? '';
+        final phoneNumber = args['phoneNumber'] as String? ?? '';
 
         return MaterialPageRoute(
-          builder: (_) => SendOtpScreen(phoneNumber: phoneNumber),
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<PasswordResetCubit>(),
+            child: VerifyResetOtpScreen(phoneNumber: phoneNumber),
+          ),
         );
 
       case AppRoute.resetPasswordScreen:
         final args = arguments as Map<String, dynamic>;
-        final token = args['token'] as String;
+        // A typed ticket, not a bare String. It authorises one password change
+        // and is never logged or persisted.
+        final ticket = args['ticket'] as PasswordResetTicket;
 
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => getIt<ForgetPasswordCubit>(),
-            child: ResetPasswordScreen(token: token),
+            create: (_) => getIt<PasswordResetCubit>(),
+            child: NewPasswordScreen(ticket: ticket),
           ),
         );
 
@@ -313,17 +330,6 @@ class AppRouter {
           ),
         );
 
-      case AppRoute.lastAttemptScreen:
-        final args = arguments as Map<String, dynamic>;
-        final exerciseDetails = args['exerciseDetails'] as ExerciseDetailsModel;
-
-        return MaterialPageRoute(
-          builder: (_) => LastAttemptScreen(exerciseDetails: exerciseDetails),
-        );
-
-      case AppRoute.aiGenerateScreen:
-        return MaterialPageRoute(builder: (_) => const AiGenerateScreen());
-
       // ========================================================================
       // EXPERIMENTS
       // ========================================================================
@@ -390,17 +396,6 @@ class AppRouter {
         );
 
       // ========================================================================
-      // MEASUREMENT
-      // ========================================================================
-      case AppRoute.measurementScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<MeasurementCubit>(),
-            child: const MeasurementScreen(),
-          ),
-        );
-
-      // ========================================================================
       // PLAYER ATTEMPTS
       // ========================================================================
       case AppRoute.playerAttemptsScreen:
@@ -434,9 +429,18 @@ class AppRouter {
       // ========================================================================
       case AppRoute.scoutSignUpScreen:
         return MaterialWithModalsPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<LoginCubit>()..loadCountries(),
-            child: const ScoutSignUpScreen(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              // Scout registration is club-less — no ClubDirectoryCubit here.
+              BlocProvider<RegistrationCubit>(
+                create: (_) => getIt<ScoutRegistrationCubit>(),
+              ),
+              BlocProvider(create: (_) => getIt<TermsCubit>()..load()),
+            ],
+            child: RegistrationScreen(
+              title: 'تسجيل كشاف'.tr(),
+              requiresClub: false,
+            ),
           ),
         );
 

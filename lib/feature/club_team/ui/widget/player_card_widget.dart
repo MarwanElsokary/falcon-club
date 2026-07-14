@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:falconclubapp/feature/club_team/cubit/club_team_cubit.dart';
+import 'package:falconclubapp/feature/club_team/cubit/club_team_state.dart';
 import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
 import 'package:falconclubapp/feature/club_team/ui/widget/player_reports_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -158,7 +161,7 @@ class _AvatarFallback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color:  mainColor,
+      color: mainColor,
       alignment: Alignment.center,
       child: Text(
         name.isNotEmpty ? name[0] : '؟',
@@ -279,29 +282,76 @@ class _CardDivider extends StatelessWidget {
   }
 }
 
+// ── Actions — التقارير / إضافة تمرين / حذف من الفريق ──────────────────────────
+
 class _CardActions extends StatelessWidget {
   final ClubPlayer player;
 
   const _CardActions({required this.player});
 
+  void _confirmDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('تأكيد الحذف'),
+        content: Text('هل تريد حذف "${player.name}" من الفريق نهائياً؟'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<ClubTeamCubit>().deletePlayerFromTeam(player.id);
+            },
+            child: Text('حذف', style: TextStyle(color: Colors.red.shade400)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _ActionButton(
-          label: 'التقارير'.tr(),
-          icon: Icons.bar_chart_rounded,
-          isPrimary: false,
-          onTap: () => showPlayerReportsSheet(context, player: player),
-        ),
-        SizedBox(height: 5.h),
-        _ActionButton(
-          label: 'إضافة تمرين'.tr(),
-          icon: Icons.sports_soccer_rounded,
-          isPrimary: true,
-          onTap: () => showAssignExerciseSheet(context, player: player),
-        ),
-      ],
+    return BlocBuilder<ClubTeamCubit, ClubTeamState>(
+      buildWhen: (_, current) => current.maybeWhen(
+        deleteTraineeLoading: () => true,
+        deleteTraineeSuccess: () => true,
+        deleteTraineeError: (_) => true,
+        clubPlayerssuccess: (_) => true,
+        orElse: () => false,
+      ),
+      builder: (context, state) {
+        final isDeleting = state.maybeWhen(
+          deleteTraineeLoading: () => true,
+          orElse: () => false,
+        );
+
+        return Column(
+          children: [
+            _ActionButton(
+              label: 'التقارير'.tr(),
+              icon: Icons.bar_chart_rounded,
+              isPrimary: false,
+              onTap: () => showPlayerReportsSheet(context, player: player),
+            ),
+            SizedBox(height: 5.h),
+            _ActionButton(
+              label: 'إضافة تمرين'.tr(),
+              icon: Icons.sports_soccer_rounded,
+              isPrimary: true,
+              onTap: () => showAssignExerciseSheet(context, player: player),
+            ),
+            SizedBox(height: 5.h),
+            _DeleteFromTeamButton(
+              isLoading: isDeleting,
+              onTap: () => _confirmDelete(context),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -334,11 +384,7 @@ class _ActionButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 13.w,
-              color: isPrimary ? Colors.white : mainColor,
-            ),
+            Icon(icon, size: 13.w, color: isPrimary ? Colors.white : mainColor),
             SizedBox(width: 4.w),
             Text(
               label,
@@ -346,6 +392,53 @@ class _ActionButton extends StatelessWidget {
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w700,
                 color: isPrimary ? Colors.white : mainColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── زر حذف من الفريق ────────────────────────────────────────────────────────
+
+class _DeleteFromTeamButton extends StatelessWidget {
+  final bool isLoading;
+  final VoidCallback onTap;
+
+  const _DeleteFromTeamButton({required this.isLoading, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Colors.red.shade400;
+    return GestureDetector(
+      onTap: isLoading ? null : onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(vertical: 7.h),
+        decoration: BoxDecoration(
+          color: isLoading ? color.withOpacity(0.4) : color.withOpacity(0.10),
+          borderRadius: BorderRadius.circular(9.r),
+          border: Border.all(color: color.withOpacity(0.3)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.delete_outline_rounded,
+              size: 13.w,
+              color: isLoading ? Colors.white54 : color,
+            ),
+            SizedBox(width: 4.w),
+            Text(
+              'حذف من الفريق'.tr(),
+              style: TextStyle(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w700,
+                color: isLoading ? Colors.white54 : color,
               ),
             ),
           ],

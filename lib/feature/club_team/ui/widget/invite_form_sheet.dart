@@ -3,7 +3,6 @@ import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/feature/club_team/ui/screen/invite_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart' show DateFormat;
 
 /// Shows the invite form as a draggable bottom sheet.
 void showInviteFormSheet(BuildContext context, {required String playerName}) {
@@ -50,9 +49,9 @@ class _InviteFormSheetState extends State<InviteFormSheet> {
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       builder: (context, child) => Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: ColorScheme.light(primary: mainColor),
-        ),
+        data: Theme.of(
+          context,
+        ).copyWith(colorScheme: ColorScheme.light(primary: mainColor)),
         child: child!,
       ),
     );
@@ -145,22 +144,25 @@ class _InviteFormSheetState extends State<InviteFormSheet> {
                   child: Container(
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(
-                        horizontal: 14.w, vertical: 14.h),
+                      horizontal: 14.w,
+                      vertical: 14.h,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(
-                          color: Colors.white.withOpacity(0.2)),
+                      border: Border.all(color: Colors.white.withOpacity(0.2)),
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.calendar_today_outlined,
-                            color: Colors.white70, size: 18.w),
+                        Icon(
+                          Icons.calendar_today_outlined,
+                          color: Colors.white70,
+                          size: 18.w,
+                        ),
                         SizedBox(width: 10.w),
                         Text(
                           _selectedDate != null
-                              ? DateFormat('yyyy/MM/dd')
-                                  .format(_selectedDate!)
+                              ? DateFormat('yyyy/MM/dd').format(_selectedDate!)
                               : 'التاريخ'.tr(),
                           style: TextStyle(
                             color: _selectedDate != null
@@ -265,8 +267,10 @@ class _InviteFormSheetState extends State<InviteFormSheet> {
             hintStyle: TextStyle(color: Colors.white54, fontSize: 13.sp),
             filled: true,
             fillColor: Colors.white.withOpacity(0.12),
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 14.w,
+              vertical: 12.h,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
@@ -277,8 +281,10 @@ class _InviteFormSheetState extends State<InviteFormSheet> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
-              borderSide:
-                  BorderSide(color: Colors.white.withOpacity(0.6), width: 1.5),
+              borderSide: BorderSide(
+                color: Colors.white.withOpacity(0.6),
+                width: 1.5,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),

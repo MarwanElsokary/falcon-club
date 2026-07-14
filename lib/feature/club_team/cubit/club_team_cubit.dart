@@ -7,6 +7,7 @@ import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.da
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 
+import '../../main_club/data/model/club_trainee_model.dart';
 import '../data/model/club_player_model.dart';
 import '../data/model/player_report_model.dart';
 import '../data/repo/club_team_repo.dart';
@@ -53,8 +54,11 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
           } else if (data is Map<String, dynamic>) {
             profile = MyProfileModel.fromJson(data);
           } else {
-            emit(const ClubTeamState.myProfileerror(
-                error: 'خطأ في تحميل الملف الشخصي'));
+            emit(
+              const ClubTeamState.myProfileerror(
+                error: 'خطأ في تحميل الملف الشخصي',
+              ),
+            );
             return;
           }
           cachedProfile = profile;
@@ -62,14 +66,108 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
           emit(ClubTeamState.myProfilesuccess(profile));
         } catch (e) {
           log('Error parsing club profile: $e');
-          emit(const ClubTeamState.myProfileerror(
-              error: 'خطأ في تحميل الملف الشخصي'));
+          emit(
+            const ClubTeamState.myProfileerror(
+              error: 'خطأ في تحميل الملف الشخصي',
+            ),
+          );
         }
       },
       failure: (error) {
-        emit(ClubTeamState.myProfileerror(
-          error: error.apiErrorModel.message ?? '',
-        ));
+        emit(
+          ClubTeamState.myProfileerror(
+            error: error.apiErrorModel.message ?? '',
+          ),
+        );
+      },
+    );
+  }
+
+  // ── أضف جوه ClubTeamCubit ────────────────────────────────────────────────────
+
+  List<ClubTrainee> cachedTrainees = [];
+
+  Future<void> fetchClubTrainees() async {
+    emit(const ClubTeamState.clubTraineesLoading());
+    final response = await _repo.getClubTrainees();
+    response.when(
+      success: (data) {
+        try {
+          final trainees = <ClubTrainee>[];
+          List rawList = [];
+
+          if (data is List) {
+            rawList = data;
+          } else if (data is Map<String, dynamic>) {
+            final d = data['data'];
+            rawList = d is List ? d : [];
+          }
+
+          for (final item in rawList) {
+            if (item is Map<String, dynamic>) {
+              trainees.add(ClubTrainee.fromJson(item));
+            }
+          }
+
+          cachedTrainees = trainees;
+          emit(ClubTeamState.clubTraineesSuccess(trainees));
+        } catch (e) {
+          emit(
+            const ClubTeamState.clubTraineesError(
+              error: 'خطأ في تحميل المدربين',
+            ),
+          );
+        }
+      },
+      failure: (error) {
+        emit(
+          ClubTeamState.clubTraineesError(
+            error: error.apiErrorModel.message ?? 'فشل جلب المدربين',
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> deleteTrainee(String traineeId) async {
+    emit(const ClubTeamState.deleteTraineeLoading());
+    final response = await _repo.deleteTrainee(traineeId);
+    response.when(
+      success: (_) {
+        cachedTrainees.removeWhere((t) => t.id == traineeId);
+        emit(const ClubTeamState.deleteTraineeSuccess());
+        // نعيد عرض اللستة المحدثة
+        emit(ClubTeamState.clubTraineesSuccess(List.from(cachedTrainees)));
+      },
+      failure: (error) {
+        emit(
+          ClubTeamState.deleteTraineeError(
+            error: error.apiErrorModel.message ?? 'فشل حذف المدرب',
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> deletePlayerFromTeam(String playerId) async {
+    emit(const ClubTeamState.deleteTraineeLoading());
+    final response = await _repo.deleteTrainee(playerId);
+    response.when(
+      success: (_) {
+        groupedPlayers.forEach((_, list) {
+          list.removeWhere((p) => p.id == playerId);
+        });
+        groupedPlayers.removeWhere((_, list) => list.isEmpty);
+
+        emit(const ClubTeamState.deleteTraineeSuccess());
+        emit(ClubTeamState.clubPlayerssuccess(Map.from(groupedPlayers)));
+      },
+      failure: (error) {
+        emit(
+          ClubTeamState.deleteTraineeError(
+            error: error.apiErrorModel.message ?? 'فشل حذف اللاعب من الفريق',
+          ),
+        );
       },
     );
   }
@@ -115,9 +213,11 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
         emitMyProfile();
       },
       failure: (error) {
-        emit(ClubTeamState.updateProfileerror(
-          error: error.apiErrorModel.message ?? 'فشل تحديث الملف الشخصي',
-        ));
+        emit(
+          ClubTeamState.updateProfileerror(
+            error: error.apiErrorModel.message ?? 'فشل تحديث الملف الشخصي',
+          ),
+        );
       },
     );
   }
@@ -135,16 +235,22 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
       success: (data) {
         try {
           groupedPlayers = _parseAndGroup(data);
-          emit(ClubTeamState.clubPlayerssuccess(groupedPlayers));        } catch (e) {
+          emit(ClubTeamState.clubPlayerssuccess(groupedPlayers));
+        } catch (e) {
           log('Error parsing players: $e');
-          emit(const ClubTeamState.clubPlayerserror(
-              error: 'خطأ في تحميل اللاعبين'));
+          emit(
+            const ClubTeamState.clubPlayerserror(
+              error: 'خطأ في تحميل اللاعبين',
+            ),
+          );
         }
       },
       failure: (error) {
-        emit(ClubTeamState.clubPlayerserror(
-          error: error.apiErrorModel.message ?? 'فشل جلب اللاعبين',
-        ));
+        emit(
+          ClubTeamState.clubPlayerserror(
+            error: error.apiErrorModel.message ?? 'فشل جلب اللاعبين',
+          ),
+        );
       },
     );
   }
@@ -203,7 +309,9 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
     if (position.contains('هجوم') ||
         position.contains('راس حربة') ||
         position.contains('مهاجم') ||
-        position.contains('جناح')) return 'الهجوم';
+        position.contains('جناح')) {
+      return 'الهجوم';
+    }
     return 'أخرى';
   }
 
@@ -218,9 +326,11 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
         emit(ClubTeamState.playerReportsSuccess(reports));
       },
       failure: (error) {
-        emit(ClubTeamState.playerReportsError(
-          error: error.apiErrorModel.message ?? 'فشل تحميل التقارير',
-        ));
+        emit(
+          ClubTeamState.playerReportsError(
+            error: error.apiErrorModel.message ?? 'فشل تحميل التقارير',
+          ),
+        );
       },
     );
   }
@@ -264,9 +374,11 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
         }
       },
       failure: (error) {
-        emit(ClubTeamState.faverror(
-          error: error.apiErrorModel.message ?? 'فشل جلب المفضلة',
-        ));
+        emit(
+          ClubTeamState.faverror(
+            error: error.apiErrorModel.message ?? 'فشل جلب المفضلة',
+          ),
+        );
       },
     );
   }
@@ -280,10 +392,12 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
         success: (_) => emit(const ClubTeamState.removeFavsuccess()),
         failure: (error) {
           favoritedPlayerIds.add(playerId);
-          emit(ClubTeamState.removeFaverror(
-            error:
-            error.apiErrorModel.message ?? 'فشل إزالة اللاعب من المفضلة',
-          ));
+          emit(
+            ClubTeamState.removeFaverror(
+              error:
+                  error.apiErrorModel.message ?? 'فشل إزالة اللاعب من المفضلة',
+            ),
+          );
         },
       );
     } else {
@@ -293,10 +407,11 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
         success: (_) => emit(const ClubTeamState.addFavsuccess()),
         failure: (error) {
           favoritedPlayerIds.remove(playerId);
-          emit(ClubTeamState.addFaverror(
-            error:
-            error.apiErrorModel.message ?? 'فشل إضافة اللاعب للمفضلة',
-          ));
+          emit(
+            ClubTeamState.addFaverror(
+              error: error.apiErrorModel.message ?? 'فشل إضافة اللاعب للمفضلة',
+            ),
+          );
         },
       );
     }

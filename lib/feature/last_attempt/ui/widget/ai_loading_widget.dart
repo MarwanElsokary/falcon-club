@@ -115,13 +115,13 @@ class GradientCirclePainter extends CustomPainter {
     // Base gradient
     final gradient1 = const LinearGradient(
       begin: Alignment.topLeft,
-      colors: const [
+      colors: [
         Color(0xFF0CE2C6),
         Color(0xFF94E20C),
         Color(0xFFE2BF0C),
         Color(0xFFF7247F),
       ],
-      stops: const [0.2251, 0.3384, 0.6601, 0.9223],
+      stops: [0.2251, 0.3384, 0.6601, 0.9223],
     );
 
     // Overlay gradient

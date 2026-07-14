@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
-import 'package:falconclubapp/core/helpers/shared_pref_helper.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/routing/routes.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
-import 'package:falconclubapp/core/widget/url-call.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/helpers/constants.dart';
+import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widget/padding_utils.dart';
+import '../../../auth/domain/usecases/log_out.dart';
 import '../../../main_screen/data/model/my_profile_model.dart';
 import '../../cubit/club_team_cubit.dart';
 import '../../cubit/club_team_state.dart';
@@ -61,15 +60,12 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
               }
               if (state is clubUpdateProfileError) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.error),
-                    backgroundColor: redClr,
-                  ),
+                  SnackBar(content: Text(state.error), backgroundColor: redClr),
                 );
               }
             },
             buildWhen: (previous, current) =>
-            current is clubProfileLoading ||
+                current is clubProfileLoading ||
                 current is clubProfileSuccess ||
                 current is clubProfileError,
             builder: (context, state) {
@@ -146,7 +142,7 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
             fontWeight: FontWeight.w700,
             color: Colors.white,
             text:
-            '${profile.data.firstName ?? ''} ${profile.data.lastName ?? ''}',
+                '${profile.data.firstName ?? ''} ${profile.data.lastName ?? ''}',
           ),
           verticalSpace(20),
 
@@ -170,7 +166,10 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                   ),
                 ),
                 Container(
-                    height: 40.h, width: 1, color: greyClr.withOpacity(0.3)),
+                  height: 40.h,
+                  width: 1,
+                  color: greyClr.withOpacity(0.3),
+                ),
                 Expanded(
                   child: _infoItem(
                     title: 'الجنس'.tr(),
@@ -178,7 +177,10 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                   ),
                 ),
                 Container(
-                    height: 40.h, width: 1, color: greyClr.withOpacity(0.3)),
+                  height: 40.h,
+                  width: 1,
+                  color: greyClr.withOpacity(0.3),
+                ),
                 Expanded(
                   child: _infoItem(
                     title: 'النادي'.tr(),
@@ -290,17 +292,19 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
     return Column(
       children: [
         TextUtils(
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-            text: title),
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+          text: title,
+        ),
         verticalSpace(2),
         TextUtils(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-            text: value,
-            maxlines: 1),
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+          text: value,
+          maxlines: 1,
+        ),
       ],
     );
   }
@@ -315,22 +319,26 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
             Icon(Icons.error, color: Colors.red, size: 60.w),
             verticalSpace(20),
             TextUtils(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                text: 'حدث خطأ'.tr()),
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              text: 'حدث خطأ'.tr(),
+            ),
             verticalSpace(10),
             TextUtils(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.white70,
-                text: error),
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.white70,
+              text: error,
+            ),
             verticalSpace(20),
             ElevatedButton(
               onPressed: () => context.read<ClubTeamCubit>().emitMyProfile(),
               style: ElevatedButton.styleFrom(backgroundColor: mainColor),
-              child: Text('إعادة المحاولة'.tr(),
-                  style: const TextStyle(color: Colors.white)),
+              child: Text(
+                'إعادة المحاولة'.tr(),
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
@@ -344,7 +352,8 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r)),
+            borderRadius: BorderRadius.circular(12.r),
+          ),
           title: CenterTextUtils(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -358,9 +367,13 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                 Expanded(
                   child: InkWell(
                     onTap: () async {
-                      await SharedPrefHelper.clearSpecificSecureData(
-                          SharedPrefKeys.userToken);
-                      await SharedPrefHelper.clearAllData();
+                      // Signing out is a domain operation, not a storage chore.
+                      // This used to clear secure storage and prefs inline —
+                      // and, unlike the drawer's dialog, forgot to clear the
+                      // cached profile, so the next user to sign in on this
+                      // device saw the previous one's data until it expired.
+                      await getIt<LogOut>()();
+                      if (!context.mounted) return;
                       Navigator.of(dialogContext).pop();
                       context.pushNamedAndRemoveUntil(
                         AppRoute.loginScreen,
@@ -370,13 +383,15 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10.w),
                       decoration: BoxDecoration(
-                          color: mainColor,
-                          borderRadius: BorderRadius.circular(20.r)),
+                        color: mainColor,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
                       child: CenterTextUtils(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          text: 'نعم'.tr()),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        text: 'نعم'.tr(),
+                      ),
                     ),
                   ),
                 ),
@@ -387,13 +402,15 @@ class _ClubProfileScreenState extends State<ClubProfileScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10.w),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.r),
-                          color: primerymainColor),
+                        borderRadius: BorderRadius.circular(20.r),
+                        color: primerymainColor,
+                      ),
                       child: CenterTextUtils(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          text: 'لا'.tr()),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        text: 'لا'.tr(),
+                      ),
                     ),
                   ),
                 ),

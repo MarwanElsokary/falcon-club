@@ -138,6 +138,8 @@ class _FavIconClickState extends State<FavIconClick>
 
 // Basic usage - animation at start position and stopped
 class BasicUsageExample extends StatelessWidget {
+  const BasicUsageExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const FavIconClick(
@@ -149,6 +151,8 @@ class BasicUsageExample extends StatelessWidget {
 
 // Start animation once and stop
 class SingleAnimationExample extends StatelessWidget {
+  const SingleAnimationExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const FavIconClick(
@@ -160,6 +164,8 @@ class SingleAnimationExample extends StatelessWidget {
 
 // Toggle between start/stop states
 class ToggleAnimationExample extends StatefulWidget {
+  const ToggleAnimationExample({super.key});
+
   @override
   State<ToggleAnimationExample> createState() => _ToggleAnimationExampleState();
 }
@@ -199,6 +205,8 @@ class _ToggleAnimationExampleState extends State<ToggleAnimationExample> {
 
 // Manual control - click to animate once, then return to start
 class ManualControlExample extends StatefulWidget {
+  const ManualControlExample({super.key});
+
   @override
   State<ManualControlExample> createState() => _ManualControlExampleState();
 }

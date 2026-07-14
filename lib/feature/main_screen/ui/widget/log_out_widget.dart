@@ -1,19 +1,29 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falconclubapp/core/helpers/constants.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
-import 'package:falconclubapp/core/helpers/shared_pref_helper.dart';
-import 'package:falconclubapp/core/routing/routes.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/cache/cach_Helper.dart';
 import '../../../../../core/widget/center_text_utils.dart';
 import '../../../../../core/widget/slide_enimation_widget.dart';
+import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widget/fav_icon_click.dart';
+import '../../../auth/domain/usecases/log_out.dart';
 
+/// Confirmation dialog for signing out.
+///
+/// Clearing used to happen *here*, in a button callback: this widget reached for
+/// `SharedPrefHelper.clearSpecificSecureData`, `SharedPrefHelper.clearAllData`
+/// and `CacheHelper.clearShared` directly, then navigated itself — while the
+/// [onLogout] callback every call site dutifully passed was never invoked at all.
+///
+/// Now the widget knows only that signing out is a thing you can ask for. What
+/// that *means* — which keys, which stores, in what order — lives behind
+/// [LogOut] → `SessionRepository`, the one place that owns session storage. The
+/// callback is finally honoured, so where to go next is the caller's decision
+/// rather than something hardcoded in a dialog.
 showLogoutDialog(
     BuildContext context,
     VoidCallback onLogout,
@@ -63,21 +73,10 @@ showLogoutDialog(
                             Expanded(
                               child: InkWell(
                                 onTap: () async {
-                                  // ✅ مسح الـ token من SecureStorage
-                                  await SharedPrefHelper.clearSpecificSecureData(
-                                    SharedPrefKeys.userToken,
-                                  );
-                                  // ✅ مسح باقي الـ SharedPreferences
-                                  await SharedPrefHelper.clearAllData();
-                                  // ✅ مسح الـ Cache (profile + categories + trials)
-                                  // عشان لما يلوجين بيوزر تاني ميرجعش داتا قديمة
-                                  await CacheHelper.clearShared();
-
+                                  await getIt<LogOut>()();
+                                  if (!context.mounted) return;
                                   context.pop();
-                                  context.pushNamedAndRemoveUntil(
-                                    AppRoute.loginScreen,
-                                    predicate: (route) => false,
-                                  );
+                                  onLogout();
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 10.w),

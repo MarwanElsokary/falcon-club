@@ -65,10 +65,12 @@ class ExperianceDetailsRepo {
   }
 
   // ── إضافة محاولة للاعب — POST /api/Club/AddAttempt ─────────────
+  // في experiance_details_repo.dart
   Future<ApiResult> addAttemptForPlayer({
     required String playerId,
     required String exerciseId,
     required String videoPath,
+    void Function(int progress)? onProgress, // ✅ أضف callback
   }) async {
     try {
       final token = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
@@ -92,6 +94,12 @@ class ExperianceDetailsRepo {
         queryParameters: {
           'PlayerId': playerId,
           'ExerciseId': int.parse(exerciseId),
+        },
+        onSendProgress: (sent, total) { // ✅ هنا الـ progress
+          if (total > 0 && onProgress != null) {
+            final percent = ((sent / total) * 100).round();
+            onProgress(percent);
+          }
         },
       );
 

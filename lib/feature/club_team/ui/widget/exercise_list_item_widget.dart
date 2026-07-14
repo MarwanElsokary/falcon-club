@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
-import 'package:falconclubapp/core/routing/routes.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
@@ -99,21 +97,19 @@ class ExerciseListItemWidget extends StatelessWidget {
       color: mainColor.withOpacity(0.06),
       child: exercise.photoPath != null && exercise.photoPath!.isNotEmpty
           ? CachedNetworkImage(
-        imageUrl: exercise.photoPath!,
-        fit: BoxFit.cover,
-        placeholder: (_, __) => Container(color: mainColor.withOpacity(0.1)),
-        errorWidget: (_, __, ___) => _imgFallback(),
-      )
+              imageUrl: exercise.photoPath!,
+              fit: BoxFit.cover,
+              placeholder: (_, __) =>
+                  Container(color: mainColor.withOpacity(0.1)),
+              errorWidget: (_, __, ___) => _imgFallback(),
+            )
           : _imgFallback(),
     );
   }
 
   Widget _imgFallback() {
     return Center(
-      child: SvgPicture.asset(
-        'assets/svgs/unavailabeImage.svg',
-        width: 36.w,
-      ),
+      child: SvgPicture.asset('assets/svgs/unavailabeImage.svg', width: 36.w),
     );
   }
 

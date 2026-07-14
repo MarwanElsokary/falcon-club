@@ -17,7 +17,6 @@ import '../../../../core/widget/show_photo_widget.dart';
 import '../../../../core/widget/text_utils.dart';
 import '../../../main_screen/cubit/main_cubit.dart';
 import '../../../main_screen/cubit/main_state.dart';
-import '../../../signup/ui/widget/profile_completion_middleware.dart';
 
 class CustomDrawerScout extends StatelessWidget {
   const CustomDrawerScout({super.key});
@@ -193,10 +192,6 @@ class CustomDrawerScout extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ProfileCheckWrapper(
-                        showInHome: false, // النسخة المصغرة للـ drawer
-                        child: const SizedBox.shrink(),
-                      ),
                       //user data
                       BlocBuilder<MainCubit, MainState>(
                         builder: (context, state) {

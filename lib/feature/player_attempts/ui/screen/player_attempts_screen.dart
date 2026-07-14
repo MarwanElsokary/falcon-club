@@ -9,7 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../cubit/player_attempts_cubit.dart';
 import '../../cubit/player_attempts_state.dart';
 import '../widget/attempt_card_widget.dart';
-import '../widget/attempt_status_badge.dart';
 
 class PlayerAttemptsScreen extends StatefulWidget {
   final int exerciseId;
@@ -138,13 +137,13 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
               color: Colors.white.withOpacity(0.2),
             ),
             child: ClipOval(
-              child: widget.playerPhoto != null &&
-                  widget.playerPhoto!.isNotEmpty
+              child:
+                  widget.playerPhoto != null && widget.playerPhoto!.isNotEmpty
                   ? Image.network(
-                widget.playerPhoto!,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => _photoFallback(),
-              )
+                      widget.playerPhoto!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => _photoFallback(),
+                    )
                   : _photoFallback(),
             ),
           ),
@@ -220,7 +219,11 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
                   horizontalSpace(8),
                   _summaryChip('$done', 'مكتمل', const Color(0xFF27AE60)),
                   horizontalSpace(8),
-                  _summaryChip('$pending', 'قيد المراجعة', const Color(0xFFF39C12)),
+                  _summaryChip(
+                    '$pending',
+                    'قيد المراجعة',
+                    const Color(0xFFF39C12),
+                  ),
                   horizontalSpace(8),
                   _summaryChip('$rejected', 'مرفوض', const Color(0xFFE74C3C)),
                 ],
@@ -327,12 +330,11 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
           ),
           verticalSpace(16),
           ElevatedButton(
-            onPressed: () => context
-                .read<PlayerAttemptsCubit>()
-                .fetchPlayerAttempts(
-              exerciseId: widget.exerciseId,
-              playerId: widget.playerId,
-            ),
+            onPressed: () =>
+                context.read<PlayerAttemptsCubit>().fetchPlayerAttempts(
+                  exerciseId: widget.exerciseId,
+                  playerId: widget.playerId,
+                ),
             style: ElevatedButton.styleFrom(backgroundColor: mainColor),
             child: const Text(
               'إعادة المحاولة',

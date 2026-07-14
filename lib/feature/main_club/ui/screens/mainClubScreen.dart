@@ -17,12 +17,12 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/thems/thems.dart';
 import '../../../club_team/cubit/club_team_cubit.dart';
-import '../../../club_team/ui/screen/club_my_team_screen.dart';
 import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../home/ui/screen/home_screen.dart';
 import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
 import '../../../training/cubit/training_cubit.dart';
 import '../../cubit/requests_cubit.dart';
+import 'ClubMyTeamScreen.dart';
 
 class MainClubScreen extends StatefulWidget {
   const MainClubScreen({super.key});
@@ -105,7 +105,7 @@ class _ClubMainScreenState extends State<MainClubScreen> {
                     ),
 
                     // 1 — فريقي
-                    const ClubMyTeamScreen(),
+                    const ClubMainMyTeamScreen(),
 
                     // 2 — اللاعيبين (Reels)
                     MultiBlocProvider(

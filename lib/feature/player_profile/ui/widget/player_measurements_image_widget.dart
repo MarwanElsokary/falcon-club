@@ -1,22 +1,16 @@
 // file: player_bio_image_widget.dart
 
-import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/padding_utils.dart';
-import 'package:falconclubapp/core/widget/showSuccesSnackBar.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:http/http.dart' as http;
-import 'dart:typed_data';
 
-import '../../../../core/widget/show_error_snack_bar.dart';
 import '../../../main_screen/data/model/my_profile_model.dart';
 
 class PlayerBioImageWidget extends StatelessWidget {
@@ -474,11 +468,7 @@ class PlayerBioImageWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: greyClr,
-              size: 16.w,
-            ),
+            Icon(Icons.arrow_forward_ios_rounded, color: greyClr, size: 16.w),
           ],
         ),
       ),

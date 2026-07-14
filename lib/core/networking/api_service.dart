@@ -1,16 +1,12 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:falconclubapp/feature/experiance_details_screen/data/model/trial_details_model.dart';
 import 'package:falconclubapp/feature/experiments/data/model/all_trials_model.dart';
-import 'package:falconclubapp/feature/login/data/model/country_model.dart';
 import 'package:falconclubapp/feature/main_screen/data/model/categories_model.dart';
 import 'package:falconclubapp/feature/reals/data/model/real_model.dart';
 import 'package:falconclubapp/feature/training_details/data/model/exercise_details_model.dart';
 
 import 'package:retrofit/retrofit.dart';
 
-import '../../feature/forget_password/data/model/forget_password_model.dart';
 import '../../feature/main_screen/data/model/club_profile_model.dart';
 import '../../feature/main_screen/data/model/my_profile_model.dart';
 import '../../feature/main_screen/data/repo/main_repo.dart';
@@ -28,6 +24,12 @@ abstract class ApiService {
 
   @POST(ApiConstants.registerStep2)
   Future<dynamic> getCurrentUser();
+
+  @GET('/Club/GetClubTrainees')
+  Future<dynamic> getClubTrainees();
+
+  @DELETE('/Club/DeletePlayer')
+  Future<dynamic> deleteTrainee(@Query('PlayerId') String playerId);
 
   // أضف هذه الدالة للتحقق من الدفع بعد 3DS
   @POST(ApiConstants.verifypay) // تأكد من المسار الصحيح
@@ -93,19 +95,39 @@ abstract class ApiService {
   @POST(ApiConstants.otp)
   Future otp(@Query('otp') int otp);
 
+  // ── Phone confirmation ────────────────────────────────────────────────────
+  // The Authorization header is passed EXPLICITLY, not left to DioFactory's
+  // interceptor. That interceptor only attaches the *session* token
+  // (`userToken`), and these calls are made with the *registration* token —
+  // which is deliberately never stored as a session. Passing it here keeps the
+  // registration credential from having to masquerade as one.
+  //
+  // `otp` is a STRING. Sending it as an int (as `otp()` above does) destroys a
+  // leading zero: int.parse("012345") == 12345, so the wrong code goes out.
+  @POST(ApiConstants.confirmPhoneByOtp)
+  Future<dynamic> confirmPhoneByOtp(
+    @Header('Authorization') String bearer,
+    @Query('otp') String otp,
+  );
+
+  @POST(ApiConstants.resendPhoneOtp)
+  Future<dynamic> resendPhoneOtp(@Header('Authorization') String bearer);
+
   // أضف في قسم الـ GET endpoints في ApiService
   @GET(ApiConstants.getTermsAndPolicies)
   Future getTermsAndPolicies();
 
-  //Player/GetCountries
+  // ── City / club directory ─────────────────────────────────────────────────
+  // Declared as `dynamic`, like most of this class. The typed `CountriesClubModel`
+  // these used to return lived in `feature/login`, so `core` depended on a
+  // feature — backwards, and it kept a deleted feature alive. `CityModel` /
+  // `ClubOptionModel` parse the raw body under `feature/auth/data` instead,
+  // which is where knowledge of the wire shape belongs.
   @GET(ApiConstants.countries)
-  Future<CountriesClubModel> countries();
+  Future<dynamic> countries();
 
-  //clubsByCountry
   @GET(ApiConstants.clubsByCountry)
-  Future<CountriesClubModel> clubsByCountry(
-    @Query('CountryId') String countryId,
-  );
+  Future<dynamic> clubsByCountry(@Query('CountryId') String countryId);
 
   //myProfile
   @GET(ApiConstants.myProfile)
@@ -230,22 +252,28 @@ abstract class ApiService {
   @GET(ApiConstants.profileFeature)
   Future<SkillsResponse> getSkills(@Query('UserId') String userId);
 
-  // Forget Password Endpoints
+  // ── Password reset ────────────────────────────────────────────────────────
+  // Also `dynamic` now. The freezed models these returned declared `message` and
+  // `resetToken` **non-nullable and required**: a response missing either threw a
+  // `TypeError` out of `fromJson` and the user saw a crash instead of the
+  // server's own error text. The replacements in
+  // `feature/auth/data/models/password_reset_models.dart` treat every field as
+  // optional, so a shape change degrades into a clean failure.
   @POST(ApiConstants.forgetPasswordByPhone)
-  Future<ForgetPasswordResponse> forgetPasswordByPhone(
+  Future<dynamic> forgetPasswordByPhone(
     @Query('phoneNumber') String phoneNumber,
   );
 
   @POST(ApiConstants.checkOtp)
   @FormUrlEncoded()
-  Future<CheckOtpResponse> checkOtp(
+  Future<dynamic> checkOtp(
     @Field('otp') String otp,
     @Field('phoneNumber') String phoneNumber,
   );
 
   @POST(ApiConstants.resetPassword)
   @FormUrlEncoded()
-  Future<ResetPasswordResponse> resetPassword(
+  Future<dynamic> resetPassword(
     @Field('Token') String token,
     @Field('Password') String password,
     @Field('ConfirmPassword') String confirmPassword,

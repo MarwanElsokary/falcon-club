@@ -199,11 +199,11 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
                     value: data.clubName ?? '—',
                   ),
                   _divider(),
-                  _detailRow(
-                    icon: Icons.person_outline,
-                    label: 'الجنس'.tr(),
-                    value: _genderText(data.gender),
-                  ),
+                  // _detailRow(
+                  //   icon: Icons.person_outline,
+                  //   label: 'الجنس'.tr(),
+                  //   value: _genderText(data.gender),
+                  // ),
                 ],
               ),
             ),

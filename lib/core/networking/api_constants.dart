@@ -6,8 +6,7 @@ class ApiConstants {
   static const String mapKey = "AIzaSyCSCPuaywN_flJUl2y6w5B6V4RMGxwTPNc";
 
   //auth
-  //login
-  static const String login = "Account/Login";
+  static const String login = "Account/LoginClub";
   static const String verifypay = "'Payment/VerifyPayment'";
 
   //Payment/CreatePayment
@@ -41,6 +40,12 @@ class ApiConstants {
   //otp
   static const String otp = "Account/ConfirmPhoneByOtp";
 
+  // Phone confirmation. Both authenticate via the Bearer token issued by
+  // RegisterClub/RegisterScout — they take no phone number and no user id,
+  // because the backend resolves the account from that token.
+  static const String confirmPhoneByOtp = "Account/ConfirmPhoneByOtp";
+  static const String resendPhoneOtp = "Account/ResendPhoneOtp";
+
   //countries
   static const String countries = "Player/GetCountries";
 
@@ -62,12 +67,13 @@ class ApiConstants {
 
   static const String getClubRequests = 'Club/GetClubRequests';
   static const String getPlayerRequests = 'Player/GetPlayerRequests';
+
   // Club Requests
   static const String acceptClub = '/Club/AcceptClub';
   static const String rejectClub = '/Club/RejectClub';
   static const String deleteClub = '/Club/DeleteClub';
 
-// Player Requests
+  // Player Requests
   static const String acceptPlayer = '/Player/AcceptPlayer';
   static const String rejectPlayer = '/Player/RejectPlayer';
   static const String deletePlayer = '/Player/DeletePlayer';

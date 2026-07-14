@@ -3,9 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:falconclubapp/core/cache/cach_Helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../../training_details/data/model/exercise_details_model.dart';
 import '../data/model/categories_model.dart';
 import '../data/repo/main_repo.dart';
 import 'main_state.dart';

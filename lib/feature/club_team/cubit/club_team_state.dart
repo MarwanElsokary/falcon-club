@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
 import 'package:falconclubapp/feature/club_team/data/model/player_report_model.dart';
 
+import '../../main_club/data/model/club_trainee_model.dart';
 import '../data/model/club_player_model.dart';
 
 part 'club_team_state.freezed.dart';
@@ -64,4 +65,21 @@ class ClubTeamState with _$ClubTeamState {
 
   const factory ClubTeamState.playerReportsError({required String error}) =
       playerReportsErrorState;
+
+  // Trainees
+  const factory ClubTeamState.clubTraineesLoading() = _ClubTraineesLoading;
+
+  const factory ClubTeamState.clubTraineesSuccess(List<ClubTrainee> trainees) =
+      _ClubTraineesSuccess;
+
+  const factory ClubTeamState.clubTraineesError({required String error}) =
+      _ClubTraineesError;
+
+  // Delete trainee
+  const factory ClubTeamState.deleteTraineeLoading() = _DeleteTraineeLoading;
+
+  const factory ClubTeamState.deleteTraineeSuccess() = _DeleteTraineeSuccess;
+
+  const factory ClubTeamState.deleteTraineeError({required String error}) =
+      _DeleteTraineeError;
 }

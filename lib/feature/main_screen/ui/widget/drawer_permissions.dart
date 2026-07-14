@@ -13,6 +13,10 @@ class DrawerPermissions {
     return role == UserRole.mainClub;
   }
 
+  static bool canShowRequests(UserRole role) {
+    return role == UserRole.mainClub;
+  }
+
   static bool canShowRank(UserRole role) {
     return role == UserRole.club ||
         role == UserRole.scout ||

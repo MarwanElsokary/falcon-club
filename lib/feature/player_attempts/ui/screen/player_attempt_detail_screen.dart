@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
@@ -66,7 +65,7 @@ class PlayerAttemptDetailScreen extends StatelessWidget {
                   else if (isProcessed && !hasSkills)
                     _buildNoSkillsWidget()
                   else if (isPending)
-                      const AiLoadingWidget(),
+                    const AiLoadingWidget(),
 
                   verticalSpace(20),
 
@@ -155,7 +154,10 @@ class PlayerAttemptDetailScreen extends StatelessWidget {
   }
 
   Widget _buildVideoCard(
-      BuildContext context, bool isProcessed, bool isRejected) {
+    BuildContext context,
+    bool isProcessed,
+    bool isRejected,
+  ) {
     return Container(
       width: context.displayWidth,
       margin: EdgeInsets.symmetric(horizontal: 15.w),
@@ -186,9 +188,7 @@ class PlayerAttemptDetailScreen extends StatelessWidget {
             ],
           ),
           verticalSpace(15),
-          AiVideoWidget(
-            videoUrl: attempt.aiVideo ?? attempt.video ?? '',
-          ),
+          AiVideoWidget(videoUrl: attempt.aiVideo ?? attempt.video ?? ''),
           verticalSpace(10),
         ],
       ),

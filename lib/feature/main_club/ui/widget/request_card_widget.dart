@@ -10,8 +10,6 @@ import '../../cubit/requests_state.dart';
 import '../../data/model/club_request_model.dart';
 import '../../data/model/player_request_model.dart';
 
-// ── Unified Card — named constructors للـ Club والـ Player ───────────────────
-
 class RequestCardWidget extends StatelessWidget {
   final String id;
   final String? name;
@@ -74,7 +72,6 @@ class RequestCardWidget extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // ── المعلومات ──
               Padding(
                 padding: EdgeInsets.all(14.w),
                 child: Row(
@@ -92,7 +89,6 @@ class RequestCardWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              // ── الأزرار ──
               _ActionButtons(id: id, isClub: isClub, isLoading: isActioning),
             ],
           ),
@@ -128,10 +124,10 @@ class _Avatar extends StatelessWidget {
       child: ClipOval(
         child: hasPhoto
             ? CachedNetworkImage(
-                imageUrl: photoPath!,
-                fit: BoxFit.cover,
-                errorWidget: (_, __, ___) => _InitialFallback(name: name),
-              )
+          imageUrl: photoPath!,
+          fit: BoxFit.cover,
+          errorWidget: (_, __, ___) => _InitialFallback(name: name),
+        )
             : _InitialFallback(name: name),
       ),
     );
@@ -260,41 +256,40 @@ class _ActionButtons extends StatelessWidget {
         children: [
           // قبول
           Expanded(
-            flex: 3,
             child: _ActionBtn(
               label: 'قبول',
               icon: Icons.check_rounded,
               color: mainColor,
               isLoading: isLoading,
               onTap: () =>
-                  isClub ? cubit.acceptClub(id) : cubit.acceptPlayer(id),
+              isClub ? cubit.acceptClub(id) : cubit.acceptPlayer(id),
             ),
           ),
           SizedBox(width: 8.w),
           // رفض
           Expanded(
-            flex: 3,
             child: _ActionBtn(
               label: 'رفض',
               icon: Icons.close_rounded,
               color: const Color(0xFFFF6B35),
               isLoading: isLoading,
               onTap: () =>
-                  isClub ? cubit.rejectClub(id) : cubit.rejectPlayer(id),
+              isClub ? cubit.rejectClub(id) : cubit.rejectPlayer(id),
             ),
           ),
-          SizedBox(width: 8.w),
-          // حذف
-          Expanded(
-            flex: 2,
-            child: _ActionBtn(
-              label: 'حذف',
-              icon: Icons.delete_outline_rounded,
-              color: Colors.red.shade400,
-              isLoading: isLoading,
-              onTap: () => _confirmDelete(context, cubit),
+          // حذف — للنادي بس
+          if (isClub) ...[
+            SizedBox(width: 8.w),
+            Expanded(
+              child: _ActionBtn(
+                label: 'حذف',
+                icon: Icons.delete_outline_rounded,
+                color: Colors.red.shade400,
+                isLoading: isLoading,
+                onTap: () => _confirmDelete(context, cubit),
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
@@ -306,11 +301,7 @@ class _ActionButtons extends StatelessWidget {
       builder: (_) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('تأكيد الحذف'),
-        content: Text(
-          isClub
-              ? 'هل تريد حذف هذا النادي نهائياً؟'
-              : 'هل تريد حذف هذا اللاعب نهائياً؟',
-        ),
+        content: const Text('هل تريد حذف هذا النادي نهائياً؟'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -319,11 +310,7 @@ class _ActionButtons extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              if (isClub) {
-                cubit.deleteClub(id);
-              } else {
-                cubit.deletePlayer(id);
-              }
+              cubit.deleteClub(id);
             },
             child: Text('حذف', style: TextStyle(color: Colors.red.shade400)),
           ),
