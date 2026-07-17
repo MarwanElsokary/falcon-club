@@ -8,11 +8,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../data/model/exercise_details_model.dart';
+import '../../domain/entities/exercise_details.dart';
 
-class TrainingExpansionTileWidget extends StatelessWidget {
-  const TrainingExpansionTileWidget({super.key, required this.exerciseDetails});
-  final ExerciseDetailsModel exerciseDetails;
+/// The two collapsible sections under an exercise's description: its equipment
+/// list and its filming instructions.
+///
+/// Takes domain [Equipment] and the instruction strings directly. Formerly
+/// `TrainingExpansionTileWidget`, which reached into a data model's
+/// `.data.equipments`/`.data.playerInstructions`.
+class ExerciseEquipmentInstructionsWidget extends StatelessWidget {
+  const ExerciseEquipmentInstructionsWidget({
+    super.key,
+    required this.equipment,
+    required this.instructions,
+  });
+
+  final List<Equipment> equipment;
+  final List<String> instructions;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +46,7 @@ class TrainingExpansionTileWidget extends StatelessWidget {
             ),
             children: [
               ListView.builder(
-                itemCount: exerciseDetails.data.equipments.length,
+                itemCount: equipment.length,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.all(0),
@@ -49,9 +61,7 @@ class TrainingExpansionTileWidget extends StatelessWidget {
                               width: 20.w,
                               height: 20.w,
                               child: CachedNetworkImage(
-                                imageUrl:
-                                    exerciseDetails.data.equipments[i].image ??
-                                    '',
+                                imageUrl: equipment[i].imageUrl ?? '',
                                 fit: BoxFit.contain,
                                 placeholder: (context, url) => Skeletonizer(
                                   enabled: true,
@@ -81,7 +91,7 @@ class TrainingExpansionTileWidget extends StatelessWidget {
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
                               color: blackclr,
-                              text: exerciseDetails.data.equipments[i].name,
+                              text: equipment[i].name,
                             ),
                           ),
                         ],
@@ -108,7 +118,7 @@ class TrainingExpansionTileWidget extends StatelessWidget {
             ),
             children: [
               ListView.builder(
-                itemCount: exerciseDetails.data.playerInstructions.length,
+                itemCount: instructions.length,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.all(0),
@@ -132,7 +142,7 @@ class TrainingExpansionTileWidget extends StatelessWidget {
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
                               color: blackclr,
-                              text: exerciseDetails.data.playerInstructions[i],
+                              text: instructions[i],
                             ),
                           ),
                         ],

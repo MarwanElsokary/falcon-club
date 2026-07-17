@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
-import 'package:falconclubapp/feature/training_details/data/model/exercise_details_model.dart';
+import 'package:falconclubapp/feature/main_screen/data/model/skills_response_model.dart';
 
 import '../../main_screen/data/model/categories_model.dart';
 

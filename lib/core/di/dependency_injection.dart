@@ -15,15 +15,11 @@ import '../../feature/main_club/cubit/requests_cubit.dart';
 import '../../feature/main_club/data/repo/requests_repo.dart';
 import '../../feature/club_team/data/repo/club_exercises_repo.dart';
 import '../../feature/digital_report/data/repo/digitalReportRepo.dart';
-import '../../feature/exercise_roster/cubit/exercise_roster_cubit.dart';
-import '../../feature/exercise_roster/data/repo/exercise_roster_repo.dart';
 import '../../feature/experiments/data/repo/experiments_repo.dart';
 import '../../feature/main_screen/cubit/main_cubit.dart';
 import '../../feature/main_screen/data/repo/main_repo.dart';
 import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/data/repo/training_repo.dart';
-import '../../feature/training_details/cubit/training_details_cubit.dart';
-import '../../feature/training_details/data/repo/training_details_repo.dart';
 
 // ── Scout Training (feature منفصلة) ─────────────────────────────────────────
 // ────────────────────────────────────────────────────────────────────────────
@@ -63,24 +59,10 @@ Future<void> setupGetIt() async {
   // too. Club and Scout share one ExerciseDetailsScreen driven by an injected
   // ExerciseCapability — there is nothing role-specific left to register.
 
-  // MARK: - ExerciseRoster (was ExperianceDetails — trial half extracted in Phase 7)
-  // Reads only now (trial details + player roster). The attempt upload it used
-  // to own — the one reason it held a `Dio` and a `ViewerCapabilityPort` —
-  // moved to the exercise feature's AttemptUploadCubit in Phase 5.
-  getIt.registerLazySingleton<ExerciseRosterRepo>(
-    () => ExerciseRosterRepo(getIt<ApiService>()),
-  );
-  getIt.registerFactory<ExerciseRosterCubit>(
-    () => ExerciseRosterCubit(getIt()),
-  );
-
-  // MARK: - TrainingDetails (النادي)
-  getIt.registerLazySingleton<TrainingDetailsRepo>(
-    () => TrainingDetailsRepo(getIt()),
-  );
-  getIt.registerFactory<TrainingDetailsCubit>(
-    () => TrainingDetailsCubit(getIt()),
-  );
+  // MARK: - ExerciseDetails — migrated to the domain in Phase 8a.
+  // TrainingDetailsCubit + ExerciseRosterCubit (both fetching club/GetExercise
+  // into two models) collapsed into one @injectable ExerciseDetailsCubit over
+  // GetExerciseDetails → ExerciseDetails, registered by injection.config.dart.
 
   // MARK: - Reals
   getIt.registerLazySingleton<RealsRepo>(() => RealsRepo(getIt()));

@@ -14,8 +14,8 @@ import 'package:falconclubapp/core/routing/routes.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
-import 'package:falconclubapp/feature/exercise_roster/cubit/exercise_roster_cubit.dart';
-import 'package:falconclubapp/feature/exercise_roster/cubit/exercise_roster_state.dart';
+import 'package:falconclubapp/feature/exercise/presentation/cubit/exercise_details_cubit.dart';
+import 'package:falconclubapp/feature/exercise/presentation/cubit/exercise_details_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,12 +24,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../exercise_roster/data/model/exercise_with_players_model.dart';
-import '../../../training_details/data/model/exercise_details_model.dart';
-import '../../../training_details/cubit/training_details_cubit.dart';
-import '../../../training_details/cubit/training_details_state.dart';
-import '../widget/training_details_cat_widget.dart';
-import '../widget/training_expansion_tile_widget.dart';
+import '../../domain/entities/exercise_details.dart';
+import '../../domain/entities/exercise_player.dart';
+import '../widgets/exercise_skills_widget.dart';
+import '../widgets/exercise_equipment_instructions_widget.dart';
 
 /// The exercise details screen — one screen for every role.
 ///
@@ -56,31 +54,17 @@ class ExerciseDetailsScreen extends StatefulWidget {
 
 class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
   @override
-  void initState() {
-    super.initState();
-    final exerciseId = context.read<TrainingDetailsCubit>().currentExerciseId;
-    if (exerciseId != null) {
-      context.read<ExerciseRosterCubit>().fetchExercisePlayers(
-        exerciseId: exerciseId,
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainColor,
-      body: BlocBuilder<TrainingDetailsCubit, TrainingDetailsState>(
-        buildWhen: (prev, curr) =>
-            curr is exerciseDetailsLoading ||
-            curr is exerciseDetailsSuccess ||
-            curr is exerciseDetailsError,
-        builder: (context, state) {
-          return state.maybeWhen(
-            exerciseDetailssuccess: (exerciseDetails) =>
-                _buildContent(context, exerciseDetails),
-            orElse: () => _buildLoading(),
-          );
+      body: BlocBuilder<ExerciseDetailsCubit, ExerciseDetailsState>(
+        builder: (context, state) => switch (state) {
+          ExerciseDetailsLoaded(:final ExerciseDetails details) =>
+            _buildContent(context, details),
+          // Loading, initial and failure all show the spinner — the same
+          // behaviour the old TrainingDetailsCubit `orElse` gave. (A failure
+          // rendering a spinner is pre-existing and deliberately unchanged here.)
+          _ => _buildLoading(),
         },
       ),
     );
@@ -99,7 +83,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
 
   Widget _buildContent(
     BuildContext context,
-    ExerciseDetailsModel exerciseDetails,
+    ExerciseDetails details,
   ) {
     return Stack(
       children: [
@@ -109,13 +93,13 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                _buildExerciseImage(exerciseDetails),
+                _buildExerciseImage(details),
                 Container(
                   height: 10.h,
                   width: context.displayWidth,
                   color: mainColor,
                 ),
-                _buildInfoSection(context, exerciseDetails),
+                _buildInfoSection(context, details),
               ],
             ),
           ),
@@ -127,7 +111,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
     );
   }
 
-  Widget _buildExerciseImage(ExerciseDetailsModel exerciseDetails) {
+  Widget _buildExerciseImage(ExerciseDetails details) {
     return SizedBox(
       width: context.displayWidth,
       height: 320.h,
@@ -135,7 +119,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
         fit: StackFit.expand,
         children: [
           CachedNetworkImage(
-            imageUrl: exerciseDetails.data.photoPath ?? '',
+            imageUrl: details.photoUrl ?? '',
             fit: BoxFit.cover,
             placeholder: (_, __) =>
                 Skeletonizer(enabled: true, child: Container(color: mainColor)),
@@ -168,7 +152,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
               fontSize: 22,
               fontWeight: FontWeight.w700,
               color: Colors.white,
-              text: exerciseDetails.data.title ?? '',
+              text: details.title,
             ),
           ),
         ],
@@ -178,7 +162,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
 
   Widget _buildInfoSection(
     BuildContext context,
-    ExerciseDetailsModel exerciseDetails,
+    ExerciseDetails details,
   ) {
     return Container(
       color: mainColor,
@@ -212,21 +196,24 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: Colors.black,
-              text: exerciseDetails.data.title ?? '',
+              text: details.title,
             ),
             verticalSpace(7),
             TextUtils(
               fontSize: 13,
               fontWeight: FontWeight.w400,
               color: blackclr,
-              text: exerciseDetails.data.description ?? '',
+              text: details.description ?? '',
             ),
             verticalSpace(15),
-            TrainingDetailsCatWidget(skills: exerciseDetails.data.skills),
+            ExerciseSkillsWidget(skills: details.skillNames),
             verticalSpace(15),
-            TrainingExpansionTileWidget(exerciseDetails: exerciseDetails),
+            ExerciseEquipmentInstructionsWidget(
+              equipment: details.equipment,
+              instructions: details.playerInstructions,
+            ),
             verticalSpace(20),
-            _buildPlayersSection(context),
+            _buildPlayersSection(context, details),
             verticalSpace(100),
           ],
         ),
@@ -234,10 +221,10 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
     );
   }
 
-  Widget _buildPlayersSection(BuildContext context) {
-    final exerciseId =
-        context.read<TrainingDetailsCubit>().currentExerciseId ?? '';
-
+  Widget _buildPlayersSection(BuildContext context, ExerciseDetails details) {
+    // The roster arrives inside the same ExerciseDetails as the rest of the
+    // screen — one fetch, not two — so there is no separate loading/error state
+    // to reconcile here. This section only renders once details have loaded.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -254,43 +241,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
           ],
         ),
         verticalSpace(12),
-        BlocBuilder<ExerciseRosterCubit, ExerciseRosterState>(
-          buildWhen: (prev, curr) =>
-              (curr is exercisePlayersLoading &&
-                  curr.exerciseId == exerciseId) ||
-              (curr is exercisePlayersSuccess &&
-                  curr.exerciseId == exerciseId) ||
-              (curr is exercisePlayersError && curr.exerciseId == exerciseId),
-          builder: (context, state) {
-            final cached = context
-                .read<ExerciseRosterCubit>()
-                .getCachedExercisePlayers(exerciseId);
-            if (cached != null) {
-              return _buildPlayersList(
-                context,
-                cached.data.players,
-                exerciseId,
-              );
-            }
-            if (state is exercisePlayersLoading &&
-                state.exerciseId == exerciseId) {
-              return _buildSkeleton();
-            }
-            if (state is exercisePlayersSuccess &&
-                state.exerciseId == exerciseId) {
-              return _buildPlayersList(
-                context,
-                state.data.data.players,
-                exerciseId,
-              );
-            }
-            if (state is exercisePlayersError &&
-                state.exerciseId == exerciseId) {
-              return _buildError(context, exerciseId);
-            }
-            return _buildSkeleton();
-          },
-        ),
+        _buildPlayersList(context, details.players, details.id),
       ],
     );
   }
@@ -356,59 +307,6 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
     );
   }
 
-  Widget _buildSkeleton() {
-    return Skeletonizer(
-      enabled: true,
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: 4,
-        itemBuilder: (_, __) => Padding(
-          padding: EdgeInsets.only(bottom: 10.h),
-          child: Container(
-            height: 64.h,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildError(BuildContext context, String exerciseId) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: redClr.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Column(
-        children: [
-          TextUtils(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: redClr,
-            text: 'تعذّر تحميل اللاعبين',
-          ),
-          verticalSpace(8),
-          ElevatedButton(
-            onPressed: () => context
-                .read<ExerciseRosterCubit>()
-                .fetchExercisePlayers(exerciseId: exerciseId),
-            style: ElevatedButton.styleFrom(backgroundColor: mainColor),
-            child: const Text(
-              'إعادة المحاولة',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 // ── صف اللاعب ────────────────────────────────────────────────────────
@@ -425,7 +323,7 @@ class _PlayerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasPhoto = player.photo != null && player.photo.toString().isNotEmpty;
+    final hasPhoto = player.hasPhoto;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
@@ -448,7 +346,7 @@ class _PlayerRow extends StatelessWidget {
                 child: ClipOval(
                   child: hasPhoto
                       ? CachedNetworkImage(
-                          imageUrl: player.photo.toString(),
+                          imageUrl: player.photoUrl ?? '',
                           fit: BoxFit.cover,
                           placeholder: (_, __) =>
                               Container(color: mainColor.withOpacity(0.2)),
@@ -465,10 +363,10 @@ class _PlayerRow extends StatelessWidget {
                     AppRoute.playerAttemptsScreen,
                     arguments: {
                       'exerciseId': exerciseId,
-                      'playerId': player.id.toString(),
-                      'playerName': player.name.toString(),
-                      'playerPhoto': player.photo?.toString(),
-                      'totalAttempts': player.attemptCount ?? 0,
+                      'playerId': player.id,
+                      'playerName': player.name,
+                      'playerPhoto': player.photoUrl,
+                      'totalAttempts': player.attemptCount,
                     },
                   ),
                   child: Container(
@@ -505,7 +403,7 @@ class _PlayerRow extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: Colors.black,
-                  text: player.name.toString(),
+                  text: player.name,
                 ),
                 verticalSpace(3),
                 GestureDetector(
@@ -513,10 +411,10 @@ class _PlayerRow extends StatelessWidget {
                     AppRoute.playerAttemptsScreen,
                     arguments: {
                       'exerciseId': exerciseId,
-                      'playerId': player.id.toString(),
-                      'playerName': player.name.toString(),
-                      'playerPhoto': player.photo?.toString(),
-                      'totalAttempts': player.attemptCount ?? 0,
+                      'playerId': player.id,
+                      'playerName': player.name,
+                      'playerPhoto': player.photoUrl,
+                      'totalAttempts': player.attemptCount,
                     },
                   ),
                   child: Row(
@@ -616,20 +514,19 @@ class _PlayerRow extends StatelessWidget {
     // view-attempts action) crashed on the cast.
     arguments: {
       'exerciseId': exerciseId,
-      'playerId': player.id.toString(),
-      'playerName': player.name.toString(),
-      'playerPhoto': player.photo?.toString(),
-      'totalAttempts': player.attemptCount ?? 0,
+      'playerId': player.id,
+      'playerName': player.name,
+      'playerPhoto': player.photoUrl,
+      'totalAttempts': player.attemptCount,
     },
   );
 
   Widget _fallback() {
-    final name = player.name.toString();
     return Container(
       color: mainColor.withOpacity(0.2),
       alignment: Alignment.center,
       child: Text(
-        name.isNotEmpty ? name[0] : '؟',
+        player.initial,
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w700,
@@ -640,15 +537,16 @@ class _PlayerRow extends StatelessWidget {
 
   void _showAddAttemptSheet(BuildContext context) {
     // Two cubits, two jobs. `AttemptUploadCubit` runs the upload; the screen's
-    // `ExerciseRosterCubit` owns the roster and is asked to refresh it once
-    // the upload succeeds — the count on the row has just changed.
+    // `ExerciseDetailsCubit` owns the exercise (details + roster) and is reloaded
+    // once the upload succeeds — the attempt count on the row has just changed,
+    // and the upload has already invalidated the cached details.
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (_) => MultiBlocProvider(
         providers: [
-          BlocProvider.value(value: context.read<ExerciseRosterCubit>()),
+          BlocProvider.value(value: context.read<ExerciseDetailsCubit>()),
           BlocProvider(create: (_) => getIt<AttemptUploadCubit>()),
         ],
         child: _AddAttemptSheet(player: player, exerciseId: exerciseId),
@@ -689,7 +587,7 @@ class _AddAttemptSheetState extends State<_AddAttemptSheet> {
     // No try/catch: the cubit never throws. Every outcome — the domain's Scout
     // ban, a blank path, a transport error, success — arrives as a state below.
     context.read<AttemptUploadCubit>().uploadAttempt(
-      playerId: widget.player.id.toString(),
+      playerId: widget.player.id,
       exerciseId: widget.exerciseId,
       videoPath: path,
     );
@@ -697,9 +595,7 @@ class _AddAttemptSheetState extends State<_AddAttemptSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final hasPhoto =
-        widget.player.photo != null &&
-        widget.player.photo.toString().isNotEmpty;
+    final hasPhoto = widget.player.hasPhoto;
 
     return BlocListener<AttemptUploadCubit, AttemptUploadState>(
       listener: (context, state) {
@@ -710,15 +606,10 @@ class _AddAttemptSheetState extends State<_AddAttemptSheet> {
         switch (state) {
           case AttemptUploadSuccess():
             Navigator.pop(context);
-            // The roster still lives in ExerciseRosterCubit; refresh it so the
-            // attempt count on the row updates. `refreshExercisePlayers` evicts
-            // its cache first — the upload ran in a different cubit, so a plain
-            // fetch would return the stale count. (Unifying this with the
-            // upload's own cache invalidation waits on the detail-screen data
-            // migration.)
-            context.read<ExerciseRosterCubit>().refreshExercisePlayers(
-              exerciseId: widget.exerciseId,
-            );
+            // Reload the exercise so the attempt count on the row updates. The
+            // upload already invalidated the cached details, so this refetches
+            // fresh — no manual cache eviction, no separate roster cubit.
+            context.read<ExerciseDetailsCubit>().reload(widget.exerciseId);
             showSuccesSnackBar(
               context: context,
               title: 'تمت إضافة المحاولة بنجاح'.tr(),
@@ -772,16 +663,14 @@ class _AddAttemptSheetState extends State<_AddAttemptSheet> {
                   child: ClipOval(
                     child: hasPhoto
                         ? CachedNetworkImage(
-                            imageUrl: widget.player.photo.toString(),
+                            imageUrl: widget.player.photoUrl ?? '',
                             fit: BoxFit.cover,
                           )
                         : Container(
                             color: mainColor.withOpacity(0.2),
                             alignment: Alignment.center,
                             child: Text(
-                              widget.player.name.toString().isNotEmpty
-                                  ? widget.player.name.toString()[0]
-                                  : '؟',
+                              widget.player.initial,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
@@ -799,7 +688,7 @@ class _AddAttemptSheetState extends State<_AddAttemptSheet> {
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
-                        text: widget.player.name.toString(),
+                        text: widget.player.name,
                       ),
                       TextUtils(
                         fontSize: 12,

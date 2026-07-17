@@ -18,7 +18,7 @@ import '../../../main_screen/data/model/my_profile_model.dart';
 import '../../../player_profile/ui/widget/player_about_me_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
-import '../../../training_details/data/model/exercise_details_model.dart';
+import 'package:falconclubapp/feature/main_screen/data/model/skills_response_model.dart';
 import '../widget/player_chart_widget.dart';
 import '../widget/player_image_widget.dart';
 import '../widget/player_measurements_image_widget.dart';

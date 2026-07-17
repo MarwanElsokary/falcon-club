@@ -5,9 +5,13 @@ import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class TrainingDetailsCatWidget extends StatelessWidget {
-  const TrainingDetailsCatWidget({super.key, required this.skills});
-  final List skills;
+/// The horizontal strip of skill chips under an exercise's title.
+///
+/// Takes the exercise's `skillNames` (domain `List<String>`). Formerly
+/// `TrainingDetailsCatWidget`, which was fed a `dynamic` list off a data model.
+class ExerciseSkillsWidget extends StatelessWidget {
+  const ExerciseSkillsWidget({super.key, required this.skills});
+  final List<String> skills;
 
   @override
   Widget build(BuildContext context) {

@@ -22,7 +22,7 @@ import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
 import '../../feature/club_team/ui/screen/club_profile_screen.dart';
-import '../../feature/exercise_roster/cubit/exercise_roster_cubit.dart';
+import '../../feature/exercise/presentation/cubit/exercise_details_cubit.dart';
 import '../../feature/trial_details/cubit/trial_details_cubit.dart';
 import '../../feature/trial_details/ui/screen/trial_details_screen.dart';
 import '../../feature/experiments/cubit/experiments_cubit.dart';
@@ -47,8 +47,7 @@ import '../../feature/club_team/cubit/club_team_cubit.dart';
 import '../../feature/club_team/ui/screen/club_main_screen.dart';
 import '../../feature/scout/ui/screen/scout_main_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
-import '../../feature/training_details/cubit/training_details_cubit.dart';
-import '../../feature/training_details/ui/screen/exercise_details_screen.dart';
+import '../../feature/exercise/presentation/screens/exercise_details_screen.dart';
 import '../../feature/exercise/domain/repositories/viewer_capability_port.dart';
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
 import '../../shared/domain/entities/attempt.dart';
@@ -281,15 +280,8 @@ class AppRouter {
         final capability = getIt<ViewerCapabilityPort>().current();
 
         return _fadeTransitionRoute(
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) =>
-                    getIt<TrainingDetailsCubit>()
-                      ..emitexerciseDetails(exerciseId: exerciseId),
-              ),
-              BlocProvider(create: (_) => getIt<ExerciseRosterCubit>()),
-            ],
+          BlocProvider(
+            create: (_) => getIt<ExerciseDetailsCubit>()..load(exerciseId),
             child: ExerciseDetailsScreen(capability: capability),
           ),
         );

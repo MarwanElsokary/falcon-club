@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:falconclubapp/feature/experiments/data/model/all_trials_model.dart';
 import 'package:falconclubapp/feature/main_screen/data/model/categories_model.dart';
 import 'package:falconclubapp/feature/reals/data/model/real_model.dart';
-import 'package:falconclubapp/feature/training_details/data/model/exercise_details_model.dart';
+import 'package:falconclubapp/feature/main_screen/data/model/skills_response_model.dart';
 
 import 'package:retrofit/retrofit.dart';
 

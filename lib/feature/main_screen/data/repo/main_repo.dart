@@ -7,7 +7,7 @@ import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.da
 import '../../../../core/cache/cach_Helper.dart';
 import '../../../../core/networking/api_error_handler.dart';
 import '../../../../core/networking/api_service.dart';
-import '../../../training_details/data/model/exercise_details_model.dart';
+import '../model/skills_response_model.dart';
 import '../model/categories_model.dart';
 
 class ToggleFavResponse {
