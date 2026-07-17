@@ -362,7 +362,14 @@ class AppRouter {
               playerId: args['playerId'] as String,
               playerName: args['playerName'] as String,
               playerPhoto: args['playerPhoto'] as String?,
-              totalAttempts: args['totalAttempts'] as int,
+              // Coerced tolerantly rather than cast: the count crosses a
+              // `dynamic` arg map, so `7`, `7.0` and `"7"` must all survive.
+              totalAttempts: switch (args['totalAttempts']) {
+                final int n => n,
+                final num n => n.toInt(),
+                final String s => int.tryParse(s) ?? 0,
+                _ => 0,
+              },
             ),
           ),
         );

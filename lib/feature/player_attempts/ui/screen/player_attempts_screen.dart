@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
@@ -6,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../shared/domain/entities/attempt.dart';
 import '../../cubit/player_attempts_cubit.dart';
 import '../../cubit/player_attempts_state.dart';
 import '../widget/attempt_card_widget.dart';
+import '../widget/attempt_status_visuals.dart';
 
 class PlayerAttemptsScreen extends StatefulWidget {
   final String exerciseId;
@@ -141,10 +144,10 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
             child: ClipOval(
               child:
                   widget.playerPhoto != null && widget.playerPhoto!.isNotEmpty
-                  ? Image.network(
-                      widget.playerPhoto!,
+                  ? CachedNetworkImage(
+                      imageUrl: widget.playerPhoto!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => _photoFallback(),
+                      errorWidget: (_, __, ___) => _photoFallback(),
                     )
                   : _photoFallback(),
             ),
@@ -215,24 +218,26 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Row(
             children: [
+              // Status colours come from the single AttemptStatusVisuals mapper,
+              // not re-hard-coded here. ('الكل' is a total, not a status.)
               _summaryChip('${tally.total}', 'الكل', mainColor),
               horizontalSpace(8),
               _summaryChip(
                 '${tally.completed}',
                 'مكتمل',
-                const Color(0xFF27AE60),
+                AttemptStatus.completed.color,
               ),
               horizontalSpace(8),
               _summaryChip(
                 '${tally.underReview}',
                 'قيد المراجعة',
-                const Color(0xFFF39C12),
+                AttemptStatus.underReview.color,
               ),
               horizontalSpace(8),
               _summaryChip(
                 '${tally.rejected}',
                 'مرفوض',
-                const Color(0xFFE74C3C),
+                AttemptStatus.rejected.color,
               ),
             ],
           ),

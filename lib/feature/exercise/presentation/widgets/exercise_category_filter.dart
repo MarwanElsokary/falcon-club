@@ -163,7 +163,11 @@ class ExerciseCategoryFilter extends StatelessWidget {
     dynamic categories,
     ExerciseListState state,
   ) {
-    final List<dynamic> rows = categories.data as List<dynamic>;
+    // Tolerant: the category payload is `dynamic` (it comes from MainCubit's
+    // model). A null or non-list `data`, or a row with a null `name`, must not
+    // take down the whole filter bar — degrade to empty / '' instead of casting.
+    final Object? rawRows = categories.data;
+    final List<dynamic> rows = rawRows is List ? rawRows : const <dynamic>[];
 
     return ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: state.hasSelection ? 0 : 20.w),
@@ -173,8 +177,8 @@ class ExerciseCategoryFilter extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final SelectedCategory category = SelectedCategory(
           id: '${rows[index].id ?? ''}',
-          name: rows[index].name as String,
-          iconUrl: rows[index].icon as String?,
+          name: '${rows[index].name ?? ''}',
+          iconUrl: rows[index].icon?.toString(),
         );
         final bool isSelected = state.isSelected(category.id);
 

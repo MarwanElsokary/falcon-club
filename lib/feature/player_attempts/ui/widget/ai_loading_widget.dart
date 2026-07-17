@@ -1,8 +1,14 @@
+import 'dart:math' as math;
+
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+/// The circular "under review" indicator shown while an attempt is being scored.
+///
+/// The ring sweeps from 0 to [percent] over the review window and the centre
+/// shows the matching percentage.
 class AiLoadingWidget extends StatefulWidget {
   const AiLoadingWidget({super.key});
 
@@ -12,7 +18,9 @@ class AiLoadingWidget extends StatefulWidget {
 
 class _AiLoadingWidgetState extends State<AiLoadingWidget>
     with SingleTickerProviderStateMixin {
-  double percent = 0.99; // 70%
+  /// The ring fills to 99% across the review window (it never claims 100% while
+  /// still processing).
+  double percent = 0.99;
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -25,12 +33,12 @@ class _AiLoadingWidgetState extends State<AiLoadingWidget>
       duration: const Duration(minutes: 7),
     );
 
-    _animation =
-        Tween<double>(begin: 0, end: percent).animate(
-          CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-        )..addListener(() {
-          setState(() {});
-        });
+    // No `addListener(setState)`: that rebuilt the whole widget every frame for
+    // seven minutes. The AnimatedBuilder in `build` scopes each frame's rebuild
+    // to just the ring and the percentage text.
+    _animation = Tween<double>(begin: 0, end: percent).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
 
     _controller.forward();
   }
@@ -53,46 +61,50 @@ class _AiLoadingWidgetState extends State<AiLoadingWidget>
         shape: BoxShape.circle,
         border: Border.all(color: offWhiteClr.withOpacity(0.2), width: 5.w),
       ),
-      child: CustomPaint(
-        painter: GradientCirclePainter(
-          percent: _animation.value,
-          strokeWidth: 15.w,
+      child: AnimatedBuilder(
+        animation: _animation,
+        // The notification line never changes, so it is built once and handed in
+        // as `child` rather than rebuilt on every animation tick.
+        child: CenterTextUtils(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+          text: ' سوف يتم ارسال اشعار لك عند الانتهاء من تقيم الفيديو',
         ),
-        child: Container(
-          padding: EdgeInsets.all(8.w),
+        builder: (context, child) => CustomPaint(
+          painter: GradientCirclePainter(
+            percent: _animation.value,
+            strokeWidth: 15.w,
+          ),
           child: Container(
-            decoration: BoxDecoration(
-              color: offWhiteClr.withOpacity(0.2),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: offWhiteClr.withOpacity(0.2),
-                width: 5.w,
-              ),
-            ),
+            padding: EdgeInsets.all(8.w),
             child: Container(
-              padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
-                color: mainColor,
+                color: offWhiteClr.withOpacity(0.2),
                 shape: BoxShape.circle,
+                border: Border.all(
+                  color: offWhiteClr.withOpacity(0.2),
+                  width: 5.w,
+                ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CenterTextUtils(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    text: '${(_animation.value * 100).toInt()}%',
-                  ),
-
-                  CenterTextUtils(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    text:
-                        ' سوف يتم ارسال اشعار لك عند الانتهاء من تقيم الفيديو',
-                  ),
-                ],
+              child: Container(
+                padding: EdgeInsets.all(10.w),
+                decoration: BoxDecoration(
+                  color: mainColor,
+                  shape: BoxShape.circle,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CenterTextUtils(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      text: '${(_animation.value * 100).toInt()}%',
+                    ),
+                    child!,
+                  ],
+                ),
               ),
             ),
           ),
@@ -144,8 +156,8 @@ class GradientCirclePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..shader = gradient2.createShader(rect);
 
-    final startAngle = -90 * 3.14159 / 180;
-    final sweepAngle = 2 * 3.14159 * percent;
+    final startAngle = -90 * math.pi / 180;
+    final sweepAngle = 2 * math.pi * percent;
 
     // Draw base gradient
     canvas.drawArc(

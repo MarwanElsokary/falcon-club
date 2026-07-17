@@ -40,7 +40,20 @@ class _ShareIconButtonState extends State<ShareIconButton> {
 
   Future<String?> _downloadVideo(String videoUrl, BuildContext context) async {
     try {
-      final dio = Dio();
+      // A dedicated, interceptor-free Dio for downloading the (public) reel
+      // video — deliberately NOT the injected `getIt<Dio>()`. That instance
+      // attaches the session `Authorization: Bearer` header to every request via
+      // its interceptor, and this download hits a public media host that must
+      // never receive the app's session token. Same family as the Auth
+      // token-leak fixes: never send the Bearer to a third-party/CDN URL. Its
+      // own timeouts, since it inherits none.
+      final dio = Dio(
+        BaseOptions(
+          connectTimeout: const Duration(seconds: 30),
+          receiveTimeout: const Duration(minutes: 2),
+          sendTimeout: const Duration(minutes: 2),
+        ),
+      );
       final directory = await getTemporaryDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final fileName = 'falcon_video_$timestamp.mp4';
@@ -52,9 +65,7 @@ class _ShareIconButtonState extends State<ShareIconButton> {
         videoUrl,
         filePath,
         options: Options(
-
-          receiveTimeout: const Duration(minutes: 2),
-          sendTimeout: const Duration(minutes: 2),
+          // Timeouts live on the dedicated Dio's BaseOptions above.
           followRedirects: true,
           validateStatus: (status) => status! < 500,
         ),

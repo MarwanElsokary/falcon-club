@@ -99,12 +99,13 @@ class _AiPercentWidgetState extends State<AiPercentWidget>
                         CenterTextUtils(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
+                          // The old `< 7 ? 0xFF0CE2C6 : 0xFF0CE2C6` branch was
+                          // dead (both colours identical). Collapsed, so the
+                          // rendered colour is unchanged for every score.
                           color: (widget.percent) < 2.5
                               ? Color(0xFFF7247F)
                               : (widget.percent) < 5
                               ? Color(0xFF94E20C)
-                              : (widget.percent) < 7
-                              ? Color(0xFF0CE2C6)
                               : Color(0xFF0CE2C6),
 
                           text: (widget.percent) < 2.5
