@@ -61,14 +61,11 @@ final class Attempt extends Equatable {
   /// The AI-annotated rendering, produced once the attempt is processed.
   /// Absent while [AttemptStatus.underReview], and on a rejected attempt.
   ///
-  /// ⚠ **This arrives as a RELATIVE path**, unlike [videoUrl]. The live response
-  /// returns `"Videos/HLS/AI/….m3u8"` with no scheme or host, while `video` is a
-  /// full `https://files.fteet.ai/…` URL. `player_attempt_detail_screen.dart:191`
-  /// feeds `attempt.aiVideo ?? attempt.video` straight to the player, so the AI
-  /// video is very likely failing to load today and silently falling back to
-  /// nothing. Left exactly as the backend sends it rather than guessing a host —
-  /// resolving it belongs with the player_attempts rewrite in Phase 6, once we
-  /// have confirmed the correct base.
+  /// Always **absolute** here. The backend sends this one *relative*
+  /// (`"Videos/HLS/AI/….m3u8"`, no scheme or host) while [videoUrl] is absolute —
+  /// which is why the AI video used to sit on its loading spinner forever. It is
+  /// now resolved against the media base in the data layer (`MediaUrl.resolve`),
+  /// so the entity and every widget see a single, playable shape.
   final String? aiVideoUrl;
 
   /// The skeleton/pose visualisation. Same lifecycle as [aiVideoUrl].

@@ -464,7 +464,7 @@ class _PlayerRow extends StatelessWidget {
                   onTap: () => Navigator.of(context).pushNamed(
                     AppRoute.playerAttemptsScreen,
                     arguments: {
-                      'exerciseId': int.tryParse(exerciseId) ?? 0,
+                      'exerciseId': exerciseId,
                       'playerId': player.id.toString(),
                       'playerName': player.name.toString(),
                       'playerPhoto': player.photo?.toString(),
@@ -512,7 +512,7 @@ class _PlayerRow extends StatelessWidget {
                   onTap: () => Navigator.of(context).pushNamed(
                     AppRoute.playerAttemptsScreen,
                     arguments: {
-                      'exerciseId': int.tryParse(exerciseId) ?? 0,
+                      'exerciseId': exerciseId,
                       'playerId': player.id.toString(),
                       'playerName': player.name.toString(),
                       'playerPhoto': player.photo?.toString(),

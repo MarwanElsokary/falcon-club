@@ -11,7 +11,7 @@ import '../../cubit/player_attempts_state.dart';
 import '../widget/attempt_card_widget.dart';
 
 class PlayerAttemptsScreen extends StatefulWidget {
-  final int exerciseId;
+  final String exerciseId;
   final String playerId;
   final String playerName;
   final String? playerPhoto;
@@ -34,11 +34,13 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<PlayerAttemptsCubit>().fetchPlayerAttempts(
-      exerciseId: widget.exerciseId,
-      playerId: widget.playerId,
-    );
+    _load();
   }
+
+  void _load() => context.read<PlayerAttemptsCubit>().load(
+    exerciseId: widget.exerciseId,
+    playerId: widget.playerId,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -205,32 +207,35 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
   Widget _buildSummaryRow() {
     return BlocBuilder<PlayerAttemptsCubit, PlayerAttemptsState>(
       builder: (context, state) {
-        return state.maybeWhen(
-          success: (model) {
-            final total = model.data.length;
-            final done = model.data.where((a) => a.isProcessed == 1).length;
-            final pending = model.data.where((a) => a.isProcessed == 0).length;
-            final rejected = model.data.where((a) => a.isProcessed == 2).length;
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                children: [
-                  _summaryChip('$total', 'الكل', mainColor),
-                  horizontalSpace(8),
-                  _summaryChip('$done', 'مكتمل', const Color(0xFF27AE60)),
-                  horizontalSpace(8),
-                  _summaryChip(
-                    '$pending',
-                    'قيد المراجعة',
-                    const Color(0xFFF39C12),
-                  ),
-                  horizontalSpace(8),
-                  _summaryChip('$rejected', 'مرفوض', const Color(0xFFE74C3C)),
-                ],
+        // Counts come pre-computed from the domain [AttemptTally], not
+        // re-filtered here on every rebuild.
+        if (state is! PlayerAttemptsLoaded) return const SizedBox.shrink();
+        final tally = state.tally;
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Row(
+            children: [
+              _summaryChip('${tally.total}', 'الكل', mainColor),
+              horizontalSpace(8),
+              _summaryChip(
+                '${tally.completed}',
+                'مكتمل',
+                const Color(0xFF27AE60),
               ),
-            );
-          },
-          orElse: () => const SizedBox.shrink(),
+              horizontalSpace(8),
+              _summaryChip(
+                '${tally.underReview}',
+                'قيد المراجعة',
+                const Color(0xFFF39C12),
+              ),
+              horizontalSpace(8),
+              _summaryChip(
+                '${tally.rejected}',
+                'مرفوض',
+                const Color(0xFFE74C3C),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -269,30 +274,25 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
   Widget _buildBody() {
     return BlocBuilder<PlayerAttemptsCubit, PlayerAttemptsState>(
       builder: (context, state) {
-        return state.when(
-          initial: () => const SizedBox.shrink(),
-          loading: () => Center(
+        return switch (state) {
+          PlayerAttemptsInitial() => const SizedBox.shrink(),
+          PlayerAttemptsLoading() => Center(
             child: CupertinoActivityIndicator(radius: 15.w, color: mainColor),
           ),
-          error: (err) => _buildError(err),
-          success: (model) {
-            if (model.data.isEmpty) {
-              return _buildEmpty();
-            }
-            return ListView.builder(
-              padding: EdgeInsets.only(bottom: 100.h, top: 4.h),
-              itemCount: model.data.length,
-              itemBuilder: (context, index) {
-                return AttemptCardWidget(
-                  attempt: model.data[index],
-                  index: index,
-                  exerciseId: widget.exerciseId,
-                  playerName: widget.playerName,
-                );
-              },
-            );
-          },
-        );
+          PlayerAttemptsFailure(:final String message) => _buildError(message),
+          PlayerAttemptsLoaded(:final attempts) =>
+            attempts.isEmpty
+                ? _buildEmpty()
+                : ListView.builder(
+                    padding: EdgeInsets.only(bottom: 100.h, top: 4.h),
+                    itemCount: attempts.length,
+                    itemBuilder: (context, index) => AttemptCardWidget(
+                      attempt: attempts[index],
+                      index: index,
+                      playerName: widget.playerName,
+                    ),
+                  ),
+        };
       },
     );
   }
@@ -330,11 +330,7 @@ class _PlayerAttemptsScreenState extends State<PlayerAttemptsScreen> {
           ),
           verticalSpace(16),
           ElevatedButton(
-            onPressed: () =>
-                context.read<PlayerAttemptsCubit>().fetchPlayerAttempts(
-                  exerciseId: widget.exerciseId,
-                  playerId: widget.playerId,
-                ),
+            onPressed: _load,
             style: ElevatedButton.styleFrom(backgroundColor: mainColor),
             child: const Text(
               'إعادة المحاولة',

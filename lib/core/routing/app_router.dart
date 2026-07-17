@@ -50,7 +50,7 @@ import '../../feature/training_details/cubit/training_details_cubit.dart';
 import '../../feature/training_details/ui/screen/exercise_details_screen.dart';
 import '../../feature/exercise/domain/repositories/viewer_capability_port.dart';
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
-import '../../feature/player_attempts/data/model/player_attempts_model.dart';
+import '../../shared/domain/entities/attempt.dart';
 import '../../feature/player_attempts/ui/screen/player_attempts_screen.dart';
 import '../../feature/player_attempts/ui/screen/player_attempt_detail_screen.dart';
 
@@ -367,7 +367,7 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (_) => getIt<PlayerAttemptsCubit>(),
             child: PlayerAttemptsScreen(
-              exerciseId: args['exerciseId'] as int,
+              exerciseId: args['exerciseId'] as String,
               playerId: args['playerId'] as String,
               playerName: args['playerName'] as String,
               playerPhoto: args['playerPhoto'] as String?,
@@ -380,10 +380,9 @@ class AppRouter {
         final args = arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => PlayerAttemptDetailScreen(
-            attempt: args['attempt'] as PlayerAttempt,
+            attempt: args['attempt'] as Attempt,
             attemptIndex: args['attemptIndex'] as int,
             playerName: args['playerName'] as String,
-            exerciseId: args['exerciseId'] as int,
           ),
         );
 

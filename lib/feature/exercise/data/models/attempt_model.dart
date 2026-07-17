@@ -1,4 +1,5 @@
 import '../../../../core/networking/json.dart';
+import '../../../../core/networking/media_url.dart';
 import '../../../../shared/domain/entities/attempt.dart';
 import '../../../../shared/domain/entities/skill.dart';
 
@@ -42,9 +43,14 @@ abstract final class AttemptModel {
   static Attempt fromJson(Map<String, dynamic> json) => Attempt(
     id: json['id']?.toString() ?? '',
     status: AttemptStatus.fromCode(Json.asInt(json['isProcessed'])),
-    videoUrl: Json.asString(json['video']),
-    aiVideoUrl: Json.asString(json['aiVideo']),
-    visualizedVideoUrl: Json.asString(json['visualizeVideo']),
+    // Resolved to absolute at the wire boundary. `video` is already absolute so
+    // it passes through unchanged; `aiVideo` arrives relative
+    // ("Videos/HLS/AI/….m3u8") and is joined onto the media base — the fix for
+    // the AI video that never loaded. Resolving all three defends against the
+    // backend switching any of them to a relative path later.
+    videoUrl: MediaUrl.resolve(Json.asString(json['video'])),
+    aiVideoUrl: MediaUrl.resolve(Json.asString(json['aiVideo'])),
+    visualizedVideoUrl: MediaUrl.resolve(Json.asString(json['visualizeVideo'])),
     skills: _skillsOf(json['skills']),
     rejectionReason: Json.asString(json['rejectedReason']),
     // Carried through verbatim: the backend sends a formatted relative label

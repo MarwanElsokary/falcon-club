@@ -2,44 +2,42 @@ import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
-import 'package:falconclubapp/feature/last_attempt/ui/widget/ai_loading_widget.dart';
-import 'package:falconclubapp/feature/last_attempt/ui/widget/ai_score/ai_score_widget.dart';
-import 'package:falconclubapp/feature/last_attempt/ui/widget/ai_video_widget.dart';
-import 'package:falconclubapp/feature/last_attempt/ui/widget/last_attempt_app_bar_widget.dart';
-import 'package:falconclubapp/feature/last_attempt/ui/widget/reject_reason_widget.dart';
-import 'package:falconclubapp/feature/training_details/data/model/exercise_details_model.dart'
-    show Skill;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../data/model/player_attempts_model.dart';
+
+import '../../../../shared/domain/entities/attempt.dart';
+import '../widget/ai_loading_widget.dart';
+import '../widget/ai_score/ai_score_widget.dart';
+import '../widget/ai_video_widget.dart';
 import '../widget/attempt_status_badge.dart';
+import '../widget/last_attempt_app_bar_widget.dart';
+import '../widget/reject_reason_widget.dart';
 
 class PlayerAttemptDetailScreen extends StatelessWidget {
-  final PlayerAttempt attempt;
+  final Attempt attempt;
   final int attemptIndex;
   final String playerName;
-  final int exerciseId;
 
   const PlayerAttemptDetailScreen({
     super.key,
     required this.attempt,
     required this.attemptIndex,
     required this.playerName,
-    required this.exerciseId,
   });
 
-  /// تحويل AttemptSkill → Skill عشان نعيد استخدام AiScoreWidget
-  List<Skill> get _skills => attempt.skills
-      .map((s) => Skill(skillName: s.skillName, score: s.score))
-      .toList();
+  /// The URL to play: the AI-annotated render once analysis exists, otherwise the
+  /// raw upload. Both are already resolved to absolute URLs by the data layer;
+  /// `null` means there is nothing playable (see [_buildVideoCard]).
+  String? get _videoUrl =>
+      attempt.hasAnalysis ? attempt.aiVideoUrl : attempt.videoUrl;
 
   @override
   Widget build(BuildContext context) {
-    final isProcessed = attempt.isProcessed == 1;
-    final isPending = attempt.isProcessed == 0;
-    final isRejected = attempt.isProcessed == 2;
-    final hasSkills = attempt.skills.isNotEmpty;
+    final bool isProcessed = attempt.status == AttemptStatus.completed;
+    final bool isPending = attempt.status == AttemptStatus.underReview;
+    final bool isRejected = attempt.status == AttemptStatus.rejected;
+    final bool hasSkills = attempt.skills.isNotEmpty;
 
     return Scaffold(
       appBar: lastAttemptAppBar(
@@ -61,7 +59,7 @@ class PlayerAttemptDetailScreen extends StatelessWidget {
 
                   // Score / Loading / no skills
                   if (isProcessed && hasSkills)
-                    AiScoreWidget(skill: _skills)
+                    AiScoreWidget(skill: attempt.skills)
                   else if (isProcessed && !hasSkills)
                     _buildNoSkillsWidget()
                   else if (isPending)
@@ -77,7 +75,7 @@ class PlayerAttemptDetailScreen extends StatelessWidget {
                   // سبب الرفض
                   if (isRejected)
                     RejectReasonWidget(
-                      rejectedReason: attempt.rejectedReason ?? '',
+                      rejectedReason: attempt.rejectionReason ?? '',
                     ),
                 ],
               ),
@@ -140,14 +138,14 @@ class PlayerAttemptDetailScreen extends StatelessWidget {
                       fontSize: 11,
                       fontWeight: FontWeight.w400,
                       color: Colors.white70,
-                      text: attempt.date ?? '',
+                      text: attempt.submittedLabel ?? '',
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          AttemptStatusBadge(isProcessed: attempt.isProcessed),
+          AttemptStatusBadge(status: attempt.status),
         ],
       ),
     );
@@ -188,8 +186,39 @@ class PlayerAttemptDetailScreen extends StatelessWidget {
             ],
           ),
           verticalSpace(15),
-          AiVideoWidget(videoUrl: attempt.aiVideo ?? attempt.video ?? ''),
+          // Guard: a null/empty URL means there is nothing to play. Show a clear
+          // state instead of handing an empty string to the player, which would
+          // sit on its loading spinner forever — the old failure mode when the
+          // relative aiVideo path never resolved.
+          if (_videoUrl != null && _videoUrl!.isNotEmpty)
+            AiVideoWidget(videoUrl: _videoUrl!)
+          else
+            _buildNoVideoWidget(),
           verticalSpace(10),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNoVideoWidget() {
+    return Container(
+      height: 200.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: greyClr.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.videocam_off_rounded, size: 40.w, color: greyClr),
+          verticalSpace(8),
+          TextUtils(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: greyClr,
+            text: 'لا يوجد فيديو متاح',
+          ),
         ],
       ),
     );

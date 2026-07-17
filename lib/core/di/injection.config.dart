@@ -117,6 +117,7 @@ import '../../feature/exercise/presentation/cubit/attempt_upload_cubit.dart'
     as _i491;
 import '../../feature/exercise/presentation/cubit/exercise_list_cubit.dart'
     as _i973;
+import '../../feature/player_attempts/cubit/player_attempts_cubit.dart' as _i72;
 import '../../shared/data/cached_subscription_reader.dart' as _i287;
 import '../../shared/domain/subscription_reader.dart' as _i876;
 import '../error/error_mapper.dart' as _i449;
@@ -352,6 +353,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i488.AuthRepository>(),
         gh<_i700.SessionRepository>(),
       ),
+    );
+    gh.factory<_i72.PlayerAttemptsCubit>(
+      () => _i72.PlayerAttemptsCubit(gh<_i396.GetPlayerAttempts>()),
     );
     gh.factory<_i973.ExerciseListCubit>(
       () => _i973.ExerciseListCubit(gh<_i876.GetExercises>()),

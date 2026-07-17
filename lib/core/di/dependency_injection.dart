@@ -15,8 +15,6 @@ import '../../feature/main_club/cubit/requests_cubit.dart';
 import '../../feature/main_club/data/repo/requests_repo.dart';
 import '../../feature/club_team/data/repo/club_exercises_repo.dart';
 import '../../feature/digital_report/data/repo/digitalReportRepo.dart';
-import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
-import '../../feature/player_attempts/data/repo/player_attempts_repo.dart';
 import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
 import '../../feature/experiance_details_screen/data/repo/experiance_details_repo.dart';
 import '../../feature/experiments/data/repo/experiments_repo.dart';
@@ -96,13 +94,9 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<PackageRepo>(() => PackageRepo(getIt()));
   getIt.registerFactory<PackageCubit>(() => PackageCubit(getIt()));
 
-  // MARK: - PlayerAttempts
-  getIt.registerLazySingleton<PlayerAttemptsRepo>(
-    () => PlayerAttemptsRepo(getIt<ApiService>()),
-  );
-  getIt.registerFactory<PlayerAttemptsCubit>(
-    () => PlayerAttemptsCubit(getIt<PlayerAttemptsRepo>()),
-  );
+  // MARK: - PlayerAttempts — migrated to the exercise domain in Phase 6.
+  // PlayerAttemptsCubit is now @injectable (over GetPlayerAttempts) and
+  // registered by injection.config.dart; the legacy repo/model are deleted.
 
   // MARK: - ClubExercises
   getIt.registerLazySingleton<ClubExercisesRepo>(

@@ -326,10 +326,14 @@ void main() {
       expect(rejected.hasAnalysis, isFalse);
     });
 
-    // aiVideo is RELATIVE while video is absolute. Stored as sent; resolving the
-    // host is a Phase 6 decision, not something to guess here.
-    test('the relative aiVideo path is preserved, not mangled', () {
-      expect(parsed.first.aiVideoUrl, 'Videos/HLS/AI/ed5e9d6f.m3u8');
+    // aiVideo is RELATIVE while video is absolute. Phase 6 resolves the relative
+    // one against the media base so the player receives an absolute URL; the
+    // already-absolute video passes through unchanged.
+    test('the relative aiVideo path is resolved to absolute', () {
+      expect(
+        parsed.first.aiVideoUrl,
+        'https://files.fteet.ai/Videos/HLS/AI/ed5e9d6f.m3u8',
+      );
       expect(parsed.first.videoUrl, startsWith('https://'));
     });
   });

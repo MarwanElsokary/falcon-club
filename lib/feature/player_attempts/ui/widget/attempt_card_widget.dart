@@ -5,20 +5,20 @@ import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../data/model/player_attempts_model.dart';
+
+import '../../../../shared/domain/entities/attempt.dart';
 import 'attempt_status_badge.dart';
+import 'attempt_status_visuals.dart';
 
 class AttemptCardWidget extends StatelessWidget {
-  final PlayerAttempt attempt;
+  final Attempt attempt;
   final int index;
-  final int exerciseId;
   final String playerName;
 
   const AttemptCardWidget({
     super.key,
     required this.attempt,
     required this.index,
-    required this.exerciseId,
     required this.playerName,
   });
 
@@ -31,7 +31,6 @@ class AttemptCardWidget extends StatelessWidget {
           'attempt': attempt,
           'attemptIndex': index,
           'playerName': playerName,
-          'exerciseId': exerciseId,
         },
       ),
       child: Container(
@@ -55,7 +54,7 @@ class AttemptCardWidget extends StatelessWidget {
                 // ── شريط جانبي ملوّن ─────────────────────────────
                 Container(
                   width: 5.w,
-                  color: _statusColor,
+                  color: attempt.status.color,
                 ),
                 // ── المحتوى ──────────────────────────────────────
                 Expanded(
@@ -108,19 +107,17 @@ class AttemptCardWidget extends StatelessWidget {
                                     fontSize: 11,
                                     fontWeight: FontWeight.w400,
                                     color: greyClr,
-                                    text: attempt.date ?? '',
+                                    text: attempt.submittedLabel ?? '',
                                   ),
                                 ],
                               ),
                               verticalSpace(8),
-                              AttemptStatusBadge(
-                                isProcessed: attempt.isProcessed,
-                              ),
+                              AttemptStatusBadge(status: attempt.status),
                             ],
                           ),
                         ),
                         // سكور لو موجود
-                        if (attempt.isProcessed == 1 &&
+                        if (attempt.status.hasScore &&
                             attempt.skills.isNotEmpty)
                           _buildScoreChip(),
                         // سهم
@@ -142,25 +139,9 @@ class AttemptCardWidget extends StatelessWidget {
     );
   }
 
-  Color get _statusColor {
-    switch (attempt.isProcessed) {
-      case 0:
-        return const Color(0xFFF39C12);
-      case 1:
-        return const Color(0xFF27AE60);
-      case 2:
-        return const Color(0xFFE74C3C);
-      default:
-        return greyClr;
-    }
-  }
-
   Widget _buildScoreChip() {
-    // متوسط الـ scores
-    final avg = attempt.skills.map((s) => s.score).reduce((a, b) => a + b) /
-        attempt.skills.length;
-    final clamped = avg.clamp(0.0, 10.0);
-
+    // Averaged in the domain (empty-safe, clamped to 0..10) rather than with an
+    // inline `reduce` that threw on an empty skill list.
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(
@@ -178,7 +159,7 @@ class AttemptCardWidget extends StatelessWidget {
             fontSize: 14,
             fontWeight: FontWeight.w800,
             color: Colors.white,
-            text: clamped.toStringAsFixed(1),
+            text: attempt.overallScore.toStringAsFixed(1),
           ),
           TextUtils(
             fontSize: 9,

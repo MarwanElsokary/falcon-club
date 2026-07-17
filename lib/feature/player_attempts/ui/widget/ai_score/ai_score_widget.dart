@@ -3,11 +3,11 @@ import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/anmiate_builder.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
-import 'package:falconclubapp/feature/last_attempt/ui/widget/ai_score/ai_percent_widget.dart';
+import 'package:falconclubapp/shared/domain/entities/skill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../training_details/data/model/exercise_details_model.dart';
+import 'ai_percent_widget.dart';
 
 class AiScoreWidget extends StatefulWidget {
   const AiScoreWidget({super.key, required this.skill});
@@ -70,8 +70,7 @@ class _AiScoreWidgetState extends State<AiScoreWidget> {
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: mainColor,
-                            // التعديل هنا: تغيير skillName إلى skill
-                            text: widget.skill[index].skillName ?? '',
+                            text: widget.skill[index].name,
                           ),
                         ),
                       ),
@@ -102,8 +101,7 @@ class _AiScoreWidgetState extends State<AiScoreWidget> {
                 columnCount: 3,
                 position: i,
                 child: AiPercentWidget(
-                  // التعديل هنا: تغيير skillName إلى skill
-                  skill: widget.skill[i].skillName ?? '',
+                  skill: widget.skill[i].name,
                   percent: widget.skill[i].score,
                 ),
               );

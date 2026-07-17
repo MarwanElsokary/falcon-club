@@ -2,6 +2,16 @@ class ApiConstants {
   static const String apiBaseUrl = "https://falconai.net/api/";
   static const String storgeApis = "https://falconai.net";
 
+  /// CDN host for uploaded media (images, videos), distinct from the API host.
+  ///
+  /// Most media arrives **absolute** already — `photoPath` and an attempt's raw
+  /// `video` come back as `https://files.fteet.ai/…`, which is why images and the
+  /// raw video have always played. The exception is an attempt's `aiVideo`, which
+  /// the backend sends **relative** (`Videos/HLS/AI/….m3u8`); it is resolved
+  /// against this base (see `MediaUrl.resolve`). Confirmed as the stable
+  /// production media host.
+  static const String mediaBaseUrl = "https://files.fteet.ai/";
+
   //mapKey
   static const String mapKey = "AIzaSyCSCPuaywN_flJUl2y6w5B6V4RMGxwTPNc";
 

@@ -1,12 +1,45 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import '../data/model/player_attempts_model.dart';
+import 'package:equatable/equatable.dart';
 
-part 'player_attempts_state.freezed.dart';
+import '../../../shared/domain/entities/attempt.dart';
 
-@freezed
-class PlayerAttemptsState with _$PlayerAttemptsState {
-  const factory PlayerAttemptsState.initial() = _Initial;
-  const factory PlayerAttemptsState.loading() = _Loading;
-  const factory PlayerAttemptsState.success(PlayerAttemptsModel model) = _Success;
-  const factory PlayerAttemptsState.error({required String error}) = _Error;
+/// State of the past-attempts screen.
+///
+/// Replaces the freezed `initial/loading/success(model)/error` union that
+/// carried a data-layer `PlayerAttemptsModel`. This one carries domain
+/// [Attempt]s and a pre-computed [AttemptTally], so the four summary counters are
+/// no longer recomputed inside `build()` on every rebuild.
+sealed class PlayerAttemptsState extends Equatable {
+  const PlayerAttemptsState();
+
+  @override
+  List<Object?> get props => const <Object?>[];
+}
+
+final class PlayerAttemptsInitial extends PlayerAttemptsState {
+  const PlayerAttemptsInitial();
+}
+
+final class PlayerAttemptsLoading extends PlayerAttemptsState {
+  const PlayerAttemptsLoading();
+}
+
+final class PlayerAttemptsLoaded extends PlayerAttemptsState {
+  const PlayerAttemptsLoaded(this.attempts, this.tally);
+
+  final List<Attempt> attempts;
+  final AttemptTally tally;
+
+  bool get isEmpty => attempts.isEmpty;
+
+  @override
+  List<Object?> get props => <Object?>[attempts, tally];
+}
+
+final class PlayerAttemptsFailure extends PlayerAttemptsState {
+  const PlayerAttemptsFailure(this.message);
+
+  final String message;
+
+  @override
+  List<Object?> get props => <Object?>[message];
 }

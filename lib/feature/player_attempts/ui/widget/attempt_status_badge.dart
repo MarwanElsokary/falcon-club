@@ -1,71 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 
+import '../../../../shared/domain/entities/attempt.dart';
+import 'attempt_status_visuals.dart';
+
 class AttemptStatusBadge extends StatelessWidget {
-  final int isProcessed;
+  final AttemptStatus status;
 
-  const AttemptStatusBadge({super.key, required this.isProcessed});
-
-  String get _label {
-    switch (isProcessed) {
-      case 0:
-        return 'قيد المراجعة';
-      case 1:
-        return 'مكتمل';
-      case 2:
-        return 'مرفوض';
-      default:
-        return 'غير معروف';
-    }
-  }
-
-  Color get _color {
-    switch (isProcessed) {
-      case 0:
-        return const Color(0xFFF39C12);
-      case 1:
-        return const Color(0xFF27AE60);
-      case 2:
-        return const Color(0xFFE74C3C);
-      default:
-        return greyClr;
-    }
-  }
-
-  IconData get _icon {
-    switch (isProcessed) {
-      case 0:
-        return Icons.hourglass_top_rounded;
-      case 1:
-        return Icons.check_circle_rounded;
-      case 2:
-        return Icons.cancel_rounded;
-      default:
-        return Icons.help_outline;
-    }
-  }
+  const AttemptStatusBadge({super.key, required this.status});
 
   @override
   Widget build(BuildContext context) {
+    final Color color = status.color;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
       decoration: BoxDecoration(
-        color: _color.withOpacity(0.12),
+        color: color.withOpacity(0.12),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: _color.withOpacity(0.4), width: 1),
+        border: Border.all(color: color.withOpacity(0.4), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_icon, color: _color, size: 12.w),
+          Icon(status.icon, color: color, size: 12.w),
           SizedBox(width: 4.w),
           TextUtils(
             fontSize: 10,
             fontWeight: FontWeight.w600,
-            color: _color,
-            text: _label,
+            color: color,
+            text: status.label,
           ),
         ],
       ),
