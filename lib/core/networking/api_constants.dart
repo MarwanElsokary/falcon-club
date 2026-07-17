@@ -63,7 +63,7 @@ class ApiConstants {
   static const String profileById = "Player/GetProfileById";
 
   //
-  static const String rank = "Club/GetRankingExercise";
+  static const String rank = "Player/GetRankingExercise";
 
   static const String getClubRequests = 'Club/GetClubRequests';
   static const String getPlayerRequests = 'Player/GetPlayerRequests';
@@ -123,6 +123,10 @@ class ApiConstants {
   //clubAddAttempt
   static const String clubAddAttempt = "Club/AddAttempt";
 
+  /// A player's attempts on one exercise. Scoped to the caller's own team by
+  /// the bearer token — it takes no club id, and must not grow one.
+  static const String clubGetPlayerAttempts = "Club/GetPlayerAttempts";
+
   //
   static const String addReel = "Player/AddReel";
 
@@ -175,20 +179,24 @@ class ApiConstants {
   static const String addMeasurementAttempt = '/Account/ResetPassword';
 }
 
+/// Human-readable fallbacks, shown ONLY when the backend/exception provides no
+/// real message of its own (see `ErrorHandler`). They used to be literal keys
+/// ("noInternetError", "defaultError", …) that were displayed verbatim — so a
+/// user could actually see the text "noInternetError" on screen.
 class ApiErrors {
-  static const String badRequestError = "badRequestError";
-  static const String noContent = "noContent";
-  static const String forbiddenError = "forbiddenError";
-  static const String unauthorizedError = "unauthorizedError";
-  static const String badResponseError = "badResponseError";
-  static const String notFoundError = "notFoundError";
-  static const String conflictError = "conflictError";
-  static const String internalServerError = "internalServerError";
-  static const String unknownError = "unknownError";
-  static const String timeoutError = "timeoutError";
-  static const String defaultError = "defaultError";
-  static const String cacheError = "cacheError";
-  static const String noInternetError = "noInternetError";
+  static const String badRequestError = "الطلب غير صحيح";
+  static const String noContent = "لا يوجد محتوى";
+  static const String forbiddenError = "ليس لديك صلاحية للوصول";
+  static const String unauthorizedError = "انتهت الجلسة، سجّل الدخول من جديد";
+  static const String badResponseError = "استجابة غير متوقعة من الخادم";
+  static const String notFoundError = "لم يتم العثور على البيانات";
+  static const String conflictError = "تعارض في البيانات";
+  static const String internalServerError = "خطأ في الخادم، حاول لاحقًا";
+  static const String unknownError = "حدث خطأ غير متوقع";
+  static const String timeoutError = "انتهت مهلة الاتصال، حاول مجددًا";
+  static const String defaultError = "حدث خطأ ما، حاول مرة أخرى";
+  static const String cacheError = "خطأ في البيانات المخزّنة";
+  static const String noInternetError = "تعذّر الاتصال بالإنترنت";
   static const String loadingMessage = "loading_message";
   static const String retryAgainMessage = "retry_again_message";
   static const String ok = "Ok";

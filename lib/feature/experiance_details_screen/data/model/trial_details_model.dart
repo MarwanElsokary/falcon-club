@@ -77,6 +77,14 @@ class Exercise {
   dynamic photoPath;
   dynamic title;
   dynamic description;
+
+  /// The exercise's own colour, as a bare hex string ("0C5147").
+  ///
+  /// The backend has always sent this; the card ignored it and cycled a
+  /// hard-coded palette by list index instead. Nullable, so an exercise without
+  /// one falls back to that palette rather than rendering blank.
+  dynamic colorCode;
+
   List<dynamic> skills;
 
   Exercise({
@@ -86,6 +94,7 @@ class Exercise {
     required this.title,
     required this.description,
     required this.skills,
+    this.colorCode,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) => Exercise(
@@ -94,6 +103,7 @@ class Exercise {
     photoPath: json["photoPath"],
     title: json["title"],
     description: json["description"],
+    colorCode: json["colorCode"],
     skills: List<String>.from(json["skills"].map((x) => x)),
   );
 
@@ -103,6 +113,7 @@ class Exercise {
     "photoPath": photoPath,
     "title": title,
     "description": description,
+    "colorCode": colorCode,
     "skills": List<dynamic>.from(skills.map((x) => x)),
   };
 }

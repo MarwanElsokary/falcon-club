@@ -7,6 +7,7 @@ import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:falconclubapp/feature/experiments/cubit/experiments_state.dart';
 import 'package:falconclubapp/feature/experiments/ui/widget/first_experinance/carousel_slider_widget.dart';
 import 'package:falconclubapp/feature/experiments/ui/widget/first_experinance/load_carousal_slider_widget.dart';
+import 'package:falconclubapp/feature/experiments/ui/widget/trials_empty_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,6 +62,19 @@ class FindYourDirectionWidget extends StatelessWidget {
               builder: (context, state) {
                 return state.maybeWhen(
                   bestTrialssuccess: (allTrialsdata) {
+                    // An empty result must not reach CarouselSliderWidget: it
+                    // does `List.generate(length, …)` and
+                    // `AnimatedSmoothIndicator(count: length)`, both of which
+                    // assume at least one card — a zero count breaks the
+                    // indicator. Empty responses now arrive here as success (the
+                    // repo maps the 400 "No Trials Found" to an empty list), so
+                    // this is where an empty state belongs.
+                    if (allTrialsdata.data.isEmpty) {
+                      return SizedBox(
+                        height: 260.h,
+                        child: const TrialsEmptyState(),
+                      );
+                    }
                     return CarouselSliderWidget(
                       heroPage: 'home',
                       height: 400,

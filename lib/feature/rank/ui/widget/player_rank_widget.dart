@@ -1,8 +1,6 @@
 import 'dart:developer';
-import 'dart:math' hide log;
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +16,8 @@ import '../../../../core/widget/text_utils.dart';
 import '../../cubit/rank_cubit.dart';
 import '../../cubit/rank_state.dart';
 import '../../data/model/rank_model.dart';
+import '../../../../shared/presentation/widgets/empty_state_view.dart';
+import '../../../../shared/presentation/widgets/subscription_paywall.dart';
 
 class PlayerRankWidget extends StatefulWidget {
   const PlayerRankWidget({super.key});
@@ -91,13 +91,14 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
         log('IS SUBSCRIBED => $isSubscribed');
 
         if (items.isEmpty) {
-          return Center(
-            child: TextUtils(
-              text: 'No Players'.tr(),
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
+          // Was a bare white "No Players" line. Now the shared empty state, in
+          // light colours for the ranking screen's dark background.
+          return const EmptyStateView(
+            icon: Icons.leaderboard_rounded,
+            title: 'لا يوجد ترتيب بعد',
+            message: 'سيظهر ترتيب اللاعبين هنا فور توفره',
+            titleColor: Colors.white,
+            messageColor: Colors.white70,
           );
         }
 
@@ -120,162 +121,23 @@ class _PlayerRankWidgetState extends State<PlayerRankWidget>
     );
   }
 
-  // ✅ نفس شكل _buildSubscribeMessage من ScoutPlayersSection بالظبط
+  /// The ranking paywall — now the app's shared [SubscriptionPaywall], the same
+  /// card the players roster and the locked exercise use. It was a third
+  /// hand-copied version of that exact design (the comment above it even said
+  /// "identical to _buildSubscribeMessage from ScoutPlayersSection"); only the
+  /// wrapping padding, which anchors it as an extra row in the list, is kept.
   Widget _buildSubscribeCard(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 8.h, bottom: 20.h),
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              color: whiteclr,
-              borderRadius: BorderRadius.circular(30.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // أيقونة القفل
-                Container(
-                  width: 80.w,
-                  height: 80.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [mainColor.withOpacity(0.1), mainColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.lock_outline_rounded,
-                      color: Colors.white,
-                      size: 40.w,
-                    ),
-                  ),
-                ),
-                verticalSpace(20),
-
-                // العنوان
-                TextUtils(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                  text: 'الترتيب الكامل مغلق'.tr(),
-                ),
-                verticalSpace(12),
-
-                // الوصف
-                TextUtils(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black54,
-                  text:
-                      'اشترك الآن لتكتشف مراكز جميع اللاعبين وتتابع المواهب الأبرز في المنافسة'
-                          .tr(),
-                  maxlines: 3,
-                ),
-                verticalSpace(20),
-
-                // المزايا
-                Container(
-                  padding: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                    color: mainColor.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(15.r),
-                    border: Border.all(color: mainColor.withOpacity(0.2)),
-                  ),
-                  child: Column(
-                    children: [
-                      _buildFeatureItem('عرض ترتيب جميع اللاعبين'),
-                      _buildFeatureItem('متابعة المواهب الصاعدة'),
-                      _buildFeatureItem('مقارنة النقاط والأداء'),
-                      _buildFeatureItem('تحديث فوري للترتيب'),
-                    ],
-                  ),
-                ),
-                verticalSpace(25),
-
-                // زر الاشتراك
-                ElevatedButton(
-                  onPressed: () => context.pushNamed(AppRoute.packageScreen),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mainColor,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 40.w,
-                      vertical: 16.h,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
-                    elevation: 4,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextUtils(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        text: 'اشترك الآن'.tr(),
-                      ),
-                      horizontalSpace(8),
-                      Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 16.w,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                ),
-                verticalSpace(10),
-              ],
-            ),
-          ),
-
-          // زخرفة يسار
-          PositionedDirectional(
-            top: 0,
-            start: 0,
-            child: SvgPicture.asset('assets/svgs/Group 385.svg', width: 60.w),
-          ),
-          // زخرفة يمين
-          PositionedDirectional(
-            end: 0,
-            bottom: 0,
-            child: SvgPicture.asset('assets/svgs/Group 386-2.svg', width: 80.w),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFeatureItem(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
-      child: Row(
-        children: [
-          Icon(Icons.check_circle, color: mainColor, size: 18.w),
-          horizontalSpace(10),
-          Expanded(
-            child: TextUtils(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-              text: text.tr(),
-            ),
-          ),
+      child: const SubscriptionPaywall(
+        title: 'الترتيب الكامل مغلق',
+        message:
+            'اشترك الآن لتكتشف مراكز جميع اللاعبين وتتابع المواهب الأبرز في المنافسة',
+        features: <String>[
+          'عرض ترتيب جميع اللاعبين',
+          'متابعة المواهب الصاعدة',
+          'مقارنة النقاط والأداء',
+          'تحديث فوري للترتيب',
         ],
       ),
     );

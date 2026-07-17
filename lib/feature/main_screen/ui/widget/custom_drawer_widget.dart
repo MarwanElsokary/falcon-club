@@ -156,15 +156,17 @@ class CustomDrawer extends StatelessWidget {
       'icon': 'assets/svgs/logout_icon.svg',
       'title': 'تسجيل الخروج'.tr(),
       'ontap': () {
+        // Capture the navigator before the drawer closes. `_closeDrawer` removes
+        // CustomDrawer from the tree, deactivating THIS build context — so the
+        // callback below must not reach for `Navigator.of(context)` after that.
+        final navigator = Navigator.of(context, rootNavigator: true);
         _closeDrawer(context);
         showLogoutDialog(
           context,
-          () {
-            context.pushNamedAndRemoveUntil(
-              AppRoute.loginScreen,
-              predicate: (route) => false,
-            );
-          },
+          () => navigator.pushNamedAndRemoveUntil(
+            AppRoute.loginScreen,
+            (route) => false,
+          ),
           'هل انت متأكد انك تريد تسجيل الخروج من هذا الحساب'.tr(),
           'assets/lottie/Log out.json',
         );
@@ -176,15 +178,14 @@ class CustomDrawer extends StatelessWidget {
         'icon': 'assets/svgs/delete-02.svg',
         'title': 'حذف الحساب'.tr(),
         'ontap': () {
+          final navigator = Navigator.of(context, rootNavigator: true);
           _closeDrawer(context);
           showLogoutDialog(
             context,
-            () {
-              context.pushNamedAndRemoveUntil(
-                AppRoute.loginScreen,
-                predicate: (route) => false,
-              );
-            },
+            () => navigator.pushNamedAndRemoveUntil(
+              AppRoute.loginScreen,
+              (route) => false,
+            ),
             'هل انت متأكد انك تريد حذف هذا الحساب'.tr(),
             'assets/lottie/Log out.json',
           );

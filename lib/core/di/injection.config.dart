@@ -87,6 +87,38 @@ import '../../feature/auth/presentation/cubit/scout_registration_cubit.dart'
     as _i731;
 import '../../feature/auth/presentation/cubit/sign_in_cubit.dart' as _i770;
 import '../../feature/auth/presentation/cubit/terms_cubit.dart' as _i608;
+import '../../feature/exercise/data/datasources/cached_viewer_capability.dart'
+    as _i37;
+import '../../feature/exercise/data/datasources/exercise_remote_data_source.dart'
+    as _i958;
+import '../../feature/exercise/data/repositories/attempt_repository_impl.dart'
+    as _i1037;
+import '../../feature/exercise/data/repositories/exercise_repository_impl.dart'
+    as _i745;
+import '../../feature/exercise/data/repositories/trial_repository_impl.dart'
+    as _i533;
+import '../../feature/exercise/domain/repositories/attempt_repository.dart'
+    as _i314;
+import '../../feature/exercise/domain/repositories/exercise_repository.dart'
+    as _i1032;
+import '../../feature/exercise/domain/repositories/trial_repository.dart'
+    as _i787;
+import '../../feature/exercise/domain/repositories/viewer_capability_port.dart'
+    as _i826;
+import '../../feature/exercise/domain/usecases/get_exercise_details.dart'
+    as _i616;
+import '../../feature/exercise/domain/usecases/get_exercises.dart' as _i876;
+import '../../feature/exercise/domain/usecases/get_player_attempts.dart'
+    as _i396;
+import '../../feature/exercise/domain/usecases/get_trial_details.dart' as _i836;
+import '../../feature/exercise/domain/usecases/upload_attempt_for_player.dart'
+    as _i544;
+import '../../feature/exercise/presentation/cubit/attempt_upload_cubit.dart'
+    as _i491;
+import '../../feature/exercise/presentation/cubit/exercise_list_cubit.dart'
+    as _i973;
+import '../../shared/data/cached_subscription_reader.dart' as _i287;
+import '../../shared/domain/subscription_reader.dart' as _i876;
 import '../error/error_mapper.dart' as _i449;
 import '../media/image_compressor.dart' as _i525;
 import '../networking/api_service.dart' as _i700;
@@ -94,6 +126,7 @@ import '../storage/key_value_store.dart' as _i892;
 import '../storage/secure_storage_store.dart' as _i314;
 import '../storage/secure_store.dart' as _i271;
 import '../storage/shared_prefs_store.dart' as _i204;
+import '../storage/timed_cache.dart' as _i484;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -164,10 +197,22 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i449.ErrorMapper>(),
       ),
     );
+    gh.lazySingleton<_i958.ExerciseRemoteDataSource>(
+      () => _i958.RetrofitExerciseRemoteDataSource(
+        gh<_i700.ApiService>(),
+        gh<_i361.Dio>(),
+      ),
+    );
+    gh.lazySingleton<_i484.TimedCache>(
+      () => _i484.TimedCache(gh<_i892.KeyValueStore>()),
+    );
     gh.lazySingleton<_i343.PendingRegistrationLocalDataSource>(
       () => _i343.SecurePendingRegistrationLocalDataSource(
         gh<_i271.SecureStore>(),
       ),
+    );
+    gh.lazySingleton<_i876.SubscriptionReader>(
+      () => _i287.CachedSubscriptionReader(gh<_i892.KeyValueStore>()),
     );
     gh.lazySingleton<_i858.PendingRegistrationRepository>(
       () => _i168.PendingRegistrationRepositoryImpl(
@@ -187,11 +232,38 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i449.ErrorMapper>(),
       ),
     );
+    gh.lazySingleton<_i314.AttemptRepository>(
+      () => _i1037.AttemptRepositoryImpl(
+        gh<_i958.ExerciseRemoteDataSource>(),
+        gh<_i484.TimedCache>(),
+        gh<_i449.ErrorMapper>(),
+      ),
+    );
+    gh.lazySingleton<_i787.TrialRepository>(
+      () => _i533.TrialRepositoryImpl(
+        gh<_i958.ExerciseRemoteDataSource>(),
+        gh<_i484.TimedCache>(),
+        gh<_i449.ErrorMapper>(),
+      ),
+    );
     gh.factory<_i461.ConfirmPhoneOtp>(
       () => _i461.ConfirmPhoneOtp(
         gh<_i317.OtpRepository>(),
         gh<_i858.PendingRegistrationRepository>(),
       ),
+    );
+    gh.lazySingleton<_i1032.ExerciseRepository>(
+      () => _i745.ExerciseRepositoryImpl(
+        gh<_i958.ExerciseRemoteDataSource>(),
+        gh<_i484.TimedCache>(),
+        gh<_i449.ErrorMapper>(),
+      ),
+    );
+    gh.factory<_i876.GetExercises>(
+      () => _i876.GetExercises(gh<_i1032.ExerciseRepository>()),
+    );
+    gh.factory<_i616.GetExerciseDetails>(
+      () => _i616.GetExerciseDetails(gh<_i1032.ExerciseRepository>()),
     );
     gh.factory<_i420.ResendPhoneOtp>(
       () => _i420.ResendPhoneOtp(gh<_i317.OtpRepository>()),
@@ -211,6 +283,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i521.VerifyPasswordResetOtp>(
       () => _i521.VerifyPasswordResetOtp(gh<_i897.PasswordResetRepository>()),
     );
+    gh.factory<_i836.GetTrialDetails>(
+      () => _i836.GetTrialDetails(gh<_i787.TrialRepository>()),
+    );
     gh.factory<_i825.LogOut>(() => _i825.LogOut(gh<_i700.SessionRepository>()));
     gh.factory<_i349.ReadSession>(
       () => _i349.ReadSession(gh<_i700.SessionRepository>()),
@@ -221,6 +296,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i702.ReadPendingRegistration>(
       () => _i702.ReadPendingRegistration(
         gh<_i858.PendingRegistrationRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i826.ViewerCapabilityPort>(
+      () => _i37.CachedViewerCapability(
+        gh<_i892.KeyValueStore>(),
+        gh<_i876.SubscriptionReader>(),
       ),
     );
     gh.factory<_i714.PasswordResetCubit>(
@@ -257,6 +338,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i858.PendingRegistrationRepository>(),
       ),
     );
+    gh.factory<_i396.GetPlayerAttempts>(
+      () => _i396.GetPlayerAttempts(gh<_i314.AttemptRepository>()),
+    );
+    gh.factory<_i544.UploadAttemptForPlayer>(
+      () => _i544.UploadAttemptForPlayer(gh<_i314.AttemptRepository>()),
+    );
     gh.factory<_i731.ScoutRegistrationCubit>(
       () => _i731.ScoutRegistrationCubit(gh<_i141.RegisterScout>()),
     );
@@ -265,6 +352,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i488.AuthRepository>(),
         gh<_i700.SessionRepository>(),
       ),
+    );
+    gh.factory<_i973.ExerciseListCubit>(
+      () => _i973.ExerciseListCubit(gh<_i876.GetExercises>()),
     );
     gh.factory<_i770.SignInCubit>(
       () => _i770.SignInCubit(
@@ -280,6 +370,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i461.ConfirmPhoneOtp>(),
         gh<_i420.ResendPhoneOtp>(),
         _credential,
+      ),
+    );
+    gh.factory<_i491.AttemptUploadCubit>(
+      () => _i491.AttemptUploadCubit(
+        gh<_i544.UploadAttemptForPlayer>(),
+        gh<_i826.ViewerCapabilityPort>(),
       ),
     );
     gh.factory<_i398.ClubRegistrationCubit>(

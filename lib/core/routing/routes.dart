@@ -1,11 +1,16 @@
 class AppRoute {
   static const String splashScreen = '/';
 
-  static const String scoutTrainingDetailsScreen =
-      '/scoutTrainingDetailsScreen';
   static const String clubInfoScreen = '/clubInfoScreen';
 
-  static const String clubTrainingDetailsScreen = '/clubTrainingDetailsScreen';
+  /// Exercise details — one screen for every role (Club, Scout, MainClub).
+  ///
+  /// Replaces the old `clubTrainingDetailsScreen` / `scoutTrainingDetailsScreen`
+  /// pair. What a viewer may do on this screen is decided by the
+  /// `ExerciseCapability` resolved at the route, not by which route was taken —
+  /// so there is exactly one destination and no role-specific fork to keep in
+  /// sync.
+  static const String exerciseDetailsScreen = '/exerciseDetailsScreen';
 
   static const String resetPasswordScreen = '/resetPassword';
   static const String scoutMainScreen = '/scoutMainScreen';

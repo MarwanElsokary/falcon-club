@@ -1,3 +1,4 @@
+import 'package:falconclubapp/core/thems/color_code.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -82,7 +83,7 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                         return GestureDetector(
                           onTap: () {
                             context.pushNamed(
-                              AppRoute.clubTrainingDetailsScreen,
+                              AppRoute.exerciseDetailsScreen,
                               arguments: {
                                 'exerciseId': exercise.id?.toString() ?? '',
                               },
@@ -96,7 +97,18 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                             ),
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
                             decoration: BoxDecoration(
-                              color: Color(0xFF0C4F45),
+                              // The exercise's own colour, from the backend.
+                              //
+                              // Every card used to be painted the same hardcoded
+                              // Color(0xFF0C4F45) — all but identical to the live
+                              // "0C5147", so the constant was evidently copied off
+                              // one exercise and applied to all of them. The whole
+                              // card follows the code now; the transparent photo
+                              // sits on top of it.
+                              color: ColorCode.cardColor(
+                                exercise.colorCode?.toString(),
+                                fallbackIndex: index,
+                              ),
                               borderRadius: BorderRadius.circular(20.r),
                             ),
                             child: Stack(
@@ -183,8 +195,27 @@ class _TalentSliderWidgetState extends State<TalentSliderWidget> {
                                                   horizontal: 10.w,
                                                   vertical: 3.w,
                                                 ),
+                                                // A lighter shade of the card's
+                                                // own colour, not a fixed green.
+                                                //
+                                                // Same trick the trial card uses:
+                                                // a TRANSLUCENT overlay, which
+                                                // Flutter composites over whatever
+                                                // the parent card is painted. So
+                                                // it tracks any colorCode the
+                                                // backend sends, automatically,
+                                                // with no colour arithmetic. The
+                                                // hardcoded greenClr clashed the
+                                                // moment the card stopped being
+                                                // green.
                                                 decoration: BoxDecoration(
-                                                  color: greenClr,
+                                                  color: offWhiteClr.withValues(
+                                                    alpha: 0.15,
+                                                  ),
+                                                  border: Border.all(
+                                                    color: offWhiteClr
+                                                        .withValues(alpha: 0.2),
+                                                  ),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                         10.r,

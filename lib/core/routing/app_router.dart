@@ -1,3 +1,5 @@
+import '../../feature/exercise/presentation/cubit/exercise_list_cubit.dart';
+import '../../feature/exercise/presentation/screens/exercise_list_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,19 +41,14 @@ import '../../feature/rank/cubit/rank_cubit.dart';
 import '../../feature/rank/ui/screen/rank_screen.dart';
 import '../../feature/reals/cubit/reals_cubit.dart';
 import '../../feature/reals/ui/screen/main_reals_screen.dart';
-import '../../feature/scout/scout_training/cubit/scout_training_cubit.dart';
-import '../../feature/scout/scout_training/cubit/scout_training_details_cubit.dart';
-import '../../feature/scout/scout_training/ui/screen/scout_training_details_screen.dart';
-import '../../feature/scout/scout_training/ui/screen/scout_training_screen.dart';
 import '../../feature/auth/presentation/screens/registration_type_screen.dart';
 import '../../feature/club_team/cubit/club_team_cubit.dart';
 import '../../feature/club_team/ui/screen/club_main_screen.dart';
 import '../../feature/scout/ui/screen/scout_main_screen.dart';
 import '../../feature/splash_screen/splash_screen.dart';
-import '../../feature/training/cubit/training_cubit.dart';
-import '../../feature/training/ui/screen/training_screen.dart';
 import '../../feature/training_details/cubit/training_details_cubit.dart';
-import '../../feature/training_details/ui/screen/ClubTrainingDetailsScreen.dart';
+import '../../feature/training_details/ui/screen/exercise_details_screen.dart';
+import '../../feature/exercise/domain/repositories/viewer_capability_port.dart';
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart';
 import '../../feature/player_attempts/data/model/player_attempts_model.dart';
 import '../../feature/player_attempts/ui/screen/player_attempts_screen.dart';
@@ -262,40 +259,25 @@ class AppRouter {
       // ========================================================================
       // TRAINING
       // ========================================================================
+      // ── قائمة التمارين — شاشة واحدة لكل الأدوار ──────────────────────────
+      // Both routes render the SAME list screen with the SAME cubit, and now a
+      // tapped exercise leads to the SAME details route for every role — the
+      // Club and Scout detail screens merged in Phase 4. The two list routes
+      // remain only because each role's shell links to its own.
       case AppRoute.trainingScreen:
-        return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) =>
-                    getIt<TrainingCubit>()
-                      ..emitallExercises(categoryId: '', popular: false),
-              ),
-              BlocProvider(create: (_) => getIt<MainCubit>()..emitCategories()),
-            ],
-            child: const TrainingScreen(),
-          ),
-        );
       case AppRoute.scoutTrainingScreen:
-        return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              // ✅ ScoutTrainingCubit مش TrainingCubit
-              BlocProvider(
-                create: (_) =>
-                    getIt<ScoutTrainingCubit>()
-                      ..fetchExercises(categoryId: '', popular: false),
-              ),
-              BlocProvider(create: (_) => getIt<MainCubit>()..emitCategories()),
-            ],
-            child: const ScoutTrainingScreen(),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => _exerciseList());
 
-      // ── شاشة تمرين النادي ────────────────────────────────────────────────
-      case AppRoute.clubTrainingDetailsScreen:
+      // ── شاشة تفاصيل التمرين — شاشة واحدة لكل الأدوار ──────────────────────
+      // One screen for Club, Scout and MainClub. The viewer's
+      // `ExerciseCapability` — resolved here, once, from the stored role and
+      // subscription — decides what the screen offers (upload vs view, paywall
+      // or not). The screen itself contains no role check, so every entry point
+      // that lands here is governed by the same rule.
+      case AppRoute.exerciseDetailsScreen:
         final args = arguments as Map<String, dynamic>;
         final exerciseId = args['exerciseId'] as String;
+        final capability = getIt<ViewerCapabilityPort>().current();
 
         return _fadeTransitionRoute(
           MultiBlocProvider(
@@ -307,26 +289,7 @@ class AppRouter {
               ),
               BlocProvider(create: (_) => getIt<ExperianceDetailsCubit>()),
             ],
-            child: const ClubTrainingDetailsScreen(),
-          ),
-        );
-
-      // ── شاشة تفاصيل التمرين للكشاف (view only) ──────────────────────────
-      case AppRoute.scoutTrainingDetailsScreen:
-        final args = arguments as Map<String, dynamic>;
-        final exerciseId = args['exerciseId'] as String;
-
-        return _fadeTransitionRoute(
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) =>
-                    getIt<ScoutTrainingDetailsCubit>()
-                      ..fetchExerciseDetails(exerciseId: exerciseId),
-              ),
-              BlocProvider(create: (_) => getIt<ExperianceDetailsCubit>()),
-            ],
-            child: const ScoutTrainingDetailsScreen(),
+            child: ExerciseDetailsScreen(capability: capability),
           ),
         );
 
@@ -453,6 +416,22 @@ class AppRouter {
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
+  }
+
+  /// The exercise list — one screen for every role.
+  ///
+  /// One screen, one cubit, one endpoint, one details destination. Since the
+  /// detail screens merged in Phase 4 the role no longer decides where a tapped
+  /// exercise leads, so there is nothing role-specific to pass in.
+  /// [MainCubit] is still the owner of the category chips, app-wide.
+  Widget _exerciseList() {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<ExerciseListCubit>()..loadAll()),
+        BlocProvider(create: (_) => getIt<MainCubit>()..emitCategories()),
+      ],
+      child: const ExerciseListScreen(),
+    );
   }
 
   PageRouteBuilder _fadeTransitionRoute(Widget page) {

@@ -9,6 +9,7 @@ import 'package:falconclubapp/core/widget/padding_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:falconclubapp/feature/experiments/cubit/experiments_cubit.dart';
 import 'package:falconclubapp/feature/experiments/cubit/experiments_state.dart';
+import 'package:falconclubapp/feature/experiments/ui/widget/trials_empty_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,12 @@ class AllExperimentScreen extends StatelessWidget {
         builder: (context, state) {
           return state.maybeWhen(
             allTrialssuccess: (allTrialsdata) {
+              // A 400 "No Trials Found" is surfaced by the repo as an empty
+              // list, not an error — so an empty result gets a real empty state
+              // rather than the loading spinner it used to sit on forever.
+              if (allTrialsdata.data.isEmpty) {
+                return const TrialsEmptyState();
+              }
               return GridView.builder(
                 padding: paddingUtils(),
                 itemCount: allTrialsdata.data.length,

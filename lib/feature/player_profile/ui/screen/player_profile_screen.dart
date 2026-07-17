@@ -1,3 +1,5 @@
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/shared/domain/subscription_reader.dart';
 import 'dart:developer';
 
 import 'package:falconclubapp/core/helpers/extensions.dart';
@@ -255,7 +257,26 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
     final Map<String, double> incomingSkills = {
       for (final skill in skills) skill.skillName: skill.score,
     };
-    final bool isSubscribed = skills.length >= 5;
+
+    // Entitlement comes from the subscription, not from the shape of the data.
+    //
+    // This used to be `skills.length >= 5` — inferring whether the user had paid
+    // from how many skills the AI happened to score. The backend does send 2
+    // skills to an unsubscribed user and 5 to a subscribed one, so it *looked*
+    // right; but it was reading a side effect, and it was wrong in both
+    // directions. A SUBSCRIBED player whose AI had only rated three skills so far
+    // was shown padlocks on skills they had paid for, and any unsubscribed player
+    // who happened to come back with five got the full chart free.
+    //
+    // `SubscriptionReader` is the single entitlement rule shared with the rank
+    // screen, the exercise paywall, the drawer and the package screen. Note it
+    // counts an *expired* plan as unentitled, which the old check could not see
+    // at all.
+    //
+    // The chart already draws all five skill slots and padlocks any the backend
+    // did not send (`player_chart_widget.dart:29`), so the "2 real + 3 locked"
+    // behaviour needs no UI change — only the correct flag.
+    final bool isSubscribed = getIt<SubscriptionReader>().current().isActive;
 
     return Column(
       children: [

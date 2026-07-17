@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 
 import '../data/repo/training_details_repo.dart';
 import 'training_details_state.dart';
@@ -8,9 +7,7 @@ class TrainingDetailsCubit extends Cubit<TrainingDetailsState> {
   final TrainingDetailsRepo _repo;
   TrainingDetailsCubit(this._repo) : super(TrainingDetailsState.initial());
 
-  String videoPath = '';
-
-  // ── الـ exerciseId الحالي — بيستخدمه ClubTrainingDetailsScreen ─
+  // ── الـ exerciseId الحالي — بيستخدمه ExerciseDetailsScreen ─
   String? currentExerciseId;
 
   // MARK: - exerciseDetails
@@ -32,48 +29,15 @@ class TrainingDetailsCubit extends Cubit<TrainingDetailsState> {
     );
   }
 
-  // MARK: - emitAddAttemptStates
-  void emitAddAttemptStates({required String curexerciseId}) async {
-    emit(const TrainingDetailsState.addAttemptLoading());
-
-    try {
-      final formData = FormData.fromMap({
-        if (videoPath.isNotEmpty)
-          'Video': await MultipartFile.fromFile(
-            videoPath,
-            filename: videoPath.split('/').last,
-          ),
-      });
-
-      final response = await _repo.addAttempt(
-        exerciseId: curexerciseId,
-        addAttemptBody: formData,
-        onSendProgress: (sent, total) {
-          if (total > 0) {
-            final progress = ((sent / total) * 100).toInt();
-            emit(TrainingDetailsState.addAttemptProgress(progress));
-          }
-        },
-      );
-
-      response.when(
-        success: (_) {
-          emit(TrainingDetailsState.addAttemptsuccess());
-        },
-        failure: (error) {
-          emit(
-            TrainingDetailsState.addAttempterror(
-              error: error.apiErrorModel.message ?? 'حدث خطأ غير معروف',
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      emit(
-        TrainingDetailsState.addAttempterror(
-          error: 'حدث خطأ أثناء رفع الفيديو: $e',
-        ),
-      );
-    }
-  }
+// `emitAddAttemptStates` and the mutable `videoPath` field were removed here.
+//
+// They drove `Player/AddAttempt` (a player uploading their own attempt), which
+// this app does not do — and nothing called them. The Club's upload goes through
+// `Club/AddAttempt` via `ExperianceDetailsCubit.addAttemptForPlayer`, and moves
+// to `UploadAttemptForPlayer` in Phase 5.
+//
+// The four `TrainingDetailsState.addAttempt*` cases they emitted are now unused
+// too; they are left in place only because the freezed state class is shared with
+// the still-live `exerciseDetails*` cases, and are deleted with the rest of this
+// feature in Phase 8.
 }

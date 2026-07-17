@@ -1,15 +1,24 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:falconclubapp/core/networking/api_result.dart';
 import '../../../../core/cache/cach_Helper.dart';
-import '../../../../core/helpers/constants.dart';
-import '../../../../core/helpers/shared_pref_helper.dart';
-import '../../../../core/networking/api_constants.dart';
 import '../../../../core/networking/api_error_handler.dart';
 import '../../../../core/networking/api_service.dart';
+import '../../../../core/networking/json.dart';
 import '../model/exerciseWithPlayersModel.dart';
 import '../model/trial_details_model.dart';
 
+/// Legacy repository, kept alive until Phases 6–7 replace its screens.
+///
+/// It used to build bare `Dio()` instances, each hand-attaching an
+/// `Authorization` header read out of secure storage, while holding an injected
+/// [ApiService] it never called. A bare `Dio` inherits no timeouts and no
+/// 401-refresh interceptor, so an expired token failed the request instead of
+/// being refreshed.
+///
+/// Its two remaining reads now go through the shared stack via [ApiService]. The
+/// attempt upload that used to live here moved to the exercise feature's
+/// `AttemptUploadCubit` → `AttemptRepository` in Phase 5, which is why this no
+/// longer holds a `Dio`.
 class ExperianceDetailsRepo {
   final ApiService _apiService;
 
@@ -23,87 +32,35 @@ class ExperianceDetailsRepo {
       final key = 'trial_details_$trialId';
       final cached = CacheHelper.getString(key);
       if (cached.isNotEmpty) {
-        final decoded = jsonDecode(cached);
-        final model = TrialDetailsModel.fromJson(decoded);
-        return ApiResult.success(model);
+        try {
+          return ApiResult.success(
+            TrialDetailsModel.fromJson(jsonDecode(cached)),
+          );
+        } catch (_) {
+          // A corrupt entry used to be fatal: `jsonDecode` threw into the outer
+          // catch, which returned a failure, and nothing ever cleared the entry
+          // — so the trial screen stayed broken until sign-out. Evict and refetch.
+          await CacheHelper.removeData(key);
+        }
       }
-      final response = await _apiService.trialDetails(trialId);
-      CacheHelper.setString(key, jsonEncode(response.toJson()));
-      return ApiResult.success(response);
+
+      final body = Json.asObject(await _apiService.trialDetails(trialId));
+      CacheHelper.setString(key, jsonEncode(body));
+      return ApiResult.success(TrialDetailsModel.fromJson(body));
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
 
-  // ── اللاعبين في تمرين — بنستخدم dio مباشرة ─────────────────────
+  // ── اللاعبين في تمرين ──────────────────────────────────────────
   Future<ApiResult<ExerciseDetailsWithPlayersModel>> exercisePlayers({
     required String exerciseId,
   }) async {
     try {
-      final token = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
-      final dio = Dio();
-      dio.options.headers = {
-        'Authorization': 'Bearer $token',
-        'Accept': 'application/json',
-        'Accept-Language': 'ar',
-      };
-
-      final response = await dio.get(
-        '${ApiConstants.apiBaseUrl}${ApiConstants.exerciseDetails}',
-        queryParameters: {'ExerciseId': exerciseId},
+      final body = Json.asObject(
+        await _apiService.exerciseDetails(exerciseId),
       );
-
-      final model = ExerciseDetailsWithPlayersModel.fromJson(
-        response.data is Map<String, dynamic>
-            ? response.data
-            : Map<String, dynamic>.from(response.data),
-      );
-      return ApiResult.success(model);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
-  }
-
-  // ── إضافة محاولة للاعب — POST /api/Club/AddAttempt ─────────────
-  // في experiance_details_repo.dart
-  Future<ApiResult> addAttemptForPlayer({
-    required String playerId,
-    required String exerciseId,
-    required String videoPath,
-    void Function(int progress)? onProgress, // ✅ أضف callback
-  }) async {
-    try {
-      final token = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
-      final dio = Dio();
-      dio.options.headers = {
-        'Authorization': 'Bearer $token',
-        'Accept': 'application/json',
-        'Accept-Language': 'ar',
-      };
-
-      final formData = FormData.fromMap({
-        'Video': await MultipartFile.fromFile(
-          videoPath,
-          filename: videoPath.split('/').last,
-        ),
-      });
-
-      final response = await dio.post(
-        '${ApiConstants.apiBaseUrl}${ApiConstants.clubAddAttempt}',
-        data: formData,
-        queryParameters: {
-          'PlayerId': playerId,
-          'ExerciseId': int.parse(exerciseId),
-        },
-        onSendProgress: (sent, total) { // ✅ هنا الـ progress
-          if (total > 0 && onProgress != null) {
-            final percent = ((sent / total) * 100).round();
-            onProgress(percent);
-          }
-        },
-      );
-
-      return ApiResult.success(response.data);
+      return ApiResult.success(ExerciseDetailsWithPlayersModel.fromJson(body));
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }

@@ -1,3 +1,5 @@
+import '../../../exercise/presentation/cubit/exercise_list_cubit.dart';
+import '../../../exercise/presentation/screens/exercise_list_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/di/dependency_injection.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
@@ -17,8 +19,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../training/cubit/training_cubit.dart';
-import '../../scout_training/cubit/scout_training_cubit.dart';
-import '../../scout_training/ui/screen/scout_training_screen.dart';
 import 'ScoutHomeScreen.dart';
 import 'custom_drawer_widget_scout.dart';
 
@@ -74,12 +74,8 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                       providers: [
                         BlocProvider(
                           create: (_) =>
-                          getIt<ExperimentsCubit>()
-                            ..emitbestTrials(categoryId: ''),
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<ScoutTrainingCubit>()
-                            ..fetchExercises(categoryId: '', popular: true),
+                              getIt<ExperimentsCubit>()
+                                ..emitbestTrials(categoryId: ''),
                         ),
                         BlocProvider(
                           create: (_) => getIt<MainCubit>()
@@ -87,6 +83,11 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                             ..emitCategories(),
                         ),
                         // ❌ مفيش RankCubit هنا — بيجيه من فوق
+                        //
+                        // The ScoutTrainingCubit that used to sit here as well
+                        // was dead weight: it fetched the same endpoint a second
+                        // time, and `talent_slider_scout_widget` renders from
+                        // TrainingCubit, so nothing ever read the result.
                         BlocProvider(
                           create: (_) => getIt<TrainingCubit>()
                             ..emitallExercises(categoryId: '', popular: true),
@@ -96,17 +97,18 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                     ),
 
                     // 1 — التمارين
+                    // The shared exercise list. As a tab nothing can be popped,
+                    // so it renders without a back row, exactly as before.
                     MultiBlocProvider(
                       providers: [
                         BlocProvider(
-                          create: (_) => getIt<ScoutTrainingCubit>()
-                            ..fetchExercises(categoryId: '', popular: false),
+                          create: (_) => getIt<ExerciseListCubit>()..loadAll(),
                         ),
                         BlocProvider(
                           create: (_) => getIt<MainCubit>()..emitCategories(),
                         ),
                       ],
-                      child: const ScoutTrainingScreen(),
+                      child: const ExerciseListScreen(),
                     ),
 
                     // 2 — الريلز
@@ -114,7 +116,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                       providers: [
                         BlocProvider(
                           create: (_) =>
-                          getIt<RealsCubit>()..emitreals(playerId: ''),
+                              getIt<RealsCubit>()..emitreals(playerId: ''),
                         ),
                       ],
                       child: MainRealsScreen(
@@ -169,7 +171,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                                 top: false,
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                   children: List.generate(5, (i) {
                                     final isSelected = index == i;
                                     return Expanded(
@@ -179,7 +181,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                                         highlightColor: Colors.transparent,
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             SizedBox(
                                               height: isSelected ? 26.h : 24.h,

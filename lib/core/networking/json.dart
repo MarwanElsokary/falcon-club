@@ -62,6 +62,32 @@ abstract final class Json {
     _ => null,
   };
 
+  /// An integer, tolerating the stringified and floating forms backends emit.
+  ///
+  /// `null` when absent or unparseable — callers pick the default, because a
+  /// missing count and a zero count are not always the same thing.
+  ///
+  /// This exists because several fields in the exercise payloads are typed
+  /// `dynamic` in the DTOs and we have no captured response to pin them down:
+  /// `bookings` and `players[].age` may each arrive as `7`, `"7"` or `7.0`.
+  /// Rather than guess one and crash on the others, all three are read.
+  static int? asInt(Object? value) => switch (value) {
+    int number => number,
+    num number => number.toInt(),
+    String text => int.tryParse(text) ?? double.tryParse(text)?.toInt(),
+    _ => null,
+  };
+
+  /// A number, keeping any fractional part.
+  ///
+  /// Use this for scores. [asInt] would truncate `8.7` to `8`, quietly losing a
+  /// point of a player's rating.
+  static num? asNum(Object? value) => switch (value) {
+    num number => number,
+    String text => num.tryParse(text),
+    _ => null,
+  };
+
   /// A string, or `null` when absent. Never throws on an unexpected type.
   static String? asString(Object? value) {
     final String? text = value?.toString();

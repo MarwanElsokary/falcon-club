@@ -40,6 +40,13 @@ class AllExerciseList {
   dynamic isPaid;
   dynamic categoryIcon;
   dynamic bookings;
+
+  /// The exercise's own colour, a bare hex string ("0C5147").
+  ///
+  /// The backend has always sent this. The Home slider ignored it and painted
+  /// every card the same hard-coded `Color(0xFF0C4F45)`.
+  dynamic colorCode;
+
   List<dynamic> skills;
 
   AllExerciseList({
@@ -53,6 +60,7 @@ class AllExerciseList {
     required this.isPaid,
     required this.bookings,
     required this.skills,
+    this.colorCode,
   });
 
   factory AllExerciseList.fromJson(Map<String, dynamic> json) =>
@@ -66,6 +74,7 @@ class AllExerciseList {
         categoryName: json["categoryName"],
         categoryIcon: json["categoryIcon"],
         bookings: json["bookings"],
+        colorCode: json["colorCode"],
         skills: List<String>.from(json["skills"].map((x) => x)),
       );
 
@@ -79,6 +88,7 @@ class AllExerciseList {
     "categoryName": categoryName,
     "categoryIcon": categoryIcon,
     "bookings": bookings,
+    "colorCode": colorCode,
     "skills": List<dynamic>.from(skills.map((x) => x)),
   };
 }

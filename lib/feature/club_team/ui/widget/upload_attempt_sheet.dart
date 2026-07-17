@@ -1,29 +1,42 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/core/widget/showSuccesSnackBar.dart';
+import 'package:falconclubapp/core/widget/show_error_snack_bar.dart';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
+import 'package:falconclubapp/feature/exercise/presentation/cubit/attempt_upload_cubit.dart';
+import 'package:falconclubapp/feature/exercise/presentation/cubit/attempt_upload_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../data/model/club_exercises_model.dart';
 
+/// [onUploaded] runs after the backend accepts the attempt — the club team
+/// screen uses it to refresh its player list. It is *only* the refresh; the
+/// upload itself is owned by [AttemptUploadCubit], provided fresh here.
 void showUploadAttemptSheet(
   BuildContext context, {
   required ClubExercise exercise,
   required ClubPlayer player,
-  required Future<void> Function(String videoPath) onUpload, // ✅ argument واحد
+  required VoidCallback onUploaded,
 }) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => _UploadAttemptSheet(
-      exercise: exercise,
-      player: player,
-      onUpload: onUpload, // ✅ argument واحد
+    builder: (_) => BlocProvider<AttemptUploadCubit>(
+      create: (_) => getIt<AttemptUploadCubit>(),
+      child: _UploadAttemptSheet(
+        exercise: exercise,
+        player: player,
+        onUploaded: onUploaded,
+      ),
     ),
   );
 }
@@ -31,12 +44,12 @@ void showUploadAttemptSheet(
 class _UploadAttemptSheet extends StatefulWidget {
   final ClubExercise exercise;
   final ClubPlayer player;
-  final Future<void> Function(String videoPath) onUpload;
+  final VoidCallback onUploaded;
 
   const _UploadAttemptSheet({
     required this.exercise,
     required this.player,
-    required this.onUpload,
+    required this.onUploaded,
   });
 
   @override
@@ -60,51 +73,45 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
       _progress = 0;
     });
 
-    try {
-      await widget.onUpload(video.path); // ✅ argument واحد بس
-      if (!mounted) return;
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: greenClr,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          content: Row(
-            children: [
-              Icon(Icons.check_circle_rounded, color: Colors.white, size: 20.w),
-              SizedBox(width: 8.w),
-              const Text(
-                'تمت إضافة المحاولة بنجاح ✓',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      setState(() => _isUploading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: redClr,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          content: Text(
-            e.toString().replaceAll('Exception: ', ''),
-            style: const TextStyle(color: Colors.white),
-          ),
-        ),
-      );
+    // Progress, success and failure now arrive as cubit states (see the
+    // BlocListener in build). This sheet's progress bar was previously dead —
+    // its `onUpload` callback carried no progress — so this is the first time
+    // the club team's assign flow shows a real one.
+    context.read<AttemptUploadCubit>().uploadAttempt(
+      playerId: widget.player.id,
+      exerciseId: widget.exercise.id.toString(),
+      videoPath: video.path,
+    );
+  }
+
+  void _onUploadState(BuildContext context, AttemptUploadState state) {
+    // The app's shared snackbars. This sheet used to hand-roll its own floating,
+    // 12r, icon-prefixed SnackBar while the details sheet hand-rolled a
+    // different one — so the same upload reported success two different ways
+    // depending on which sheet you started it from.
+    switch (state) {
+      case AttemptUploadSuccess():
+        widget.onUploaded();
+        Navigator.pop(context);
+        showSuccesSnackBar(
+          context: context,
+          title: 'تمت إضافة المحاولة بنجاح'.tr(),
+        );
+      case AttemptUploadFailure(:final String message):
+        setState(() => _isUploading = false);
+        showErrorSnackBar(context: context, title: message);
+      case AttemptUploadInProgress(:final int percent):
+        setState(() => _progress = percent);
+      case AttemptUploadIdle():
+        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return BlocListener<AttemptUploadCubit, AttemptUploadState>(
+      listener: _onUploadState,
+      child: Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
@@ -150,6 +157,7 @@ class _UploadAttemptSheetState extends State<_UploadAttemptSheet> {
             _buildActionButtons(),
           ],
         ],
+      ),
       ),
     );
   }

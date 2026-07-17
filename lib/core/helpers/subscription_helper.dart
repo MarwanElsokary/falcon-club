@@ -1,16 +1,19 @@
-// subscription_helper.dart
-import 'package:falconclubapp/core/cache/cach_Helper.dart';
+import '../../shared/domain/subscription_reader.dart';
+import '../di/dependency_injection.dart';
 
-// مش هتتغير — بس دلوقتي هتقرأ داتا fresh دايماً
-bool isActiveSubscription() {
-  final profile = CacheHelper.getmyProfile();
-  if (profile == null) return false;
-
-  // 🔥 لو remainingSubscriptionDays مش موجودة (Club)، نعتمد على isSubscribed بس
-  final isSubscribed = profile.data.isSubscribed == true;
-  final days = profile.data.remainingSubscriptionDays;
-
-  // لو days موجودة نتحقق منها، لو null نعتمد على isSubscribed بس
-  if (days == null) return isSubscribed;
-  return isSubscribed && (days as num) > 0;
-}
+/// Whether the current user may reach paid content.
+///
+/// This used to parse `CacheHelper.getmyProfile()` and apply its own
+/// `isSubscribed && (days == null || days > 0)` rule. That rule was the *right*
+/// one — but it was one of **four** different rules in the app, and the other
+/// three were wrong (see [SubscriptionReader]). It now delegates, so every caller
+/// shares a single answer and the rule has one place to be corrected.
+///
+/// Behaviour is unchanged for this call site: [Subscription.isActive] applies
+/// exactly the same logic, including treating a missing `remainingDays` (which is
+/// how a Club profile comes back) as "no expiry to check".
+///
+/// Kept as a free function only so the existing call sites keep compiling. New
+/// code should depend on [SubscriptionReader] directly rather than reaching
+/// through a global.
+bool isActiveSubscription() => getIt<SubscriptionReader>().current().isActive;

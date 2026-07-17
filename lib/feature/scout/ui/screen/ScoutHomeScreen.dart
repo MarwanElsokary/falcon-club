@@ -12,13 +12,17 @@ import '../../../main_screen/cubit/main_cubit.dart';
 import '../../../home/ui/widget/find_your_direction_widget.dart';
 import '../../../home/ui/widget/home_app_bar_widget.dart';
 import '../../../home/ui/widget/top_rate_widget/top_player_widget.dart';
-import '../../scout_training/cubit/scout_training_cubit.dart';
+import '../../../training/cubit/training_cubit.dart';
 import '../widget/join_talent_widget_scout.dart';
 
 /// الـ Home الخاص بالكشاف
 /// الفرق عن HomeScreen:
-/// ✅ بيستخدم ScoutTrainingCubit مش TrainingCubit
 /// ✅ مفيش UploadTrainingWidget (الكشاف مش بيرفع تمارين)
+///
+/// It used to claim it used `ScoutTrainingCubit` rather than `TrainingCubit`.
+/// It never did: `talent_slider_scout_widget` always rendered from
+/// `TrainingCubit`, and the ScoutTrainingCubit it also created just fetched the
+/// same endpoint again and threw the answer away.
 class ScoutHomeScreen extends StatefulWidget {
   final VoidCallback? onDrawerTap;
 
@@ -31,7 +35,14 @@ class ScoutHomeScreen extends StatefulWidget {
 class _ScoutHomeScreenState extends State<ScoutHomeScreen> {
   Future<void> _onRefresh() async {
     context.read<ExperimentsCubit>().emitbestTrials(categoryId: '');
-    context.read<ScoutTrainingCubit>().fetchExercises(
+    // Refreshes the cubit the slider actually reads.
+    //
+    // This used to call `ScoutTrainingCubit.fetchExercises` — but
+    // `talent_slider_scout_widget` renders from `BlocBuilder<TrainingCubit,
+    // TrainingState>`. So pull-to-refresh fired a second, redundant request
+    // against the same endpoint and threw the result away, while the slider it
+    // was meant to refresh never updated at all.
+    context.read<TrainingCubit>().emitallExercises(
       categoryId: '',
       popular: true,
     );

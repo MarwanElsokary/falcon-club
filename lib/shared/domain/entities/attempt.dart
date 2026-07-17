@@ -45,17 +45,51 @@ final class Attempt extends Equatable {
     required this.id,
     required this.status,
     this.videoUrl,
+    this.aiVideoUrl,
+    this.visualizedVideoUrl,
     this.skills = const <Skill>[],
     this.rejectionReason,
-    this.submittedAt,
+    this.submittedLabel,
   });
 
   final String id;
   final AttemptStatus status;
+
+  /// The raw video the coach uploaded.
   final String? videoUrl;
+
+  /// The AI-annotated rendering, produced once the attempt is processed.
+  /// Absent while [AttemptStatus.underReview], and on a rejected attempt.
+  ///
+  /// ⚠ **This arrives as a RELATIVE path**, unlike [videoUrl]. The live response
+  /// returns `"Videos/HLS/AI/….m3u8"` with no scheme or host, while `video` is a
+  /// full `https://files.fteet.ai/…` URL. `player_attempt_detail_screen.dart:191`
+  /// feeds `attempt.aiVideo ?? attempt.video` straight to the player, so the AI
+  /// video is very likely failing to load today and silently falling back to
+  /// nothing. Left exactly as the backend sends it rather than guessing a host —
+  /// resolving it belongs with the player_attempts rewrite in Phase 6, once we
+  /// have confirmed the correct base.
+  final String? aiVideoUrl;
+
+  /// The skeleton/pose visualisation. Same lifecycle as [aiVideoUrl].
+  final String? visualizedVideoUrl;
+
   final List<Skill> skills;
   final String? rejectionReason;
-  final DateTime? submittedAt;
+
+  /// When the attempt was submitted, **as the backend phrases it**.
+  ///
+  /// This was originally a `DateTime?`, parsed with `DateTime.tryParse`. The
+  /// live payload shows why that was wrong: `date` comes back as
+  /// `"منذ 7 شهور"` — "7 months ago" — a **pre-formatted, localised, relative
+  /// label**, not a timestamp. `tryParse` returned `null` for every attempt ever
+  /// fetched, so the field was silently always empty.
+  ///
+  /// There is no timestamp to recover, so there is nothing to sort or format by;
+  /// the backend has already made both decisions. The label is carried through
+  /// verbatim, which is exactly what `attempt_card_widget.dart:111` and
+  /// `player_attempt_detail_screen.dart:143` already do (`text: attempt.date`).
+  final String? submittedLabel;
 
   /// Overall score for this attempt.
   ///
@@ -66,14 +100,22 @@ final class Attempt extends Equatable {
 
   bool get isPlayable => videoUrl != null && videoUrl!.isNotEmpty;
 
+  /// The AI outputs only exist once processing has completed successfully.
+  /// Asking the entity beats each widget re-deriving
+  /// `isProcessed == 1 && aiVideo != null` for itself.
+  bool get hasAnalysis =>
+      status == AttemptStatus.completed && (aiVideoUrl?.isNotEmpty ?? false);
+
   @override
   List<Object?> get props => [
     id,
     status,
     videoUrl,
+    aiVideoUrl,
+    visualizedVideoUrl,
     skills,
     rejectionReason,
-    submittedAt,
+    submittedLabel,
   ];
 }
 

@@ -1,3 +1,4 @@
+import 'package:falconclubapp/core/thems/color_code.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -36,7 +37,7 @@ class _TalentSliderWidgetState extends State<TalentSliderScoutWidget> {
       children: [
         BlocBuilder<TrainingCubit, TrainingState>(
           buildWhen: (previous, current) =>
-          current is allExercisesLoading ||
+              current is allExercisesLoading ||
               current is allExercisesSuccess ||
               current is allExercisesError,
           builder: (context, state) {
@@ -82,7 +83,7 @@ class _TalentSliderWidgetState extends State<TalentSliderScoutWidget> {
                         return GestureDetector(
                           onTap: () {
                             context.pushNamed(
-                              AppRoute.scoutTrainingDetailsScreen,
+                              AppRoute.exerciseDetailsScreen,
                               arguments: {
                                 'exerciseId': exercise.id?.toString() ?? '',
                               },
@@ -96,7 +97,12 @@ class _TalentSliderWidgetState extends State<TalentSliderScoutWidget> {
                             ),
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
                             decoration: BoxDecoration(
-                              color: Color(0xFF0C4F45),
+                              // The exercise's own colour, from the backend —
+                              // same fix as the club slider this was forked from.
+                              color: ColorCode.cardColor(
+                                exercise.colorCode?.toString(),
+                                fallbackIndex: index,
+                              ),
                               borderRadius: BorderRadius.circular(20.r),
                             ),
                             child: Stack(
@@ -104,7 +110,7 @@ class _TalentSliderWidgetState extends State<TalentSliderScoutWidget> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -183,12 +189,25 @@ class _TalentSliderWidgetState extends State<TalentSliderScoutWidget> {
                                                   horizontal: 10.w,
                                                   vertical: 3.w,
                                                 ),
+                                                // A lighter shade of the card's
+                                                // own colour — a translucent
+                                                // overlay that composites over
+                                                // the colorCode, exactly as the
+                                                // trial card does. Same fix as
+                                                // the club slider this was forked
+                                                // from.
                                                 decoration: BoxDecoration(
-                                                  color: greenClr,
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                    10.r,
+                                                  color: offWhiteClr.withValues(
+                                                    alpha: 0.15,
                                                   ),
+                                                  border: Border.all(
+                                                    color: offWhiteClr
+                                                        .withValues(alpha: 0.2),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        10.r,
+                                                      ),
                                                 ),
                                                 child: Center(
                                                   child: CenterTextUtils(
@@ -234,23 +253,23 @@ class _TalentSliderWidgetState extends State<TalentSliderScoutWidget> {
                                                     height: 120.h,
                                                     decoration: BoxDecoration(
                                                       borderRadius:
-                                                      BorderRadius.circular(
-                                                        34.r,
-                                                      ),
+                                                          BorderRadius.circular(
+                                                            34.r,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
                                             errorWidget:
                                                 (
-                                                context,
-                                                url,
-                                                error,
+                                                  context,
+                                                  url,
+                                                  error,
                                                 ) => Padding(
-                                              padding: EdgeInsets.all(20.w),
-                                              child: SvgPicture.asset(
-                                                'assets/svgs/unavailabeImage.svg',
-                                              ),
-                                            ),
+                                                  padding: EdgeInsets.all(20.w),
+                                                  child: SvgPicture.asset(
+                                                    'assets/svgs/unavailabeImage.svg',
+                                                  ),
+                                                ),
                                           ),
                                         ),
                                       ),

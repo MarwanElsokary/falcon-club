@@ -73,9 +73,15 @@ showLogoutDialog(
                             Expanded(
                               child: InkWell(
                                 onTap: () async {
+                                  // Capture the navigator BEFORE the async gap.
+                                  // After `await`, this dialog's context — and
+                                  // the drawer context `onLogout` closes over —
+                                  // may already be deactivated, so
+                                  // `Navigator.of(context)` would throw. A
+                                  // captured NavigatorState stays valid.
+                                  final navigator = Navigator.of(context);
                                   await getIt<LogOut>()();
-                                  if (!context.mounted) return;
-                                  context.pop();
+                                  navigator.pop(); // close the dialog
                                   onLogout();
                                 },
                                 child: Container(

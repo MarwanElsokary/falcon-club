@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/cache/cach_Helper.dart';
+import '../../../../core/helpers/subscription_helper.dart';
 import '../../../../core/widget/show_error_snack_bar.dart';
 import '../../cubit/package_state.dart';
 
@@ -143,8 +143,14 @@ class PackageScreen extends StatelessWidget {
                           text: 'اشتراك',
                           onPressed: () {
                             // التحقق من حالة الاشتراك
-                            final profile = CacheHelper.getmyProfile();
-                            if (profile?.data.isSubscribed == true) {
+                            //
+                            // This read `profile.isSubscribed` directly, which is
+                            // true for anyone who *ever* bought a plan — so a user
+                            // whose subscription had EXPIRED was told "أنت مشترك
+                            // بالفعل" and blocked from renewing it. `isActive`
+                            // checks the remaining days too, so an expired plan
+                            // can be bought again.
+                            if (isActiveSubscription()) {
                               // استخدام showErrorSnackBar مباشرة
                               showErrorSnackBar(
                                 context: context,

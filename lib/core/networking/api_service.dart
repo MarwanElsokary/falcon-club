@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/data/model/trial_details_model.dart';
 import 'package:falconclubapp/feature/experiments/data/model/all_trials_model.dart';
 import 'package:falconclubapp/feature/main_screen/data/model/categories_model.dart';
 import 'package:falconclubapp/feature/reals/data/model/real_model.dart';
@@ -10,8 +9,6 @@ import 'package:retrofit/retrofit.dart';
 import '../../feature/main_screen/data/model/club_profile_model.dart';
 import '../../feature/main_screen/data/model/my_profile_model.dart';
 import '../../feature/main_screen/data/repo/main_repo.dart';
-import '../../feature/rank/data/model/rank_model.dart';
-import '../../feature/training/data/model/all_exercises_model.dart';
 import 'api_constants.dart';
 
 part 'api_service.g.dart';
@@ -179,8 +176,16 @@ abstract class ApiService {
   Future<MyProfileModel> profileById(@Query('UserId') String userId);
 
   //rank
+  // `GetRankingExercise` requires the `exerciseId` query param — the app sends
+  // it empty for the overall ranking, matching the confirmed-working call
+  // `…/GetRankingExercise?exerciseId=`.
+  //
+  // Returns `dynamic`, not `RankModel`: the endpoint answers with a **bare
+  // array**, and typing it `RankModel` made Retrofit fetch a Map and cast-fail
+  // on the List — surfacing as a bogus "no internet" error. `RankModel
+  // .fromResponse` parses the raw body.
   @GET(ApiConstants.rank)
-  Future<RankModel> rank();
+  Future<dynamic> rank(@Query('exerciseId') String exerciseId);
 
   //real
   @GET(ApiConstants.reals)
@@ -213,21 +218,25 @@ abstract class ApiService {
   );
 
   //allExercises
+  // ── Exercise / trial reads ────────────────────────────────────────────────
+  // `dynamic`, like most of this class. These three used to return
+  // `AllExercisesModel` / `TrialDetailsModel` / `ExerciseDetailsModel`, all of
+  // which live under `feature/` — so `core/networking` depended on three
+  // features, the same inversion removed from the auth endpoints in Phase 7.
+  // The new `feature/exercise/data` models parse the raw body; the legacy repos
+  // still standing until Phase 8 now decode it themselves at the call site.
   @GET(ApiConstants.allExercises)
-  Future<AllExercisesModel> allExercises(
+  Future<dynamic> allExercises(
     @Query('CategoryId') String categoryId,
     @Query('Popular') String popular,
   );
 
   //trialDetails
   @GET(ApiConstants.trialDetails)
-  Future<TrialDetailsModel> trialDetails(@Query('TrialId') String trialId);
+  Future<dynamic> trialDetails(@Query('TrialId') String trialId);
 
-  //trialDetails
   @GET(ApiConstants.exerciseDetails)
-  Future<ExerciseDetailsModel> exerciseDetails(
-    @Query('ExerciseId') String exerciseId,
-  );
+  Future<dynamic> exerciseDetails(@Query('ExerciseId') String exerciseId);
 
   @POST(ApiConstants.addAttempt)
   Future addAttempt(
@@ -236,11 +245,30 @@ abstract class ApiService {
   );
 
   // POST /api/Club/AddAttempt — المدرب يرفع فيديو للاعب
+  //
+  // The exercise feature does NOT use this method. A Retrofit-generated call
+  // has no `onSendProgress` hook, and an attempt is a multipart video upload
+  // over a phone connection — a UI with no progress for thirty seconds is
+  // indistinguishable from a hang, which is the bug this feature shipped with.
+  // `ExerciseRemoteDataSource` therefore posts through the *injected* `Dio` (the
+  // one `DioFactory` configures with the auth interceptor, timeouts and the
+  // debug-only logger), which does expose progress. That is not the same thing
+  // as a bare `Dio()`.
   @POST(ApiConstants.clubAddAttempt)
   Future clubAddAttempt(
     @Body() FormData body,
     @Query('PlayerId') String playerId,
     @Query('ExerciseId') int exerciseId,
+  );
+
+  /// A player's attempts on one exercise.
+  ///
+  /// `PlayerAttemptsRepo` hand-rolled this with a bare `Dio()` while holding an
+  /// injected `ApiService` it never called.
+  @GET(ApiConstants.clubGetPlayerAttempts)
+  Future<dynamic> getPlayerAttempts(
+    @Query('ExerciseId') String exerciseId,
+    @Query('PlayerId') String playerId,
   );
 
   //delete account

@@ -1,3 +1,6 @@
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/shared/domain/entities/subscription.dart';
+import 'package:falconclubapp/shared/domain/subscription_reader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/cache/cach_Helper.dart';
@@ -21,26 +24,25 @@ import '../../../main_screen/cubit/main_state.dart';
 class CustomDrawerScout extends StatelessWidget {
   const CustomDrawerScout({super.key});
 
-  String _getSubscriptionStatusText(bool isSubscribed, dynamic remainingDays) {
-    if (isSubscribed == true) {
-      if (remainingDays != null) {
-        final days = int.tryParse(remainingDays.toString());
-        if (days != null && days > 0) {
-          return '${'الأيام المتبقية'.tr()}: $days ${'يوم'.tr()}';
-        } else {
-          return 'مشترك'.tr();
-        }
-      } else {
-        return 'مشترك'.tr();
-      }
-    } else {
-      return 'غير مشترك'.tr();
-    }
+  /// The label under the scout's name.
+  ///
+  /// It used to be driven by the raw `isSubscribed` flag with its own inline
+  /// day-counting, and it got the edge case wrong: a subscription that had been
+  /// *bought* but had **zero days left** fell into the `else` and rendered
+  /// "مشترك" — in green. An expired scout was told they were subscribed.
+  ///
+  /// `Subscription.isActive` is the single rule now, so "expired" and "never
+  /// subscribed" both read "غير مشترك", which is what they both are.
+  String _getSubscriptionStatusText(Subscription subscription) {
+    if (!subscription.isActive) return 'غير مشترك'.tr();
+
+    final int? days = subscription.remainingDays;
+    if (days == null) return 'مشترك'.tr();
+    return '${'الأيام المتبقية'.tr()}: $days ${'يوم'.tr()}';
   }
 
-  Color _getSubscriptionColor(bool isSubscribed) {
-    return isSubscribed ? Colors.green : redClr;
-  }
+  Color _getSubscriptionColor(Subscription subscription) =>
+      subscription.isActive ? Colors.green : redClr;
 
   @override
   Widget build(BuildContext context) {
@@ -138,15 +140,17 @@ class CustomDrawerScout extends StatelessWidget {
         'icon': 'assets/svgs/logout_icon.svg',
         'title': 'تسجيل الخروج'.tr(),
         'ontap': () {
+          // Capture the navigator before the drawer closes. `context.pop()`
+          // dismisses the drawer, deactivating THIS build context — so the
+          // callback below must not reach for `Navigator.of(context)` after that.
+          final navigator = Navigator.of(context, rootNavigator: true);
           context.pop();
           showLogoutDialog(
             context,
-                () {
-              context.pushNamedAndRemoveUntil(
-                AppRoute.loginScreen,
-                predicate: (route) => false,
-              );
-            },
+            () => navigator.pushNamedAndRemoveUntil(
+              AppRoute.loginScreen,
+              (route) => false,
+            ),
             'هل انت متأكد انك تريد تسجيل الخروج من هذا الحساب'.tr(),
             'assets/lottie/Log out.json',
           );
@@ -157,15 +161,14 @@ class CustomDrawerScout extends StatelessWidget {
         'icon': 'assets/svgs/delete-02.svg',
         'title': 'حذف الحساب'.tr(),
         'ontap': () {
+          final navigator = Navigator.of(context, rootNavigator: true);
           context.pop();
           showLogoutDialog(
             context,
-                () {
-              context.pushNamedAndRemoveUntil(
-                AppRoute.loginScreen,
-                predicate: (route) => false,
-              );
-            },
+            () => navigator.pushNamedAndRemoveUntil(
+              AppRoute.loginScreen,
+              (route) => false,
+            ),
             'هل انت متأكد انك تريد حذف هذا الحساب'.tr(),
             'assets/lottie/Log out.json',
           );
@@ -195,14 +198,13 @@ class CustomDrawerScout extends StatelessWidget {
                       //user data
                       BlocBuilder<MainCubit, MainState>(
                         builder: (context, state) {
-                          final profile = CacheHelper.getmyProfile();
-                          final isSubscribed =
-                              profile?.data.isSubscribed == true;
-                          final remainingDays =
-                              profile?.data.remainingSubscriptionDays;
+                          // One entitlement rule, shared with the rank screen,
+                          // the exercise paywall and the package screen.
+                          final subscription = getIt<SubscriptionReader>()
+                              .current();
+                          final isSubscribed = subscription.isActive;
                           final subscriptionText = _getSubscriptionStatusText(
-                            isSubscribed,
-                            remainingDays,
+                            subscription,
                           );
 
                           return InkWell(
@@ -219,20 +221,18 @@ class CustomDrawerScout extends StatelessWidget {
                                       showPhotoDialog(
                                         context: context,
                                         image:
-                                        CacheHelper.getmyProfile() == null
+                                            CacheHelper.getmyProfile() == null
                                             ? ''
-                                            : CacheHelper
-                                            .getmyProfile()!
-                                            .data
-                                            .photo ??
-                                            '',
+                                            : CacheHelper.getmyProfile()!
+                                                      .data
+                                                      .photo ??
+                                                  '',
                                         name: CacheHelper.getmyProfile() == null
                                             ? ''
-                                            : CacheHelper
-                                            .getmyProfile()!
-                                            .data
-                                            .firstName ??
-                                            '',
+                                            : CacheHelper.getmyProfile()!
+                                                      .data
+                                                      .firstName ??
+                                                  '',
                                       );
                                     },
                                     child: Container(
@@ -249,14 +249,13 @@ class CustomDrawerScout extends StatelessWidget {
                                           height: 48.w,
                                           child: CachedNetworkImage(
                                             imageUrl:
-                                            CacheHelper.getmyProfile() ==
-                                                null
+                                                CacheHelper.getmyProfile() ==
+                                                    null
                                                 ? ''
-                                                : CacheHelper
-                                                .getmyProfile()!
-                                                .data
-                                                .photo ??
-                                                '',
+                                                : CacheHelper.getmyProfile()!
+                                                          .data
+                                                          .photo ??
+                                                      '',
                                             fit: BoxFit.cover,
                                             placeholder: (context, url) =>
                                                 Skeletonizer(
@@ -265,22 +264,23 @@ class CustomDrawerScout extends StatelessWidget {
                                                     height: 48.w,
                                                     width: 48.w,
                                                     decoration:
-                                                    const BoxDecoration(
-                                                      shape:
-                                                      BoxShape.circle,
-                                                    ),
+                                                        const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
                                                   ),
                                                 ),
                                             errorWidget:
-                                                (context,
-                                                url,
-                                                error,) =>
-                                                Container(
+                                                (
+                                                  context,
+                                                  url,
+                                                  error,
+                                                ) => Container(
                                                   padding: EdgeInsets.all(12.w),
                                                   decoration:
-                                                  const BoxDecoration(
-                                                    color: offWhiteClr,
-                                                  ),
+                                                      const BoxDecoration(
+                                                        color: offWhiteClr,
+                                                      ),
                                                   child: Image.asset(
                                                     'assets/images/Mask group.png',
                                                     width: 48.w,
@@ -295,9 +295,9 @@ class CustomDrawerScout extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         TextUtils(
                                           maxlines: 1,
@@ -305,11 +305,7 @@ class CustomDrawerScout extends StatelessWidget {
                                           fontWeight: FontWeight.w700,
                                           color: Colors.white,
                                           text:
-                                          'هلا ${CacheHelper.getmyProfile() ==
-                                              null ? '' : CacheHelper
-                                              .getmyProfile()!
-                                              .data
-                                              .firstName ?? ''}!',
+                                              'هلا ${CacheHelper.getmyProfile() == null ? '' : CacheHelper.getmyProfile()!.data.firstName ?? ''}!',
                                         ),
                                         verticalSpace(3),
                                         TextUtils(
@@ -318,13 +314,12 @@ class CustomDrawerScout extends StatelessWidget {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.white,
                                           text:
-                                          CacheHelper.getmyProfile() == null
+                                              CacheHelper.getmyProfile() == null
                                               ? ''
-                                              : CacheHelper
-                                              .getmyProfile()!
-                                              .data
-                                              .positionName ??
-                                              '',
+                                              : CacheHelper.getmyProfile()!
+                                                        .data
+                                                        .positionName ??
+                                                    '',
                                         ),
                                         verticalSpace(3),
 
@@ -338,7 +333,7 @@ class CustomDrawerScout extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               color: redClr.withOpacity(0.1),
                                               borderRadius:
-                                              BorderRadius.circular(8.r),
+                                                  BorderRadius.circular(8.r),
                                               border: Border.all(
                                                 color: redClr.withOpacity(0.3),
                                                 width: 1.w,
@@ -376,7 +371,7 @@ class CustomDrawerScout extends StatelessWidget {
                                                 0.1,
                                               ),
                                               borderRadius:
-                                              BorderRadius.circular(8.r),
+                                                  BorderRadius.circular(8.r),
                                               border: Border.all(
                                                 color: Colors.green.withOpacity(
                                                   0.3,
@@ -475,8 +470,8 @@ class CustomDrawerScout extends StatelessWidget {
                                       width: itemData[index]['width'],
 
                                       color:
-                                      itemData[index]['title'] ==
-                                          'حذف الحساب'.tr()
+                                          itemData[index]['title'] ==
+                                              'حذف الحساب'.tr()
                                           ? redClr
                                           : Colors.white,
                                     ),
@@ -486,8 +481,8 @@ class CustomDrawerScout extends StatelessWidget {
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
                                         color:
-                                        itemData[index]['title'] ==
-                                            'حذف الحساب'.tr()
+                                            itemData[index]['title'] ==
+                                                'حذف الحساب'.tr()
                                             ? redClr
                                             : Colors.white,
                                         text: itemData[index]['title'],

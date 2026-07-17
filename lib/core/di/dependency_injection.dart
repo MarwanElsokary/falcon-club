@@ -22,10 +22,6 @@ import '../../feature/experiance_details_screen/data/repo/experiance_details_rep
 import '../../feature/experiments/data/repo/experiments_repo.dart';
 import '../../feature/main_screen/cubit/main_cubit.dart';
 import '../../feature/main_screen/data/repo/main_repo.dart';
-import '../../feature/scout/scout_training/cubit/scout_training_cubit.dart';
-import '../../feature/scout/scout_training/cubit/scout_training_details_cubit.dart';
-import '../../feature/scout/scout_training/data/repo/scout_training_details_repo.dart';
-import '../../feature/scout/scout_training/data/repo/scout_training_repo.dart';
 import '../../feature/training/cubit/training_cubit.dart';
 import '../../feature/training/data/repo/training_repo.dart';
 import '../../feature/training_details/cubit/training_details_cubit.dart';
@@ -63,21 +59,18 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<TrainingRepo>(() => TrainingRepo(getIt()));
   getIt.registerFactory<TrainingCubit>(() => TrainingCubit(getIt()));
 
-  // MARK: - Scout Training (مستقل — لا يؤثر على Training النادي)
-  getIt.registerLazySingleton<ScoutTrainingRepo>(
-    () => ScoutTrainingRepo(getIt()),
-  );
-  getIt.registerFactory<ScoutTrainingCubit>(() => ScoutTrainingCubit(getIt()));
-  getIt.registerLazySingleton<ScoutTrainingDetailsRepo>(
-    () => ScoutTrainingDetailsRepo(getIt()),
-  );
-  getIt.registerFactory<ScoutTrainingDetailsCubit>(
-    () => ScoutTrainingDetailsCubit(getIt()),
-  );
+  // MARK: - Scout Training — removed in Phase 4.
+  // The Scout list fork went first (one ExerciseListCubit for every role); the
+  // Scout *details* fork (ScoutTrainingDetailsRepo/Cubit/Screen) is now gone
+  // too. Club and Scout share one ExerciseDetailsScreen driven by an injected
+  // ExerciseCapability — there is nothing role-specific left to register.
 
   // MARK: - ExperianceDetails
+  // Reads only now (trial details + player roster). The attempt upload it used
+  // to own — the one reason it held a `Dio` and a `ViewerCapabilityPort` —
+  // moved to the exercise feature's AttemptUploadCubit in Phase 5.
   getIt.registerLazySingleton<ExperianceDetailsRepo>(
-    () => ExperianceDetailsRepo(getIt()),
+    () => ExperianceDetailsRepo(getIt<ApiService>()),
   );
   getIt.registerFactory<ExperianceDetailsCubit>(
     () => ExperianceDetailsCubit(getIt()),

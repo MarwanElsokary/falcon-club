@@ -8,10 +8,13 @@ class RankRepo {
 
   RankRepo(this._apiService);
 
-  Future<ApiResult<RankModel>> rank() async {
+  /// [exerciseId] empty means the overall ranking — the app's only use today.
+  Future<ApiResult<RankModel>> rank({String exerciseId = ''}) async {
     try {
-      final response = await _apiService.rank();
-      return ApiResult.success(response);
+      final response = await _apiService.rank(exerciseId);
+      // The endpoint returns a bare array; the factory parses it (and the
+      // envelope shape, and an empty/absent list).
+      return ApiResult.success(RankModel.fromResponse(response));
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/routing/routes.dart';
+import 'package:falconclubapp/core/thems/color_code.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/padding_utils.dart';
 import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
@@ -21,14 +22,29 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List catColor = [Color(0xFF451376), blueClr, Color(0xFF0C4F45)];
-
     return ListView.builder(
       itemCount: exerciseList.length,
       shrinkWrap: true,
       padding: EdgeInsets.all(0),
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
+        // The exercise's own colour, from the backend.
+        //
+        // This used to be `catColor[index % catColor.length]` over a hard-coded
+        // three-colour palette — so a card's colour depended on where it landed
+        // in the list, and reordering the response recoloured everything. The
+        // backend has always sent `colorCode`; the client just ignored it.
+        //
+        // Nothing else about the card changes. The skill tag is
+        // `offWhiteClr.withOpacity(0.15)` — a *translucent* overlay, which
+        // composites over whatever this card is painted, so it remains exactly
+        // the same lighter shade of the card colour that it is today, for any
+        // colour the backend sends. No colour arithmetic is needed or wanted.
+        final Color cardColor = ColorCode.cardColor(
+          exerciseList[index].colorCode?.toString(),
+          fallbackIndex: index,
+        );
+
         return Column(
           children: [
             SlideEnimationWidget(
@@ -36,7 +52,7 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   context.pushNamed(
-                    AppRoute.clubTrainingDetailsScreen,
+                    AppRoute.exerciseDetailsScreen,
                     arguments: {
                       'exerciseId': '${exerciseList[index].id}',
                       'exerciseTitle': exerciseList[index].title,
@@ -53,7 +69,7 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                       padding: paddingUtils(),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.r),
-                        color: catColor[index % catColor.length],
+                        color: cardColor,
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +163,14 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                           16.r,
                         ), // Using .r for responsive border radius
-                        child: SizedBox(
+                        // The exercise photo is a transparent PNG, so whatever
+                        // sits behind it shows through. It used to be the card
+                        // itself; painting the same colour explicitly here keeps
+                        // that true even where the image is inset from the card
+                        // edge, and makes the dependency visible rather than
+                        // incidental.
+                        child: Container(
+                          color: cardColor,
                           width: 100.h,
                           height: 120.h,
                           child: CachedNetworkImage(

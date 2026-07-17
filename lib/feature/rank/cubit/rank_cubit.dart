@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:falconclubapp/feature/rank/cubit/rank_state.dart';
 import 'package:falconclubapp/feature/rank/data/model/rank_model.dart';
 
-import '../../../../core/cache/cach_Helper.dart';
+import '../../../../core/helpers/subscription_helper.dart';
 import '../data/repo/rank_repo.dart';
 
 class RankCubit extends Cubit<RankState> {
@@ -22,9 +22,13 @@ class RankCubit extends Cubit<RankState> {
 
     if (isClosed) return;
 
-    // ✅ بنقرأ isSubscribed من الـ cache بعد ما الـ API رجع
-    // في الوقت ده GetProfile يكون خلص وحدّث الـ cache
-    isSubscribed = CacheHelper.getmyProfile()?.data.isSubscribed ?? false;
+    // ✅ بنقرأ حالة الاشتراك بعد ما الـ API رجع وحدّث الـ cache
+    //
+    // This read `CacheHelper.getmyProfile()?.data.isSubscribed ?? false`, which
+    // checks only that a plan was *bought at some point* — it ignores
+    // `remainingSubscriptionDays`, so an EXPIRED subscription still unlocked the
+    // full ranking. `Subscription.isActive` checks both.
+    isSubscribed = isActiveSubscription();
 
     response.when(
       success: (rankResponse) {

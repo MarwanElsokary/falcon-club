@@ -97,9 +97,22 @@ void main() {
   });
 
   group('Skill', () {
-    test('clamps out-of-range backend values', () {
-      expect(Skill.clamped(name: 'speed', rawScore: 140).score, 100);
+    // The scale is 0..10, not 0..100. This test asserted 100 — a guess made
+    // before any real payload existed. The live GetPlayerAttempts response
+    // returns 0.979 / 2.317 / 1.083 / 2.360, and `attempt_card_widget.dart:162`
+    // clamps the average to 0.0..10.0.
+    test('clamps out-of-range backend values to the 0-10 scale', () {
+      expect(Skill.clamped(name: 'speed', rawScore: 140).score, 10);
       expect(Skill.clamped(name: 'speed', rawScore: -5).score, 0);
+    });
+
+    test('a real score keeps its fraction and maps onto the axis', () {
+      final Skill skill = Skill.clamped(name: 'Speed', rawScore: 2.317);
+
+      expect(skill.score, closeTo(2.317, 0.001));
+      // Under the old maxScore of 100 this would have been 0.023 — a genuine
+      // 2.3/10 rendering as 2% of a chart axis.
+      expect(skill.ratio, closeTo(0.2317, 0.001));
     });
   });
 }

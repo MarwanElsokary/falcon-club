@@ -10,19 +10,32 @@ final class Skill extends Equatable {
 
   final String name;
 
-  /// Normalised to [minScore]..[maxScore].
+  /// The AI's rating, on a **0–10** scale.
   final double score;
 
   static const double minScore = 0;
-  static const double maxScore = 100;
+
+  /// Ten, not a hundred.
+  ///
+  /// This entity originally declared `maxScore = 100`, which was a guess made
+  /// before any real payload existed. The live `GetPlayerAttempts` response
+  /// settles it: scores come back as `0.979`, `2.317`, `1.083`, `2.360`, and
+  /// `attempt_card_widget.dart:162` — the widget that has been shipping this for
+  /// months — clamps the average to `0.0..10.0`.
+  ///
+  /// The old value was not merely cosmetic: [ratio] would have divided by 100,
+  /// so a genuine 2.4/10 would have rendered as 2% of the axis on any chart or
+  /// progress bar that used it.
+  static const double maxScore = 10;
 
   /// Clamps any out-of-range value the backend might send, so the UI never has
-  /// to defend against it. Widgets currently clamp this inline in three places.
+  /// to defend against it. Widgets clamp this inline in three places today.
   factory Skill.clamped({required String name, required num rawScore}) => Skill(
     name: name,
     score: rawScore.toDouble().clamp(minScore, maxScore),
   );
 
+  /// Position on a 0..1 axis, for charts and bars.
   double get ratio => score / maxScore;
 
   @override

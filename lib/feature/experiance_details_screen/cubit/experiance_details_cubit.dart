@@ -6,7 +6,8 @@ import 'experiance_details_state.dart';
 class ExperianceDetailsCubit extends Cubit<ExperianceDetailsState> {
   final ExperianceDetailsRepo _repo;
 
-  ExperianceDetailsCubit(this._repo) : super(ExperianceDetailsState.initial());
+  ExperianceDetailsCubit(this._repo)
+    : super(ExperianceDetailsState.initial());
 
   final Map<String, ExerciseDetailsWithPlayersModel> _exerciseCache = {};
 
@@ -61,31 +62,14 @@ class ExperianceDetailsCubit extends Cubit<ExperianceDetailsState> {
     return _exerciseCache[exerciseId];
   }
 
-  // ── إضافة محاولة للاعب — POST /api/Club/AddAttempt ─────────────
-  // في experiance_details_cubit.dart
-  // في experiance_details_cubit.dart
-  Future<void> addAttemptForPlayer({
-    required String playerId,
-    required String exerciseId,
-    required String videoPath,
-  }) async {
-    if (isClosed) return;
-
-    final response = await _repo.addAttemptForPlayer(
-      playerId: playerId,
-      exerciseId: exerciseId,
-      videoPath: videoPath,
-    );
-
-    if (isClosed) return;
-
-    response.when(
-      success: (_) {
-        _exerciseCache.remove(exerciseId);
-      },
-      failure: (error) {
-        throw Exception(error.apiErrorModel.message ?? 'حدث خطأ'); // ✅
-      },
-    );
+  /// Evicts the cached roster for [exerciseId] and reloads it from the network.
+  ///
+  /// Called after an attempt upload changes a player's `attemptCount`. The
+  /// upload itself now runs in `AttemptUploadCubit`, which cannot reach this
+  /// cubit's in-memory cache, so [fetchExercisePlayers] alone would return the
+  /// stale entry it holds. This drops that entry first, then refetches.
+  Future<void> refreshExercisePlayers({required String exerciseId}) {
+    _exerciseCache.remove(exerciseId);
+    return fetchExercisePlayers(exerciseId: exerciseId);
   }
 }

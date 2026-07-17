@@ -30,14 +30,7 @@ class ExperianceDetailsState with _$ExperianceDetailsState {
     required String error,
   }) = exercisePlayersError;
 
-  // ── add attempt for player ──────────────────────────────────────
-  const factory ExperianceDetailsState.addAttemptLoading() =
-  clubAddAttemptLoading;
-  const factory ExperianceDetailsState.addAttemptProgress(int progress) =
-  clubAddAttemptProgress;
-  const factory ExperianceDetailsState.addAttemptsuccess() =
-  clubAddAttemptSuccess;
-  const factory ExperianceDetailsState.addAttempterror({
-    required String error,
-  }) = clubAddAttemptError;
+  // The attempt-upload states moved to `AttemptUploadCubit` in the exercise
+  // feature (Phase 5). Uploading is no longer this cubit's concern — it owns
+  // trial details and the player roster only.
 }

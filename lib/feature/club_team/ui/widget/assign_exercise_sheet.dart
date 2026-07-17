@@ -3,7 +3,6 @@ import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:falconclubapp/feature/club_team/data/model/club_player_model.dart';
 import 'package:falconclubapp/feature/club_team/ui/widget/upload_attempt_sheet.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,35 +11,33 @@ import '../../cubit/club_exercises_cubit.dart';
 import '../../cubit/club_exercises_state.dart';
 import '../../data/model/club_exercises_model.dart';
 import 'exercise_list_item_widget.dart';
-import 'package:falconclubapp/core/di/dependency_injection.dart';
 
 /// يُستدعى هكذا:
-/// showAssignExerciseSheet(context, player: player);
+/// showAssignExerciseSheet(context, player: player, onUploaded: ...);
+///
+/// [onUploaded] is forwarded to the upload sheet and runs once an attempt is
+/// accepted — the club team screen refreshes its player list with it.
 void showAssignExerciseSheet(
   BuildContext context, {
   required ClubPlayer player,
+  required VoidCallback onUploaded,
 }) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => MultiBlocProvider(
-      providers: [
-        BlocProvider.value(
-          value: context.read<ClubExercisesCubit>()..fetchExercises(),
-        ),
-        // ← getIt مباشرة — مش محتاجين ExperianceDetailsCubit في الـ context بتاع الشاشة
-        BlocProvider(create: (_) => getIt<ExperianceDetailsCubit>()),
-      ],
-      child: _AssignExerciseSheet(player: player),
+    builder: (_) => BlocProvider.value(
+      value: context.read<ClubExercisesCubit>()..fetchExercises(),
+      child: _AssignExerciseSheet(player: player, onUploaded: onUploaded),
     ),
   );
 }
 
 class _AssignExerciseSheet extends StatefulWidget {
   final ClubPlayer player;
+  final VoidCallback onUploaded;
 
-  const _AssignExerciseSheet({required this.player});
+  const _AssignExerciseSheet({required this.player, required this.onUploaded});
 
   @override
   State<_AssignExerciseSheet> createState() => _AssignExerciseSheetState();
@@ -70,19 +67,12 @@ class _AssignExerciseSheetState extends State<_AssignExerciseSheet> {
   }
 
   void _onExerciseTap(BuildContext ctx, ClubExercise ex) {
-    final cubit = ctx.read<ExperianceDetailsCubit>();
     Navigator.pop(ctx);
     showUploadAttemptSheet(
       context,
-      exercise: ex, // ✅ ex مش exercise
-      player: widget.player, // ✅ widget.player مش player
-      onUpload: (videoPath) async { // ✅ parameter واحد بس
-        await cubit.addAttemptForPlayer(
-          playerId: widget.player.id,
-          exerciseId: ex.id.toString(),
-          videoPath: videoPath,
-        );
-      },
+      exercise: ex,
+      player: widget.player,
+      onUploaded: widget.onUploaded,
     );
   }
 

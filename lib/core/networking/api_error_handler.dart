@@ -141,7 +141,12 @@ class ErrorHandler implements Exception {
     if (error is DioException) {
       apiErrorModel = _handleError(error);
     } else {
-      apiErrorModel = DataSource.DEFAULT.getFailure();
+      // A non-Dio failure (usually a parsing/`TypeError`). Carry its real text
+      // rather than a bare generic — see [_serverMessageOr].
+      apiErrorModel = ApiErrorModel(
+        code: ResponseCode.DEFAULT,
+        message: error.toString(),
+      );
     }
   }
 }
@@ -160,39 +165,44 @@ ApiErrorModel _handleError(DioException error) {
     case DioExceptionType.badCertificate:
       return DataSource.NO_INTERNET_CONNECTION.getFailure();
 
+    // Both branches: prefer the backend's own message when the response carries
+    // one, and only fall back to a sensible generic when it does not.
     case DioExceptionType.badResponse:
-      if (error.response != null && error.response!.data != null) {
-        try {
-          final data = error.response!.data;
-          if (data is Map<String, dynamic>) {
-            // نقرأ رسالة السيرفر مباشرة إذا موجودة
-            return ApiErrorModel.fromJson(data);
-          } else {
-            return DataSource.DEFAULT.getFailure();
-          }
-        } catch (_) {
-          return DataSource.DEFAULT.getFailure();
-        }
-      } else {
-        return DataSource.DEFAULT.getFailure();
-      }
+      return _serverMessageOr(error, DataSource.DEFAULT.getFailure());
 
     case DioExceptionType.unknown:
-      if (error.response != null && error.response!.data != null) {
-        try {
-          final data = error.response!.data;
-          if (data is Map<String, dynamic>) {
-            return ApiErrorModel.fromJson(data);
-          } else {
-            return DataSource.DEFAULT.getFailure();
-          }
-        } catch (_) {
-          return DataSource.DEFAULT.getFailure();
-        }
-      } else {
-        return DataSource.NO_INTERNET_CONNECTION.getFailure();
-      }
+      return _serverMessageOr(
+        error,
+        DataSource.NO_INTERNET_CONNECTION.getFailure(),
+      );
   }
+}
+
+/// Reads the backend's `message` from the response body when present, otherwise
+/// returns [fallback].
+///
+/// The body is usually `{ "message": "…" }`, but some endpoints return the
+/// message as a bare string; both are honoured. Anything else degrades to the
+/// generic [fallback] — which is now a human sentence, not a bare error code.
+ApiErrorModel _serverMessageOr(DioException error, ApiErrorModel fallback) {
+  final data = error.response?.data;
+  if (data == null) return fallback;
+
+  try {
+    if (data is Map<String, dynamic>) {
+      final parsed = ApiErrorModel.fromJson(data);
+      final message = parsed.message;
+      if (message != null && message.trim().isNotEmpty) return parsed;
+    } else if (data is String && data.trim().isNotEmpty) {
+      return ApiErrorModel(
+        code: error.response?.statusCode,
+        message: data.trim(),
+      );
+    }
+  } catch (_) {
+    // Fall through to the generic below.
+  }
+  return fallback;
 }
 
 class ApiInternalStatus {

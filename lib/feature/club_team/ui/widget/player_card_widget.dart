@@ -1,3 +1,5 @@
+import 'package:falconclubapp/core/di/dependency_injection.dart';
+import 'package:falconclubapp/feature/exercise/domain/repositories/viewer_capability_port.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/feature/club_team/cubit/club_team_cubit.dart';
@@ -329,6 +331,17 @@ class _CardActions extends StatelessWidget {
           orElse: () => false,
         );
 
+        // "إضافة تمرين" ends in a video upload, which is Club-only.
+        //
+        // This card is reached from the drawer's "فريقي" item as well as the
+        // Club's team tab — and `DrawerPermissions.canShowMyTeam` grants that
+        // item to **MainClub**. So a MainClub supervisor could open this and
+        // upload an attempt for a player, which is the coach's job, not theirs.
+        // Same rule as the Scout hole in the trials flow, a different door.
+        final bool canUpload = getIt<ViewerCapabilityPort>()
+            .current()
+            .canUploadAttempt;
+
         return Column(
           children: [
             _ActionButton(
@@ -337,13 +350,20 @@ class _CardActions extends StatelessWidget {
               isPrimary: false,
               onTap: () => showPlayerReportsSheet(context, player: player),
             ),
-            SizedBox(height: 5.h),
-            _ActionButton(
-              label: 'إضافة تمرين'.tr(),
-              icon: Icons.sports_soccer_rounded,
-              isPrimary: true,
-              onTap: () => showAssignExerciseSheet(context, player: player),
-            ),
+            if (canUpload) ...[
+              SizedBox(height: 5.h),
+              _ActionButton(
+                label: 'إضافة تمرين'.tr(),
+                icon: Icons.sports_soccer_rounded,
+                isPrimary: true,
+                onTap: () => showAssignExerciseSheet(
+                  context,
+                  player: player,
+                  onUploaded: () =>
+                      context.read<ClubTeamCubit>().fetchClubPlayers(),
+                ),
+              ),
+            ],
             SizedBox(height: 5.h),
             _DeleteFromTeamButton(
               isLoading: isDeleting,

@@ -1,3 +1,15 @@
+import 'package:falconclubapp/feature/exercise/presentation/cubit/exercise_list_cubit.dart';
+import 'package:falconclubapp/feature/exercise/presentation/cubit/exercise_list_state.dart';
+import 'package:falconclubapp/core/storage/timed_cache.dart';
+import 'package:falconclubapp/feature/exercise/data/datasources/exercise_remote_data_source.dart';
+import 'package:falconclubapp/feature/exercise/domain/repositories/attempt_repository.dart';
+import 'package:falconclubapp/feature/exercise/domain/repositories/exercise_repository.dart';
+import 'package:falconclubapp/feature/exercise/domain/repositories/trial_repository.dart';
+import 'package:falconclubapp/feature/exercise/domain/usecases/get_exercise_details.dart';
+import 'package:falconclubapp/feature/exercise/domain/usecases/get_exercises.dart';
+import 'package:falconclubapp/feature/exercise/domain/usecases/get_player_attempts.dart';
+import 'package:falconclubapp/feature/exercise/domain/usecases/get_trial_details.dart';
+import 'package:falconclubapp/feature/exercise/domain/usecases/upload_attempt_for_player.dart';
 import 'package:dio/dio.dart';
 import 'package:falconclubapp/core/di/dependency_injection.dart';
 import 'package:falconclubapp/core/di/injection.dart';
@@ -78,22 +90,28 @@ void main() {
     expect(getIt<ApiService>(), isA<ApiService>());
   });
 
-  test('Dio and ApiService are singletons, as they were before the move', () async {
-    await configureDependencies();
-    await setupGetIt();
+  test(
+    'Dio and ApiService are singletons, as they were before the move',
+    () async {
+      await configureDependencies();
+      await setupGetIt();
 
-    expect(identical(getIt<Dio>(), getIt<Dio>()), isTrue);
-    expect(identical(getIt<ApiService>(), getIt<ApiService>()), isTrue);
-  });
+      expect(identical(getIt<Dio>(), getIt<Dio>()), isTrue);
+      expect(identical(getIt<ApiService>(), getIt<ApiService>()), isTrue);
+    },
+  );
 
-  test('legacy repositories still resolve ApiService from the same GetIt', () async {
-    await configureDependencies();
-    await setupGetIt();
+  test(
+    'legacy repositories still resolve ApiService from the same GetIt',
+    () async {
+      await configureDependencies();
+      await setupGetIt();
 
-    // A legacy, un-migrated repository. If the strangler step had broken the
-    // shared instance, constructing this would throw.
-    expect(() => getIt<ApiService>(), returnsNormally);
-  });
+      // A legacy, un-migrated repository. If the strangler step had broken the
+      // shared instance, constructing this would throw.
+      expect(() => getIt<ApiService>(), returnsNormally);
+    },
+  );
 
   group('foundation abstractions resolve to their implementations (DIP)', () {
     test('storage, network, and error mapping are all bound', () async {
@@ -111,10 +129,7 @@ void main() {
 
       expect(getIt<SessionRepository>(), isA<SessionRepository>());
       expect(getIt<ClubDirectoryRepository>(), isA<ClubDirectoryRepository>());
-      expect(
-        getIt<SessionLocalDataSource>(),
-        isA<SessionLocalDataSource>(),
-      );
+      expect(getIt<SessionLocalDataSource>(), isA<SessionLocalDataSource>());
       expect(
         getIt<ClubDirectoryRemoteDataSource>(),
         isA<ClubDirectoryRemoteDataSource>(),
@@ -232,14 +247,60 @@ void main() {
       await configureDependencies();
       await setupGetIt();
 
-      expect(
-        getIt<PasswordResetRepository>(),
-        isA<PasswordResetRepository>(),
-      );
+      expect(getIt<PasswordResetRepository>(), isA<PasswordResetRepository>());
       expect(getIt<RequestPasswordReset>(), isA<RequestPasswordReset>());
       expect(getIt<VerifyPasswordResetOtp>(), isA<VerifyPasswordResetOtp>());
       expect(getIt<ResetPassword>(), isA<ResetPassword>());
       expect(getIt<PasswordResetCubit>(), isA<PasswordResetCubit>());
+    });
+  });
+
+  group('exercise (Phase 2)', () {
+    // `flutter analyze` cannot see a DI misconfiguration — a use case whose
+    // repository was never registered compiles perfectly and throws at the
+    // moment the user opens the screen. Booting the real container is the only
+    // way to catch it before a device does.
+    test('the whole exercise graph resolves', () async {
+      await configureDependencies();
+      await setupGetIt();
+
+      expect(getIt<TimedCache>(), isA<TimedCache>());
+      expect(
+        getIt<ExerciseRemoteDataSource>(),
+        isA<ExerciseRemoteDataSource>(),
+      );
+      expect(getIt<ExerciseRepository>(), isA<ExerciseRepository>());
+      expect(getIt<AttemptRepository>(), isA<AttemptRepository>());
+      expect(getIt<TrialRepository>(), isA<TrialRepository>());
+
+      expect(getIt<GetExercises>(), isA<GetExercises>());
+      expect(getIt<GetExerciseDetails>(), isA<GetExerciseDetails>());
+      expect(getIt<GetPlayerAttempts>(), isA<GetPlayerAttempts>());
+      expect(getIt<GetTrialDetails>(), isA<GetTrialDetails>());
+      expect(getIt<UploadAttemptForPlayer>(), isA<UploadAttemptForPlayer>());
+    });
+
+    // Three call sites resolve this: the club route, the scout route, and the
+    // scout's bottom-nav tab. All three now build the same cubit.
+    test('ExerciseListCubit resolves (Phase 3)', () async {
+      await configureDependencies();
+      await setupGetIt();
+
+      expect(getIt<ExerciseListCubit>(), isA<ExerciseListCubit>());
+      expect(
+        getIt<ExerciseListCubit>().state.status,
+        isA<ExerciseListInitial>(),
+      );
+    });
+
+    // The upload posts through the shared Dio, so it must be resolvable — this
+    // is what the five bare `Dio()` instances were quietly working around.
+    test('the remote data source gets the SHARED Dio, not a new one', () async {
+      await configureDependencies();
+      await setupGetIt();
+
+      expect(getIt<Dio>(), same(getIt<Dio>()));
+      expect(getIt<ApiService>(), isA<ApiService>());
     });
   });
 }
