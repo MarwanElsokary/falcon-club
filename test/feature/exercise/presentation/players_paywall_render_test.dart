@@ -5,9 +5,9 @@ import 'package:falconclubapp/feature/training_details/ui/screen/exercise_detail
 import 'package:falconclubapp/core/networking/api_result.dart';
 import 'package:falconclubapp/feature/exercise/domain/entities/exercise_capability.dart';
 import 'package:falconclubapp/feature/exercise/domain/repositories/viewer_capability_port.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/data/model/exerciseWithPlayersModel.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/data/repo/experiance_details_repo.dart';
+import 'package:falconclubapp/feature/exercise_roster/cubit/exercise_roster_cubit.dart';
+import 'package:falconclubapp/feature/exercise_roster/data/model/exercise_with_players_model.dart';
+import 'package:falconclubapp/feature/exercise_roster/data/repo/exercise_roster_repo.dart';
 import 'package:falconclubapp/shared/domain/entities/subscription.dart';
 import 'package:falconclubapp/shared/domain/subscription_reader.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockExperianceRepo extends Mock implements ExperianceDetailsRepo {}
+class _MockExperianceRepo extends Mock implements ExerciseRosterRepo {}
 
 class _MockTrainingDetailsRepo extends Mock implements TrainingDetailsRepo {}
 
@@ -124,7 +124,7 @@ void main() {
   tearDown(() => GetIt.instance.reset());
 
   /// Registers the entitlement the whole app reads. The `capability` is what the
-  /// screen is driven by; the reader is what `ExperianceDetailsCubit` consults.
+  /// screen is driven by; the reader is what `ExerciseRosterCubit` consults.
   void signedInAs(Subscription subscription) {
     GetIt.instance.registerSingleton<SubscriptionReader>(
       _StubReader(subscription),
@@ -156,7 +156,7 @@ void main() {
     ExerciseCapability capability,
   ) async {
     ignoreOverflowWarnings();
-    final ExperianceDetailsCubit players = ExperianceDetailsCubit(
+    final ExerciseRosterCubit players = ExerciseRosterCubit(
       experianceRepo,
     );
     final TrainingDetailsCubit details = TrainingDetailsCubit(trainingRepo);
@@ -176,7 +176,7 @@ void main() {
         builder: (_, __) => MaterialApp(
           home: MultiBlocProvider(
             providers: <BlocProvider<dynamic>>[
-              BlocProvider<ExperianceDetailsCubit>.value(value: players),
+              BlocProvider<ExerciseRosterCubit>.value(value: players),
               BlocProvider<TrainingDetailsCubit>.value(value: details),
             ],
             child: ExerciseDetailsScreen(capability: capability),

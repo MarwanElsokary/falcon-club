@@ -14,8 +14,8 @@ import 'package:falconclubapp/core/routing/routes.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
-import 'package:falconclubapp/feature/experiance_details_screen/cubit/experiance_details_state.dart';
+import 'package:falconclubapp/feature/exercise_roster/cubit/exercise_roster_cubit.dart';
+import 'package:falconclubapp/feature/exercise_roster/cubit/exercise_roster_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +24,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../experiance_details_screen/data/model/exerciseWithPlayersModel.dart';
+import '../../../exercise_roster/data/model/exercise_with_players_model.dart';
 import '../../../training_details/data/model/exercise_details_model.dart';
 import '../../../training_details/cubit/training_details_cubit.dart';
 import '../../../training_details/cubit/training_details_state.dart';
@@ -60,7 +60,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
     super.initState();
     final exerciseId = context.read<TrainingDetailsCubit>().currentExerciseId;
     if (exerciseId != null) {
-      context.read<ExperianceDetailsCubit>().fetchExercisePlayers(
+      context.read<ExerciseRosterCubit>().fetchExercisePlayers(
         exerciseId: exerciseId,
       );
     }
@@ -254,7 +254,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
           ],
         ),
         verticalSpace(12),
-        BlocBuilder<ExperianceDetailsCubit, ExperianceDetailsState>(
+        BlocBuilder<ExerciseRosterCubit, ExerciseRosterState>(
           buildWhen: (prev, curr) =>
               (curr is exercisePlayersLoading &&
                   curr.exerciseId == exerciseId) ||
@@ -263,7 +263,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
               (curr is exercisePlayersError && curr.exerciseId == exerciseId),
           builder: (context, state) {
             final cached = context
-                .read<ExperianceDetailsCubit>()
+                .read<ExerciseRosterCubit>()
                 .getCachedExercisePlayers(exerciseId);
             if (cached != null) {
               return _buildPlayersList(
@@ -397,7 +397,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
           verticalSpace(8),
           ElevatedButton(
             onPressed: () => context
-                .read<ExperianceDetailsCubit>()
+                .read<ExerciseRosterCubit>()
                 .fetchExercisePlayers(exerciseId: exerciseId),
             style: ElevatedButton.styleFrom(backgroundColor: mainColor),
             child: const Text(
@@ -636,7 +636,7 @@ class _PlayerRow extends StatelessWidget {
 
   void _showAddAttemptSheet(BuildContext context) {
     // Two cubits, two jobs. `AttemptUploadCubit` runs the upload; the screen's
-    // `ExperianceDetailsCubit` owns the roster and is asked to refresh it once
+    // `ExerciseRosterCubit` owns the roster and is asked to refresh it once
     // the upload succeeds — the count on the row has just changed.
     showModalBottomSheet(
       context: context,
@@ -644,7 +644,7 @@ class _PlayerRow extends StatelessWidget {
       isScrollControlled: true,
       builder: (_) => MultiBlocProvider(
         providers: [
-          BlocProvider.value(value: context.read<ExperianceDetailsCubit>()),
+          BlocProvider.value(value: context.read<ExerciseRosterCubit>()),
           BlocProvider(create: (_) => getIt<AttemptUploadCubit>()),
         ],
         child: _AddAttemptSheet(player: player, exerciseId: exerciseId),
@@ -706,13 +706,13 @@ class _AddAttemptSheetState extends State<_AddAttemptSheet> {
         switch (state) {
           case AttemptUploadSuccess():
             Navigator.pop(context);
-            // The roster still lives in ExperianceDetailsCubit; refresh it so the
+            // The roster still lives in ExerciseRosterCubit; refresh it so the
             // attempt count on the row updates. `refreshExercisePlayers` evicts
             // its cache first — the upload ran in a different cubit, so a plain
             // fetch would return the stale count. (Unifying this with the
             // upload's own cache invalidation waits on the detail-screen data
             // migration.)
-            context.read<ExperianceDetailsCubit>().refreshExercisePlayers(
+            context.read<ExerciseRosterCubit>().refreshExercisePlayers(
               exerciseId: widget.exerciseId,
             );
             showSuccesSnackBar(

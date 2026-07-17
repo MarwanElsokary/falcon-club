@@ -22,8 +22,9 @@ import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
 import '../../feature/club_team/ui/screen/club_profile_screen.dart';
-import '../../feature/experiance_details_screen/cubit/experiance_details_cubit.dart';
-import '../../feature/experiance_details_screen/ui/screen/experiance_details_screen.dart';
+import '../../feature/exercise_roster/cubit/exercise_roster_cubit.dart';
+import '../../feature/trial_details/cubit/trial_details_cubit.dart';
+import '../../feature/trial_details/ui/screen/trial_details_screen.dart';
 import '../../feature/experiments/cubit/experiments_cubit.dart';
 import '../../feature/auth/presentation/cubit/sign_in_cubit.dart';
 import '../../feature/auth/presentation/screens/sign_in_screen.dart';
@@ -287,31 +288,29 @@ class AppRouter {
                     getIt<TrainingDetailsCubit>()
                       ..emitexerciseDetails(exerciseId: exerciseId),
               ),
-              BlocProvider(create: (_) => getIt<ExperianceDetailsCubit>()),
+              BlocProvider(create: (_) => getIt<ExerciseRosterCubit>()),
             ],
             child: ExerciseDetailsScreen(capability: capability),
           ),
         );
 
       // ========================================================================
-      // EXPERIMENTS
+      // TRIAL DETAILS
       // ========================================================================
-      case AppRoute.experianceDetailsScreen:
+      case AppRoute.trialDetailsScreen:
         final args = arguments as Map<String, dynamic>;
         final heroTag = args['heroTag'] as String;
-        final experianceImage = args['experianceImage'] as String;
+        final trialImage = args['trialImage'] as String;
         final trialId = args['trialId'] as String;
         final title = args['title'] as String;
 
         return _fadeTransitionRoute(
           BlocProvider(
-            create: (_) =>
-                getIt<ExperianceDetailsCubit>()
-                  ..emittrialsDetails(trialId: trialId),
-            child: ExperianceDetailsScreen(
+            create: (_) => getIt<TrialDetailsCubit>()..load(trialId),
+            child: TrialDetailsScreen(
               title: title,
               heroTag: heroTag,
-              experianceImage: experianceImage,
+              trialImage: trialImage,
             ),
           ),
         );

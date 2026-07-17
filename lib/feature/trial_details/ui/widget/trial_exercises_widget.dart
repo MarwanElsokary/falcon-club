@@ -13,35 +13,31 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/widget/center_text_utils.dart';
-import '../../data/model/trial_details_model.dart';
+import 'package:falconclubapp/shared/domain/entities/exercise.dart';
 
-class AllTrainingAtExperianceWidget extends StatelessWidget {
-  const AllTrainingAtExperianceWidget({super.key, required this.exerciseList});
+/// The exercises inside a trial, as tappable cards.
+///
+/// Migrated onto the shared [Exercise] entity — the old version used a *second*
+/// `Exercise` class declared inside `trial_details_model.dart` that shadowed this
+/// one. Behaviour is unchanged: the card colour comes from the backend's
+/// `colorCode` (not a palette indexed by list position), and a tap opens the
+/// exercise details screen.
+class TrialExercisesWidget extends StatelessWidget {
+  const TrialExercisesWidget({super.key, required this.exercises});
 
-  final List<Exercise> exerciseList;
+  final List<Exercise> exercises;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: exerciseList.length,
+      itemCount: exercises.length,
       shrinkWrap: true,
       padding: EdgeInsets.all(0),
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        // The exercise's own colour, from the backend.
-        //
-        // This used to be `catColor[index % catColor.length]` over a hard-coded
-        // three-colour palette — so a card's colour depended on where it landed
-        // in the list, and reordering the response recoloured everything. The
-        // backend has always sent `colorCode`; the client just ignored it.
-        //
-        // Nothing else about the card changes. The skill tag is
-        // `offWhiteClr.withOpacity(0.15)` — a *translucent* overlay, which
-        // composites over whatever this card is painted, so it remains exactly
-        // the same lighter shade of the card colour that it is today, for any
-        // colour the backend sends. No colour arithmetic is needed or wanted.
+        final Exercise exercise = exercises[index];
         final Color cardColor = ColorCode.cardColor(
-          exerciseList[index].colorCode?.toString(),
+          exercise.colorCode,
           fallbackIndex: index,
         );
 
@@ -50,18 +46,10 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
             SlideEnimationWidget(
               index: index,
               child: GestureDetector(
-                onTap: () {
-                  context.pushNamed(
-                    AppRoute.exerciseDetailsScreen,
-                    arguments: {
-                      'exerciseId': '${exerciseList[index].id}',
-                      'exerciseTitle': exerciseList[index].title,
-                      'exerciseDescription': exerciseList[index].description,
-                      'exerciseSkills': exerciseList[index].skills,
-                      'exercisePhotoPath': exerciseList[index].photoPath,
-                    },
-                  );
-                },
+                onTap: () => context.pushNamed(
+                  AppRoute.exerciseDetailsScreen,
+                  arguments: {'exerciseId': exercise.id},
+                ),
                 child: Stack(
                   children: [
                     Container(
@@ -89,15 +77,14 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                                             fontSize: 20,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,
-                                            text: exerciseList[index].title,
+                                            text: exercise.title,
                                           ),
                                           verticalSpace(10),
                                           TextUtils(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,
-                                            text:
-                                                exerciseList[index].description,
+                                            text: exercise.description ?? '',
                                           ),
                                         ],
                                       ),
@@ -112,8 +99,7 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
-                                    itemCount:
-                                        exerciseList[index].skills.length,
+                                    itemCount: exercise.skillNames.length,
                                     itemBuilder: (context, currentindex) {
                                       return Row(
                                         children: [
@@ -138,8 +124,8 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.white,
-                                                text: exerciseList[index]
-                                                    .skills[currentindex],
+                                                text: exercise
+                                                    .skillNames[currentindex],
                                               ),
                                             ),
                                           ),
@@ -158,17 +144,11 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                     PositionedDirectional(
                       end: 20.w,
                       top: 20.w,
-
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          16.r,
-                        ), // Using .r for responsive border radius
-                        // The exercise photo is a transparent PNG, so whatever
-                        // sits behind it shows through. It used to be the card
-                        // itself; painting the same colour explicitly here keeps
-                        // that true even where the image is inset from the card
-                        // edge, and makes the dependency visible rather than
-                        // incidental.
+                        borderRadius: BorderRadius.circular(16.r),
+                        // The exercise photo is a transparent PNG, so the card
+                        // colour shows through; painting it explicitly keeps that
+                        // true even where the image is inset from the card edge.
                         child: Container(
                           color: cardColor,
                           width: 100.h,
@@ -176,8 +156,7 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                           child: CachedNetworkImage(
                             width: 100.h,
                             height: 120.h,
-                            imageUrl: exerciseList[index].photoPath ?? '',
-
+                            imageUrl: exercise.photoUrl ?? '',
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Skeletonizer(
                               enabled: true,
@@ -185,9 +164,7 @@ class AllTrainingAtExperianceWidget extends StatelessWidget {
                                 width: 100.h,
                                 height: 120.h,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    34.r,
-                                  ), // Match the border radius
+                                  borderRadius: BorderRadius.circular(34.r),
                                 ),
                               ),
                             ),

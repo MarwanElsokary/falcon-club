@@ -55,8 +55,8 @@ class AppRoute {
   //trainingScreen
   static const String trainingScreen = '/trainingScreen';
 
-  //experianceDetailsScreen
-  static const String experianceDetailsScreen = '/experianceDetailsScreen';
+  //trialDetailsScreen — was the misspelled experianceDetailsScreen
+  static const String trialDetailsScreen = '/trialDetailsScreen';
 
   //rankScreen
   static const String rankScreen = '/rankScreen';

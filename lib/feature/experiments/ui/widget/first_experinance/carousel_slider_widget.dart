@@ -124,7 +124,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                               .toString(),
                         );
                         context.pushNamed(
-                          AppRoute.experianceDetailsScreen,
+                          AppRoute.trialDetailsScreen,
                           arguments: {
                             'title':
                                 '${context.read<ExperimentsCubit>().allTrialsList[index].title ?? ''}',
@@ -132,7 +132,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                                 '${context.read<ExperimentsCubit>().allTrialsList[index].id ?? ''}',
                             'heroTag':
                                 "${widget.heroPage}_experiance_image_hero_${context.read<ExperimentsCubit>().allTrialsList[index].id}", // ✅ بدل 1 بـ index
-                            'experianceImage':
+                            'trialImage':
                                 context
                                     .read<ExperimentsCubit>()
                                     .allTrialsList[index]

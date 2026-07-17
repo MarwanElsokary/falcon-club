@@ -58,14 +58,13 @@ class AllExperimentScreen extends StatelessWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(34.r),
                       onTap: () {
-                        // ✅ الـ route الصح هو experianceDetailsScreen
                         context.pushNamed(
-                          AppRoute.experianceDetailsScreen,
+                          AppRoute.trialDetailsScreen,
                           arguments: {
                             'title': trial.title ?? '',
                             'trialId': '${trial.id ?? ''}',
                             'heroTag': heroTag,
-                            'experianceImage': trial.photoPath ?? '',
+                            'trialImage': trial.photoPath ?? '',
                           },
                         );
                       },

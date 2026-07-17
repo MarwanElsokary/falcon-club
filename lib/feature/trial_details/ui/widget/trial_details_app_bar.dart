@@ -5,16 +5,15 @@ import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExperianceDetailsAppBar extends StatefulWidget {
-  const ExperianceDetailsAppBar({super.key, required this.title});
+class TrialDetailsAppBar extends StatefulWidget {
+  const TrialDetailsAppBar({super.key, required this.title});
   final String title;
 
   @override
-  State<ExperianceDetailsAppBar> createState() =>
-      _ExperianceDetailsAppBarState();
+  State<TrialDetailsAppBar> createState() => _TrialDetailsAppBarState();
 }
 
-class _ExperianceDetailsAppBarState extends State<ExperianceDetailsAppBar>
+class _TrialDetailsAppBarState extends State<TrialDetailsAppBar>
     with TickerProviderStateMixin {
   late AnimationController _mainController;
   late AnimationController _rippleController;

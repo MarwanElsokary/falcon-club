@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ExperianceDetailsImageWidget extends StatelessWidget {
-  const ExperianceDetailsImageWidget({
+class TrialImageWidget extends StatelessWidget {
+  const TrialImageWidget({
     super.key,
-    required this.experianceImage,
+    required this.trialImage,
     required this.heroTag,
   });
-  final String experianceImage;
+  final String trialImage;
   final String heroTag;
 
   @override
@@ -29,7 +29,7 @@ class ExperianceDetailsImageWidget extends StatelessWidget {
             child: CachedNetworkImage(
               width: context.displayWidth / 1,
               height: 550.h,
-              imageUrl: experianceImage,
+              imageUrl: trialImage,
               fit: BoxFit.cover,
               placeholder: (context, url) => Skeletonizer(
                 enabled: true,
