@@ -610,8 +610,12 @@ class _PlayerRow extends StatelessWidget {
 
   void _openAttempts(BuildContext context) => Navigator.of(context).pushNamed(
     AppRoute.playerAttemptsScreen,
+    // exerciseId is passed as a String — the route casts `args['exerciseId'] as
+    // String`. The other two nav sites (the badge and the name taps) already do.
+    // This one lagged behind as an int, so tapping "مشاهدة" (Scout/MainClub's
+    // view-attempts action) crashed on the cast.
     arguments: {
-      'exerciseId': int.tryParse(exerciseId) ?? 0,
+      'exerciseId': exerciseId,
       'playerId': player.id.toString(),
       'playerName': player.name.toString(),
       'playerPhoto': player.photo?.toString(),
