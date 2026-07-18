@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../main_screen/data/model/my_profile_model.dart';
+import '../../../profile/domain/entities/player_profile.dart';
 
 class PlayerAboutMeWidget extends StatelessWidget {
   const PlayerAboutMeWidget({super.key, required this.playerProfile});
-  final MyProfileModel playerProfile;
+  final PlayerProfile playerProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class PlayerAboutMeWidget extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 color: Colors.black,
-                text: '${'عن'.tr()} ${playerProfile.data.firstName ?? ''}',
+                text: '${'عن'.tr()} ${playerProfile.firstName}',
               ),
               verticalSpace(5),
               TextUtils(
@@ -40,7 +40,7 @@ class PlayerAboutMeWidget extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: blackclr,
                 text:
-                    'الاعب ${playerProfile.data.firstName ?? ''} ${playerProfile.data.lastName ?? ''} هو لاعب محترف يلعب في مركز ${playerProfile.data.positionName ?? ''} و يتميز ب طول ${playerProfile.data.height ?? ''} سم و وزن ${playerProfile.data.weight ?? ''} كجم. يمتلك مهارات فنية عالية و رؤية ممتازة للملعب تجعله لاعباً لا غنى عنه في فريقه.'
+                    'الاعب ${playerProfile.firstName} ${playerProfile.lastName} هو لاعب محترف يلعب في مركز ${playerProfile.positionName ?? ''} و يتميز ب طول ${playerProfile.height ?? ''} سم و وزن ${playerProfile.weight ?? ''} كجم. يمتلك مهارات فنية عالية و رؤية ممتازة للملعب تجعله لاعباً لا غنى عنه في فريقه.'
                         .tr(),
               ),
             ],

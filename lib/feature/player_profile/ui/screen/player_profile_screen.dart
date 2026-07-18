@@ -14,7 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../main_screen/data/model/my_profile_model.dart';
+import '../../../profile/domain/entities/player_profile.dart';
+import '../../../profile/presentation/cubit/player_profile_cubit.dart';
+import '../../../profile/presentation/cubit/player_profile_state.dart';
 import '../../../player_profile/ui/widget/player_about_me_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
@@ -156,26 +158,23 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   // ════════════════════════════════════════════════════════════════
 
   Widget _buildMainContent() {
-    return BlocBuilder<MainCubit, MainState>(
-      buildWhen: (previous, current) =>
-          current is playerProfileLoading ||
-          current is playerProfileSuccess ||
-          current is playerProfileError,
+    // Display is driven by the domain PlayerProfileCubit (Phase 4). Skills (the
+    // radar chart) and the favourite toggle stay on MainCubit for now.
+    return BlocBuilder<PlayerProfileCubit, PlayerProfileState>(
       builder: (context, state) {
         log('🎯 Main Content State: ${state.runtimeType}');
-        return state.maybeWhen(
-          playerProfileloading: () =>
-              _buildFullScreenLoading('جاري تحميل البروفايل...'),
-          playerProfileerror: (error) => _buildFullScreenError(error),
-          playerProfilesuccess: (playerProfile) =>
-              _buildProfileContent(playerProfile),
-          orElse: () => _buildFullScreenLoading('جاري التحميل...'),
-        );
+        return switch (state) {
+          PlayerProfileLoaded(:final PlayerProfile profile) =>
+            _buildProfileContent(profile),
+          PlayerProfileFailure(:final String message) =>
+            _buildFullScreenError(message),
+          _ => _buildFullScreenLoading('جاري تحميل البروفايل...'),
+        };
       },
     );
   }
 
-  Widget _buildProfileContent(MyProfileModel playerProfile) {
+  Widget _buildProfileContent(PlayerProfile playerProfile) {
     if (!_skillsLoaded) {
       _skillsLoaded = true;
       Future.microtask(() {
@@ -192,14 +191,6 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 verticalSpace(20),
-
-                // PlayerImageWithFavoriteWidget(
-                //   playerProfile: playerProfile,
-                //   showFavoriteButton: widget.showFavoriteButton,
-                //   isFavorited: _isFavorited,
-                //   isFavLoading: _isFavLoading,
-                //   onFavoriteTap: _toggleFavorite,
-                // ),
 
                 //user Image
                 PlayerImageWidget(playerProfile: playerProfile),
@@ -407,9 +398,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
             ElevatedButton(
               onPressed: () {
                 _skillsLoaded = false;
-                context.read<MainCubit>().emitProfileById(
-                  userId: widget.playerId,
-                );
+                context.read<PlayerProfileCubit>().load(widget.playerId);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: mainColor,

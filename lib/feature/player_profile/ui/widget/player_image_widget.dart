@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
-import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
+import 'package:falconclubapp/feature/profile/domain/entities/player_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,7 +11,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 class PlayerImageWidget extends StatelessWidget {
   const PlayerImageWidget({super.key, required this.playerProfile});
 
-  final MyProfileModel playerProfile;
+  final PlayerProfile playerProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class PlayerImageWidget extends StatelessWidget {
               child: CachedNetworkImage(
                 width: 98.w,
                 height: 139.w,
-                imageUrl: playerProfile.data.photo ?? '',
+                imageUrl: playerProfile.photoUrl ?? '',
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Skeletonizer(
                   enabled: true,
@@ -69,7 +69,7 @@ class PlayerImageWidget extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w600,
           color: Colors.white,
-          text: playerProfile.data.firstName ?? '',
+          text: playerProfile.firstName,
         ),
       ],
     );

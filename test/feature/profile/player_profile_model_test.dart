@@ -60,12 +60,25 @@ void main() {
     expect(p.hasClub, isTrue);
   });
 
-  test('bio measurements arrive null → hasAny false, no image', () {
+  test('bio measurements arrive null → hasAny false, no image, no date', () {
     final PlayerProfile p = PlayerProfileModel.fromJson(live());
 
     expect(p.measurements.hasAny, isFalse);
     expect(p.measurementsImageUrl, isNull);
     expect(p.hasMeasurementsImage, isFalse);
+    expect(p.measurementsDate, isNull); // bioDate null in the capture
+  });
+
+  test('a present bioDate is carried through verbatim as the label', () {
+    final Map<String, dynamic> json = live();
+    (json['data'] as Map)['bioImage'] = 'https://files.fteet.ai/bio.png';
+    (json['data'] as Map)['bioDate'] = '2025-04-26T00:00:00';
+
+    final PlayerProfile p = PlayerProfileModel.fromJson(json);
+
+    expect(p.measurementsImageUrl, 'https://files.fteet.ai/bio.png');
+    expect(p.hasMeasurementsImage, isTrue);
+    expect(p.measurementsDate, '2025-04-26T00:00:00'); // verbatim, not parsed
   });
 
   test('stringified height/tps still parse (tolerant)', () {

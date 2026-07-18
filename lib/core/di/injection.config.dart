@@ -129,6 +129,8 @@ import '../../feature/profile/domain/repositories/profile_repository.dart'
 import '../../feature/profile/domain/usecases/get_my_profile.dart' as _i352;
 import '../../feature/profile/domain/usecases/get_player_profile.dart' as _i513;
 import '../../feature/profile/domain/usecases/update_my_profile.dart' as _i567;
+import '../../feature/profile/presentation/cubit/player_profile_cubit.dart'
+    as _i27;
 import '../../feature/profile/presentation/cubit/profile_cubit.dart' as _i499;
 import '../../feature/profile/presentation/cubit/profile_edit_cubit.dart'
     as _i394;
@@ -369,6 +371,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i910.GetTermsAndPolicies>(
       () => _i910.GetTermsAndPolicies(gh<_i506.TermsRepository>()),
+    );
+    gh.factory<_i27.PlayerProfileCubit>(
+      () => _i27.PlayerProfileCubit(gh<_i513.GetPlayerProfile>()),
     );
     gh.factory<_i852.RegisterClub>(
       () => _i852.RegisterClub(

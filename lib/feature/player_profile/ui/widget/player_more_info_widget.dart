@@ -3,7 +3,7 @@ import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:falconclubapp/core/widget/padding_utils.dart';
-import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
+import 'package:falconclubapp/feature/profile/domain/entities/player_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,7 +11,7 @@ import '../../../../core/thems/thems.dart';
 
 class PlayerMoreInfoWidget extends StatelessWidget {
   const PlayerMoreInfoWidget({super.key, required this.playerProfile});
-  final MyProfileModel playerProfile;
+  final PlayerProfile playerProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class PlayerMoreInfoWidget extends StatelessWidget {
           Expanded(
             child: playerinputData(
               title: 'القدم المفضلة'.tr(),
-              subTitle: '${playerProfile.data.direction ?? ''}',
+              subTitle: playerProfile.preferredFoot ?? '',
             ),
           ),
 
@@ -39,7 +39,7 @@ class PlayerMoreInfoWidget extends StatelessWidget {
           Expanded(
             child: playerinputData(
               title: 'الموقع'.tr(),
-              subTitle: '${playerProfile.data.positionName ?? ''}',
+              subTitle: playerProfile.positionName ?? '',
             ),
           ),
           // ignore: deprecated_member_use
@@ -47,7 +47,7 @@ class PlayerMoreInfoWidget extends StatelessWidget {
           Expanded(
             child: playerinputData(
               title: 'الجنس'.tr(),
-              subTitle: '${playerProfile.data.gender ?? ''}',
+              subTitle: playerProfile.gender?.arabicLabel ?? '',
             ),
           ),
         ],

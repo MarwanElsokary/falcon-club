@@ -50,6 +50,7 @@ final class PlayerProfile extends Equatable {
     this.weight,
     this.measurements = const BodyMeasurements(),
     this.measurementsImageUrl,
+    this.measurementsDate,
     this.clubName,
     this.clubImageUrl,
     this.tps,
@@ -81,6 +82,11 @@ final class PlayerProfile extends Equatable {
   final BodyMeasurements measurements;
   final String? measurementsImageUrl;
 
+  /// The scan date **as the backend formats it**, shown under the measurements
+  /// image ("تاريخ القياسات: …"). Carried through verbatim like [birthDateLabel];
+  /// `null` when no scan date is present (the common case).
+  final String? measurementsDate;
+
   final String? clubName;
   final String? clubImageUrl;
 
@@ -109,6 +115,7 @@ final class PlayerProfile extends Equatable {
     weight,
     measurements,
     measurementsImageUrl,
+    measurementsDate,
     clubName,
     clubImageUrl,
     tps,

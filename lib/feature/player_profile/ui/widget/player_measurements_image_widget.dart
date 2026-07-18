@@ -1,69 +1,32 @@
 // file: player_bio_image_widget.dart
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
-import 'package:falconclubapp/core/widget/padding_utils.dart';
-import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:image_gallery_saver/image_gallery_saver.dart';
 
-import '../../../main_screen/data/model/my_profile_model.dart';
+import '../../../profile/domain/entities/player_profile.dart';
+import '../../../profile/presentation/widgets/profile_section_card.dart';
 
 class PlayerBioImageWidget extends StatelessWidget {
-  final MyProfileModel playerProfile;
+  final PlayerProfile playerProfile;
 
   const PlayerBioImageWidget({super.key, required this.playerProfile});
 
   @override
   Widget build(BuildContext context) {
-    final bioImage = playerProfile.data.bioImage;
+    final String? bioImage = playerProfile.measurementsImageUrl;
 
     // إذا لم توجد صورة قياسات، لا نعرض أي شيء
     if (bioImage == null || bioImage.isEmpty || bioImage == 'null') {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
-    return Stack(
-      children: [
-        Container(
-          width: context.displayWidth / 1,
-          padding: paddingUtils(),
-          decoration: BoxDecoration(
-            color: whiteclr,
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // العنوان
-              TextUtils(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-                text: 'صورة القياسات',
-              ),
-              verticalSpace(15),
-
-              // صورة القياسات
-              _buildBioImage(bioImage, context),
-            ],
-          ),
-        ),
-        PositionedDirectional(
-          top: 0,
-          start: 0,
-          child: SvgPicture.asset('assets/svgs/Group 385.svg'),
-        ),
-        PositionedDirectional(
-          end: 0,
-          bottom: 0,
-          child: SvgPicture.asset('assets/svgs/Group 386-2.svg', width: 120.w),
-        ),
-      ],
+    return ProfileSectionCard(
+      title: 'صورة القياسات',
+      child: _buildBioImage(bioImage, context),
     );
   }
 
@@ -267,7 +230,7 @@ class PlayerBioImageWidget extends StatelessWidget {
           verticalSpace(12),
 
           // معلومات التاريخ
-          if (playerProfile.data.bioDate != null) _buildDateInfo(),
+          if (playerProfile.measurementsDate != null) _buildDateInfo(),
         ],
       ),
     );
@@ -297,7 +260,7 @@ class PlayerBioImageWidget extends StatelessWidget {
           ),
           horizontalSpace(8),
           Text(
-            'تاريخ القياسات: ${_formatDate(playerProfile.data.bioDate)}',
+            'تاريخ القياسات: ${_formatDate(playerProfile.measurementsDate)}',
             style: TextStyle(
               fontSize: 13.sp,
               color: Colors.black87,

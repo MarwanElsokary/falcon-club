@@ -1,17 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
-import 'package:falconclubapp/core/widget/padding_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../main_screen/data/model/my_profile_model.dart';
+import '../../../profile/domain/entities/player_profile.dart';
+import '../../../profile/presentation/widgets/profile_section_card.dart';
 
 class PlayerMeasurementsWidget extends StatelessWidget {
-  final MyProfileModel playerProfile;
+  final PlayerProfile playerProfile;
 
   const PlayerMeasurementsWidget({
     super.key,
@@ -20,45 +18,14 @@ class PlayerMeasurementsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: context.displayWidth / 1,
-          padding: paddingUtils(),
-          decoration: BoxDecoration(
-            color: whiteclr,
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextUtils(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-                text: 'قياسات اللاعب'.tr(),
-              ),
-              verticalSpace(15),
-              _buildMeasurementsGrid(),
-            ],
-          ),
-        ),
-        PositionedDirectional(
-          top: 0,
-          start: 0,
-          child: SvgPicture.asset('assets/svgs/Group 385.svg'),
-        ),
-        PositionedDirectional(
-          end: 0,
-          bottom: 0,
-          child: SvgPicture.asset('assets/svgs/Group 386-2.svg', width: 120.w),
-        ),
-      ],
+    return ProfileSectionCard(
+      title: 'قياسات اللاعب'.tr(),
+      child: _buildMeasurementsGrid(),
     );
   }
 
   Widget _buildMeasurementsGrid() {
-    final data = playerProfile.data;
+    final BodyMeasurements m = playerProfile.measurements;
 
     return Column(
       children: [
@@ -68,7 +35,7 @@ class PlayerMeasurementsWidget extends StatelessWidget {
             Expanded(
               child: _buildMeasurementCard(
                 label: 'الطول',
-                value: _formatValue(data.bioHeight),
+                value: _formatValue(m.height),
                 unit: 'سم',
               ),
             ),
@@ -76,7 +43,7 @@ class PlayerMeasurementsWidget extends StatelessWidget {
             Expanded(
               child: _buildMeasurementCard(
                 label: 'عرض الكتفين',
-                value: _formatValue(data.bioShoulderWidth),
+                value: _formatValue(m.shoulderWidth),
                 unit: 'سم',
               ),
             ),
@@ -90,7 +57,7 @@ class PlayerMeasurementsWidget extends StatelessWidget {
             Expanded(
               child: _buildMeasurementCard(
                 label: 'طول الذراع',
-                value: _formatValue(data.bioArmLength),
+                value: _formatValue(m.armLength),
                 unit: 'سم',
               ),
             ),
@@ -98,7 +65,7 @@ class PlayerMeasurementsWidget extends StatelessWidget {
             Expanded(
               child: _buildMeasurementCard(
                 label: 'زاوية الساق',
-                value: _formatValue(data.bioAvgLegAngle),
+                value: _formatValue(m.avgLegAngle),
                 unit: '°',
               ),
             ),
@@ -106,13 +73,12 @@ class PlayerMeasurementsWidget extends StatelessWidget {
         ),
 
         // عرض البيانات الأساسية فقط إذا كانت موجودة
-        if (_hasBasicMeasurements(data))
-          _buildBasicMeasurementsSection(data),
+        if (_hasBasicMeasurements()) _buildBasicMeasurementsSection(),
       ],
     );
   }
 
-  Widget _buildBasicMeasurementsSection(Data data) {
+  Widget _buildBasicMeasurementsSection() {
     return Container(
       margin: EdgeInsets.only(top: 12.h),
       padding: EdgeInsets.all(12.w),
@@ -136,7 +102,11 @@ class PlayerMeasurementsWidget extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _buildInfoItem('الطول المدخل', _formatValue(data.height), 'سم'),
+                child: _buildInfoItem(
+                  'الطول المدخل',
+                  _formatValue(playerProfile.height),
+                  'سم',
+                ),
               ),
               Container(
                 height: 20.h,
@@ -145,7 +115,11 @@ class PlayerMeasurementsWidget extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 8.w),
               ),
               Expanded(
-                child: _buildInfoItem('الوزن', _formatValue(data.weight), 'كجم'),
+                child: _buildInfoItem(
+                  'الوزن',
+                  _formatValue(playerProfile.weight),
+                  'كجم',
+                ),
               ),
             ],
           ),
@@ -234,7 +208,9 @@ class PlayerMeasurementsWidget extends StatelessWidget {
   }
 
   String _formatValue(dynamic value) {
-    if (value == null || value.toString().isEmpty || value.toString() == 'null') {
+    if (value == null ||
+        value.toString().isEmpty ||
+        value.toString() == 'null') {
       return '--';
     }
 
@@ -246,8 +222,7 @@ class PlayerMeasurementsWidget extends StatelessWidget {
     return value.toString();
   }
 
-  bool _hasBasicMeasurements(Data data) {
-    return (data.height != null && data.height.toString() != 'null') ||
-        (data.weight != null && data.weight.toString() != 'null');
+  bool _hasBasicMeasurements() {
+    return playerProfile.height != null || playerProfile.weight != null;
   }
 }

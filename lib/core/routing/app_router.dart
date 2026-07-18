@@ -21,6 +21,7 @@ import '../../feature/auth/presentation/screens/registration_screen.dart';
 import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
+import '../../feature/profile/presentation/cubit/player_profile_cubit.dart';
 import '../../feature/profile/presentation/cubit/profile_cubit.dart';
 import '../../feature/profile/presentation/cubit/profile_edit_cubit.dart';
 import '../../feature/profile/presentation/screens/coach_profile_screen.dart';
@@ -232,10 +233,14 @@ class AppRouter {
                 create: (_) =>
                     getIt<RealsCubit>()..emitreals(playerId: playerId),
               ),
+              // Profile display via the domain PlayerProfileCubit (Phase 4).
               BlocProvider(
-                create: (_) =>
-                    getIt<MainCubit>()..emitProfileById(userId: playerId),
+                create: (_) => getIt<PlayerProfileCubit>()..load(playerId),
               ),
+              // MainCubit stays for the skills radar + the (dormant) favourite
+              // toggle; skills is triggered lazily by the screen once the
+              // profile loads, so there is no emitProfileById here.
+              BlocProvider(create: (_) => getIt<MainCubit>()),
             ],
             child: PlayerProfileScreen(
               ismyProfile: isMyProfile,

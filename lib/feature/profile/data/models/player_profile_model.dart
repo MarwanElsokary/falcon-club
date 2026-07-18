@@ -44,6 +44,8 @@ abstract final class PlayerProfileModel {
         avgLegAngle: Json.asNum(data['bioAvgLegAngle'])?.toDouble(),
       ),
       measurementsImageUrl: Json.asString(data['bioImage']),
+      // Mirrors the key MyProfileModel read; null in the sample capture.
+      measurementsDate: Json.asString(data['bioDate']),
       clubName: Json.asString(data['clubName']),
       clubImageUrl: Json.asString(data['clubImage']),
       tps: Json.asNum(data['tps'])?.toDouble(),
