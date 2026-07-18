@@ -130,6 +130,17 @@ abstract class ApiService {
   @GET(ApiConstants.myProfile)
   Future<MyProfileModel> myProfile();
 
+  // ── Profile feature (raw) ─────────────────────────────────────────────────
+  // `dynamic` on purpose: the profile feature parses the raw body into domain
+  // entities via `ProfileModel`/`PlayerProfileModel`, the same way the exercise
+  // feature does. The typed `myProfile()`/`profileById()` above still feed the
+  // legacy MainCubit/ClubTeamCubit flows until Phase 7 retires them.
+  @GET(ApiConstants.myProfile)
+  Future<dynamic> getProfileRaw();
+
+  @GET(ApiConstants.profileById)
+  Future<dynamic> getProfileByIdRaw(@Query('UserId') String userId);
+
   @POST(ApiConstants.toggleFavPlayer)
   Future<ToggleFavResponse> toggleFavPlayer(
     @Query('PlayerId') String playerId,

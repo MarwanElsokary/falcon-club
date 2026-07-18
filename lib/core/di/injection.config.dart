@@ -120,6 +120,14 @@ import '../../feature/exercise/presentation/cubit/exercise_details_cubit.dart'
 import '../../feature/exercise/presentation/cubit/exercise_list_cubit.dart'
     as _i973;
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart' as _i72;
+import '../../feature/profile/data/datasources/profile_remote_data_source.dart'
+    as _i256;
+import '../../feature/profile/data/repositories/profile_repository_impl.dart'
+    as _i1035;
+import '../../feature/profile/domain/repositories/profile_repository.dart'
+    as _i173;
+import '../../feature/profile/domain/usecases/get_my_profile.dart' as _i352;
+import '../../feature/profile/domain/usecases/get_player_profile.dart' as _i513;
 import '../../feature/trial_details/cubit/trial_details_cubit.dart' as _i896;
 import '../../shared/data/cached_subscription_reader.dart' as _i287;
 import '../../shared/domain/subscription_reader.dart' as _i876;
@@ -177,6 +185,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i449.ErrorMapper>(),
       ),
     );
+    gh.lazySingleton<_i256.ProfileRemoteDataSource>(
+      () => _i256.RetrofitProfileRemoteDataSource(gh<_i700.ApiService>()),
+    );
     gh.lazySingleton<_i891.TermsRemoteDataSource>(
       () => _i891.RetrofitTermsRemoteDataSource(gh<_i700.ApiService>()),
     );
@@ -215,6 +226,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i271.SecureStore>(),
       ),
     );
+    gh.lazySingleton<_i173.ProfileRepository>(
+      () => _i1035.ProfileRepositoryImpl(
+        gh<_i256.ProfileRemoteDataSource>(),
+        gh<_i892.KeyValueStore>(),
+        gh<_i449.ErrorMapper>(),
+      ),
+    );
     gh.lazySingleton<_i876.SubscriptionReader>(
       () => _i287.CachedSubscriptionReader(gh<_i892.KeyValueStore>()),
     );
@@ -229,6 +247,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i700.ApiService>(),
         gh<_i1059.RegistrationRequestBuilder>(),
       ),
+    );
+    gh.factory<_i352.GetMyProfile>(
+      () => _i352.GetMyProfile(gh<_i173.ProfileRepository>()),
+    );
+    gh.factory<_i513.GetPlayerProfile>(
+      () => _i513.GetPlayerProfile(gh<_i173.ProfileRepository>()),
     );
     gh.lazySingleton<_i506.TermsRepository>(
       () => _i433.TermsRepositoryImpl(

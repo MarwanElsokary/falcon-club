@@ -68,7 +68,8 @@ void main() {
       required Subscription subscription,
     }) => Profile(
       id: 'user-1',
-      fullName: 'Test User',
+      firstName: 'Test',
+      lastName: 'User',
       role: role,
       subscription: subscription,
     );
