@@ -19,7 +19,10 @@ class ClubTrainee {
 
   factory ClubTrainee.fromJson(Map<String, dynamic> json) {
     return ClubTrainee(
-      id: json['id'] as String,
+      // Tolerant: the backend sends `id` as a number on some endpoints (as
+      // ClubPlayer already handles). Coerce instead of `as String`, which threw
+      // and dropped the whole trainees list to a generic error.
+      id: json['id']?.toString() ?? '',
       name: json['name'] as String? ?? '',
       phone: json['phone'] as String?,
       email: json['email'] as String?,

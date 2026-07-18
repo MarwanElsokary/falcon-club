@@ -118,8 +118,11 @@ class Data {
     positionId: json["positionId"],
     positionName: json["positionName"],
     clubJoinDate: json["clubJoinDate"],
-    // 🔥 لو مش موجود في Club profile، نعتبرها كبيرة عشان مش المشكلة
-    remainingSubscriptionDays: json["remainingSubscriptionDays"] ?? 999,
+    // An absent field means "no horizon reported" — keep it null, never fake a
+    // large number. A fabricated 999 would let an expired/absent subscription
+    // read as active for any account that omits the field (stale cache, backend
+    // edge case). Entitlement fails closed on null (see Subscription.isActive).
+    remainingSubscriptionDays: json["remainingSubscriptionDays"],
     joinDate: json["joinDate"],
     position: json["position"],
     tps: json["tps"],

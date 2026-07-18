@@ -25,7 +25,14 @@ class RealModel {
   });
 
   factory RealModel.fromJson(Map<String, dynamic> json) => RealModel(
-    data: List<RealsVide>.from(json["data"].map((x) => RealsVide.fromJson(x))),
+    // Tolerant: absent/null/non-list `data` yields an empty feed instead of
+    // throwing and breaking the whole reels page. Non-object rows are skipped.
+    data: (json["data"] is List)
+        ? (json["data"] as List)
+              .whereType<Map>()
+              .map((x) => RealsVide.fromJson(Map<String, dynamic>.from(x)))
+              .toList()
+        : const <RealsVide>[],
     totalCount: json["totalCount"],
     pageNumber: json["pageNumber"],
     pageSize: json["pageSize"],
@@ -85,9 +92,15 @@ class RealsVide {
     commentsCount: json["commentsCount"],
     isLiked: json["isLiked"],
     isMyReel: json["isMyReel"],
-    comments: List<Comment>.from(
-      json["comments"].map((x) => Comment.fromJson(x)),
-    ),
+    // Tolerant: a reel that arrives without a `comments` array must still
+    // render — degrade to an empty comment list rather than throwing and
+    // taking down the entire feed's parse.
+    comments: (json["comments"] is List)
+        ? (json["comments"] as List)
+              .whereType<Map>()
+              .map((x) => Comment.fromJson(Map<String, dynamic>.from(x)))
+              .toList()
+        : const <Comment>[],
   );
 
   Map<String, dynamic> toJson() => {

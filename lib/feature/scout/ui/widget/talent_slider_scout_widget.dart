@@ -133,44 +133,6 @@ class _TalentSliderWidgetState extends State<TalentSliderScoutWidget> {
                                           color: Colors.white,
                                           text: exercise.categoryName ?? '',
                                         ),
-                                        // ClipOval(
-                                        //   child: SizedBox(
-                                        //     width: 16.w,
-                                        //     height: 16.w,
-                                        //     child: CachedNetworkImage(
-                                        //       imageUrl:
-                                        //       exercise.categoryIcon ?? '',
-                                        //       fit: BoxFit.contain,
-                                        //       placeholder: (context, url) =>
-                                        //           Skeletonizer(
-                                        //             enabled: true,
-                                        //             child: Container(
-                                        //               height: 16.w,
-                                        //               width: 16.w,
-                                        //               decoration:
-                                        //               const BoxDecoration(
-                                        //                 shape:
-                                        //                 BoxShape.circle,
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //       errorWidget:
-                                        //           (
-                                        //           context,
-                                        //           url,
-                                        //           error,
-                                        //           ) => Container(
-                                        //         padding: EdgeInsets.all(
-                                        //           3.w,
-                                        //         ),
-                                        //         child: SvgPicture.asset(
-                                        //           'assets/svgs/unavailabeImage.svg',
-                                        //           width: 16.w,
-                                        //         ),
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
                                       ],
                                     ),
                                     Container(),

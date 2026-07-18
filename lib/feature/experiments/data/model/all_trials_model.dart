@@ -17,9 +17,15 @@ class AllTrialsModel {
 
   factory AllTrialsModel.fromJson(Map<String, dynamic> json) => AllTrialsModel(
     message: json["message"],
-    data: List<AllTrialsList>.from(
-      json["data"].map((x) => AllTrialsList.fromJson(x)),
-    ),
+    // Tolerant: an absent/null/non-list `data` yields an empty list (→ the
+    // empty state) instead of throwing NoSuchMethodError and failing the whole
+    // screen. Non-object rows are skipped, not thrown on. Mirrors RankModel.
+    data: (json["data"] is List)
+        ? (json["data"] as List)
+              .whereType<Map>()
+              .map((x) => AllTrialsList.fromJson(Map<String, dynamic>.from(x)))
+              .toList()
+        : const <AllTrialsList>[],
   );
 
   Map<String, dynamic> toJson() => {

@@ -11,6 +11,7 @@ import '../../../../core/thems/thems.dart';
 import '../../../../core/widget/center_text_utils.dart';
 import '../../../main_screen/cubit/main_cubit.dart';
 import '../../../main_screen/cubit/main_state.dart';
+import '../../../main_screen/data/model/categories_model.dart';
 import '../cubit/exercise_list_cubit.dart';
 import '../cubit/exercise_list_state.dart';
 
@@ -47,7 +48,7 @@ class ExerciseCategoryFilter extends StatelessWidget {
             current is categoriesSuccess ||
             current is categoriesError,
         builder: (BuildContext context, MainState state) => state.maybeWhen(
-          categoriessuccess: (dynamic categories) =>
+          categoriessuccess: (CategoriesModel categories) =>
               BlocBuilder<ExerciseListCubit, ExerciseListState>(
                 builder:
                     (BuildContext context, ExerciseListState exerciseState) =>
@@ -61,7 +62,7 @@ class ExerciseCategoryFilter extends StatelessWidget {
 
   Widget _bar(
     BuildContext context,
-    dynamic categories,
+    CategoriesModel categories,
     ExerciseListState state,
   ) {
     final SelectedCategory? selected = state.selectedCategory;
@@ -160,14 +161,13 @@ class ExerciseCategoryFilter extends StatelessWidget {
 
   Widget _chips(
     BuildContext context,
-    dynamic categories,
+    CategoriesModel categories,
     ExerciseListState state,
   ) {
-    // Tolerant: the category payload is `dynamic` (it comes from MainCubit's
-    // model). A null or non-list `data`, or a row with a null `name`, must not
-    // take down the whole filter bar — degrade to empty / '' instead of casting.
-    final Object? rawRows = categories.data;
-    final List<dynamic> rows = rawRows is List ? rawRows : const <dynamic>[];
+    // The model is now typed and its `data` is always a (possibly empty) list,
+    // so no cast guard is needed. A row's fields are `String?`; a missing name
+    // still degrades to '' rather than showing null.
+    final List<CategoriesList> rows = categories.data;
 
     return ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: state.hasSelection ? 0 : 20.w),
@@ -176,9 +176,9 @@ class ExerciseCategoryFilter extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         final SelectedCategory category = SelectedCategory(
-          id: '${rows[index].id ?? ''}',
-          name: '${rows[index].name ?? ''}',
-          iconUrl: rows[index].icon?.toString(),
+          id: rows[index].id ?? '',
+          name: rows[index].name ?? '',
+          iconUrl: rows[index].icon,
         );
         final bool isSelected = state.isSelected(category.id);
 

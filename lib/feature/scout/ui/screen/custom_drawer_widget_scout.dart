@@ -17,34 +17,7 @@ class CustomDrawerScout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // في ملف custom_drawer.dart
-    // ابحث عن List itemData واضف العنصر ده بعد التدريبات وقبل سياسة الخصوصية:
-
     List itemData = [
-      // {
-      //   'width': 20.w,
-      //   'icon': 'assets/svgs/profile.svg',
-      //   'title': 'الحساب'.tr(),
-      //   'ontap': () {
-      //     context.pushNamed(
-      //       AppRoute.playerProfile,
-      //       arguments: {
-      //         'isMyProfile': true,
-      //         'playerId': CacheHelper.getmyProfile() == null
-      //             ? ''
-      //             : CacheHelper.getmyProfile()!.data.userId,
-      //       },
-      //     );
-      //   },
-      // },
-      // {
-      //   'width': 20.w,
-      //   'icon': 'assets/svgs/svgexport-18 (1) 2.svg',
-      //   'title': 'تعديل الحساب'.tr(),
-      //   'ontap': () {
-      //     context.pushNamed(AppRoute.signUpScreen, arguments: {'update': true});
-      //   },
-      // },
       {
         'width': 20.w,
         'icon': 'assets/svgs/profile.svg',
@@ -87,14 +60,6 @@ class CustomDrawerScout extends StatelessWidget {
         },
       },
 
-      // {
-      //   'width': 20.w,
-      //   'icon': 'assets/svgs/ruler-angular-svgrepo-com.svg',
-      //   'title': 'القياسات'.tr(),
-      //   'ontap': () {
-      //     context.pushNamed(AppRoute.measurementScreen);
-      //   },
-      // },
       {
         'width': 20.w,
         'icon': 'assets/svgs/lock-svgrepo-com.svg',
