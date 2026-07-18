@@ -9,6 +9,7 @@ import '../../../../core/usecase/usecase.dart';
 import '../../../../shared/domain/entities/profile.dart';
 import '../../../../shared/domain/entities/user_role.dart';
 import '../../domain/entities/player_profile.dart';
+import '../../domain/entities/update_profile_params.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../datasources/profile_remote_data_source.dart';
 import '../models/player_profile_model.dart';
@@ -57,6 +58,24 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Right<Failure, PlayerProfile>(PlayerProfileModel.fromJson(body));
     } catch (error) {
       return Left<Failure, PlayerProfile>(_errorMapper.map(error));
+    }
+  }
+
+  @override
+  ResultFuture<Unit> updateMyProfile(UpdateProfileParams params) async {
+    try {
+      await _remoteDataSource.updateMyProfile(
+        firstName: params.firstName,
+        lastName: params.lastName,
+        // The value object is the wire value verbatim (see PhoneNumber).
+        phone: params.phone.value,
+        // Gender is written as an int here; it is read back as Arabic.
+        genderApiValue: params.gender.apiValue,
+        imagePath: params.imagePath,
+      );
+      return const Right<Failure, Unit>(unit);
+    } catch (error) {
+      return Left<Failure, Unit>(_errorMapper.map(error));
     }
   }
 }

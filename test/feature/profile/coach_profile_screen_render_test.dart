@@ -1,9 +1,8 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:falconclubapp/core/error/failures.dart';
-import 'package:falconclubapp/feature/club_team/cubit/club_team_cubit.dart';
-import 'package:falconclubapp/feature/club_team/cubit/club_team_state.dart';
 import 'package:falconclubapp/feature/profile/domain/usecases/get_my_profile.dart';
+import 'package:falconclubapp/feature/profile/domain/usecases/update_my_profile.dart';
 import 'package:falconclubapp/feature/profile/presentation/cubit/profile_cubit.dart';
+import 'package:falconclubapp/feature/profile/presentation/cubit/profile_edit_cubit.dart';
 import 'package:falconclubapp/feature/profile/presentation/screens/coach_profile_screen.dart';
 import 'package:falconclubapp/shared/domain/entities/gender.dart';
 import 'package:falconclubapp/shared/domain/entities/profile.dart';
@@ -17,8 +16,7 @@ import 'package:mocktail/mocktail.dart';
 
 class _MockGetMyProfile extends Mock implements GetMyProfile {}
 
-class _MockClubTeamCubit extends MockCubit<ClubTeamState>
-    implements ClubTeamCubit {}
+class _MockUpdateMyProfile extends Mock implements UpdateMyProfile {}
 
 /// A Coach profile with a distinct club name (so it is findable apart from the
 /// coach's own name) and the contact facts populated. Guards that the whole
@@ -36,7 +34,7 @@ const Profile _coach = Profile(
 
 void main() {
   late _MockGetMyProfile getMyProfile;
-  late _MockClubTeamCubit clubTeamCubit;
+  late _MockUpdateMyProfile updateMyProfile;
 
   setUp(() {
     getMyProfile = _MockGetMyProfile();
@@ -44,12 +42,9 @@ void main() {
       (_) async => const Right<Failure, Profile>(_coach),
     );
 
-    clubTeamCubit = _MockClubTeamCubit();
-    whenListen(
-      clubTeamCubit,
-      const Stream<ClubTeamState>.empty(),
-      initialState: const ClubTeamState.initial(),
-    );
+    // The edit cubit only needs to exist for the screen's BlocListener; the
+    // render/scroll tests never submit, so the use case is never invoked.
+    updateMyProfile = _MockUpdateMyProfile();
   });
 
   /// Swallows only RenderFlex *overflow* reports — the synthetic test font's
@@ -82,7 +77,9 @@ void main() {
           home: MultiBlocProvider(
             providers: [
               BlocProvider<ProfileCubit>.value(value: profileCubit),
-              BlocProvider<ClubTeamCubit>.value(value: clubTeamCubit),
+              BlocProvider<ProfileEditCubit>(
+                create: (_) => ProfileEditCubit(updateMyProfile),
+              ),
             ],
             child: const CoachProfileScreen(),
           ),

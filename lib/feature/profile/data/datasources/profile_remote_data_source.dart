@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -15,6 +17,17 @@ abstract interface class ProfileRemoteDataSource {
   Future<Map<String, dynamic>> fetchMyProfile();
 
   Future<Map<String, dynamic>> fetchPlayerProfile(String userId);
+
+  /// PUTs `Club/UpdateProfile` as multipart. [genderApiValue] is the int the
+  /// endpoint wants (0/1); [imagePath] is sent as the `Photo` part only when
+  /// non-null, so an unchanged photo is left alone.
+  Future<void> updateMyProfile({
+    required String firstName,
+    required String lastName,
+    required String phone,
+    required int genderApiValue,
+    String? imagePath,
+  });
 }
 
 @LazySingleton(as: ProfileRemoteDataSource)
@@ -35,5 +48,31 @@ class RetrofitProfileRemoteDataSource implements ProfileRemoteDataSource {
       throw const ServerException(message: FailureMessages.resourceNotFound);
     }
     return Json.asObject(await _apiService.getProfileByIdRaw(userId));
+  }
+
+  @override
+  Future<void> updateMyProfile({
+    required String firstName,
+    required String lastName,
+    required String phone,
+    required int genderApiValue,
+    String? imagePath,
+  }) async {
+    final Map<String, dynamic> fields = <String, dynamic>{
+      'FirstName': firstName,
+      'LastName': lastName,
+      'PhoneNumber': phone,
+      'Gender': genderApiValue,
+    };
+
+    if (imagePath != null && imagePath.isNotEmpty) {
+      fields['Photo'] = await MultipartFile.fromFile(
+        imagePath,
+        filename: 'photo.jpg',
+        contentType: MediaType('image', 'jpeg'),
+      );
+    }
+
+    await _apiService.clubUpdateProfile(FormData.fromMap(fields));
   }
 }

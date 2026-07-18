@@ -1,15 +1,12 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:falconclubapp/core/cache/cach_Helper.dart';
 import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http_parser/http_parser.dart';
 
 import '../../main_club/data/model/club_trainee_model.dart';
 import '../data/model/club_player_model.dart';
-import '../data/model/player_report_model.dart';
 import '../data/repo/club_team_repo.dart';
 import 'club_team_state.dart';
 
@@ -22,13 +19,8 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   ValueNotifier<bool> show = ValueNotifier(true);
   final GlobalKey<ScaffoldState> sliderDrawerKey = GlobalKey<ScaffoldState>();
 
-  // profile form
-  final formKey = GlobalKey<FormState>();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final phoneController = TextEditingController();
-  int gender = -1;
-  String imagePath = '';
+  // The self-profile edit form moved to ProfileEditCubit in the profile feature
+  // (Phase 3). This cubit no longer owns edit state.
 
   // grouped players — محتاجينه بس عشان _buildContent يقراه
   Map<String, List<ClubPlayer>> groupedPlayers = {};
@@ -172,55 +164,6 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
     );
   }
 
-  void initProfileForm() {
-    final profile = cachedProfile ?? CacheHelper.getmyProfile();
-    if (profile != null) {
-      firstNameController.text = profile.data.firstName ?? '';
-      lastNameController.text = profile.data.lastName ?? '';
-      phoneController.text = profile.data.phoneNumber ?? '';
-      gender = profile.data.gender is int ? profile.data.gender : -1;
-    }
-  }
-
-  // ============================================================================
-  // UPDATE PROFILE
-  // ============================================================================
-  Future<void> emitUpdateProfile() async {
-    if (!formKey.currentState!.validate()) return;
-
-    emit(const ClubTeamState.updateProfileloading());
-
-    final Map<String, dynamic> formMap = {
-      "FirstName": firstNameController.text,
-      "LastName": lastNameController.text,
-      "PhoneNumber": phoneController.text,
-      "Gender": gender == -1 ? 0 : gender,
-    };
-
-    if (imagePath.isNotEmpty) {
-      formMap['Photo'] = await MultipartFile.fromFile(
-        imagePath,
-        filename: 'photo.jpg',
-        contentType: MediaType('image', 'jpeg'),
-      );
-    }
-
-    final response = await _repo.clubUpdateProfile(FormData.fromMap(formMap));
-    response.when(
-      success: (data) {
-        cachedProfile = null;
-        emit(ClubTeamState.updateProfilesuccess(data));
-        emitMyProfile();
-      },
-      failure: (error) {
-        emit(
-          ClubTeamState.updateProfileerror(
-            error: error.apiErrorModel.message ?? 'فشل تحديث الملف الشخصي',
-          ),
-        );
-      },
-    );
-  }
 
   // ============================================================================
   // CLUB PLAYERS — fetch every time, no cache
@@ -422,9 +365,6 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   // ============================================================================
   @override
   Future<void> close() {
-    firstNameController.dispose();
-    lastNameController.dispose();
-    phoneController.dispose();
     currentIndex.dispose();
     show.dispose();
     return super.close();

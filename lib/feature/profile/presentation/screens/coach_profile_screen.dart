@@ -9,12 +9,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../shared/domain/entities/profile.dart';
-import '../../../club_team/cubit/club_team_cubit.dart';
-import '../../../club_team/cubit/club_team_state.dart';
-import '../../../club_team/ui/widget/club_edit_profile_sheet.dart';
 import '../cubit/profile_cubit.dart';
+import '../cubit/profile_edit_cubit.dart';
+import '../cubit/profile_edit_state.dart';
 import '../cubit/profile_state.dart';
 import '../widgets/profile_action_tile.dart';
+import '../widgets/profile_edit_sheet.dart';
 import '../widgets/profile_error_view.dart';
 import '../widgets/profile_loading_view.dart';
 import '../widgets/profile_scaffold.dart';
@@ -28,18 +28,18 @@ import '../widgets/profile_section_card.dart';
 /// the player profile read as one design, and new sections (a Favorites card in
 /// Phase 6) slot into the same language.
 ///
-/// The edit path is deliberately unchanged from Phase 2 — it still rides
-/// `ClubTeamCubit` and opens `ClubEditProfileSheet`; a successful edit refreshes
-/// the display via [ProfileCubit]. The edit internals migrate in Phase 3.
+/// The edit path runs on [ProfileEditCubit] over the domain (Phase 3): the edit
+/// tile seeds the cubit from the loaded [Profile] and opens [ProfileEditSheet];
+/// a successful save refreshes the display via [ProfileCubit].
 class CoachProfileScreen extends StatelessWidget {
   const CoachProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ProfileScaffold(
-      child: BlocListener<ClubTeamCubit, ClubTeamState>(
+      child: BlocListener<ProfileEditCubit, ProfileEditState>(
         listener: (context, state) {
-          if (state is clubUpdateProfileSuccess) {
+          if (state is ProfileEditSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('تم تحديث الملف الشخصي بنجاح'.tr()),
@@ -48,9 +48,9 @@ class CoachProfileScreen extends StatelessWidget {
             );
             context.read<ProfileCubit>().load();
           }
-          if (state is clubUpdateProfileError) {
+          if (state is ProfileEditFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error), backgroundColor: redClr),
+              SnackBar(content: Text(state.message), backgroundColor: redClr),
             );
           }
         },
@@ -138,20 +138,21 @@ class CoachProfileScreen extends StatelessWidget {
           ),
           verticalSpace(16),
 
-          // ── إجراء تعديل الملف الشخصي (نفس مسار Phase 2 دون تغيير) ─────
+          // ── إجراء تعديل الملف الشخصي (Phase 3: على الدومين) ──────────
           ProfileActionTile(
             iconAsset: 'assets/svgs/svgexport-18 (1) 2.svg',
             title: 'تعديل الملف الشخصي'.tr(),
             onTap: () {
-              final cubit = context.read<ClubTeamCubit>();
-              cubit.initProfileForm();
+              final ProfileEditCubit editCubit = context
+                  .read<ProfileEditCubit>()
+                ..seed(profile);
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
-                builder: (_) => BlocProvider.value(
-                  value: cubit,
-                  child: const ClubEditProfileSheet(),
+                builder: (_) => BlocProvider<ProfileEditCubit>.value(
+                  value: editCubit,
+                  child: const ProfileEditSheet(),
                 ),
               );
             },

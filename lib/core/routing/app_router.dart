@@ -22,6 +22,7 @@ import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
 import '../../feature/profile/presentation/cubit/profile_cubit.dart';
+import '../../feature/profile/presentation/cubit/profile_edit_cubit.dart';
 import '../../feature/profile/presentation/screens/coach_profile_screen.dart';
 import '../../feature/profile/presentation/screens/main_club_profile_screen.dart';
 import '../../feature/exercise/presentation/cubit/exercise_details_cubit.dart';
@@ -142,12 +143,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              // Display via the domain ProfileCubit. ClubTeamCubit stays for the
-              // edit sheet only (migrated in Phase 3); its emitMyProfile is not
-              // called here — the shell already refreshed the cache the edit form
-              // reads, so there is no duplicate Club/GetProfile fetch.
+              // Display via the domain ProfileCubit; edit via the domain
+              // ProfileEditCubit (Phase 3). Both live entirely in the profile
+              // feature now — the coach profile no longer touches ClubTeamCubit.
               BlocProvider(create: (_) => getIt<ProfileCubit>()..load()),
-              BlocProvider(create: (_) => getIt<ClubTeamCubit>()),
+              BlocProvider(create: (_) => getIt<ProfileEditCubit>()),
             ],
             child: const CoachProfileScreen(),
           ),

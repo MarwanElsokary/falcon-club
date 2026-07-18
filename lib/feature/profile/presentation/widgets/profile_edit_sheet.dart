@@ -12,20 +12,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../cubit/club_team_cubit.dart';
-import '../../cubit/club_team_state.dart';
+import '../../../../shared/domain/entities/gender.dart';
+import '../../../../shared/domain/value_objects/phone_number.dart';
+import '../cubit/profile_edit_cubit.dart';
+import '../cubit/profile_edit_state.dart';
 
-class ClubEditProfileSheet extends StatefulWidget {
-  const ClubEditProfileSheet({super.key});
+/// The self-profile edit bottom sheet.
+///
+/// Moved out of `club_team` and onto [ProfileEditCubit] in Phase 3: the form now
+/// lives in the profile feature over the domain, gender is a [Gender] preselected
+/// from the real value, the phone is validated through
+/// [PhoneNumber.forSaudiRegistration], and the current photo previews until a new
+/// one is picked. The `Form` key is local UI state; the cubit holds the data.
+class ProfileEditSheet extends StatefulWidget {
+  const ProfileEditSheet({super.key});
 
   @override
-  State<ClubEditProfileSheet> createState() => _ClubEditProfileSheetState();
+  State<ProfileEditSheet> createState() => _ProfileEditSheetState();
 }
 
-class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
+class _ProfileEditSheetState extends State<ProfileEditSheet> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? _genderError;
+
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ClubTeamCubit>();
+    final ProfileEditCubit cubit = context.read<ProfileEditCubit>();
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -39,7 +51,7 @@ class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
       ),
       child: SingleChildScrollView(
         child: Form(
-          key: cubit.formKey,
+          key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,22 +74,17 @@ class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
                 text: 'تعديل الملف الشخصي'.tr(),
               ),
               verticalSpace(20),
-              // photo picker
+              // photo picker — previews the current photo until a new one is
+              // picked (the picked file wins).
               Center(
                 child: GestureDetector(
                   onTap: _pickImage,
                   child: CircleAvatar(
                     radius: 40.r,
                     backgroundColor: fillColor,
-                    backgroundImage: cubit.imagePath.isNotEmpty
-                        ? FileImage(File(cubit.imagePath))
-                        : null,
-                    child: cubit.imagePath.isEmpty
-                        ? Icon(
-                            Icons.camera_alt,
-                            color: mainColor,
-                            size: 30.w,
-                          )
+                    backgroundImage: _avatarImage(cubit),
+                    child: _avatarImage(cubit) == null
+                        ? Icon(Icons.camera_alt, color: mainColor, size: 30.w)
                         : null,
                   ),
                 ),
@@ -136,7 +143,7 @@ class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
                 },
               ),
               verticalSpace(12),
-              // phone number
+              // phone number — strict Saudi format via the value object.
               TextUtils(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -150,12 +157,9 @@ class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
                 textInputType: TextInputType.phone,
                 textInputAction: TextInputAction.done,
                 hintText: 'رقم الهاتف'.tr(),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'يرجى إدخال رقم الهاتف'.tr();
-                  }
-                  return null;
-                },
+                validator: (value) => PhoneNumber.forSaudiRegistration(
+                  value ?? '',
+                ).fold((failure) => failure.message, (_) => null),
               ),
               verticalSpace(12),
               // gender
@@ -171,40 +175,48 @@ class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
                   Expanded(
                     child: _genderButton(
                       title: 'ذكر'.tr(),
-                      value: 0,
-                      selected: cubit.gender == 0,
+                      value: Gender.male,
+                      selected: cubit.gender == Gender.male,
                     ),
                   ),
                   horizontalSpace(12),
                   Expanded(
                     child: _genderButton(
                       title: 'أنثى'.tr(),
-                      value: 1,
-                      selected: cubit.gender == 1,
+                      value: Gender.female,
+                      selected: cubit.gender == Gender.female,
                     ),
                   ),
                 ],
               ),
+              if (_genderError != null) ...[
+                verticalSpace(6),
+                TextUtils(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: redClr,
+                  text: _genderError!,
+                ),
+              ],
               verticalSpace(24),
               // submit button
-              BlocConsumer<ClubTeamCubit, ClubTeamState>(
+              BlocConsumer<ProfileEditCubit, ProfileEditState>(
                 listener: (context, state) {
-                  if (state is clubUpdateProfileSuccess) {
+                  if (state is ProfileEditSuccess) {
                     Navigator.pop(context);
                   }
                 },
                 buildWhen: (prev, curr) =>
-                    curr is clubUpdateProfileLoading ||
-                    curr is clubUpdateProfileSuccess ||
-                    curr is clubUpdateProfileError,
+                    curr is ProfileEditSubmitting ||
+                    curr is ProfileEditSuccess ||
+                    curr is ProfileEditFailure ||
+                    curr is ProfileEditInitial,
                 builder: (context, state) {
-                  if (state is clubUpdateProfileLoading) {
+                  if (state is ProfileEditSubmitting) {
                     return LoadButtonUtils(backGroundColor: mainColor);
                   }
                   return ButtonUtils(
-                    onPressed: () {
-                      cubit.emitUpdateProfile();
-                    },
+                    onPressed: _onSave,
                     text: 'حفظ التغييرات'.tr(),
                     colorstext: Colors.white,
                     background: mainColor,
@@ -219,15 +231,34 @@ class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
     );
   }
 
+  ImageProvider? _avatarImage(ProfileEditCubit cubit) {
+    if (cubit.newImagePath != null && cubit.newImagePath!.isNotEmpty) {
+      return FileImage(File(cubit.newImagePath!));
+    }
+    if (cubit.currentPhotoUrl != null && cubit.currentPhotoUrl!.isNotEmpty) {
+      return NetworkImage(cubit.currentPhotoUrl!);
+    }
+    return null;
+  }
+
+  void _onSave() {
+    final ProfileEditCubit cubit = context.read<ProfileEditCubit>();
+    final bool formOk = _formKey.currentState?.validate() ?? false;
+    final bool genderOk = cubit.gender != null;
+    setState(() => _genderError = genderOk ? null : 'يرجى اختيار الجنس'.tr());
+    if (formOk && genderOk) cubit.submit();
+  }
+
   Widget _genderButton({
     required String title,
-    required int value,
+    required Gender value,
     required bool selected,
   }) {
     return InkWell(
       onTap: () {
         setState(() {
-          context.read<ClubTeamCubit>().gender = value;
+          context.read<ProfileEditCubit>().selectGender(value);
+          _genderError = null;
         });
       },
       borderRadius: BorderRadius.circular(12.r),
@@ -253,17 +284,15 @@ class _ClubEditProfileSheetState extends State<ClubEditProfileSheet> {
   }
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final image = await picker.pickImage(
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(
       source: ImageSource.gallery,
       maxWidth: 800,
       maxHeight: 800,
       imageQuality: 80,
     );
     if (image != null) {
-      setState(() {
-        context.read<ClubTeamCubit>().imagePath = image.path;
-      });
+      setState(() => context.read<ProfileEditCubit>().setImage(image.path));
     }
   }
 }

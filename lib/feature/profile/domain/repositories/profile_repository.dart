@@ -1,6 +1,9 @@
+import 'package:fpdart/fpdart.dart';
+
 import '../../../../core/usecase/usecase.dart';
 import '../../../../shared/domain/entities/profile.dart';
 import '../entities/player_profile.dart';
+import '../entities/update_profile_params.dart';
 
 /// Reads profiles.
 ///
@@ -19,4 +22,8 @@ abstract interface class ProfileRepository {
   ResultFuture<Profile> getMyProfile();
 
   ResultFuture<PlayerProfile> getPlayerProfile(String userId);
+
+  /// Saves the current user's own profile (`Club/UpdateProfile`, multipart).
+  /// Success carries no value; callers re-fetch via [getMyProfile].
+  ResultFuture<Unit> updateMyProfile(UpdateProfileParams params);
 }

@@ -128,7 +128,10 @@ import '../../feature/profile/domain/repositories/profile_repository.dart'
     as _i173;
 import '../../feature/profile/domain/usecases/get_my_profile.dart' as _i352;
 import '../../feature/profile/domain/usecases/get_player_profile.dart' as _i513;
+import '../../feature/profile/domain/usecases/update_my_profile.dart' as _i567;
 import '../../feature/profile/presentation/cubit/profile_cubit.dart' as _i499;
+import '../../feature/profile/presentation/cubit/profile_edit_cubit.dart'
+    as _i394;
 import '../../feature/trial_details/cubit/trial_details_cubit.dart' as _i896;
 import '../../shared/data/cached_subscription_reader.dart' as _i287;
 import '../../shared/domain/subscription_reader.dart' as _i876;
@@ -255,6 +258,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i513.GetPlayerProfile>(
       () => _i513.GetPlayerProfile(gh<_i173.ProfileRepository>()),
     );
+    gh.factory<_i567.UpdateMyProfile>(
+      () => _i567.UpdateMyProfile(gh<_i173.ProfileRepository>()),
+    );
     gh.lazySingleton<_i506.TermsRepository>(
       () => _i433.TermsRepositoryImpl(
         gh<_i891.TermsRemoteDataSource>(),
@@ -293,6 +299,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i616.GetExerciseDetails>(
       () => _i616.GetExerciseDetails(gh<_i1032.ExerciseRepository>()),
+    );
+    gh.factory<_i394.ProfileEditCubit>(
+      () => _i394.ProfileEditCubit(gh<_i567.UpdateMyProfile>()),
     );
     gh.factory<_i420.ResendPhoneOtp>(
       () => _i420.ResendPhoneOtp(gh<_i317.OtpRepository>()),
