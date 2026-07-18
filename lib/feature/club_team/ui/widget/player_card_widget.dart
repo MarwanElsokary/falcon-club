@@ -14,6 +14,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
 import '../../../../core/utils/colors.dart';
+import '../../../../core/widget/show_confirm_dialog.dart';
 import 'assign_exercise_sheet.dart';
 
 class PlayerCardWidget extends StatelessWidget {
@@ -292,26 +293,12 @@ class _CardActions extends StatelessWidget {
   const _CardActions({required this.player});
 
   void _confirmDelete(BuildContext context) {
-    showDialog(
+    final ClubTeamCubit cubit = context.read<ClubTeamCubit>();
+    showConfirmDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('تأكيد الحذف'),
-        content: Text('هل تريد حذف "${player.name}" من الفريق نهائياً؟'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.read<ClubTeamCubit>().deletePlayerFromTeam(player.id);
-            },
-            child: Text('حذف', style: TextStyle(color: Colors.red.shade400)),
-          ),
-        ],
-      ),
+      isDestructive: true,
+      title: 'هل تريد حذف "${player.name}" من الفريق؟'.tr(),
+      onConfirm: () => cubit.deletePlayerFromTeam(player.id),
     );
   }
 

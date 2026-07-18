@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/utils/styles.dart';
+import 'package:falconclubapp/core/widget/show_confirm_dialog.dart';
 
 import '../../../club_team/cubit/club_team_cubit.dart';
 import '../../../club_team/cubit/club_team_state.dart';
@@ -222,31 +224,12 @@ class _DeleteButton extends StatelessWidget {
   });
 
   void _confirmDelete(BuildContext context) {
-    showDialog(
+    final ClubTeamCubit cubit = context.read<ClubTeamCubit>();
+    showConfirmDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        title: const Text('تأكيد الحذف'),
-        content: Text('هل تريد حذف "$traineeName" من الفريق؟'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.read<ClubTeamCubit>().deleteTrainee(traineeId);
-            },
-            child: Text(
-              'حذف',
-              style: TextStyle(color: Colors.red.shade400),
-            ),
-          ),
-        ],
-      ),
+      isDestructive: true,
+      title: 'هل تريد حذف "$traineeName" من الفريق؟'.tr(),
+      onConfirm: () => cubit.deleteTrainee(traineeId),
     );
   }
 

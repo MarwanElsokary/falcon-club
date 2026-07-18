@@ -98,9 +98,11 @@ void main() {
   int count(String key) => constructed[key] ?? 0;
   void bump(String key) => constructed[key] = (constructed[key] ?? 0) + 1;
 
-  setUp(() {
+  setUp(() async {
     countReset();
-    getIt.reset();
+    // GetIt.reset() is async; unawaited it lands *after* the registrations
+    // below and silently wipes them.
+    await getIt.reset();
 
     getIt.registerFactory<ExperimentsCubit>(() {
       bump('experiments');

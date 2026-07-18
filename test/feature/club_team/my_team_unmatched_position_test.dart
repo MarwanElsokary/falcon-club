@@ -48,8 +48,10 @@ ClubPlayer _player({required String id, required String name, required String po
     );
 
 void main() {
-  setUp(() {
-    getIt.reset();
+  setUp(() async {
+    // GetIt.reset() is async; unawaited it lands *after* the registrations
+    // below and silently wipes them.
+    await getIt.reset();
     getIt.registerFactory<ClubExercisesCubit>(
       () => ClubExercisesCubit(_MockClubExercisesRepo()),
     );

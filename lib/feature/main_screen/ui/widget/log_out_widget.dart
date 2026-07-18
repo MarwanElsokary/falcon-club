@@ -10,6 +10,7 @@ import '../../../../../core/widget/slide_enimation_widget.dart';
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widget/fav_icon_click.dart';
+import '../../../../core/widget/show_confirm_dialog.dart';
 import '../../../auth/domain/usecases/log_out.dart';
 
 /// Confirmation dialog for signing out.
@@ -42,6 +43,9 @@ showLogoutDialog(
         actions: <Widget>[
           SlideEnimationWidget(
             index: 0,
+            // Same entrance timing as the shared confirm dialog, so the two do
+            // not diverge — the 2500ms default made this one feel sluggish.
+            duration: kDialogEntranceDuration,
             child: Stack(
               children: [
                 Container(
