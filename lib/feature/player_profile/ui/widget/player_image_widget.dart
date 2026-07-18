@@ -9,9 +9,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class PlayerImageWidget extends StatelessWidget {
-  const PlayerImageWidget({super.key, required this.playerProfile});
+  const PlayerImageWidget({
+    super.key,
+    required this.playerProfile,
+    this.favoriteButton,
+  });
 
   final PlayerProfile playerProfile;
+
+  /// Optional overlay pinned to the photo's bottom-start corner (the favourite
+  /// heart on the player-profile screen). Null everywhere else.
+  final Widget? favoriteButton;
 
   @override
   Widget build(BuildContext context) {
@@ -21,40 +29,53 @@ class PlayerImageWidget extends StatelessWidget {
         //image
         Align(
           alignment: AlignmentGeometry.center,
-          child: Container(
-            width: 98.w,
-            height: 139.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100.r),
-              border: Border.all(color: secondMainColor, width: 5.w),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                100.r,
-              ), // Using .r for responsive border radius
-              child: CachedNetworkImage(
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
                 width: 98.w,
                 height: 139.w,
-                imageUrl: playerProfile.photoUrl ?? '',
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Skeletonizer(
-                  enabled: true,
-                  child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100.r),
+                  border: Border.all(color: secondMainColor, width: 5.w),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    100.r,
+                  ), // Using .r for responsive border radius
+                  child: CachedNetworkImage(
                     width: 98.w,
                     height: 139.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        20.r,
-                      ), // Match the border radius
+                    imageUrl: playerProfile.photoUrl ?? '',
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Skeletonizer(
+                      enabled: true,
+                      child: Container(
+                        width: 98.w,
+                        height: 139.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            20.r,
+                          ), // Match the border radius
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Padding(
+                      padding: EdgeInsets.all(20.w),
+                      child: SvgPicture.asset(
+                        'assets/svgs/unavailabeImage.svg',
+                      ),
                     ),
                   ),
                 ),
-                errorWidget: (context, url, error) => Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: SvgPicture.asset('assets/svgs/unavailabeImage.svg'),
-                ),
               ),
-            ),
+              if (favoriteButton != null)
+                PositionedDirectional(
+                  bottom: -4.h,
+                  start: -4.w,
+                  child: favoriteButton!,
+                ),
+            ],
           ),
         ),
         verticalSpace(5),

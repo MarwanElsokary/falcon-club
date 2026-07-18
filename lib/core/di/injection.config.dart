@@ -119,6 +119,19 @@ import '../../feature/exercise/presentation/cubit/exercise_details_cubit.dart'
     as _i527;
 import '../../feature/exercise/presentation/cubit/exercise_list_cubit.dart'
     as _i973;
+import '../../feature/favorites/data/datasources/favorites_remote_data_source.dart'
+    as _i696;
+import '../../feature/favorites/data/repositories/favorites_repository_impl.dart'
+    as _i940;
+import '../../feature/favorites/domain/favorites_sync.dart' as _i485;
+import '../../feature/favorites/domain/repositories/favorites_repository.dart'
+    as _i631;
+import '../../feature/favorites/domain/usecases/get_favorites.dart' as _i309;
+import '../../feature/favorites/domain/usecases/toggle_favorite.dart' as _i480;
+import '../../feature/favorites/presentation/cubit/favorites_cubit.dart'
+    as _i776;
+import '../../feature/favorites/presentation/cubit/player_favorite_cubit.dart'
+    as _i725;
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart' as _i72;
 import '../../feature/profile/data/datasources/profile_remote_data_source.dart'
     as _i256;
@@ -164,11 +177,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i449.ErrorMapper>(() => const _i449.ErrorMapper());
+    gh.lazySingleton<_i485.FavoritesSync>(() => _i485.FavoritesSync());
     gh.lazySingleton<_i525.ImageCompressor>(
       () => const _i525.FlutterImageCompressor(),
     );
     gh.lazySingleton<_i700.ApiService>(
       () => registerModule.apiService(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i696.FavoritesRemoteDataSource>(
+      () => _i696.RetrofitFavoritesRemoteDataSource(gh<_i700.ApiService>()),
     );
     gh.lazySingleton<_i545.PasswordResetRemoteDataSource>(
       () => _i545.RetrofitPasswordResetRemoteDataSource(gh<_i700.ApiService>()),
@@ -179,11 +196,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i892.KeyValueStore>(
       () => _i204.SharedPrefsStore(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i631.FavoritesRepository>(
+      () => _i940.FavoritesRepositoryImpl(
+        gh<_i696.FavoritesRemoteDataSource>(),
+        gh<_i449.ErrorMapper>(),
+      ),
+    );
     gh.lazySingleton<_i601.SessionLocalDataSource>(
       () => _i601.StoredSessionLocalDataSource(
         gh<_i271.SecureStore>(),
         gh<_i892.KeyValueStore>(),
       ),
+    );
+    gh.factory<_i309.GetFavorites>(
+      () => _i309.GetFavorites(gh<_i631.FavoritesRepository>()),
+    );
+    gh.factory<_i480.ToggleFavorite>(
+      () => _i480.ToggleFavorite(gh<_i631.FavoritesRepository>()),
     );
     gh.lazySingleton<_i897.PasswordResetRepository>(
       () => _i373.PasswordResetRepositoryImpl(
@@ -230,6 +259,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i343.PendingRegistrationLocalDataSource>(
       () => _i343.SecurePendingRegistrationLocalDataSource(
         gh<_i271.SecureStore>(),
+      ),
+    );
+    gh.factory<_i776.FavoritesCubit>(
+      () => _i776.FavoritesCubit(
+        gh<_i309.GetFavorites>(),
+        gh<_i480.ToggleFavorite>(),
+        gh<_i485.FavoritesSync>(),
+      ),
+    );
+    gh.factory<_i725.PlayerFavoriteCubit>(
+      () => _i725.PlayerFavoriteCubit(
+        gh<_i309.GetFavorites>(),
+        gh<_i480.ToggleFavorite>(),
+        gh<_i485.FavoritesSync>(),
       ),
     );
     gh.lazySingleton<_i173.ProfileRepository>(

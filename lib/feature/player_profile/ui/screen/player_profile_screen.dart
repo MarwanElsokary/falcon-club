@@ -14,6 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../favorites/presentation/cubit/player_favorite_cubit.dart';
+import '../../../favorites/presentation/cubit/player_favorite_state.dart';
+import '../../../favorites/presentation/widgets/animated_favorite_heart.dart';
 import '../../../profile/domain/entities/player_profile.dart';
 import '../../../profile/presentation/cubit/player_profile_cubit.dart';
 import '../../../profile/presentation/cubit/player_profile_state.dart';
@@ -47,108 +50,68 @@ class PlayerProfileScreen extends StatefulWidget {
 
 class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
   bool _skillsLoaded = false;
-  bool _isFavorited = false;
-  bool _isFavLoading = false;
 
   @override
   void initState() {
     super.initState();
     log('🎬 PlayerProfileScreen initialized for playerId: ${widget.playerId}');
-    _isFavorited = context.read<MainCubit>().isFavorited(widget.playerId);
-  }
-
-  Future<void> _toggleFavorite() async {
-    if (_isFavLoading) return;
-    await context.read<MainCubit>().emitToggleFavorite(
-      playerId: widget.playerId,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MainCubit, MainState>(
-      listenWhen: (_, current) =>
-          current is toggleFavoriteLoading ||
-          current is toggleFavoriteSuccess ||
-          current is toggleFavoriteError,
-      listener: (context, state) {
-        state.maybeWhen(
-          toggleFavoriteLoading: () {
-            setState(() => _isFavLoading = true);
-          },
-          toggleFavoriteSuccess: (playerId, isFavorited, message) {
-            setState(() {
-              _isFavorited = isFavorited;
-              _isFavLoading = false;
-            });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  message,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                backgroundColor: _isFavorited
-                    ? const Color(0xFF1A6B3C)
-                    : const Color(0xFF8B1A1A),
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-          },
-          toggleFavoriteError: (error) {
-            setState(() => _isFavLoading = false);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  error,
-                  style: TextStyle(color: Colors.white, fontSize: 13.sp),
-                  textAlign: TextAlign.center,
-                ),
-                backgroundColor: Colors.red.shade700,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-              ),
-            );
-          },
-          orElse: () {},
-        );
-      },
-      child: PopScope(
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size(context.displayWidth, 30.h),
-            child: Container(
-              color: mainColor,
-              child: SafeArea(
-                // ✅ AppBar نظيف — بس زرار الرجوع والعنوان
-                child: PlayerProfileAppBarWidget(),
-              ),
+    return PopScope(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size(context.displayWidth, 30.h),
+          child: Container(
+            color: mainColor,
+            child: SafeArea(
+              // ✅ AppBar نظيف — بس زرار الرجوع والعنوان
+              child: PlayerProfileAppBarWidget(),
             ),
-          ),
-          body: Container(
-            width: context.displayWidth,
-            height: context.displayHeight,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Frame 1011 1.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: _buildMainContent(),
           ),
         ),
+        body: Container(
+          width: context.displayWidth,
+          height: context.displayHeight,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/Frame 1011 1.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: _buildMainContent(),
+        ),
+      ),
+    );
+  }
+
+  /// The favourite heart pinned to the player's photo (bottom-start). Shares the
+  /// domain toggle with the favourites grid; a failed toggle rolls back and
+  /// shows a snackbar. Tappable only once membership has resolved.
+  Widget _buildFavoriteHeart() {
+    return BlocConsumer<PlayerFavoriteCubit, PlayerFavoriteState>(
+      listenWhen: (_, curr) => curr is PlayerFavoriteActionError,
+      listener: (context, state) {
+        if (state is PlayerFavoriteActionError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: redClr,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            ),
+          );
+        }
+      },
+      builder: (context, state) => AnimatedFavoriteHeart(
+        isFavorited: state.isFavorited,
+        onTap: state.isResolved
+            ? () => context.read<PlayerFavoriteCubit>().toggle(widget.playerId)
+            : null,
       ),
     );
   }
@@ -193,7 +156,12 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
                 verticalSpace(20),
 
                 //user Image
-                PlayerImageWidget(playerProfile: playerProfile),
+                PlayerImageWidget(
+                  playerProfile: playerProfile,
+                  favoriteButton: widget.showFavoriteButton
+                      ? _buildFavoriteHeart()
+                      : null,
+                ),
                 verticalSpace(5),
                 _buildSkillsChartSection(),
                 SlideEnimationWidget(

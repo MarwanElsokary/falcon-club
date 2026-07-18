@@ -60,36 +60,6 @@ class ClubTeamRepo {
     }
   }
 
-  //addToFav
-  Future<ApiResult> addToFav(String playerId) async {
-    try {
-      final response = await _apiService.addToFav(playerId);
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
-  }
-
-  //removeFromFav
-  Future<ApiResult> removeFromFav(String playerId) async {
-    try {
-      final response = await _apiService.removeFromFav(playerId);
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
-  }
-
-  //getFav — returns raw response; cubit will parse players
-  Future<ApiResult> getFav() async {
-    try {
-      final response = await _apiService.getFav();
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
-  }
-
   //getReelsByPlayerId — returns list of thumbnail/video URLs
   Future<ApiResult<List<String>>> getReelsByPlayerId(String playerId) async {
     try {

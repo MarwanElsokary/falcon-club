@@ -19,9 +19,10 @@ import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../home/ui/screen/home_screen.dart';
 import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
 import '../../../training/cubit/training_cubit.dart';
+import '../../../favorites/presentation/cubit/favorites_cubit.dart';
+import '../../../favorites/presentation/screens/favorites_screen.dart';
 import '../../cubit/club_team_cubit.dart';
 import 'club_my_team_screen.dart';
-import 'favorites_screen.dart';
 
 class ClubMainScreen extends StatefulWidget {
   const ClubMainScreen({super.key});
@@ -121,7 +122,10 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
                     ),
 
                     // 3 — قائمة الاهتمامات
-                    const FavoritesScreen(),
+                    BlocProvider(
+                      create: (_) => getIt<FavoritesCubit>()..load(),
+                      child: const FavoritesScreen(),
+                    ),
 
                     // 4 — الرتب
                     const RankScreen(),
@@ -243,8 +247,9 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
       'assets/svgs/reals_un_select.svg',
       color: mainColor.withOpacity(0.5),
     ),
+    // المفضلة — نفس قلب الـ Lottie المستخدم في الكارت والبروفايل
     SvgPicture.asset(
-      'assets/svgs/solar_clipboard-linear.svg',
+      'assets/svgs/mingcute_heart-fill.svg',
       color: mainColor.withOpacity(0.5),
     ),
     SvgPicture.asset(
@@ -257,7 +262,7 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
     SvgPicture.asset('assets/svgs/home_select.svg'),
     Icon(Icons.groups, color: mainColor, size: 26.h),
     SvgPicture.asset('assets/svgs/reals_select.svg'),
-    SvgPicture.asset('assets/svgs/solar_clipboard-linear1.svg'),
+    SvgPicture.asset('assets/svgs/mingcute_heart-fill.svg', color: mainColor),
     SvgPicture.asset('assets/svgs/rank_icon.svg', color: mainColor),
   ];
 
@@ -265,7 +270,7 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
     'الرئيسية'.tr(),
     'فريقي'.tr(),
     'اللاعيبين'.tr(),
-    'الاهتمامات'.tr(),
+    'المفضلة'.tr(),
     'الرتب'.tr(),
   ];
 }

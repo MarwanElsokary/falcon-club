@@ -18,6 +18,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../favorites/presentation/cubit/favorites_cubit.dart';
+import '../../../favorites/presentation/screens/favorites_screen.dart';
 import '../../../training/cubit/training_cubit.dart';
 import 'ScoutHomeScreen.dart';
 import 'custom_drawer_widget_scout.dart';
@@ -125,8 +127,11 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                       ),
                     ),
 
-                    // 3 — اللاعبين المفضلين
-                    const _ScoutFavoritesTab(),
+                    // 3 — المفضلة (نفس تبويب الكوتش، Scout token يدعمه)
+                    BlocProvider(
+                      create: (_) => getIt<FavoritesCubit>()..load(),
+                      child: const FavoritesScreen(),
+                    ),
 
                     // 4 — الرتب
                     // ❌ مفيش BlocProvider هنا — بيجيه من فوق
@@ -248,8 +253,9 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
       'assets/svgs/reals_un_select.svg',
       color: mainColor.withOpacity(0.5),
     ),
+    // المفضلة — نفس قلب الـ Lottie المستخدم في الكارت والبروفايل
     SvgPicture.asset(
-      'assets/svgs/solar_clipboard-linear.svg',
+      'assets/svgs/mingcute_heart-fill.svg',
       color: mainColor.withOpacity(0.5),
     ),
     SvgPicture.asset(
@@ -262,7 +268,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
     SvgPicture.asset('assets/svgs/home_select.svg'),
     Icon(Icons.sports_soccer, color: mainColor, size: 26.h),
     SvgPicture.asset('assets/svgs/reals_select.svg'),
-    SvgPicture.asset('assets/svgs/solar_clipboard-linear1.svg'),
+    SvgPicture.asset('assets/svgs/mingcute_heart-fill.svg', color: mainColor),
     SvgPicture.asset('assets/svgs/rank_icon.svg', color: mainColor),
   ];
 
@@ -270,16 +276,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
     'الرئيسية'.tr(),
     'التمارين'.tr(),
     'الريلز'.tr(),
-    'اللاعبين'.tr(),
+    'المفضلة'.tr(),
     'الرتب'.tr(),
   ];
-}
-
-class _ScoutFavoritesTab extends StatelessWidget {
-  const _ScoutFavoritesTab();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('قريباً — قائمة اللاعبين'));
-  }
 }
