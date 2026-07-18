@@ -2,12 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
-import 'package:falconclubapp/core/widget/padding_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../shared/domain/entities/profile.dart';
@@ -16,16 +14,23 @@ import '../../../club_team/cubit/club_team_state.dart';
 import '../../../club_team/ui/widget/club_edit_profile_sheet.dart';
 import '../cubit/profile_cubit.dart';
 import '../cubit/profile_state.dart';
+import '../widgets/profile_action_tile.dart';
 import '../widgets/profile_error_view.dart';
-import '../widgets/profile_info_card.dart';
 import '../widgets/profile_loading_view.dart';
 import '../widgets/profile_scaffold.dart';
+import '../widgets/profile_section_card.dart';
 
 /// The Coach/Club's own profile — view + entry to edit.
 ///
 /// Replaces `ClubProfileScreen`. Display is driven by [ProfileCubit] over the
-/// domain [Profile]; the edit sheet still rides `ClubTeamCubit` (migrated in
-/// Phase 3), so a successful edit refreshes the display via [ProfileCubit].
+/// domain [Profile]. As of Phase 2.5 it wears the player-profile section-card
+/// chrome ([ProfileSectionCard] / [ProfileActionTile]) so the self-profile and
+/// the player profile read as one design, and new sections (a Favorites card in
+/// Phase 6) slot into the same language.
+///
+/// The edit path is deliberately unchanged from Phase 2 — it still rides
+/// `ClubTeamCubit` and opens `ClubEditProfileSheet`; a successful edit refreshes
+/// the display via [ProfileCubit]. The edit internals migrate in Phase 3.
 class CoachProfileScreen extends StatelessWidget {
   const CoachProfileScreen({super.key});
 
@@ -71,7 +76,7 @@ class CoachProfileScreen extends StatelessWidget {
         children: [
           verticalSpace(20),
 
-          // ── صورة البروفايل ────────────────────────────────────────────
+          // ── صورة البروفايل (نفس معالجة بروفايل اللاعب) ────────────────
           Align(
             alignment: Alignment.center,
             child: Container(
@@ -108,55 +113,48 @@ class CoachProfileScreen extends StatelessWidget {
           ),
           verticalSpace(10),
 
-          // ── الاسم ─────────────────────────────────────────────────────
+          // ── الاسم + اسم النادي (نفس نمط الخط، مثل بروفايل اللاعب) ──────
           TextUtils(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: Colors.white,
             text: profile.fullName,
           ),
+          if (profile.clubName != null && profile.clubName!.isNotEmpty) ...[
+            verticalSpace(4),
+            TextUtils(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              text: profile.clubName!,
+            ),
+          ],
           verticalSpace(20),
 
-          // ── بطاقة المعلومات: هاتف | جنس | نادي ──────────────────────
-          ProfileInfoCard(
-            dividerColor: greyClr.withOpacity(0.3),
-            items: [
-              _infoItem(title: 'الهاتف'.tr(), value: profile.phone ?? ''),
-              _infoItem(
-                title: 'الجنس'.tr(),
-                value: profile.gender?.arabicLabel ?? '',
-              ),
-              _infoItem(title: 'النادي'.tr(), value: profile.clubName ?? ''),
-            ],
+          // ── بطاقة المعلومات: هاتف / جنس ──────────────────────────────
+          ProfileSectionCard(
+            title: 'معلومات'.tr(),
+            child: _contactGrid(profile),
           ),
-          verticalSpace(30),
+          verticalSpace(16),
 
-          // ── قائمة الإجراءات ───────────────────────────────────────────
-          Padding(
-            padding: paddingUtils(),
-            child: Column(
-              children: [
-                _buildActionItem(
-                  icon: 'assets/svgs/svgexport-18 (1) 2.svg',
-                  iconWidth: 20.w,
-                  title: 'تعديل الملف الشخصي'.tr(),
-                  onTap: () {
-                    final cubit = context.read<ClubTeamCubit>();
-                    cubit.initProfileForm();
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => BlocProvider.value(
-                        value: cubit,
-                        child: const ClubEditProfileSheet(),
-                      ),
-                    );
-                  },
+          // ── إجراء تعديل الملف الشخصي (نفس مسار Phase 2 دون تغيير) ─────
+          ProfileActionTile(
+            iconAsset: 'assets/svgs/svgexport-18 (1) 2.svg',
+            title: 'تعديل الملف الشخصي'.tr(),
+            onTap: () {
+              final cubit = context.read<ClubTeamCubit>();
+              cubit.initProfileForm();
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (_) => BlocProvider.value(
+                  value: cubit,
+                  child: const ClubEditProfileSheet(),
                 ),
-                _buildDivider(),
-              ],
-            ),
+              );
+            },
           ),
 
           verticalSpace(100),
@@ -165,56 +163,77 @@ class CoachProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionItem({
-    required String icon,
-    required double iconWidth,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12.r),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 14.h),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextUtils(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-                text: title,
-              ),
-            ),
-            SizedBox(width: 12.w),
-            SvgPicture.asset(icon, width: iconWidth, color: Colors.white),
-          ],
+  /// Club now sits under the name (like the player profile), so the section is
+  /// the two remaining contact facts — phone then gender — as full-width rows.
+  /// Full-width rows (no side-by-side `Expanded` under the unbounded scroll
+  /// view) also keep the layout bounded by construction.
+  Widget _contactGrid(Profile profile) {
+    return Column(
+      children: [
+        _contactRow(
+          icon: Icons.phone_outlined,
+          label: 'الهاتف'.tr(),
+          value: profile.phone,
         ),
-      ),
+        verticalSpace(12),
+        _contactRow(
+          icon: Icons.wc_outlined,
+          label: 'الجنس'.tr(),
+          value: profile.gender?.arabicLabel,
+        ),
+      ],
     );
   }
 
-  Widget _buildDivider() =>
-      Divider(color: Colors.white.withOpacity(0.15), height: 1);
-
-  Widget _infoItem({required String title, required String value}) {
-    return Column(
-      children: [
-        TextUtils(
-          fontSize: 10,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          text: title,
-        ),
-        verticalSpace(2),
-        TextUtils(
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          text: value,
-          maxlines: 1,
-        ),
-      ],
+  /// A single contact fact: a `mainColor`-tinted icon chip beside a stacked
+  /// label/value in a soft rounded cell — the "more developed" cell treatment.
+  Widget _contactRow({
+    required IconData icon,
+    required String label,
+    required String? value,
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+      decoration: BoxDecoration(
+        color: mainColor.withOpacity(0.04),
+        border: Border.all(color: mainColor.withOpacity(0.15)),
+        borderRadius: BorderRadius.circular(18.r),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 40.w,
+            height: 40.w,
+            decoration: BoxDecoration(
+              color: mainColor.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: mainColor, size: 20.w),
+          ),
+          horizontalSpace(12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextUtils(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black54,
+                  text: label,
+                ),
+                verticalSpace(2),
+                TextUtils(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black87,
+                  text: (value == null || value.isEmpty) ? '—' : value,
+                  maxlines: 1,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
