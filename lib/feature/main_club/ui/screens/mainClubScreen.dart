@@ -20,6 +20,7 @@ import '../../../club_team/cubit/club_team_cubit.dart';
 import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../home/ui/screen/home_screen.dart';
 import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
+import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../../training/cubit/training_cubit.dart';
 import '../../cubit/requests_cubit.dart';
 import 'ClubMyTeamScreen.dart';
@@ -73,7 +74,7 @@ class _ClubMainScreenState extends State<MainClubScreen> {
         key: _scaffoldKey,
 
         drawer: BlocProvider(
-          create: (_) => getIt<MainCubit>()..emitMyProfile(),
+          create: (_) => getIt<ProfileCubit>()..load(),
           child: const CustomDrawer(),
         ),
 

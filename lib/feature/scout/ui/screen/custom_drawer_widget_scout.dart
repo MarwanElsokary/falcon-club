@@ -1,48 +1,19 @@
-import 'package:falconclubapp/core/di/dependency_injection.dart';
-import 'package:falconclubapp/shared/domain/entities/subscription.dart';
-import 'package:falconclubapp/shared/domain/subscription_reader.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falconclubapp/core/cache/cach_Helper.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/url-call.dart';
 import 'package:falconclubapp/feature/main_screen/ui/widget/log_out_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
-import '../../../../core/widget/show_photo_widget.dart';
 import '../../../../core/widget/text_utils.dart';
-import '../../../main_screen/cubit/main_cubit.dart';
-import '../../../main_screen/cubit/main_state.dart';
+import '../../../profile/presentation/widgets/profile_drawer_header.dart';
 
 class CustomDrawerScout extends StatelessWidget {
   const CustomDrawerScout({super.key});
-
-  /// The label under the scout's name.
-  ///
-  /// It used to be driven by the raw `isSubscribed` flag with its own inline
-  /// day-counting, and it got the edge case wrong: a subscription that had been
-  /// *bought* but had **zero days left** fell into the `else` and rendered
-  /// "مشترك" — in green. An expired scout was told they were subscribed.
-  ///
-  /// `Subscription.isActive` is the single rule now, so "expired" and "never
-  /// subscribed" both read "غير مشترك", which is what they both are.
-  String _getSubscriptionStatusText(Subscription subscription) {
-    if (!subscription.isActive) return 'غير مشترك'.tr();
-
-    final int? days = subscription.remainingDays;
-    if (days == null) return 'مشترك'.tr();
-    return '${'الأيام المتبقية'.tr()}: $days ${'يوم'.tr()}';
-  }
-
-  Color _getSubscriptionColor(Subscription subscription) =>
-      subscription.isActive ? Colors.green : redClr;
 
   @override
   Widget build(BuildContext context) {
@@ -203,263 +174,13 @@ class CustomDrawerScout extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      //user data
-                      BlocBuilder<MainCubit, MainState>(
-                        builder: (context, state) {
-                          // One entitlement rule, shared with the rank screen,
-                          // the exercise paywall and the package screen.
-                          final subscription = getIt<SubscriptionReader>()
-                              .current();
-                          final isSubscribed = subscription.isActive;
-                          final subscriptionText = _getSubscriptionStatusText(
-                            subscription,
-                          );
-
-                          return InkWell(
-                            onTap: () {
-                              context.pushNamed(AppRoute.packageScreen);
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(100),
-                                    onTap: () {
-                                      showPhotoDialog(
-                                        context: context,
-                                        image:
-                                            CacheHelper.getmyProfile() == null
-                                            ? ''
-                                            : CacheHelper.getmyProfile()!
-                                                      .data
-                                                      .photo ??
-                                                  '',
-                                        name: CacheHelper.getmyProfile() == null
-                                            ? ''
-                                            : CacheHelper.getmyProfile()!
-                                                      .data
-                                                      .firstName ??
-                                                  '',
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2.w,
-                                        ),
-                                      ),
-                                      child: ClipOval(
-                                        child: SizedBox(
-                                          width: 48.w,
-                                          height: 48.w,
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                CacheHelper.getmyProfile() ==
-                                                    null
-                                                ? ''
-                                                : CacheHelper.getmyProfile()!
-                                                          .data
-                                                          .photo ??
-                                                      '',
-                                            fit: BoxFit.cover,
-                                            placeholder: (context, url) =>
-                                                Skeletonizer(
-                                                  enabled: true,
-                                                  child: Container(
-                                                    height: 48.w,
-                                                    width: 48.w,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                  ),
-                                                ),
-                                            errorWidget:
-                                                (
-                                                  context,
-                                                  url,
-                                                  error,
-                                                ) => Container(
-                                                  padding: EdgeInsets.all(12.w),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                        color: offWhiteClr,
-                                                      ),
-                                                  child: Image.asset(
-                                                    'assets/images/Mask group.png',
-                                                    width: 48.w,
-                                                  ),
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  horizontalSpace(10),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        TextUtils(
-                                          maxlines: 1,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.white,
-                                          text:
-                                              'هلا ${CacheHelper.getmyProfile() == null ? '' : CacheHelper.getmyProfile()!.data.firstName ?? ''}!',
-                                        ),
-                                        verticalSpace(3),
-                                        TextUtils(
-                                          maxlines: 1,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white,
-                                          text:
-                                              CacheHelper.getmyProfile() == null
-                                              ? ''
-                                              : CacheHelper.getmyProfile()!
-                                                        .data
-                                                        .positionName ??
-                                                    '',
-                                        ),
-                                        verticalSpace(3),
-
-                                        // عرض حالة الاشتراك بشكل مشابه لشاشة البروفايل
-                                        if (!isSubscribed)
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 8.w,
-                                              vertical: 4.h,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: redClr.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              border: Border.all(
-                                                color: redClr.withOpacity(0.3),
-                                                width: 1.w,
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Icon(
-                                                  Icons.lock_outline,
-                                                  color: redClr,
-                                                  size: 12.w,
-                                                ),
-                                                horizontalSpace(4),
-                                                Flexible(
-                                                  child: TextUtils(
-                                                    maxlines: 1,
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: redClr,
-                                                    text: 'غير مشترك',
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        else
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 8.w,
-                                              vertical: 4.h,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: Colors.green.withOpacity(
-                                                0.1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              border: Border.all(
-                                                color: Colors.green.withOpacity(
-                                                  0.3,
-                                                ),
-                                                width: 1.w,
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Icon(
-                                                  Icons.check_circle_outline,
-                                                  color: Colors.green,
-                                                  size: 12.w,
-                                                ),
-                                                horizontalSpace(4),
-                                                Flexible(
-                                                  child: TextUtils(
-                                                    maxlines: 1,
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.green,
-                                                    text: subscriptionText,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-
-                                        verticalSpace(5),
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      if (context
-                                          .read<MainCubit>()
-                                          .sliderDrawerKey
-                                          .currentState!
-                                          .isDrawerOpen) {
-                                        context
-                                            .read<MainCubit>()
-                                            .sliderDrawerKey
-                                            .currentState
-                                            ?.closeDrawer();
-                                      } else {
-                                        context
-                                            .read<MainCubit>()
-                                            .sliderDrawerKey
-                                            .currentState
-                                            ?.openDrawer();
-                                      }
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(5.w),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: offWhiteClr.withOpacity(0.06),
-                                      ),
-                                      child: Icon(
-                                        Icons.close,
-                                        color: Colors.white,
-                                        size: 25.w,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+                      // ── الهيدر المشترك ──────────────────────────────
+                      ProfileDrawerHeader(
+                        showSubscriptionBadge: true,
+                        onHeaderTap: () =>
+                            context.pushNamed(AppRoute.packageScreen),
+                        onClose: () => Scaffold.maybeOf(context)?.closeDrawer(),
                       ),
-
-                      verticalSpace(7),
-                      Divider(
-                        color: offWhiteClr.withOpacity(0.3),
-                        endIndent: 20.w,
-                        indent: 20.w,
-                      ),
-                      verticalSpace(20),
 
                       ListView.builder(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),

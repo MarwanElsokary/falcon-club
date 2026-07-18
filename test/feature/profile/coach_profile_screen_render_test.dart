@@ -2,6 +2,7 @@ import 'package:falconclubapp/core/error/failures.dart';
 import 'package:falconclubapp/feature/profile/domain/usecases/get_my_profile.dart';
 import 'package:falconclubapp/feature/profile/domain/usecases/update_my_profile.dart';
 import 'package:falconclubapp/feature/profile/presentation/cubit/profile_cubit.dart';
+import 'package:falconclubapp/feature/profile/domain/profile_cache.dart';
 import 'package:falconclubapp/feature/profile/presentation/cubit/profile_edit_cubit.dart';
 import 'package:falconclubapp/feature/profile/presentation/screens/coach_profile_screen.dart';
 import 'package:falconclubapp/shared/domain/entities/gender.dart';
@@ -63,7 +64,7 @@ void main() {
   Future<void> pumpScreen(WidgetTester tester) async {
     ignoreOverflowWarnings();
 
-    final ProfileCubit profileCubit = ProfileCubit(getMyProfile);
+    final ProfileCubit profileCubit = ProfileCubit(getMyProfile, ProfileCache());
     await profileCubit.load();
 
     tester.view.physicalSize = const Size(1170, 2532);

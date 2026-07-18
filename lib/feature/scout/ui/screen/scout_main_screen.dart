@@ -20,6 +20,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../favorites/presentation/cubit/favorites_cubit.dart';
 import '../../../favorites/presentation/screens/favorites_screen.dart';
+import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../../training/cubit/training_cubit.dart';
 import 'ScoutHomeScreen.dart';
 import 'custom_drawer_widget_scout.dart';
@@ -60,7 +61,7 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
       child: Scaffold(
         key: _scaffoldKey,
         drawer: BlocProvider(
-          create: (_) => getIt<MainCubit>()..emitMyProfile(),
+          create: (_) => getIt<ProfileCubit>()..load(),
           child: const CustomDrawerScout(),
         ),
         body: Stack(

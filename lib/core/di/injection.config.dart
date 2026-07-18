@@ -141,6 +141,7 @@ import '../../feature/profile/data/repositories/completed_exercises_repository_i
     as _i906;
 import '../../feature/profile/data/repositories/profile_repository_impl.dart'
     as _i1035;
+import '../../feature/profile/domain/profile_cache.dart' as _i331;
 import '../../feature/profile/domain/repositories/completed_exercises_repository.dart'
     as _i487;
 import '../../feature/profile/domain/repositories/profile_repository.dart'
@@ -188,6 +189,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i449.ErrorMapper>(() => const _i449.ErrorMapper());
     gh.lazySingleton<_i485.FavoritesSync>(() => _i485.FavoritesSync());
+    gh.lazySingleton<_i331.ProfileCache>(() => _i331.ProfileCache());
     gh.lazySingleton<_i525.ImageCompressor>(
       () => const _i525.FlutterImageCompressor(),
     );
@@ -330,6 +332,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i567.UpdateMyProfile>(
       () => _i567.UpdateMyProfile(gh<_i173.ProfileRepository>()),
     );
+    gh.factory<_i499.ProfileCubit>(
+      () => _i499.ProfileCubit(
+        gh<_i352.GetMyProfile>(),
+        gh<_i331.ProfileCache>(),
+      ),
+    );
     gh.lazySingleton<_i506.TermsRepository>(
       () => _i433.TermsRepositoryImpl(
         gh<_i891.TermsRemoteDataSource>(),
@@ -405,9 +413,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i136.DescribeSession>(
       () => _i136.DescribeSession(gh<_i700.SessionRepository>()),
-    );
-    gh.factory<_i499.ProfileCubit>(
-      () => _i499.ProfileCubit(gh<_i352.GetMyProfile>()),
     );
     gh.factory<_i702.ReadPendingRegistration>(
       () => _i702.ReadPendingRegistration(

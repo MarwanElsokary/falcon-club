@@ -37,8 +37,19 @@ void main() {
     expect(p.gender, Gender.male);
     // clubName is absent from the lean Scout-token capture → null (tolerant).
     expect(p.clubName, isNull);
+    // positionName is likewise absent from this capture → null (tolerant).
+    expect(p.positionName, isNull);
     // Role is not in the payload — it comes from the session.
     expect(p.role, UserRole.scout);
+  });
+
+  test('a present positionName is carried through (drawer subtitle)', () {
+    final Map<String, dynamic> json = live();
+    (json['data'] as Map)['positionName'] = 'مدرب';
+
+    final Profile p = ProfileModel.fromJson(json, role: UserRole.club);
+
+    expect(p.positionName, 'مدرب');
   });
 
   test('no remainingSubscriptionDays → remainingDays null, isActive==isSubscribed', () {

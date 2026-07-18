@@ -28,6 +28,7 @@ final class Profile extends Equatable {
     this.gender,
     this.accountNumber,
     this.clubName,
+    this.positionName,
     this.subscription = Subscription.none,
     this.isProfileCompleted = true,
   });
@@ -50,6 +51,10 @@ final class Profile extends Equatable {
   /// Absent from the lean Scout-token `Club/GetProfile` capture, so read
   /// tolerantly — null when not present.
   final String? clubName;
+
+  /// The backend's role/position label (e.g. "مدرب"), shown as the drawer-header
+  /// subtitle. Free text, distinct from [role] (the enum); read tolerantly.
+  final String? positionName;
 
   final Subscription subscription;
   final bool isProfileCompleted;
@@ -75,6 +80,7 @@ final class Profile extends Equatable {
     gender,
     accountNumber,
     clubName,
+    positionName,
     subscription,
     isProfileCompleted,
   ];
