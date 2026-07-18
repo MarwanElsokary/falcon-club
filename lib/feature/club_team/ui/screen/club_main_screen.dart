@@ -37,11 +37,19 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
 
   late final ClubTeamCubit _clubTeamCubit;
 
+  /// Tabs the user has actually opened. Index 0 (الرئيسية) is always built; the
+  /// rest mount lazily on first visit so their cubits/fetches don't fire at
+  /// shell startup. Once visited, a tab stays alive (set only grows) — same
+  /// state-preservation as a plain IndexedStack for the tabs one actually uses.
+  final Set<int> _visited = <int>{0};
+
   @override
   void initState() {
     super.initState();
     _clubTeamCubit = context.read<ClubTeamCubit>();
-    _clubTeamCubit.emitMyProfile();
+    // F9: the route provider (app_router) already calls emitMyProfile on this
+    // same instance — no second call here. Nothing consumes ClubTeamCubit's
+    // profile state; the route's call covers the cache side-effect.
     _clubTeamCubit.currentIndex.addListener(_onTabChanged);
   }
 
@@ -83,53 +91,68 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
             ValueListenableBuilder<int>(
               valueListenable: context.read<ClubTeamCubit>().currentIndex,
               builder: (context, currentIndex, _) {
+                // Mark the visited tab so its subtree is built (and stays built).
+                _visited.add(currentIndex);
                 return IndexedStack(
                   index: currentIndex,
                   children: [
                     // 0 — الرئيسية
-                    MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (_) =>
-                          getIt<ExperimentsCubit>()
-                            ..emitbestTrials(categoryId: ''),
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<TrainingCubit>()
-                            ..emitallExercises(categoryId: '', popular: true),
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<MainCubit>()..emitMyProfile(),
-                        ),
-                      ],
-                      child: HomeScreen(onDrawerTap: _toggleDrawer),
-                    ),
+                    _visited.contains(0)
+                        ? MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) => getIt<ExperimentsCubit>()
+                                  ..emitbestTrials(categoryId: ''),
+                              ),
+                              BlocProvider(
+                                create: (_) => getIt<TrainingCubit>()
+                                  ..emitallExercises(
+                                    categoryId: '',
+                                    popular: true,
+                                  ),
+                              ),
+                              BlocProvider(
+                                create: (_) =>
+                                    getIt<MainCubit>()..emitMyProfile(),
+                              ),
+                            ],
+                            child: HomeScreen(onDrawerTap: _toggleDrawer),
+                          )
+                        : const SizedBox.shrink(),
 
                     // 1 — فريقي
-                    const ClubMyTeamScreen(),
+                    _visited.contains(1)
+                        ? const ClubMyTeamScreen()
+                        : const SizedBox.shrink(),
 
                     // 2 — اللاعيبين (Reels)
-                    MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (_) =>
-                          getIt<RealsCubit>()..emitreals(playerId: ''),
-                        ),
-                      ],
-                      child: MainRealsScreen(
-                        playerProfile: false,
-                        playnowOrNot: currentIndex == 2,
-                      ),
-                    ),
+                    _visited.contains(2)
+                        ? MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) =>
+                                    getIt<RealsCubit>()..emitreals(playerId: ''),
+                              ),
+                            ],
+                            child: MainRealsScreen(
+                              playerProfile: false,
+                              playnowOrNot: currentIndex == 2,
+                            ),
+                          )
+                        : const SizedBox.shrink(),
 
                     // 3 — قائمة الاهتمامات
-                    BlocProvider(
-                      create: (_) => getIt<FavoritesCubit>()..load(),
-                      child: const FavoritesScreen(),
-                    ),
+                    _visited.contains(3)
+                        ? BlocProvider(
+                            create: (_) => getIt<FavoritesCubit>()..load(),
+                            child: const FavoritesScreen(),
+                          )
+                        : const SizedBox.shrink(),
 
                     // 4 — الرتب
-                    const RankScreen(),
+                    _visited.contains(4)
+                        ? const RankScreen()
+                        : const SizedBox.shrink(),
                   ],
                 );
               },

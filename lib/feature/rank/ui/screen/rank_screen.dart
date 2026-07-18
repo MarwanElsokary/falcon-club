@@ -20,7 +20,13 @@ class _RankScreenState extends State<RankScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<RankCubit>().emitRank();
+    // F11: the shell/route provider already calls emitRank (it also feeds the
+    // home top-3 widget). With the lazy tab stack this screen mounts *after*
+    // that, so only fetch if the list is still empty — kills the double-fetch
+    // that fired when both this initState and the provider ran at shell mount.
+    // The standalone rank route has a fresh (empty) cubit, so it still fetches.
+    final RankCubit cubit = context.read<RankCubit>();
+    if (cubit.rankList.isEmpty) cubit.emitRank();
   }
 
   @override

@@ -37,6 +37,12 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
   final ValueNotifier<int> _currentIndex = ValueNotifier(0);
   final ValueNotifier<bool> _show = ValueNotifier(true);
 
+  /// Tabs the user has actually opened. Index 0 (الرئيسية) is always built; the
+  /// rest mount lazily on first visit so their cubits/fetches don't fire at
+  /// shell startup. Once visited, a tab stays alive (set only grows) — same
+  /// state-preservation as a plain IndexedStack for the tabs one actually uses.
+  final Set<int> _visited = <int>{0};
+
   void _toggleDrawer() {
     if (_scaffoldKey.currentState?.isDrawerOpen == true) {
       _scaffoldKey.currentState?.closeDrawer();
@@ -69,74 +75,91 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
             ValueListenableBuilder<int>(
               valueListenable: _currentIndex,
               builder: (context, index, _) {
+                // Mark the visited tab so its subtree is built (and stays built).
+                _visited.add(index);
                 return IndexedStack(
                   index: index,
                   children: [
                     // 0 — الرئيسية
-                    MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (_) =>
-                              getIt<ExperimentsCubit>()
-                                ..emitbestTrials(categoryId: ''),
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<MainCubit>()
-                            ..emitMyProfile()
-                            ..emitCategories(),
-                        ),
-                        // ❌ مفيش RankCubit هنا — بيجيه من فوق
-                        //
-                        // The ScoutTrainingCubit that used to sit here as well
-                        // was dead weight: it fetched the same endpoint a second
-                        // time, and `talent_slider_scout_widget` renders from
-                        // TrainingCubit, so nothing ever read the result.
-                        BlocProvider(
-                          create: (_) => getIt<TrainingCubit>()
-                            ..emitallExercises(categoryId: '', popular: true),
-                        ),
-                      ],
-                      child: ScoutHomeScreen(onDrawerTap: _toggleDrawer),
-                    ),
+                    _visited.contains(0)
+                        ? MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) => getIt<ExperimentsCubit>()
+                                  ..emitbestTrials(categoryId: ''),
+                              ),
+                              BlocProvider(
+                                create: (_) => getIt<MainCubit>()
+                                  ..emitMyProfile()
+                                  ..emitCategories(),
+                              ),
+                              // ❌ مفيش RankCubit هنا — بيجيه من فوق
+                              //
+                              // The ScoutTrainingCubit that used to sit here as
+                              // well was dead weight: it fetched the same
+                              // endpoint a second time, and
+                              // `talent_slider_scout_widget` renders from
+                              // TrainingCubit, so nothing ever read the result.
+                              BlocProvider(
+                                create: (_) => getIt<TrainingCubit>()
+                                  ..emitallExercises(
+                                    categoryId: '',
+                                    popular: true,
+                                  ),
+                              ),
+                            ],
+                            child: ScoutHomeScreen(onDrawerTap: _toggleDrawer),
+                          )
+                        : const SizedBox.shrink(),
 
                     // 1 — التمارين
                     // The shared exercise list. As a tab nothing can be popped,
                     // so it renders without a back row, exactly as before.
-                    MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (_) => getIt<ExerciseListCubit>()..loadAll(),
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<MainCubit>()..emitCategories(),
-                        ),
-                      ],
-                      child: const ExerciseListScreen(),
-                    ),
+                    _visited.contains(1)
+                        ? MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) =>
+                                    getIt<ExerciseListCubit>()..loadAll(),
+                              ),
+                              BlocProvider(
+                                create: (_) =>
+                                    getIt<MainCubit>()..emitCategories(),
+                              ),
+                            ],
+                            child: const ExerciseListScreen(),
+                          )
+                        : const SizedBox.shrink(),
 
                     // 2 — الريلز
-                    MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (_) =>
-                              getIt<RealsCubit>()..emitreals(playerId: ''),
-                        ),
-                      ],
-                      child: MainRealsScreen(
-                        playerProfile: false,
-                        playnowOrNot: index == 2,
-                      ),
-                    ),
+                    _visited.contains(2)
+                        ? MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) =>
+                                    getIt<RealsCubit>()..emitreals(playerId: ''),
+                              ),
+                            ],
+                            child: MainRealsScreen(
+                              playerProfile: false,
+                              playnowOrNot: index == 2,
+                            ),
+                          )
+                        : const SizedBox.shrink(),
 
                     // 3 — المفضلة (نفس تبويب الكوتش، Scout token يدعمه)
-                    BlocProvider(
-                      create: (_) => getIt<FavoritesCubit>()..load(),
-                      child: const FavoritesScreen(),
-                    ),
+                    _visited.contains(3)
+                        ? BlocProvider(
+                            create: (_) => getIt<FavoritesCubit>()..load(),
+                            child: const FavoritesScreen(),
+                          )
+                        : const SizedBox.shrink(),
 
                     // 4 — الرتب
                     // ❌ مفيش BlocProvider هنا — بيجيه من فوق
-                    const RankScreen(),
+                    _visited.contains(4)
+                        ? const RankScreen()
+                        : const SizedBox.shrink(),
                   ],
                 );
               },
