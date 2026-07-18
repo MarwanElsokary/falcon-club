@@ -34,7 +34,7 @@ mixin _$ClubTeamState {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$ClubTeamState {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,7 +73,7 @@ mixin _$ClubTeamState {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -219,7 +219,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return initial();
@@ -243,7 +243,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return initial?.call();
@@ -266,7 +266,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -414,7 +414,7 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return myProfileloading();
@@ -438,7 +438,7 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return myProfileloading?.call();
@@ -461,7 +461,7 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -640,7 +640,7 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return myProfilesuccess(myProfileModel);
@@ -664,7 +664,7 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return myProfilesuccess?.call(myProfileModel);
@@ -687,7 +687,7 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -874,7 +874,7 @@ class _$clubProfileErrorImpl implements clubProfileError {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return myProfileerror(error);
@@ -898,7 +898,7 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return myProfileerror?.call(error);
@@ -921,7 +921,7 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -1078,7 +1078,7 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return clubPlayersloading();
@@ -1102,7 +1102,7 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return clubPlayersloading?.call();
@@ -1125,7 +1125,7 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -1310,7 +1310,7 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return clubPlayerssuccess(players);
@@ -1334,7 +1334,7 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return clubPlayerssuccess?.call(players);
@@ -1357,7 +1357,7 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -1545,7 +1545,7 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return clubPlayerserror(error);
@@ -1569,7 +1569,7 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return clubPlayerserror?.call(error);
@@ -1592,7 +1592,7 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -1750,7 +1750,7 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return playerReportsLoading();
@@ -1774,7 +1774,7 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return playerReportsLoading?.call();
@@ -1797,7 +1797,7 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -1982,7 +1982,7 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return playerReportsSuccess(reports);
@@ -2006,7 +2006,7 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return playerReportsSuccess?.call(reports);
@@ -2029,7 +2029,7 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -2216,7 +2216,7 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return playerReportsError(error);
@@ -2240,7 +2240,7 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return playerReportsError?.call(error);
@@ -2263,7 +2263,7 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -2421,7 +2421,7 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return clubTraineesLoading();
@@ -2445,7 +2445,7 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return clubTraineesLoading?.call();
@@ -2468,7 +2468,7 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -2653,7 +2653,7 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return clubTraineesSuccess(trainees);
@@ -2677,7 +2677,7 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return clubTraineesSuccess?.call(trainees);
@@ -2700,7 +2700,7 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -2887,7 +2887,7 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return clubTraineesError(error);
@@ -2911,7 +2911,7 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return clubTraineesError?.call(error);
@@ -2934,7 +2934,7 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -3092,7 +3092,7 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return deleteTraineeLoading();
@@ -3116,7 +3116,7 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return deleteTraineeLoading?.call();
@@ -3139,7 +3139,7 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
@@ -3235,6 +3235,8 @@ abstract class _$$DeleteTraineeSuccessImplCopyWith<$Res> {
     _$DeleteTraineeSuccessImpl value,
     $Res Function(_$DeleteTraineeSuccessImpl) then,
   ) = __$$DeleteTraineeSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -3248,27 +3250,55 @@ class __$$DeleteTraineeSuccessImplCopyWithImpl<$Res>
 
   /// Create a copy of ClubTeamState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? message = null}) {
+    return _then(
+      _$DeleteTraineeSuccessImpl(
+        message: null == message
+            ? _value.message
+            : message // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
 class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
-  const _$DeleteTraineeSuccessImpl();
+  const _$DeleteTraineeSuccessImpl({required this.message});
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'ClubTeamState.deleteTraineeSuccess()';
+    return 'ClubTeamState.deleteTraineeSuccess(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DeleteTraineeSuccessImpl);
+            other is _$DeleteTraineeSuccessImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of ClubTeamState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteTraineeSuccessImplCopyWith<_$DeleteTraineeSuccessImpl>
+  get copyWith =>
+      __$$DeleteTraineeSuccessImplCopyWithImpl<_$DeleteTraineeSuccessImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -3288,10 +3318,10 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
-    return deleteTraineeSuccess();
+    return deleteTraineeSuccess(message);
   }
 
   @override
@@ -3312,10 +3342,10 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
-    return deleteTraineeSuccess?.call();
+    return deleteTraineeSuccess?.call(message);
   }
 
   @override
@@ -3335,12 +3365,12 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {
     if (deleteTraineeSuccess != null) {
-      return deleteTraineeSuccess();
+      return deleteTraineeSuccess(message);
     }
     return orElse();
   }
@@ -3422,7 +3452,16 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
 }
 
 abstract class _DeleteTraineeSuccess implements ClubTeamState {
-  const factory _DeleteTraineeSuccess() = _$DeleteTraineeSuccessImpl;
+  const factory _DeleteTraineeSuccess({required final String message}) =
+      _$DeleteTraineeSuccessImpl;
+
+  String get message;
+
+  /// Create a copy of ClubTeamState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeleteTraineeSuccessImplCopyWith<_$DeleteTraineeSuccessImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -3513,7 +3552,7 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
     required TResult Function(String error) clubTraineesError,
     required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
+    required TResult Function(String message) deleteTraineeSuccess,
     required TResult Function(String error) deleteTraineeError,
   }) {
     return deleteTraineeError(error);
@@ -3537,7 +3576,7 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult? Function(String error)? clubTraineesError,
     TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
+    TResult? Function(String message)? deleteTraineeSuccess,
     TResult? Function(String error)? deleteTraineeError,
   }) {
     return deleteTraineeError?.call(error);
@@ -3560,7 +3599,7 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
     TResult Function(String error)? clubTraineesError,
     TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
+    TResult Function(String message)? deleteTraineeSuccess,
     TResult Function(String error)? deleteTraineeError,
     required TResult orElse(),
   }) {

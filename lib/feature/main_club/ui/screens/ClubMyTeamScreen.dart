@@ -10,6 +10,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/thems/thems.dart';
 import '../../../../core/utils/colors.dart';
+import '../../../../core/widget/showSuccesSnackBar.dart';
+import '../../../../core/widget/show_error_snack_bar.dart';
 import '../../../club_team/cubit/club_exercises_cubit.dart';
 import '../../../club_team/cubit/club_team_cubit.dart';
 import '../../../club_team/cubit/club_team_state.dart';
@@ -54,33 +56,17 @@ class _ClubMyTeamScreenState extends State<ClubMainMyTeamScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<ClubExercisesCubit>(),
+      // Both messages come from the server. This screen deletes players (tab 0)
+      // and coaches (tab 1) through the same `Club/DeletePlayer` endpoint and
+      // the same states, so the old hardcoded 'تم حذف المدرب بنجاح' announced a
+      // coach even when a player had been removed.
       child: BlocListener<ClubTeamCubit, ClubTeamState>(
         listener: (context, state) {
           state.maybeWhen(
-            deleteTraineeSuccess: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('تم حذف المدرب بنجاح'),
-                  backgroundColor: mainColor,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              );
-            },
-            deleteTraineeError: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: Colors.red,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              );
-            },
+            deleteTraineeSuccess: (message) =>
+                showSuccesSnackBar(context: context, title: message),
+            deleteTraineeError: (error) =>
+                showErrorSnackBar(context: context, title: error),
             orElse: () {},
           );
         },
@@ -252,9 +238,21 @@ class _ClubMyTeamScreenState extends State<ClubMainMyTeamScreen> {
 
   Widget _buildPlayersRealSliver(BuildContext context) {
     final grouped = context.read<ClubTeamCubit>().groupedPlayers;
-    final visibleSections = _sectionOrder
-        .where((key) => grouped[key]?.isNotEmpty ?? false)
-        .toList();
+    // The canonical sections first, in order...
+    final visibleSections = <String>[
+      ..._sectionOrder.where((key) => grouped[key]?.isNotEmpty ?? false),
+      // ...then any section the cubit produced that isn't in the canonical
+      // order. `_getSectionKey` buckets an unrecognised position into 'أخرى',
+      // and the API's `withoutPosition` list lands there too — filtering
+      // strictly to `_sectionOrder` dropped those players from the roster
+      // entirely, so a squad with no/unmatched positions rendered as "no
+      // players at all". Appending the leftovers means nothing can silently
+      // vanish again, including any future key.
+      ...grouped.keys.where(
+        (key) =>
+            !_sectionOrder.contains(key) && (grouped[key]?.isNotEmpty ?? false),
+      ),
+    ];
 
     if (visibleSections.isEmpty) {
       return SliverFillRemaining(

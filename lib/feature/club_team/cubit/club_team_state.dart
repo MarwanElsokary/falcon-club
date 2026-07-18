@@ -52,7 +52,12 @@ class ClubTeamState with _$ClubTeamState {
   // Delete trainee
   const factory ClubTeamState.deleteTraineeLoading() = _DeleteTraineeLoading;
 
-  const factory ClubTeamState.deleteTraineeSuccess() = _DeleteTraineeSuccess;
+  /// [message] is the backend's own confirmation text. One endpoint
+  /// (`Club/DeletePlayer`) serves both the player roster and the coaches list,
+  /// so the server is the only party that knows which was removed — the client
+  /// must not invent role-specific copy.
+  const factory ClubTeamState.deleteTraineeSuccess({required String message}) =
+      _DeleteTraineeSuccess;
 
   const factory ClubTeamState.deleteTraineeError({required String error}) =
       _DeleteTraineeError;

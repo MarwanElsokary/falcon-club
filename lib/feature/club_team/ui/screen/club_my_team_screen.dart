@@ -10,6 +10,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/thems/thems.dart';
 import '../../../../core/utils/colors.dart';
+import '../../../../core/widget/showSuccesSnackBar.dart';
+import '../../../../core/widget/show_error_snack_bar.dart';
 import '../../cubit/club_exercises_cubit.dart';
 import '../../cubit/club_team_cubit.dart';
 import '../../cubit/club_team_state.dart';
@@ -38,29 +40,45 @@ class ClubMyTeamScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<ClubExercisesCubit>(),
-      child: Scaffold(
-        backgroundColor: const Color(0xFFF7F4FB),
-        body: Stack(
-          children: [
-            PositionedDirectional(
-              start: 0,
-              top: 0,
-              child: SvgPicture.asset(
-                'assets/svgs/Group 386.svg',
-                width: 120.w,
+      // Removing a player emits deleteTraineeSuccess / deleteTraineeError, but
+      // this screen had no listener at all — a failed delete cleared the
+      // spinner, left the player in place, and reported nothing. Both messages
+      // come from the server: `Club/DeletePlayer` serves the player roster and
+      // the coaches list alike, so only it knows which was removed.
+      child: BlocListener<ClubTeamCubit, ClubTeamState>(
+        listener: (context, state) {
+          state.maybeWhen(
+            deleteTraineeSuccess: (message) =>
+                showSuccesSnackBar(context: context, title: message),
+            deleteTraineeError: (error) =>
+                showErrorSnackBar(context: context, title: error),
+            orElse: () {},
+          );
+        },
+        child: Scaffold(
+          backgroundColor: const Color(0xFFF7F4FB),
+          body: Stack(
+            children: [
+              PositionedDirectional(
+                start: 0,
+                top: 0,
+                child: SvgPicture.asset(
+                  'assets/svgs/Group 386.svg',
+                  width: 120.w,
+                ),
               ),
-            ),
-            SafeArea(
-              child: Column(
-                children: [
-                  SizedBox(height: 12.h),
-                  _buildHeader(),
-                  SizedBox(height: 8.h),
-                  Expanded(child: _buildBody()),
-                ],
+              SafeArea(
+                child: Column(
+                  children: [
+                    SizedBox(height: 12.h),
+                    _buildHeader(),
+                    SizedBox(height: 8.h),
+                    Expanded(child: _buildBody()),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -165,9 +183,21 @@ class ClubMyTeamScreen extends StatelessWidget {
   // ── Real data ─────────────────────────────────────────────────────────────
   Widget _buildRealSliver(BuildContext context) {
     final grouped = context.read<ClubTeamCubit>().groupedPlayers;
-    final visibleSections = _sectionOrder
-        .where((key) => grouped[key]?.isNotEmpty ?? false)
-        .toList();
+    // The canonical sections first, in order...
+    final visibleSections = <String>[
+      ..._sectionOrder.where((key) => grouped[key]?.isNotEmpty ?? false),
+      // ...then any section the cubit produced that isn't in the canonical
+      // order. `_getSectionKey` buckets an unrecognised position into 'أخرى',
+      // and the API's `withoutPosition` list lands there too — filtering
+      // strictly to `_sectionOrder` dropped those players from the roster
+      // entirely, so a squad with no/unmatched positions rendered as "no
+      // players at all". Appending the leftovers means nothing can silently
+      // vanish again, including any future key.
+      ...grouped.keys.where(
+        (key) =>
+            !_sectionOrder.contains(key) && (grouped[key]?.isNotEmpty ?? false),
+      ),
+    ];
 
     if (visibleSections.isEmpty) {
       return SliverFillRemaining(

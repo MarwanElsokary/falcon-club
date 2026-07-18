@@ -320,7 +320,7 @@ class _CardActions extends StatelessWidget {
     return BlocBuilder<ClubTeamCubit, ClubTeamState>(
       buildWhen: (_, current) => current.maybeWhen(
         deleteTraineeLoading: () => true,
-        deleteTraineeSuccess: () => true,
+        deleteTraineeSuccess: (_) => true,
         deleteTraineeError: (_) => true,
         clubPlayerssuccess: (_) => true,
         orElse: () => false,

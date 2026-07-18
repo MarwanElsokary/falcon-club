@@ -5,6 +5,7 @@ import 'package:falconclubapp/core/cache/cach_Helper.dart';
 import 'package:falconclubapp/feature/main_screen/data/model/my_profile_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/networking/json.dart';
 import '../../main_club/data/model/club_trainee_model.dart';
 import '../data/model/club_player_model.dart';
 import '../data/repo/club_team_repo.dart';
@@ -125,39 +126,58 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
     emit(const ClubTeamState.deleteTraineeLoading());
     final response = await _repo.deleteTrainee(traineeId);
     response.when(
-      success: (_) {
+      success: (data) {
         cachedTrainees.removeWhere((t) => t.id == traineeId);
-        emit(const ClubTeamState.deleteTraineeSuccess());
+        emit(ClubTeamState.deleteTraineeSuccess(message: _messageFrom(data)));
         // نعيد عرض اللستة المحدثة
         emit(ClubTeamState.clubTraineesSuccess(List.from(cachedTrainees)));
       },
       failure: (error) {
         emit(
           ClubTeamState.deleteTraineeError(
-            error: error.apiErrorModel.message ?? 'فشل حذف المدرب',
+            error: error.apiErrorModel.message ?? _deleteFallbackError,
           ),
         );
       },
     );
   }
 
+  /// A connection error carries no response body, so `_serverMessageOr` has
+  /// nothing to parse and the message arrives null. The old fallback said
+  /// 'فشل حذف المدرب' — but `Club/DeletePlayer` serves both the player roster
+  /// and the coaches list, so hardcoding either role is wrong half the time.
+  static const String _deleteFallbackError =
+      'تعذر تنفيذ العملية، تحقق من الاتصال';
+
+  /// Neutral for the same reason: only used when the server sent no text.
+  static const String _deleteFallbackSuccess = 'تمت العملية بنجاح';
+
+  /// The backend's `{"message": "..."}` confirmation, when it sent one.
+  static String _messageFrom(dynamic body) {
+    if (body is Map) {
+      final String? text = Json.asString(body['message']);
+      if (text != null) return text;
+    }
+    return _deleteFallbackSuccess;
+  }
+
   Future<void> deletePlayerFromTeam(String playerId) async {
     emit(const ClubTeamState.deleteTraineeLoading());
     final response = await _repo.deleteTrainee(playerId);
     response.when(
-      success: (_) {
+      success: (data) {
         groupedPlayers.forEach((_, list) {
           list.removeWhere((p) => p.id == playerId);
         });
         groupedPlayers.removeWhere((_, list) => list.isEmpty);
 
-        emit(const ClubTeamState.deleteTraineeSuccess());
+        emit(ClubTeamState.deleteTraineeSuccess(message: _messageFrom(data)));
         emit(ClubTeamState.clubPlayerssuccess(Map.from(groupedPlayers)));
       },
       failure: (error) {
         emit(
           ClubTeamState.deleteTraineeError(
-            error: error.apiErrorModel.message ?? 'فشل حذف اللاعب من الفريق',
+            error: error.apiErrorModel.message ?? _deleteFallbackError,
           ),
         );
       },
