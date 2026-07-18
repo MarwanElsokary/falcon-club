@@ -133,15 +133,25 @@ import '../../feature/favorites/presentation/cubit/favorites_cubit.dart'
 import '../../feature/favorites/presentation/cubit/player_favorite_cubit.dart'
     as _i725;
 import '../../feature/player_attempts/cubit/player_attempts_cubit.dart' as _i72;
+import '../../feature/profile/data/datasources/completed_exercises_remote_data_source.dart'
+    as _i339;
 import '../../feature/profile/data/datasources/profile_remote_data_source.dart'
     as _i256;
+import '../../feature/profile/data/repositories/completed_exercises_repository_impl.dart'
+    as _i906;
 import '../../feature/profile/data/repositories/profile_repository_impl.dart'
     as _i1035;
+import '../../feature/profile/domain/repositories/completed_exercises_repository.dart'
+    as _i487;
 import '../../feature/profile/domain/repositories/profile_repository.dart'
     as _i173;
 import '../../feature/profile/domain/usecases/get_my_profile.dart' as _i352;
+import '../../feature/profile/domain/usecases/get_player_exercises.dart'
+    as _i850;
 import '../../feature/profile/domain/usecases/get_player_profile.dart' as _i513;
 import '../../feature/profile/domain/usecases/update_my_profile.dart' as _i567;
+import '../../feature/profile/presentation/cubit/completed_exercises_cubit.dart'
+    as _i918;
 import '../../feature/profile/presentation/cubit/player_profile_cubit.dart'
     as _i27;
 import '../../feature/profile/presentation/cubit/profile_cubit.dart' as _i499;
@@ -184,6 +194,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i700.ApiService>(
       () => registerModule.apiService(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i339.CompletedExercisesRemoteDataSource>(
+      () => _i339.RetrofitCompletedExercisesRemoteDataSource(
+        gh<_i700.ApiService>(),
+      ),
+    );
+    gh.lazySingleton<_i487.CompletedExercisesRepository>(
+      () => _i906.CompletedExercisesRepositoryImpl(
+        gh<_i339.CompletedExercisesRemoteDataSource>(),
+        gh<_i449.ErrorMapper>(),
+      ),
+    );
     gh.lazySingleton<_i696.FavoritesRemoteDataSource>(
       () => _i696.RetrofitFavoritesRemoteDataSource(gh<_i700.ApiService>()),
     );
@@ -213,6 +234,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i480.ToggleFavorite>(
       () => _i480.ToggleFavorite(gh<_i631.FavoritesRepository>()),
+    );
+    gh.factory<_i850.GetPlayerExercises>(
+      () => _i850.GetPlayerExercises(gh<_i487.CompletedExercisesRepository>()),
     );
     gh.lazySingleton<_i897.PasswordResetRepository>(
       () => _i373.PasswordResetRepositoryImpl(
@@ -344,6 +368,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i616.GetExerciseDetails>(
       () => _i616.GetExerciseDetails(gh<_i1032.ExerciseRepository>()),
+    );
+    gh.factory<_i918.CompletedExercisesCubit>(
+      () => _i918.CompletedExercisesCubit(gh<_i850.GetPlayerExercises>()),
     );
     gh.factory<_i394.ProfileEditCubit>(
       () => _i394.ProfileEditCubit(gh<_i567.UpdateMyProfile>()),

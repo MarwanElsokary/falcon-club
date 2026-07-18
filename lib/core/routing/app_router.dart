@@ -22,6 +22,7 @@ import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
 import '../../feature/favorites/presentation/cubit/player_favorite_cubit.dart';
+import '../../feature/profile/presentation/cubit/completed_exercises_cubit.dart';
 import '../../feature/profile/presentation/cubit/player_profile_cubit.dart';
 import '../../feature/profile/presentation/cubit/profile_cubit.dart';
 import '../../feature/profile/presentation/cubit/profile_edit_cubit.dart';
@@ -255,6 +256,11 @@ class AppRouter {
               // Favourite heart (Phase 6): resolves membership + toggles.
               BlocProvider(
                 create: (_) => getIt<PlayerFavoriteCubit>()..load(playerId),
+              ),
+              // Completed-exercises section (التمارين المنجزة).
+              BlocProvider(
+                create: (_) =>
+                    getIt<CompletedExercisesCubit>()..load(playerId),
               ),
               // MainCubit stays for the skills radar + the (dormant) favourite
               // toggle; skills is triggered lazily by the screen once the

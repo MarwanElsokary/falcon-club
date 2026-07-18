@@ -20,6 +20,7 @@ import '../../../favorites/presentation/widgets/animated_favorite_heart.dart';
 import '../../../profile/domain/entities/player_profile.dart';
 import '../../../profile/presentation/cubit/player_profile_cubit.dart';
 import '../../../profile/presentation/cubit/player_profile_state.dart';
+import '../../../player_profile/ui/widget/completed_exercises_widget.dart';
 import '../../../player_profile/ui/widget/player_about_me_widget.dart';
 import '../../../player_profile/ui/widget/player_experiance_widget.dart';
 import '../../../player_profile/ui/widget/player_profile_app_bar_widget.dart';
@@ -176,6 +177,12 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
                 PlayerBioImageWidget(playerProfile: playerProfile),
                 verticalSpace(10),
                 PlayerVideosWidget(),
+                verticalSpace(10),
+                CompletedExercisesWidget(
+                  playerId: widget.playerId,
+                  playerName: playerProfile.fullName,
+                  playerPhoto: playerProfile.photoUrl,
+                ),
                 verticalSpace(10),
                 PlayerExperianceWidget(playerProfile: playerProfile),
                 verticalSpace(20),

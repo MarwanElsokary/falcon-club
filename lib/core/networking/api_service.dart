@@ -282,6 +282,10 @@ abstract class ApiService {
     @Query('PlayerId') String playerId,
   );
 
+  // One card per distinct exercise the player has completed.
+  @GET(ApiConstants.getPlayerExercises)
+  Future<dynamic> getPlayerExercises(@Query('PlayerId') String playerId);
+
   //delete account
   @DELETE(ApiConstants.deleteAccount)
   Future deleteAccount();

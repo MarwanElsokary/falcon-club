@@ -72,6 +72,9 @@ class ApiConstants {
   //
   static const String profileById = "Player/GetProfileById";
 
+  // One entry per distinct exercise a player has completed (bookings = count).
+  static const String getPlayerExercises = "Player/GetPlayerExercises";
+
   //
   static const String rank = "Player/GetRankingExercise";
 
