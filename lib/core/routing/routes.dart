@@ -16,6 +16,10 @@ class AppRoute {
   static const String scoutMainScreen = '/scoutMainScreen';
   static const String mainClubScreen = '/mainClubScreen';
   static const String clubProfileScreen = '/clubMyTeamScreen';
+
+  /// The Scout's own profile (distinct clean path — the club/coach route above
+  /// reuses a legacy string).
+  static const String scoutProfileScreen = '/scoutProfileScreen';
   static const String requestsScreen = '/requestsScreen';
   static const String scoutTrainingScreen = '/scoutTrainingScreen';
 

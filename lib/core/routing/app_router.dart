@@ -26,6 +26,7 @@ import '../../feature/profile/presentation/cubit/player_profile_cubit.dart';
 import '../../feature/profile/presentation/cubit/profile_cubit.dart';
 import '../../feature/profile/presentation/cubit/profile_edit_cubit.dart';
 import '../../feature/profile/presentation/screens/coach_profile_screen.dart';
+import '../../feature/profile/presentation/screens/scout_profile_screen.dart';
 import '../../feature/profile/presentation/screens/main_club_profile_screen.dart';
 import '../../feature/exercise/presentation/cubit/exercise_details_cubit.dart';
 import '../../feature/trial_details/cubit/trial_details_cubit.dart';
@@ -152,6 +153,19 @@ class AppRouter {
               BlocProvider(create: (_) => getIt<ProfileEditCubit>()),
             ],
             child: const CoachProfileScreen(),
+          ),
+        );
+
+      case AppRoute.scoutProfileScreen:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              // Same domain stack as the coach profile — Scout uses the same
+              // Club/GetProfile + Club/UpdateProfile backend.
+              BlocProvider(create: (_) => getIt<ProfileCubit>()..load()),
+              BlocProvider(create: (_) => getIt<ProfileEditCubit>()),
+            ],
+            child: const ScoutProfileScreen(),
           ),
         );
       case AppRoute.clubMyTeamScreen:

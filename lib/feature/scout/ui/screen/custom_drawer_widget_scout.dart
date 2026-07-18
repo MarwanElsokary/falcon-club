@@ -75,6 +75,14 @@ class CustomDrawerScout extends StatelessWidget {
       //   },
       // },
       {
+        'width': 20.w,
+        'icon': 'assets/svgs/profile.svg',
+        'title': 'الملف الشخصي'.tr(),
+        'ontap': () {
+          context.pushNamed(AppRoute.scoutProfileScreen);
+        },
+      },
+      {
         'width': 16.w,
         'icon': 'assets/svgs/notification_icon.svg',
         'title': 'الاشعارات'.tr(),
