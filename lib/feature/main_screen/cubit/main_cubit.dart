@@ -21,11 +21,6 @@ class MainCubit extends Cubit<MainState> {
   ValueNotifier<bool> show = ValueNotifier(true);
   bool openProfile = false;
 
-  // ✅ حفظ حالة المفضلة محلياً
-  final Set<String> _favoritedPlayers = {};
-
-  bool isFavorited(String playerId) => _favoritedPlayers.contains(playerId);
-
   // MARK: - myProfile
   void emitMyProfile() async {
     emit(const MainState.myProfileloading());
@@ -38,27 +33,6 @@ class MainCubit extends Cubit<MainState> {
       failure: (error) {
         emit(
           MainState.myProfileerror(error: error.apiErrorModel.message ?? ''),
-        );
-      },
-    );
-  }
-
-  // MARK: - profileById
-  void emitProfileById({required String userId}) async {
-    emit(const MainState.playerProfileloading());
-    final response = await _repo.profileById(userId: userId);
-    response.when(
-      success: (profileByIdResponse) async {
-        log('succces');
-        emit(MainState.playerProfilesuccess(profileByIdResponse));
-
-        await emitSkills(userId: userId);
-      },
-      failure: (error) {
-        emit(
-          MainState.playerProfileerror(
-            error: error.apiErrorModel.message ?? '',
-          ),
         );
       },
     );
@@ -79,39 +53,6 @@ class MainCubit extends Cubit<MainState> {
       failure: (error) {
         log('💥 خطأ في جلب المهارات: ${error.apiErrorModel.message}');
         emit(MainState.playerSkillssuccess([]));
-      },
-    );
-  }
-
-  // MARK: - Toggle Favorite Player ⭐
-  Future<void> emitToggleFavorite({required String playerId}) async {
-    emit(const MainState.toggleFavoriteLoading());
-
-    final response = await _repo.toggleFavoritePlayer(playerId: playerId);
-
-    response.when(
-      success: (toggleResponse) {
-        // تحديث الحالة المحلية
-        if (_favoritedPlayers.contains(playerId)) {
-          _favoritedPlayers.remove(playerId);
-        } else {
-          _favoritedPlayers.add(playerId);
-        }
-
-        emit(
-          MainState.toggleFavoriteSuccess(
-            playerId: playerId,
-            isFavorited: _favoritedPlayers.contains(playerId),
-            message: toggleResponse.message,
-          ),
-        );
-      },
-      failure: (error) {
-        emit(
-          MainState.toggleFavoriteError(
-            error: error.apiErrorModel.message ?? 'حدث خطأ',
-          ),
-        );
       },
     );
   }

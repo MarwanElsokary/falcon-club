@@ -20,15 +20,6 @@ class ClubTeamState with _$ClubTeamState {
   const factory ClubTeamState.myProfileerror({required String error}) =
       clubProfileError;
 
-  //updateProfile
-  const factory ClubTeamState.updateProfileloading() = clubUpdateProfileLoading;
-
-  const factory ClubTeamState.updateProfilesuccess(dynamic response) =
-      clubUpdateProfileSuccess;
-
-  const factory ClubTeamState.updateProfileerror({required String error}) =
-      clubUpdateProfileError;
-
   //clubPlayers
   const factory ClubTeamState.clubPlayersloading() = clubPlayersLoading;
 
@@ -39,23 +30,6 @@ class ClubTeamState with _$ClubTeamState {
 
   const factory ClubTeamState.clubPlayerserror({required String error}) =
       clubPlayersError;
-
-  //favorites
-  const factory ClubTeamState.favloading() = favLoading;
-
-  const factory ClubTeamState.favsuccess(dynamic players) = favSuccess;
-
-  const factory ClubTeamState.faverror({required String error}) = favError;
-
-  const factory ClubTeamState.addFavsuccess() = addFavSuccess;
-
-  const factory ClubTeamState.addFaverror({required String error}) =
-      addFavError;
-
-  const factory ClubTeamState.removeFavsuccess() = removeFavSuccess;
-
-  const factory ClubTeamState.removeFaverror({required String error}) =
-      removeFavError;
 
   const factory ClubTeamState.playerReportsLoading() =
       playerReportsLoadingState;

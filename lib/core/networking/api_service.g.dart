@@ -293,48 +293,6 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<dynamic> addToFav(String playerId) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'playerId': playerId};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<dynamic>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            'Club/AddToFav',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
-    return _value;
-  }
-
-  @override
-  Future<dynamic> removeFromFav(String playerId) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'playerId': playerId};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<dynamic>(
-      Options(method: 'DELETE', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            'Club/RemoveFromFav',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
-    return _value;
-  }
-
-  @override
   Future<dynamic> getFav() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -855,33 +813,6 @@ class _ApiService implements ApiService {
     );
     final _result = await _dio.fetch(_options);
     final _value = _result.data;
-    return _value;
-  }
-
-  @override
-  Future<MyProfileModel> profileById(String userId) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'UserId': userId};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<MyProfileModel>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            'Player/GetProfileById',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late MyProfileModel _value;
-    try {
-      _value = MyProfileModel.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
     return _value;
   }
 

@@ -68,14 +68,6 @@ abstract class ApiService {
   @GET(ApiConstants.getReelsByPlayerId)
   Future<dynamic> getReelsByPlayerId();
 
-  //addToFav
-  @POST(ApiConstants.addToFav)
-  Future<dynamic> addToFav(@Query("playerId") String playerId);
-
-  //removeFromFav
-  @DELETE(ApiConstants.removeFromFav)
-  Future<dynamic> removeFromFav(@Query("playerId") String playerId);
-
   //GetFavPlayers
   @GET(ApiConstants.getFav)
   Future<dynamic> getFav();
@@ -181,10 +173,6 @@ abstract class ApiService {
 
   @POST(ApiConstants.payPackage)
   Future payPackage(@Body() payPackageBody);
-
-  //myProfile
-  @GET(ApiConstants.profileById)
-  Future<MyProfileModel> profileById(@Query('UserId') String userId);
 
   //rank
   // `GetRankingExercise` requires the `exerciseId` query param — the app sends

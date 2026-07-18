@@ -1,5 +1,5 @@
-import 'package:falconclubapp/feature/player_profile/ui/widget/completed_exercise_card.dart';
-import 'package:falconclubapp/feature/player_profile/ui/widget/completed_exercises_grid.dart';
+import 'package:falconclubapp/feature/player_profile/presentation/widget/completed_exercise_card.dart';
+import 'package:falconclubapp/feature/player_profile/presentation/widget/completed_exercises_grid.dart';
 import 'package:falconclubapp/feature/profile/domain/entities/completed_exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

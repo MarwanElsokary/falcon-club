@@ -23,20 +23,10 @@ mixin _$ClubTeamState {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -53,20 +43,10 @@ mixin _$ClubTeamState {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -83,19 +63,9 @@ mixin _$ClubTeamState {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -113,21 +83,9 @@ mixin _$ClubTeamState {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -146,19 +104,9 @@ mixin _$ClubTeamState {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -175,19 +123,9 @@ mixin _$ClubTeamState {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -270,20 +208,10 @@ class _$InitialImpl implements _Initial {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -304,20 +232,10 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -338,19 +256,9 @@ class _$InitialImpl implements _Initial {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -375,21 +283,9 @@ class _$InitialImpl implements _Initial {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -412,19 +308,9 @@ class _$InitialImpl implements _Initial {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -445,19 +331,9 @@ class _$InitialImpl implements _Initial {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -527,20 +403,10 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -561,20 +427,10 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -595,19 +451,9 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -632,21 +478,9 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -669,19 +503,9 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -702,19 +526,9 @@ class _$clubProfileLoadingImpl implements clubProfileLoading {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -815,20 +629,10 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -849,20 +653,10 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -883,19 +677,9 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -920,21 +704,9 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -957,19 +729,9 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -990,19 +752,9 @@ class _$clubProfileSuccessImpl implements clubProfileSuccess {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -1111,20 +863,10 @@ class _$clubProfileErrorImpl implements clubProfileError {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -1145,20 +887,10 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -1179,19 +911,9 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -1216,21 +938,9 @@ class _$clubProfileErrorImpl implements clubProfileError {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -1253,19 +963,9 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -1286,19 +986,9 @@ class _$clubProfileErrorImpl implements clubProfileError {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -1328,858 +1018,6 @@ abstract class clubProfileError implements ClubTeamState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$clubProfileErrorImplCopyWith<_$clubProfileErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$clubUpdateProfileLoadingImplCopyWith<$Res> {
-  factory _$$clubUpdateProfileLoadingImplCopyWith(
-    _$clubUpdateProfileLoadingImpl value,
-    $Res Function(_$clubUpdateProfileLoadingImpl) then,
-  ) = __$$clubUpdateProfileLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$clubUpdateProfileLoadingImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$clubUpdateProfileLoadingImpl>
-    implements _$$clubUpdateProfileLoadingImplCopyWith<$Res> {
-  __$$clubUpdateProfileLoadingImplCopyWithImpl(
-    _$clubUpdateProfileLoadingImpl _value,
-    $Res Function(_$clubUpdateProfileLoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$clubUpdateProfileLoadingImpl implements clubUpdateProfileLoading {
-  const _$clubUpdateProfileLoadingImpl();
-
-  @override
-  String toString() {
-    return 'ClubTeamState.updateProfileloading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$clubUpdateProfileLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return updateProfileloading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return updateProfileloading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (updateProfileloading != null) {
-      return updateProfileloading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return updateProfileloading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return updateProfileloading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (updateProfileloading != null) {
-      return updateProfileloading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class clubUpdateProfileLoading implements ClubTeamState {
-  const factory clubUpdateProfileLoading() = _$clubUpdateProfileLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$clubUpdateProfileSuccessImplCopyWith<$Res> {
-  factory _$$clubUpdateProfileSuccessImplCopyWith(
-    _$clubUpdateProfileSuccessImpl value,
-    $Res Function(_$clubUpdateProfileSuccessImpl) then,
-  ) = __$$clubUpdateProfileSuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({dynamic response});
-}
-
-/// @nodoc
-class __$$clubUpdateProfileSuccessImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$clubUpdateProfileSuccessImpl>
-    implements _$$clubUpdateProfileSuccessImplCopyWith<$Res> {
-  __$$clubUpdateProfileSuccessImplCopyWithImpl(
-    _$clubUpdateProfileSuccessImpl _value,
-    $Res Function(_$clubUpdateProfileSuccessImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? response = freezed}) {
-    return _then(
-      _$clubUpdateProfileSuccessImpl(
-        freezed == response
-            ? _value.response
-            : response // ignore: cast_nullable_to_non_nullable
-                  as dynamic,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$clubUpdateProfileSuccessImpl implements clubUpdateProfileSuccess {
-  const _$clubUpdateProfileSuccessImpl(this.response);
-
-  @override
-  final dynamic response;
-
-  @override
-  String toString() {
-    return 'ClubTeamState.updateProfilesuccess(response: $response)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$clubUpdateProfileSuccessImpl &&
-            const DeepCollectionEquality().equals(other.response, response));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$clubUpdateProfileSuccessImplCopyWith<_$clubUpdateProfileSuccessImpl>
-  get copyWith =>
-      __$$clubUpdateProfileSuccessImplCopyWithImpl<
-        _$clubUpdateProfileSuccessImpl
-      >(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return updateProfilesuccess(response);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return updateProfilesuccess?.call(response);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (updateProfilesuccess != null) {
-      return updateProfilesuccess(response);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return updateProfilesuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return updateProfilesuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (updateProfilesuccess != null) {
-      return updateProfilesuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class clubUpdateProfileSuccess implements ClubTeamState {
-  const factory clubUpdateProfileSuccess(final dynamic response) =
-      _$clubUpdateProfileSuccessImpl;
-
-  dynamic get response;
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$clubUpdateProfileSuccessImplCopyWith<_$clubUpdateProfileSuccessImpl>
-  get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$clubUpdateProfileErrorImplCopyWith<$Res> {
-  factory _$$clubUpdateProfileErrorImplCopyWith(
-    _$clubUpdateProfileErrorImpl value,
-    $Res Function(_$clubUpdateProfileErrorImpl) then,
-  ) = __$$clubUpdateProfileErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$clubUpdateProfileErrorImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$clubUpdateProfileErrorImpl>
-    implements _$$clubUpdateProfileErrorImplCopyWith<$Res> {
-  __$$clubUpdateProfileErrorImplCopyWithImpl(
-    _$clubUpdateProfileErrorImpl _value,
-    $Res Function(_$clubUpdateProfileErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$clubUpdateProfileErrorImpl(
-        error: null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$clubUpdateProfileErrorImpl implements clubUpdateProfileError {
-  const _$clubUpdateProfileErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'ClubTeamState.updateProfileerror(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$clubUpdateProfileErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$clubUpdateProfileErrorImplCopyWith<_$clubUpdateProfileErrorImpl>
-  get copyWith =>
-      __$$clubUpdateProfileErrorImplCopyWithImpl<_$clubUpdateProfileErrorImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return updateProfileerror(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return updateProfileerror?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (updateProfileerror != null) {
-      return updateProfileerror(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return updateProfileerror(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return updateProfileerror?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (updateProfileerror != null) {
-      return updateProfileerror(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class clubUpdateProfileError implements ClubTeamState {
-  const factory clubUpdateProfileError({required final String error}) =
-      _$clubUpdateProfileErrorImpl;
-
-  String get error;
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$clubUpdateProfileErrorImplCopyWith<_$clubUpdateProfileErrorImpl>
-  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -2229,20 +1067,10 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -2263,20 +1091,10 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -2297,19 +1115,9 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -2334,21 +1142,9 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -2371,19 +1167,9 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -2404,19 +1190,9 @@ class _$clubPlayersLoadingImpl implements clubPlayersLoading {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -2523,20 +1299,10 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -2557,20 +1323,10 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -2591,19 +1347,9 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -2628,21 +1374,9 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -2665,19 +1399,9 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -2698,19 +1422,9 @@ class _$clubPlayersSuccessImpl implements clubPlayersSuccess {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -2820,20 +1534,10 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -2854,20 +1558,10 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -2888,19 +1582,9 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -2925,21 +1609,9 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -2962,19 +1634,9 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -2995,19 +1657,9 @@ class _$clubPlayersErrorImpl implements clubPlayersError {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -3036,1950 +1688,6 @@ abstract class clubPlayersError implements ClubTeamState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$clubPlayersErrorImplCopyWith<_$clubPlayersErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$favLoadingImplCopyWith<$Res> {
-  factory _$$favLoadingImplCopyWith(
-    _$favLoadingImpl value,
-    $Res Function(_$favLoadingImpl) then,
-  ) = __$$favLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$favLoadingImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$favLoadingImpl>
-    implements _$$favLoadingImplCopyWith<$Res> {
-  __$$favLoadingImplCopyWithImpl(
-    _$favLoadingImpl _value,
-    $Res Function(_$favLoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$favLoadingImpl implements favLoading {
-  const _$favLoadingImpl();
-
-  @override
-  String toString() {
-    return 'ClubTeamState.favloading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$favLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return favloading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return favloading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (favloading != null) {
-      return favloading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return favloading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return favloading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (favloading != null) {
-      return favloading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class favLoading implements ClubTeamState {
-  const factory favLoading() = _$favLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$favSuccessImplCopyWith<$Res> {
-  factory _$$favSuccessImplCopyWith(
-    _$favSuccessImpl value,
-    $Res Function(_$favSuccessImpl) then,
-  ) = __$$favSuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({dynamic players});
-}
-
-/// @nodoc
-class __$$favSuccessImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$favSuccessImpl>
-    implements _$$favSuccessImplCopyWith<$Res> {
-  __$$favSuccessImplCopyWithImpl(
-    _$favSuccessImpl _value,
-    $Res Function(_$favSuccessImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? players = freezed}) {
-    return _then(
-      _$favSuccessImpl(
-        freezed == players
-            ? _value.players
-            : players // ignore: cast_nullable_to_non_nullable
-                  as dynamic,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$favSuccessImpl implements favSuccess {
-  const _$favSuccessImpl(this.players);
-
-  @override
-  final dynamic players;
-
-  @override
-  String toString() {
-    return 'ClubTeamState.favsuccess(players: $players)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$favSuccessImpl &&
-            const DeepCollectionEquality().equals(other.players, players));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(players));
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$favSuccessImplCopyWith<_$favSuccessImpl> get copyWith =>
-      __$$favSuccessImplCopyWithImpl<_$favSuccessImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return favsuccess(players);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return favsuccess?.call(players);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (favsuccess != null) {
-      return favsuccess(players);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return favsuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return favsuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (favsuccess != null) {
-      return favsuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class favSuccess implements ClubTeamState {
-  const factory favSuccess(final dynamic players) = _$favSuccessImpl;
-
-  dynamic get players;
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$favSuccessImplCopyWith<_$favSuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$favErrorImplCopyWith<$Res> {
-  factory _$$favErrorImplCopyWith(
-    _$favErrorImpl value,
-    $Res Function(_$favErrorImpl) then,
-  ) = __$$favErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$favErrorImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$favErrorImpl>
-    implements _$$favErrorImplCopyWith<$Res> {
-  __$$favErrorImplCopyWithImpl(
-    _$favErrorImpl _value,
-    $Res Function(_$favErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$favErrorImpl(
-        error: null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$favErrorImpl implements favError {
-  const _$favErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'ClubTeamState.faverror(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$favErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$favErrorImplCopyWith<_$favErrorImpl> get copyWith =>
-      __$$favErrorImplCopyWithImpl<_$favErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return faverror(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return faverror?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (faverror != null) {
-      return faverror(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return faverror(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return faverror?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (faverror != null) {
-      return faverror(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class favError implements ClubTeamState {
-  const factory favError({required final String error}) = _$favErrorImpl;
-
-  String get error;
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$favErrorImplCopyWith<_$favErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$addFavSuccessImplCopyWith<$Res> {
-  factory _$$addFavSuccessImplCopyWith(
-    _$addFavSuccessImpl value,
-    $Res Function(_$addFavSuccessImpl) then,
-  ) = __$$addFavSuccessImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$addFavSuccessImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$addFavSuccessImpl>
-    implements _$$addFavSuccessImplCopyWith<$Res> {
-  __$$addFavSuccessImplCopyWithImpl(
-    _$addFavSuccessImpl _value,
-    $Res Function(_$addFavSuccessImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$addFavSuccessImpl implements addFavSuccess {
-  const _$addFavSuccessImpl();
-
-  @override
-  String toString() {
-    return 'ClubTeamState.addFavsuccess()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$addFavSuccessImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return addFavsuccess();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return addFavsuccess?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (addFavsuccess != null) {
-      return addFavsuccess();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return addFavsuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return addFavsuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (addFavsuccess != null) {
-      return addFavsuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class addFavSuccess implements ClubTeamState {
-  const factory addFavSuccess() = _$addFavSuccessImpl;
-}
-
-/// @nodoc
-abstract class _$$addFavErrorImplCopyWith<$Res> {
-  factory _$$addFavErrorImplCopyWith(
-    _$addFavErrorImpl value,
-    $Res Function(_$addFavErrorImpl) then,
-  ) = __$$addFavErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$addFavErrorImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$addFavErrorImpl>
-    implements _$$addFavErrorImplCopyWith<$Res> {
-  __$$addFavErrorImplCopyWithImpl(
-    _$addFavErrorImpl _value,
-    $Res Function(_$addFavErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$addFavErrorImpl(
-        error: null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$addFavErrorImpl implements addFavError {
-  const _$addFavErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'ClubTeamState.addFaverror(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$addFavErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$addFavErrorImplCopyWith<_$addFavErrorImpl> get copyWith =>
-      __$$addFavErrorImplCopyWithImpl<_$addFavErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return addFaverror(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return addFaverror?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (addFaverror != null) {
-      return addFaverror(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return addFaverror(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return addFaverror?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (addFaverror != null) {
-      return addFaverror(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class addFavError implements ClubTeamState {
-  const factory addFavError({required final String error}) = _$addFavErrorImpl;
-
-  String get error;
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$addFavErrorImplCopyWith<_$addFavErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$removeFavSuccessImplCopyWith<$Res> {
-  factory _$$removeFavSuccessImplCopyWith(
-    _$removeFavSuccessImpl value,
-    $Res Function(_$removeFavSuccessImpl) then,
-  ) = __$$removeFavSuccessImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$removeFavSuccessImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$removeFavSuccessImpl>
-    implements _$$removeFavSuccessImplCopyWith<$Res> {
-  __$$removeFavSuccessImplCopyWithImpl(
-    _$removeFavSuccessImpl _value,
-    $Res Function(_$removeFavSuccessImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$removeFavSuccessImpl implements removeFavSuccess {
-  const _$removeFavSuccessImpl();
-
-  @override
-  String toString() {
-    return 'ClubTeamState.removeFavsuccess()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$removeFavSuccessImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return removeFavsuccess();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return removeFavsuccess?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (removeFavsuccess != null) {
-      return removeFavsuccess();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return removeFavsuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return removeFavsuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (removeFavsuccess != null) {
-      return removeFavsuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class removeFavSuccess implements ClubTeamState {
-  const factory removeFavSuccess() = _$removeFavSuccessImpl;
-}
-
-/// @nodoc
-abstract class _$$removeFavErrorImplCopyWith<$Res> {
-  factory _$$removeFavErrorImplCopyWith(
-    _$removeFavErrorImpl value,
-    $Res Function(_$removeFavErrorImpl) then,
-  ) = __$$removeFavErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$removeFavErrorImplCopyWithImpl<$Res>
-    extends _$ClubTeamStateCopyWithImpl<$Res, _$removeFavErrorImpl>
-    implements _$$removeFavErrorImplCopyWith<$Res> {
-  __$$removeFavErrorImplCopyWithImpl(
-    _$removeFavErrorImpl _value,
-    $Res Function(_$removeFavErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$removeFavErrorImpl(
-        error: null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$removeFavErrorImpl implements removeFavError {
-  const _$removeFavErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'ClubTeamState.removeFaverror(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$removeFavErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$removeFavErrorImplCopyWith<_$removeFavErrorImpl> get copyWith =>
-      __$$removeFavErrorImplCopyWithImpl<_$removeFavErrorImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
-    required TResult Function() clubPlayersloading,
-    required TResult Function(Map<String, List<ClubPlayer>> players)
-    clubPlayerssuccess,
-    required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
-    required TResult Function() playerReportsLoading,
-    required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
-    required TResult Function(String error) playerReportsError,
-    required TResult Function() clubTraineesLoading,
-    required TResult Function(List<ClubTrainee> trainees) clubTraineesSuccess,
-    required TResult Function(String error) clubTraineesError,
-    required TResult Function() deleteTraineeLoading,
-    required TResult Function() deleteTraineeSuccess,
-    required TResult Function(String error) deleteTraineeError,
-  }) {
-    return removeFaverror(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
-    TResult? Function()? clubPlayersloading,
-    TResult? Function(Map<String, List<ClubPlayer>> players)?
-    clubPlayerssuccess,
-    TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
-    TResult? Function()? playerReportsLoading,
-    TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult? Function(String error)? playerReportsError,
-    TResult? Function()? clubTraineesLoading,
-    TResult? Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult? Function(String error)? clubTraineesError,
-    TResult? Function()? deleteTraineeLoading,
-    TResult? Function()? deleteTraineeSuccess,
-    TResult? Function(String error)? deleteTraineeError,
-  }) {
-    return removeFaverror?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
-    TResult Function()? clubPlayersloading,
-    TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
-    TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
-    TResult Function()? playerReportsLoading,
-    TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
-    TResult Function(String error)? playerReportsError,
-    TResult Function()? clubTraineesLoading,
-    TResult Function(List<ClubTrainee> trainees)? clubTraineesSuccess,
-    TResult Function(String error)? clubTraineesError,
-    TResult Function()? deleteTraineeLoading,
-    TResult Function()? deleteTraineeSuccess,
-    TResult Function(String error)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (removeFaverror != null) {
-      return removeFaverror(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(clubProfileLoading value) myProfileloading,
-    required TResult Function(clubProfileSuccess value) myProfilesuccess,
-    required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
-    required TResult Function(clubPlayersLoading value) clubPlayersloading,
-    required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
-    required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
-    required TResult Function(playerReportsLoadingState value)
-    playerReportsLoading,
-    required TResult Function(playerReportsSuccessState value)
-    playerReportsSuccess,
-    required TResult Function(playerReportsErrorState value) playerReportsError,
-    required TResult Function(_ClubTraineesLoading value) clubTraineesLoading,
-    required TResult Function(_ClubTraineesSuccess value) clubTraineesSuccess,
-    required TResult Function(_ClubTraineesError value) clubTraineesError,
-    required TResult Function(_DeleteTraineeLoading value) deleteTraineeLoading,
-    required TResult Function(_DeleteTraineeSuccess value) deleteTraineeSuccess,
-    required TResult Function(_DeleteTraineeError value) deleteTraineeError,
-  }) {
-    return removeFaverror(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(clubProfileLoading value)? myProfileloading,
-    TResult? Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult? Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
-    TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult? Function(playerReportsErrorState value)? playerReportsError,
-    TResult? Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult? Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult? Function(_ClubTraineesError value)? clubTraineesError,
-    TResult? Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult? Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult? Function(_DeleteTraineeError value)? deleteTraineeError,
-  }) {
-    return removeFaverror?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(clubProfileLoading value)? myProfileloading,
-    TResult Function(clubProfileSuccess value)? myProfilesuccess,
-    TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
-    TResult Function(clubPlayersLoading value)? clubPlayersloading,
-    TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
-    TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
-    TResult Function(playerReportsLoadingState value)? playerReportsLoading,
-    TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
-    TResult Function(playerReportsErrorState value)? playerReportsError,
-    TResult Function(_ClubTraineesLoading value)? clubTraineesLoading,
-    TResult Function(_ClubTraineesSuccess value)? clubTraineesSuccess,
-    TResult Function(_ClubTraineesError value)? clubTraineesError,
-    TResult Function(_DeleteTraineeLoading value)? deleteTraineeLoading,
-    TResult Function(_DeleteTraineeSuccess value)? deleteTraineeSuccess,
-    TResult Function(_DeleteTraineeError value)? deleteTraineeError,
-    required TResult orElse(),
-  }) {
-    if (removeFaverror != null) {
-      return removeFaverror(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class removeFavError implements ClubTeamState {
-  const factory removeFavError({required final String error}) =
-      _$removeFavErrorImpl;
-
-  String get error;
-
-  /// Create a copy of ClubTeamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$removeFavErrorImplCopyWith<_$removeFavErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -5031,20 +1739,10 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -5065,20 +1763,10 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -5099,19 +1787,9 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -5136,21 +1814,9 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -5173,19 +1839,9 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -5206,19 +1862,9 @@ class _$playerReportsLoadingStateImpl implements playerReportsLoadingState {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -5325,20 +1971,10 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -5359,20 +1995,10 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -5393,19 +2019,9 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -5430,21 +2046,9 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -5467,19 +2071,9 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -5500,19 +2094,9 @@ class _$playerReportsSuccessStateImpl implements playerReportsSuccessState {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -5621,20 +2205,10 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -5655,20 +2229,10 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -5689,19 +2253,9 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -5726,21 +2280,9 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -5763,19 +2305,9 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -5796,19 +2328,9 @@ class _$playerReportsErrorStateImpl implements playerReportsErrorState {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -5888,20 +2410,10 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -5922,20 +2434,10 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -5956,19 +2458,9 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -5993,21 +2485,9 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -6030,19 +2510,9 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -6063,19 +2533,9 @@ class _$ClubTraineesLoadingImpl implements _ClubTraineesLoading {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -6182,20 +2642,10 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -6216,20 +2666,10 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -6250,19 +2690,9 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -6287,21 +2717,9 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -6324,19 +2742,9 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -6357,19 +2765,9 @@ class _$ClubTraineesSuccessImpl implements _ClubTraineesSuccess {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -6478,20 +2876,10 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -6512,20 +2900,10 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -6546,19 +2924,9 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -6583,21 +2951,9 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -6620,19 +2976,9 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -6653,19 +2999,9 @@ class _$ClubTraineesErrorImpl implements _ClubTraineesError {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -6745,20 +3081,10 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -6779,20 +3105,10 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -6813,19 +3129,9 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -6850,21 +3156,9 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -6887,19 +3181,9 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -6920,19 +3204,9 @@ class _$DeleteTraineeLoadingImpl implements _DeleteTraineeLoading {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -7003,20 +3277,10 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -7037,20 +3301,10 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -7071,19 +3325,9 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -7108,21 +3352,9 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -7145,19 +3377,9 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -7178,19 +3400,9 @@ class _$DeleteTraineeSuccessImpl implements _DeleteTraineeSuccess {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,
@@ -7290,20 +3502,10 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() updateProfileloading,
-    required TResult Function(dynamic response) updateProfilesuccess,
-    required TResult Function(String error) updateProfileerror,
     required TResult Function() clubPlayersloading,
     required TResult Function(Map<String, List<ClubPlayer>> players)
     clubPlayerssuccess,
     required TResult Function(String error) clubPlayerserror,
-    required TResult Function() favloading,
-    required TResult Function(dynamic players) favsuccess,
-    required TResult Function(String error) faverror,
-    required TResult Function() addFavsuccess,
-    required TResult Function(String error) addFaverror,
-    required TResult Function() removeFavsuccess,
-    required TResult Function(String error) removeFaverror,
     required TResult Function() playerReportsLoading,
     required TResult Function(List<PlayerReport> reports) playerReportsSuccess,
     required TResult Function(String error) playerReportsError,
@@ -7324,20 +3526,10 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? updateProfileloading,
-    TResult? Function(dynamic response)? updateProfilesuccess,
-    TResult? Function(String error)? updateProfileerror,
     TResult? Function()? clubPlayersloading,
     TResult? Function(Map<String, List<ClubPlayer>> players)?
     clubPlayerssuccess,
     TResult? Function(String error)? clubPlayerserror,
-    TResult? Function()? favloading,
-    TResult? Function(dynamic players)? favsuccess,
-    TResult? Function(String error)? faverror,
-    TResult? Function()? addFavsuccess,
-    TResult? Function(String error)? addFaverror,
-    TResult? Function()? removeFavsuccess,
-    TResult? Function(String error)? removeFaverror,
     TResult? Function()? playerReportsLoading,
     TResult? Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult? Function(String error)? playerReportsError,
@@ -7358,19 +3550,9 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? updateProfileloading,
-    TResult Function(dynamic response)? updateProfilesuccess,
-    TResult Function(String error)? updateProfileerror,
     TResult Function()? clubPlayersloading,
     TResult Function(Map<String, List<ClubPlayer>> players)? clubPlayerssuccess,
     TResult Function(String error)? clubPlayerserror,
-    TResult Function()? favloading,
-    TResult Function(dynamic players)? favsuccess,
-    TResult Function(String error)? faverror,
-    TResult Function()? addFavsuccess,
-    TResult Function(String error)? addFaverror,
-    TResult Function()? removeFavsuccess,
-    TResult Function(String error)? removeFaverror,
     TResult Function()? playerReportsLoading,
     TResult Function(List<PlayerReport> reports)? playerReportsSuccess,
     TResult Function(String error)? playerReportsError,
@@ -7395,21 +3577,9 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     required TResult Function(clubProfileLoading value) myProfileloading,
     required TResult Function(clubProfileSuccess value) myProfilesuccess,
     required TResult Function(clubProfileError value) myProfileerror,
-    required TResult Function(clubUpdateProfileLoading value)
-    updateProfileloading,
-    required TResult Function(clubUpdateProfileSuccess value)
-    updateProfilesuccess,
-    required TResult Function(clubUpdateProfileError value) updateProfileerror,
     required TResult Function(clubPlayersLoading value) clubPlayersloading,
     required TResult Function(clubPlayersSuccess value) clubPlayerssuccess,
     required TResult Function(clubPlayersError value) clubPlayerserror,
-    required TResult Function(favLoading value) favloading,
-    required TResult Function(favSuccess value) favsuccess,
-    required TResult Function(favError value) faverror,
-    required TResult Function(addFavSuccess value) addFavsuccess,
-    required TResult Function(addFavError value) addFaverror,
-    required TResult Function(removeFavSuccess value) removeFavsuccess,
-    required TResult Function(removeFavError value) removeFaverror,
     required TResult Function(playerReportsLoadingState value)
     playerReportsLoading,
     required TResult Function(playerReportsSuccessState value)
@@ -7432,19 +3602,9 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     TResult? Function(clubProfileLoading value)? myProfileloading,
     TResult? Function(clubProfileSuccess value)? myProfilesuccess,
     TResult? Function(clubProfileError value)? myProfileerror,
-    TResult? Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult? Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult? Function(clubUpdateProfileError value)? updateProfileerror,
     TResult? Function(clubPlayersLoading value)? clubPlayersloading,
     TResult? Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult? Function(clubPlayersError value)? clubPlayerserror,
-    TResult? Function(favLoading value)? favloading,
-    TResult? Function(favSuccess value)? favsuccess,
-    TResult? Function(favError value)? faverror,
-    TResult? Function(addFavSuccess value)? addFavsuccess,
-    TResult? Function(addFavError value)? addFaverror,
-    TResult? Function(removeFavSuccess value)? removeFavsuccess,
-    TResult? Function(removeFavError value)? removeFaverror,
     TResult? Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult? Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult? Function(playerReportsErrorState value)? playerReportsError,
@@ -7465,19 +3625,9 @@ class _$DeleteTraineeErrorImpl implements _DeleteTraineeError {
     TResult Function(clubProfileLoading value)? myProfileloading,
     TResult Function(clubProfileSuccess value)? myProfilesuccess,
     TResult Function(clubProfileError value)? myProfileerror,
-    TResult Function(clubUpdateProfileLoading value)? updateProfileloading,
-    TResult Function(clubUpdateProfileSuccess value)? updateProfilesuccess,
-    TResult Function(clubUpdateProfileError value)? updateProfileerror,
     TResult Function(clubPlayersLoading value)? clubPlayersloading,
     TResult Function(clubPlayersSuccess value)? clubPlayerssuccess,
     TResult Function(clubPlayersError value)? clubPlayerserror,
-    TResult Function(favLoading value)? favloading,
-    TResult Function(favSuccess value)? favsuccess,
-    TResult Function(favError value)? faverror,
-    TResult Function(addFavSuccess value)? addFavsuccess,
-    TResult Function(addFavError value)? addFaverror,
-    TResult Function(removeFavSuccess value)? removeFavsuccess,
-    TResult Function(removeFavError value)? removeFaverror,
     TResult Function(playerReportsLoadingState value)? playerReportsLoading,
     TResult Function(playerReportsSuccessState value)? playerReportsSuccess,
     TResult Function(playerReportsErrorState value)? playerReportsError,

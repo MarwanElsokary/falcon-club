@@ -23,10 +23,6 @@ mixin _$MainState {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -36,10 +32,6 @@ mixin _$MainState {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -47,9 +39,6 @@ mixin _$MainState {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -58,10 +47,6 @@ mixin _$MainState {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -69,9 +54,6 @@ mixin _$MainState {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -80,10 +62,6 @@ mixin _$MainState {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -92,9 +70,6 @@ mixin _$MainState {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -103,11 +78,6 @@ mixin _$MainState {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -115,9 +85,6 @@ mixin _$MainState {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -126,9 +93,6 @@ mixin _$MainState {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -136,9 +100,6 @@ mixin _$MainState {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -147,9 +108,6 @@ mixin _$MainState {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -221,10 +179,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -234,10 +188,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return initial();
   }
@@ -249,9 +199,6 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -260,10 +207,6 @@ class _$InitialImpl implements _Initial {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return initial?.call();
   }
@@ -275,9 +218,6 @@ class _$InitialImpl implements _Initial {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -286,10 +226,6 @@ class _$InitialImpl implements _Initial {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -305,9 +241,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -316,11 +249,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return initial(this);
   }
@@ -332,9 +260,6 @@ class _$InitialImpl implements _Initial {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -343,9 +268,6 @@ class _$InitialImpl implements _Initial {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return initial?.call(this);
   }
@@ -357,9 +279,6 @@ class _$InitialImpl implements _Initial {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -368,9 +287,6 @@ class _$InitialImpl implements _Initial {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -431,10 +347,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -444,10 +356,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return myProfileloading();
   }
@@ -459,9 +367,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -470,10 +375,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return myProfileloading?.call();
   }
@@ -485,9 +386,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -496,10 +394,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (myProfileloading != null) {
@@ -515,9 +409,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -526,11 +417,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return myProfileloading(this);
   }
@@ -542,9 +428,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -553,9 +436,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return myProfileloading?.call(this);
   }
@@ -567,9 +447,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -578,9 +455,6 @@ class _$myProfileLoadingImpl implements myProfileLoading {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (myProfileloading != null) {
@@ -672,10 +546,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -685,10 +555,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return myProfilesuccess(myProfileModel);
   }
@@ -700,9 +566,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -711,10 +574,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return myProfilesuccess?.call(myProfileModel);
   }
@@ -726,9 +585,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -737,10 +593,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (myProfilesuccess != null) {
@@ -756,9 +608,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -767,11 +616,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return myProfilesuccess(this);
   }
@@ -783,9 +627,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -794,9 +635,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return myProfilesuccess?.call(this);
   }
@@ -808,9 +646,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -819,9 +654,6 @@ class _$myProfileSuccessImpl implements myProfileSuccess {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (myProfilesuccess != null) {
@@ -921,10 +753,6 @@ class _$myProfileErrorImpl implements myProfileError {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -934,10 +762,6 @@ class _$myProfileErrorImpl implements myProfileError {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return myProfileerror(error);
   }
@@ -949,9 +773,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -960,10 +781,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return myProfileerror?.call(error);
   }
@@ -975,9 +792,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -986,10 +800,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (myProfileerror != null) {
@@ -1005,9 +815,6 @@ class _$myProfileErrorImpl implements myProfileError {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -1016,11 +823,6 @@ class _$myProfileErrorImpl implements myProfileError {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return myProfileerror(this);
   }
@@ -1032,9 +834,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -1043,9 +842,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return myProfileerror?.call(this);
   }
@@ -1057,9 +853,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -1068,9 +861,6 @@ class _$myProfileErrorImpl implements myProfileError {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (myProfileerror != null) {
@@ -1090,717 +880,6 @@ abstract class myProfileError implements MainState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$myProfileErrorImplCopyWith<_$myProfileErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$playerProfileLoadingImplCopyWith<$Res> {
-  factory _$$playerProfileLoadingImplCopyWith(
-    _$playerProfileLoadingImpl value,
-    $Res Function(_$playerProfileLoadingImpl) then,
-  ) = __$$playerProfileLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$playerProfileLoadingImplCopyWithImpl<$Res>
-    extends _$MainStateCopyWithImpl<$Res, _$playerProfileLoadingImpl>
-    implements _$$playerProfileLoadingImplCopyWith<$Res> {
-  __$$playerProfileLoadingImplCopyWithImpl(
-    _$playerProfileLoadingImpl _value,
-    $Res Function(_$playerProfileLoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$playerProfileLoadingImpl implements playerProfileLoading {
-  const _$playerProfileLoadingImpl();
-
-  @override
-  String toString() {
-    return 'MainState.playerProfileloading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$playerProfileLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
-    required TResult Function() playerSkillsloading,
-    required TResult Function(List<Skill> skills) playerSkillssuccess,
-    required TResult Function(String error) playerSkillserror,
-    required TResult Function() categoriesloading,
-    required TResult Function(CategoriesModel categoriesModel)
-    categoriessuccess,
-    required TResult Function(String error) categorieserror,
-    required TResult Function() playVideoloading,
-    required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
-  }) {
-    return playerProfileloading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
-    TResult? Function()? playerSkillsloading,
-    TResult? Function(List<Skill> skills)? playerSkillssuccess,
-    TResult? Function(String error)? playerSkillserror,
-    TResult? Function()? categoriesloading,
-    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult? Function(String error)? categorieserror,
-    TResult? Function()? playVideoloading,
-    TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
-  }) {
-    return playerProfileloading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
-    TResult Function()? playerSkillsloading,
-    TResult Function(List<Skill> skills)? playerSkillssuccess,
-    TResult Function(String error)? playerSkillserror,
-    TResult Function()? categoriesloading,
-    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult Function(String error)? categorieserror,
-    TResult Function()? playVideoloading,
-    TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (playerProfileloading != null) {
-      return playerProfileloading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(myProfileLoading value) myProfileloading,
-    required TResult Function(myProfileSuccess value) myProfilesuccess,
-    required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
-    required TResult Function(playerSkillsLoading value) playerSkillsloading,
-    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
-    required TResult Function(playerSkillsError value) playerSkillserror,
-    required TResult Function(categoriesLoading value) categoriesloading,
-    required TResult Function(categoriesSuccess value) categoriessuccess,
-    required TResult Function(categoriesError value) categorieserror,
-    required TResult Function(playVideoLoading value) playVideoloading,
-    required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
-  }) {
-    return playerProfileloading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(myProfileLoading value)? myProfileloading,
-    TResult? Function(myProfileSuccess value)? myProfilesuccess,
-    TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
-    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult? Function(playerSkillsError value)? playerSkillserror,
-    TResult? Function(categoriesLoading value)? categoriesloading,
-    TResult? Function(categoriesSuccess value)? categoriessuccess,
-    TResult? Function(categoriesError value)? categorieserror,
-    TResult? Function(playVideoLoading value)? playVideoloading,
-    TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
-  }) {
-    return playerProfileloading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(myProfileLoading value)? myProfileloading,
-    TResult Function(myProfileSuccess value)? myProfilesuccess,
-    TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
-    TResult Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult Function(playerSkillsError value)? playerSkillserror,
-    TResult Function(categoriesLoading value)? categoriesloading,
-    TResult Function(categoriesSuccess value)? categoriessuccess,
-    TResult Function(categoriesError value)? categorieserror,
-    TResult Function(playVideoLoading value)? playVideoloading,
-    TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (playerProfileloading != null) {
-      return playerProfileloading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class playerProfileLoading implements MainState {
-  const factory playerProfileLoading() = _$playerProfileLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$playerProfileSuccessImplCopyWith<$Res> {
-  factory _$$playerProfileSuccessImplCopyWith(
-    _$playerProfileSuccessImpl value,
-    $Res Function(_$playerProfileSuccessImpl) then,
-  ) = __$$playerProfileSuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({MyProfileModel playerProfileModel});
-}
-
-/// @nodoc
-class __$$playerProfileSuccessImplCopyWithImpl<$Res>
-    extends _$MainStateCopyWithImpl<$Res, _$playerProfileSuccessImpl>
-    implements _$$playerProfileSuccessImplCopyWith<$Res> {
-  __$$playerProfileSuccessImplCopyWithImpl(
-    _$playerProfileSuccessImpl _value,
-    $Res Function(_$playerProfileSuccessImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? playerProfileModel = null}) {
-    return _then(
-      _$playerProfileSuccessImpl(
-        null == playerProfileModel
-            ? _value.playerProfileModel
-            : playerProfileModel // ignore: cast_nullable_to_non_nullable
-                  as MyProfileModel,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$playerProfileSuccessImpl implements playerProfileSuccess {
-  const _$playerProfileSuccessImpl(this.playerProfileModel);
-
-  @override
-  final MyProfileModel playerProfileModel;
-
-  @override
-  String toString() {
-    return 'MainState.playerProfilesuccess(playerProfileModel: $playerProfileModel)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$playerProfileSuccessImpl &&
-            (identical(other.playerProfileModel, playerProfileModel) ||
-                other.playerProfileModel == playerProfileModel));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, playerProfileModel);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$playerProfileSuccessImplCopyWith<_$playerProfileSuccessImpl>
-  get copyWith =>
-      __$$playerProfileSuccessImplCopyWithImpl<_$playerProfileSuccessImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
-    required TResult Function() playerSkillsloading,
-    required TResult Function(List<Skill> skills) playerSkillssuccess,
-    required TResult Function(String error) playerSkillserror,
-    required TResult Function() categoriesloading,
-    required TResult Function(CategoriesModel categoriesModel)
-    categoriessuccess,
-    required TResult Function(String error) categorieserror,
-    required TResult Function() playVideoloading,
-    required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
-  }) {
-    return playerProfilesuccess(playerProfileModel);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
-    TResult? Function()? playerSkillsloading,
-    TResult? Function(List<Skill> skills)? playerSkillssuccess,
-    TResult? Function(String error)? playerSkillserror,
-    TResult? Function()? categoriesloading,
-    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult? Function(String error)? categorieserror,
-    TResult? Function()? playVideoloading,
-    TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
-  }) {
-    return playerProfilesuccess?.call(playerProfileModel);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
-    TResult Function()? playerSkillsloading,
-    TResult Function(List<Skill> skills)? playerSkillssuccess,
-    TResult Function(String error)? playerSkillserror,
-    TResult Function()? categoriesloading,
-    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult Function(String error)? categorieserror,
-    TResult Function()? playVideoloading,
-    TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (playerProfilesuccess != null) {
-      return playerProfilesuccess(playerProfileModel);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(myProfileLoading value) myProfileloading,
-    required TResult Function(myProfileSuccess value) myProfilesuccess,
-    required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
-    required TResult Function(playerSkillsLoading value) playerSkillsloading,
-    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
-    required TResult Function(playerSkillsError value) playerSkillserror,
-    required TResult Function(categoriesLoading value) categoriesloading,
-    required TResult Function(categoriesSuccess value) categoriessuccess,
-    required TResult Function(categoriesError value) categorieserror,
-    required TResult Function(playVideoLoading value) playVideoloading,
-    required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
-  }) {
-    return playerProfilesuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(myProfileLoading value)? myProfileloading,
-    TResult? Function(myProfileSuccess value)? myProfilesuccess,
-    TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
-    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult? Function(playerSkillsError value)? playerSkillserror,
-    TResult? Function(categoriesLoading value)? categoriesloading,
-    TResult? Function(categoriesSuccess value)? categoriessuccess,
-    TResult? Function(categoriesError value)? categorieserror,
-    TResult? Function(playVideoLoading value)? playVideoloading,
-    TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
-  }) {
-    return playerProfilesuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(myProfileLoading value)? myProfileloading,
-    TResult Function(myProfileSuccess value)? myProfilesuccess,
-    TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
-    TResult Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult Function(playerSkillsError value)? playerSkillserror,
-    TResult Function(categoriesLoading value)? categoriesloading,
-    TResult Function(categoriesSuccess value)? categoriessuccess,
-    TResult Function(categoriesError value)? categorieserror,
-    TResult Function(playVideoLoading value)? playVideoloading,
-    TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (playerProfilesuccess != null) {
-      return playerProfilesuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class playerProfileSuccess implements MainState {
-  const factory playerProfileSuccess(final MyProfileModel playerProfileModel) =
-      _$playerProfileSuccessImpl;
-
-  MyProfileModel get playerProfileModel;
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$playerProfileSuccessImplCopyWith<_$playerProfileSuccessImpl>
-  get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$playerProfileErrorImplCopyWith<$Res> {
-  factory _$$playerProfileErrorImplCopyWith(
-    _$playerProfileErrorImpl value,
-    $Res Function(_$playerProfileErrorImpl) then,
-  ) = __$$playerProfileErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$playerProfileErrorImplCopyWithImpl<$Res>
-    extends _$MainStateCopyWithImpl<$Res, _$playerProfileErrorImpl>
-    implements _$$playerProfileErrorImplCopyWith<$Res> {
-  __$$playerProfileErrorImplCopyWithImpl(
-    _$playerProfileErrorImpl _value,
-    $Res Function(_$playerProfileErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$playerProfileErrorImpl(
-        error: null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$playerProfileErrorImpl implements playerProfileError {
-  const _$playerProfileErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'MainState.playerProfileerror(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$playerProfileErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$playerProfileErrorImplCopyWith<_$playerProfileErrorImpl> get copyWith =>
-      __$$playerProfileErrorImplCopyWithImpl<_$playerProfileErrorImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
-    required TResult Function() playerSkillsloading,
-    required TResult Function(List<Skill> skills) playerSkillssuccess,
-    required TResult Function(String error) playerSkillserror,
-    required TResult Function() categoriesloading,
-    required TResult Function(CategoriesModel categoriesModel)
-    categoriessuccess,
-    required TResult Function(String error) categorieserror,
-    required TResult Function() playVideoloading,
-    required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
-  }) {
-    return playerProfileerror(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
-    TResult? Function()? playerSkillsloading,
-    TResult? Function(List<Skill> skills)? playerSkillssuccess,
-    TResult? Function(String error)? playerSkillserror,
-    TResult? Function()? categoriesloading,
-    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult? Function(String error)? categorieserror,
-    TResult? Function()? playVideoloading,
-    TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
-  }) {
-    return playerProfileerror?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
-    TResult Function()? playerSkillsloading,
-    TResult Function(List<Skill> skills)? playerSkillssuccess,
-    TResult Function(String error)? playerSkillserror,
-    TResult Function()? categoriesloading,
-    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult Function(String error)? categorieserror,
-    TResult Function()? playVideoloading,
-    TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (playerProfileerror != null) {
-      return playerProfileerror(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(myProfileLoading value) myProfileloading,
-    required TResult Function(myProfileSuccess value) myProfilesuccess,
-    required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
-    required TResult Function(playerSkillsLoading value) playerSkillsloading,
-    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
-    required TResult Function(playerSkillsError value) playerSkillserror,
-    required TResult Function(categoriesLoading value) categoriesloading,
-    required TResult Function(categoriesSuccess value) categoriessuccess,
-    required TResult Function(categoriesError value) categorieserror,
-    required TResult Function(playVideoLoading value) playVideoloading,
-    required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
-  }) {
-    return playerProfileerror(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(myProfileLoading value)? myProfileloading,
-    TResult? Function(myProfileSuccess value)? myProfilesuccess,
-    TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
-    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult? Function(playerSkillsError value)? playerSkillserror,
-    TResult? Function(categoriesLoading value)? categoriesloading,
-    TResult? Function(categoriesSuccess value)? categoriessuccess,
-    TResult? Function(categoriesError value)? categorieserror,
-    TResult? Function(playVideoLoading value)? playVideoloading,
-    TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
-  }) {
-    return playerProfileerror?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(myProfileLoading value)? myProfileloading,
-    TResult Function(myProfileSuccess value)? myProfilesuccess,
-    TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
-    TResult Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult Function(playerSkillsError value)? playerSkillserror,
-    TResult Function(categoriesLoading value)? categoriesloading,
-    TResult Function(categoriesSuccess value)? categoriessuccess,
-    TResult Function(categoriesError value)? categorieserror,
-    TResult Function(playVideoLoading value)? playVideoloading,
-    TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (playerProfileerror != null) {
-      return playerProfileerror(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class playerProfileError implements MainState {
-  const factory playerProfileError({required final String error}) =
-      _$playerProfileErrorImpl;
-
-  String get error;
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$playerProfileErrorImplCopyWith<_$playerProfileErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1852,10 +931,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -1865,10 +940,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return playerSkillsloading();
   }
@@ -1880,9 +951,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -1891,10 +959,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return playerSkillsloading?.call();
   }
@@ -1906,9 +970,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -1917,10 +978,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playerSkillsloading != null) {
@@ -1936,9 +993,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -1947,11 +1001,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return playerSkillsloading(this);
   }
@@ -1963,9 +1012,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -1974,9 +1020,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return playerSkillsloading?.call(this);
   }
@@ -1988,9 +1031,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -1999,9 +1039,6 @@ class _$playerSkillsLoadingImpl implements playerSkillsLoading {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playerSkillsloading != null) {
@@ -2098,10 +1135,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -2111,10 +1144,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return playerSkillssuccess(skills);
   }
@@ -2126,9 +1155,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -2137,10 +1163,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return playerSkillssuccess?.call(skills);
   }
@@ -2152,9 +1174,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -2163,10 +1182,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playerSkillssuccess != null) {
@@ -2182,9 +1197,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -2193,11 +1205,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return playerSkillssuccess(this);
   }
@@ -2209,9 +1216,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -2220,9 +1224,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return playerSkillssuccess?.call(this);
   }
@@ -2234,9 +1235,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -2245,9 +1243,6 @@ class _$playerSkillsSuccessImpl implements playerSkillsSuccess {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playerSkillssuccess != null) {
@@ -2347,10 +1342,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -2360,10 +1351,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return playerSkillserror(error);
   }
@@ -2375,9 +1362,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -2386,10 +1370,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return playerSkillserror?.call(error);
   }
@@ -2401,9 +1381,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -2412,10 +1389,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playerSkillserror != null) {
@@ -2431,9 +1404,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -2442,11 +1412,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return playerSkillserror(this);
   }
@@ -2458,9 +1423,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -2469,9 +1431,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return playerSkillserror?.call(this);
   }
@@ -2483,9 +1442,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -2494,9 +1450,6 @@ class _$playerSkillsErrorImpl implements playerSkillsError {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playerSkillserror != null) {
@@ -2566,10 +1519,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -2579,10 +1528,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return categoriesloading();
   }
@@ -2594,9 +1539,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -2605,10 +1547,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return categoriesloading?.call();
   }
@@ -2620,9 +1558,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -2631,10 +1566,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (categoriesloading != null) {
@@ -2650,9 +1581,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -2661,11 +1589,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return categoriesloading(this);
   }
@@ -2677,9 +1600,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -2688,9 +1608,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return categoriesloading?.call(this);
   }
@@ -2702,9 +1619,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -2713,9 +1627,6 @@ class _$categoriesLoadingImpl implements categoriesLoading {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (categoriesloading != null) {
@@ -2807,10 +1718,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -2820,10 +1727,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return categoriessuccess(categoriesModel);
   }
@@ -2835,9 +1738,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -2846,10 +1746,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return categoriessuccess?.call(categoriesModel);
   }
@@ -2861,9 +1757,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -2872,10 +1765,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (categoriessuccess != null) {
@@ -2891,9 +1780,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -2902,11 +1788,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return categoriessuccess(this);
   }
@@ -2918,9 +1799,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -2929,9 +1807,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return categoriessuccess?.call(this);
   }
@@ -2943,9 +1818,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -2954,9 +1826,6 @@ class _$categoriesSuccessImpl implements categoriesSuccess {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (categoriessuccess != null) {
@@ -3056,10 +1925,6 @@ class _$categoriesErrorImpl implements categoriesError {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -3069,10 +1934,6 @@ class _$categoriesErrorImpl implements categoriesError {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return categorieserror(error);
   }
@@ -3084,9 +1945,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -3095,10 +1953,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return categorieserror?.call(error);
   }
@@ -3110,9 +1964,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -3121,10 +1972,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (categorieserror != null) {
@@ -3140,9 +1987,6 @@ class _$categoriesErrorImpl implements categoriesError {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -3151,11 +1995,6 @@ class _$categoriesErrorImpl implements categoriesError {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return categorieserror(this);
   }
@@ -3167,9 +2006,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -3178,9 +2014,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return categorieserror?.call(this);
   }
@@ -3192,9 +2025,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -3203,9 +2033,6 @@ class _$categoriesErrorImpl implements categoriesError {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (categorieserror != null) {
@@ -3275,10 +2102,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -3288,10 +2111,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return playVideoloading();
   }
@@ -3303,9 +2122,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -3314,10 +2130,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return playVideoloading?.call();
   }
@@ -3329,9 +2141,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -3340,10 +2149,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playVideoloading != null) {
@@ -3359,9 +2164,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -3370,11 +2172,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return playVideoloading(this);
   }
@@ -3386,9 +2183,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -3397,9 +2191,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return playVideoloading?.call(this);
   }
@@ -3411,9 +2202,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -3422,9 +2210,6 @@ class _$playVideoLoadingImpl implements playVideoLoading {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playVideoloading != null) {
@@ -3485,10 +2270,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     required TResult Function() myProfileloading,
     required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
     required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
     required TResult Function() playerSkillsloading,
     required TResult Function(List<Skill> skills) playerSkillssuccess,
     required TResult Function(String error) playerSkillserror,
@@ -3498,10 +2279,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     required TResult Function(String error) categorieserror,
     required TResult Function() playVideoloading,
     required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
   }) {
     return playVideosuccess();
   }
@@ -3513,9 +2290,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult? Function()? myProfileloading,
     TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
     TResult? Function()? playerSkillsloading,
     TResult? Function(List<Skill> skills)? playerSkillssuccess,
     TResult? Function(String error)? playerSkillserror,
@@ -3524,10 +2298,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult? Function(String error)? categorieserror,
     TResult? Function()? playVideoloading,
     TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
   }) {
     return playVideosuccess?.call();
   }
@@ -3539,9 +2309,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult Function()? myProfileloading,
     TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
     TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
     TResult Function()? playerSkillsloading,
     TResult Function(List<Skill> skills)? playerSkillssuccess,
     TResult Function(String error)? playerSkillserror,
@@ -3550,10 +2317,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult Function(String error)? categorieserror,
     TResult Function()? playVideoloading,
     TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playVideosuccess != null) {
@@ -3569,9 +2332,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     required TResult Function(myProfileLoading value) myProfileloading,
     required TResult Function(myProfileSuccess value) myProfilesuccess,
     required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
     required TResult Function(playerSkillsLoading value) playerSkillsloading,
     required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
     required TResult Function(playerSkillsError value) playerSkillserror,
@@ -3580,11 +2340,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     required TResult Function(categoriesError value) categorieserror,
     required TResult Function(playVideoLoading value) playVideoloading,
     required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
   }) {
     return playVideosuccess(this);
   }
@@ -3596,9 +2351,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult? Function(myProfileLoading value)? myProfileloading,
     TResult? Function(myProfileSuccess value)? myProfilesuccess,
     TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
     TResult? Function(playerSkillsLoading value)? playerSkillsloading,
     TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult? Function(playerSkillsError value)? playerSkillserror,
@@ -3607,9 +2359,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult? Function(categoriesError value)? categorieserror,
     TResult? Function(playVideoLoading value)? playVideoloading,
     TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
   }) {
     return playVideosuccess?.call(this);
   }
@@ -3621,9 +2370,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult Function(myProfileLoading value)? myProfileloading,
     TResult Function(myProfileSuccess value)? myProfilesuccess,
     TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
     TResult Function(playerSkillsLoading value)? playerSkillsloading,
     TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
     TResult Function(playerSkillsError value)? playerSkillserror,
@@ -3632,9 +2378,6 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
     TResult Function(categoriesError value)? categorieserror,
     TResult Function(playVideoLoading value)? playVideoloading,
     TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
     required TResult orElse(),
   }) {
     if (playVideosuccess != null) {
@@ -3646,743 +2389,4 @@ class _$playVideoSuccessImpl implements playVideoSuccess {
 
 abstract class playVideoSuccess implements MainState {
   const factory playVideoSuccess() = _$playVideoSuccessImpl;
-}
-
-/// @nodoc
-abstract class _$$toggleFavoriteLoadingImplCopyWith<$Res> {
-  factory _$$toggleFavoriteLoadingImplCopyWith(
-    _$toggleFavoriteLoadingImpl value,
-    $Res Function(_$toggleFavoriteLoadingImpl) then,
-  ) = __$$toggleFavoriteLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$toggleFavoriteLoadingImplCopyWithImpl<$Res>
-    extends _$MainStateCopyWithImpl<$Res, _$toggleFavoriteLoadingImpl>
-    implements _$$toggleFavoriteLoadingImplCopyWith<$Res> {
-  __$$toggleFavoriteLoadingImplCopyWithImpl(
-    _$toggleFavoriteLoadingImpl _value,
-    $Res Function(_$toggleFavoriteLoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$toggleFavoriteLoadingImpl implements toggleFavoriteLoading {
-  const _$toggleFavoriteLoadingImpl();
-
-  @override
-  String toString() {
-    return 'MainState.toggleFavoriteLoading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$toggleFavoriteLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
-    required TResult Function() playerSkillsloading,
-    required TResult Function(List<Skill> skills) playerSkillssuccess,
-    required TResult Function(String error) playerSkillserror,
-    required TResult Function() categoriesloading,
-    required TResult Function(CategoriesModel categoriesModel)
-    categoriessuccess,
-    required TResult Function(String error) categorieserror,
-    required TResult Function() playVideoloading,
-    required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
-  }) {
-    return toggleFavoriteLoading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
-    TResult? Function()? playerSkillsloading,
-    TResult? Function(List<Skill> skills)? playerSkillssuccess,
-    TResult? Function(String error)? playerSkillserror,
-    TResult? Function()? categoriesloading,
-    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult? Function(String error)? categorieserror,
-    TResult? Function()? playVideoloading,
-    TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
-  }) {
-    return toggleFavoriteLoading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
-    TResult Function()? playerSkillsloading,
-    TResult Function(List<Skill> skills)? playerSkillssuccess,
-    TResult Function(String error)? playerSkillserror,
-    TResult Function()? categoriesloading,
-    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult Function(String error)? categorieserror,
-    TResult Function()? playVideoloading,
-    TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (toggleFavoriteLoading != null) {
-      return toggleFavoriteLoading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(myProfileLoading value) myProfileloading,
-    required TResult Function(myProfileSuccess value) myProfilesuccess,
-    required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
-    required TResult Function(playerSkillsLoading value) playerSkillsloading,
-    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
-    required TResult Function(playerSkillsError value) playerSkillserror,
-    required TResult Function(categoriesLoading value) categoriesloading,
-    required TResult Function(categoriesSuccess value) categoriessuccess,
-    required TResult Function(categoriesError value) categorieserror,
-    required TResult Function(playVideoLoading value) playVideoloading,
-    required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
-  }) {
-    return toggleFavoriteLoading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(myProfileLoading value)? myProfileloading,
-    TResult? Function(myProfileSuccess value)? myProfilesuccess,
-    TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
-    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult? Function(playerSkillsError value)? playerSkillserror,
-    TResult? Function(categoriesLoading value)? categoriesloading,
-    TResult? Function(categoriesSuccess value)? categoriessuccess,
-    TResult? Function(categoriesError value)? categorieserror,
-    TResult? Function(playVideoLoading value)? playVideoloading,
-    TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
-  }) {
-    return toggleFavoriteLoading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(myProfileLoading value)? myProfileloading,
-    TResult Function(myProfileSuccess value)? myProfilesuccess,
-    TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
-    TResult Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult Function(playerSkillsError value)? playerSkillserror,
-    TResult Function(categoriesLoading value)? categoriesloading,
-    TResult Function(categoriesSuccess value)? categoriessuccess,
-    TResult Function(categoriesError value)? categorieserror,
-    TResult Function(playVideoLoading value)? playVideoloading,
-    TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (toggleFavoriteLoading != null) {
-      return toggleFavoriteLoading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class toggleFavoriteLoading implements MainState {
-  const factory toggleFavoriteLoading() = _$toggleFavoriteLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$toggleFavoriteSuccessImplCopyWith<$Res> {
-  factory _$$toggleFavoriteSuccessImplCopyWith(
-    _$toggleFavoriteSuccessImpl value,
-    $Res Function(_$toggleFavoriteSuccessImpl) then,
-  ) = __$$toggleFavoriteSuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String playerId, bool isFavorited, String message});
-}
-
-/// @nodoc
-class __$$toggleFavoriteSuccessImplCopyWithImpl<$Res>
-    extends _$MainStateCopyWithImpl<$Res, _$toggleFavoriteSuccessImpl>
-    implements _$$toggleFavoriteSuccessImplCopyWith<$Res> {
-  __$$toggleFavoriteSuccessImplCopyWithImpl(
-    _$toggleFavoriteSuccessImpl _value,
-    $Res Function(_$toggleFavoriteSuccessImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? playerId = null,
-    Object? isFavorited = null,
-    Object? message = null,
-  }) {
-    return _then(
-      _$toggleFavoriteSuccessImpl(
-        playerId: null == playerId
-            ? _value.playerId
-            : playerId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        isFavorited: null == isFavorited
-            ? _value.isFavorited
-            : isFavorited // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        message: null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$toggleFavoriteSuccessImpl implements toggleFavoriteSuccess {
-  const _$toggleFavoriteSuccessImpl({
-    required this.playerId,
-    required this.isFavorited,
-    required this.message,
-  });
-
-  @override
-  final String playerId;
-  @override
-  final bool isFavorited;
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'MainState.toggleFavoriteSuccess(playerId: $playerId, isFavorited: $isFavorited, message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$toggleFavoriteSuccessImpl &&
-            (identical(other.playerId, playerId) ||
-                other.playerId == playerId) &&
-            (identical(other.isFavorited, isFavorited) ||
-                other.isFavorited == isFavorited) &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, playerId, isFavorited, message);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$toggleFavoriteSuccessImplCopyWith<_$toggleFavoriteSuccessImpl>
-  get copyWith =>
-      __$$toggleFavoriteSuccessImplCopyWithImpl<_$toggleFavoriteSuccessImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
-    required TResult Function() playerSkillsloading,
-    required TResult Function(List<Skill> skills) playerSkillssuccess,
-    required TResult Function(String error) playerSkillserror,
-    required TResult Function() categoriesloading,
-    required TResult Function(CategoriesModel categoriesModel)
-    categoriessuccess,
-    required TResult Function(String error) categorieserror,
-    required TResult Function() playVideoloading,
-    required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
-  }) {
-    return toggleFavoriteSuccess(playerId, isFavorited, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
-    TResult? Function()? playerSkillsloading,
-    TResult? Function(List<Skill> skills)? playerSkillssuccess,
-    TResult? Function(String error)? playerSkillserror,
-    TResult? Function()? categoriesloading,
-    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult? Function(String error)? categorieserror,
-    TResult? Function()? playVideoloading,
-    TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
-  }) {
-    return toggleFavoriteSuccess?.call(playerId, isFavorited, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
-    TResult Function()? playerSkillsloading,
-    TResult Function(List<Skill> skills)? playerSkillssuccess,
-    TResult Function(String error)? playerSkillserror,
-    TResult Function()? categoriesloading,
-    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult Function(String error)? categorieserror,
-    TResult Function()? playVideoloading,
-    TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (toggleFavoriteSuccess != null) {
-      return toggleFavoriteSuccess(playerId, isFavorited, message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(myProfileLoading value) myProfileloading,
-    required TResult Function(myProfileSuccess value) myProfilesuccess,
-    required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
-    required TResult Function(playerSkillsLoading value) playerSkillsloading,
-    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
-    required TResult Function(playerSkillsError value) playerSkillserror,
-    required TResult Function(categoriesLoading value) categoriesloading,
-    required TResult Function(categoriesSuccess value) categoriessuccess,
-    required TResult Function(categoriesError value) categorieserror,
-    required TResult Function(playVideoLoading value) playVideoloading,
-    required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
-  }) {
-    return toggleFavoriteSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(myProfileLoading value)? myProfileloading,
-    TResult? Function(myProfileSuccess value)? myProfilesuccess,
-    TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
-    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult? Function(playerSkillsError value)? playerSkillserror,
-    TResult? Function(categoriesLoading value)? categoriesloading,
-    TResult? Function(categoriesSuccess value)? categoriessuccess,
-    TResult? Function(categoriesError value)? categorieserror,
-    TResult? Function(playVideoLoading value)? playVideoloading,
-    TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
-  }) {
-    return toggleFavoriteSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(myProfileLoading value)? myProfileloading,
-    TResult Function(myProfileSuccess value)? myProfilesuccess,
-    TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
-    TResult Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult Function(playerSkillsError value)? playerSkillserror,
-    TResult Function(categoriesLoading value)? categoriesloading,
-    TResult Function(categoriesSuccess value)? categoriessuccess,
-    TResult Function(categoriesError value)? categorieserror,
-    TResult Function(playVideoLoading value)? playVideoloading,
-    TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (toggleFavoriteSuccess != null) {
-      return toggleFavoriteSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class toggleFavoriteSuccess implements MainState {
-  const factory toggleFavoriteSuccess({
-    required final String playerId,
-    required final bool isFavorited,
-    required final String message,
-  }) = _$toggleFavoriteSuccessImpl;
-
-  String get playerId;
-  bool get isFavorited;
-  String get message;
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$toggleFavoriteSuccessImplCopyWith<_$toggleFavoriteSuccessImpl>
-  get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$toggleFavoriteErrorImplCopyWith<$Res> {
-  factory _$$toggleFavoriteErrorImplCopyWith(
-    _$toggleFavoriteErrorImpl value,
-    $Res Function(_$toggleFavoriteErrorImpl) then,
-  ) = __$$toggleFavoriteErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$toggleFavoriteErrorImplCopyWithImpl<$Res>
-    extends _$MainStateCopyWithImpl<$Res, _$toggleFavoriteErrorImpl>
-    implements _$$toggleFavoriteErrorImplCopyWith<$Res> {
-  __$$toggleFavoriteErrorImplCopyWithImpl(
-    _$toggleFavoriteErrorImpl _value,
-    $Res Function(_$toggleFavoriteErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$toggleFavoriteErrorImpl(
-        error: null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$toggleFavoriteErrorImpl implements toggleFavoriteError {
-  const _$toggleFavoriteErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'MainState.toggleFavoriteError(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$toggleFavoriteErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$toggleFavoriteErrorImplCopyWith<_$toggleFavoriteErrorImpl> get copyWith =>
-      __$$toggleFavoriteErrorImplCopyWithImpl<_$toggleFavoriteErrorImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() myProfileloading,
-    required TResult Function(MyProfileModel myProfileModel) myProfilesuccess,
-    required TResult Function(String error) myProfileerror,
-    required TResult Function() playerProfileloading,
-    required TResult Function(MyProfileModel playerProfileModel)
-    playerProfilesuccess,
-    required TResult Function(String error) playerProfileerror,
-    required TResult Function() playerSkillsloading,
-    required TResult Function(List<Skill> skills) playerSkillssuccess,
-    required TResult Function(String error) playerSkillserror,
-    required TResult Function() categoriesloading,
-    required TResult Function(CategoriesModel categoriesModel)
-    categoriessuccess,
-    required TResult Function(String error) categorieserror,
-    required TResult Function() playVideoloading,
-    required TResult Function() playVideosuccess,
-    required TResult Function() toggleFavoriteLoading,
-    required TResult Function(String playerId, bool isFavorited, String message)
-    toggleFavoriteSuccess,
-    required TResult Function(String error) toggleFavoriteError,
-  }) {
-    return toggleFavoriteError(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? myProfileloading,
-    TResult? Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult? Function(String error)? myProfileerror,
-    TResult? Function()? playerProfileloading,
-    TResult? Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult? Function(String error)? playerProfileerror,
-    TResult? Function()? playerSkillsloading,
-    TResult? Function(List<Skill> skills)? playerSkillssuccess,
-    TResult? Function(String error)? playerSkillserror,
-    TResult? Function()? categoriesloading,
-    TResult? Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult? Function(String error)? categorieserror,
-    TResult? Function()? playVideoloading,
-    TResult? Function()? playVideosuccess,
-    TResult? Function()? toggleFavoriteLoading,
-    TResult? Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult? Function(String error)? toggleFavoriteError,
-  }) {
-    return toggleFavoriteError?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? myProfileloading,
-    TResult Function(MyProfileModel myProfileModel)? myProfilesuccess,
-    TResult Function(String error)? myProfileerror,
-    TResult Function()? playerProfileloading,
-    TResult Function(MyProfileModel playerProfileModel)? playerProfilesuccess,
-    TResult Function(String error)? playerProfileerror,
-    TResult Function()? playerSkillsloading,
-    TResult Function(List<Skill> skills)? playerSkillssuccess,
-    TResult Function(String error)? playerSkillserror,
-    TResult Function()? categoriesloading,
-    TResult Function(CategoriesModel categoriesModel)? categoriessuccess,
-    TResult Function(String error)? categorieserror,
-    TResult Function()? playVideoloading,
-    TResult Function()? playVideosuccess,
-    TResult Function()? toggleFavoriteLoading,
-    TResult Function(String playerId, bool isFavorited, String message)?
-    toggleFavoriteSuccess,
-    TResult Function(String error)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (toggleFavoriteError != null) {
-      return toggleFavoriteError(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(myProfileLoading value) myProfileloading,
-    required TResult Function(myProfileSuccess value) myProfilesuccess,
-    required TResult Function(myProfileError value) myProfileerror,
-    required TResult Function(playerProfileLoading value) playerProfileloading,
-    required TResult Function(playerProfileSuccess value) playerProfilesuccess,
-    required TResult Function(playerProfileError value) playerProfileerror,
-    required TResult Function(playerSkillsLoading value) playerSkillsloading,
-    required TResult Function(playerSkillsSuccess value) playerSkillssuccess,
-    required TResult Function(playerSkillsError value) playerSkillserror,
-    required TResult Function(categoriesLoading value) categoriesloading,
-    required TResult Function(categoriesSuccess value) categoriessuccess,
-    required TResult Function(categoriesError value) categorieserror,
-    required TResult Function(playVideoLoading value) playVideoloading,
-    required TResult Function(playVideoSuccess value) playVideosuccess,
-    required TResult Function(toggleFavoriteLoading value)
-    toggleFavoriteLoading,
-    required TResult Function(toggleFavoriteSuccess value)
-    toggleFavoriteSuccess,
-    required TResult Function(toggleFavoriteError value) toggleFavoriteError,
-  }) {
-    return toggleFavoriteError(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(myProfileLoading value)? myProfileloading,
-    TResult? Function(myProfileSuccess value)? myProfilesuccess,
-    TResult? Function(myProfileError value)? myProfileerror,
-    TResult? Function(playerProfileLoading value)? playerProfileloading,
-    TResult? Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult? Function(playerProfileError value)? playerProfileerror,
-    TResult? Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult? Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult? Function(playerSkillsError value)? playerSkillserror,
-    TResult? Function(categoriesLoading value)? categoriesloading,
-    TResult? Function(categoriesSuccess value)? categoriessuccess,
-    TResult? Function(categoriesError value)? categorieserror,
-    TResult? Function(playVideoLoading value)? playVideoloading,
-    TResult? Function(playVideoSuccess value)? playVideosuccess,
-    TResult? Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult? Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult? Function(toggleFavoriteError value)? toggleFavoriteError,
-  }) {
-    return toggleFavoriteError?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(myProfileLoading value)? myProfileloading,
-    TResult Function(myProfileSuccess value)? myProfilesuccess,
-    TResult Function(myProfileError value)? myProfileerror,
-    TResult Function(playerProfileLoading value)? playerProfileloading,
-    TResult Function(playerProfileSuccess value)? playerProfilesuccess,
-    TResult Function(playerProfileError value)? playerProfileerror,
-    TResult Function(playerSkillsLoading value)? playerSkillsloading,
-    TResult Function(playerSkillsSuccess value)? playerSkillssuccess,
-    TResult Function(playerSkillsError value)? playerSkillserror,
-    TResult Function(categoriesLoading value)? categoriesloading,
-    TResult Function(categoriesSuccess value)? categoriessuccess,
-    TResult Function(categoriesError value)? categorieserror,
-    TResult Function(playVideoLoading value)? playVideoloading,
-    TResult Function(playVideoSuccess value)? playVideosuccess,
-    TResult Function(toggleFavoriteLoading value)? toggleFavoriteLoading,
-    TResult Function(toggleFavoriteSuccess value)? toggleFavoriteSuccess,
-    TResult Function(toggleFavoriteError value)? toggleFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (toggleFavoriteError != null) {
-      return toggleFavoriteError(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class toggleFavoriteError implements MainState {
-  const factory toggleFavoriteError({required final String error}) =
-      _$toggleFavoriteErrorImpl;
-
-  String get error;
-
-  /// Create a copy of MainState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$toggleFavoriteErrorImplCopyWith<_$toggleFavoriteErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }

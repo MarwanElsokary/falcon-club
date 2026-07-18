@@ -97,12 +97,6 @@ class ApiConstants {
   //getReelsByPlayerId
   static const String getReelsByPlayerId = "Player/GetReels";
 
-  //addToFav
-  static const String addToFav = "Club/AddToFav";
-
-  //removeFromFav
-  static const String removeFromFav = "Club/RemoveFromFav";
-
   //getFav
   static const String getFav = "Club/GetFavPlayers";
 

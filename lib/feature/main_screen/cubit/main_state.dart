@@ -17,14 +17,6 @@ class MainState with _$MainState {
   const factory MainState.myProfileerror({required String error}) =
   myProfileError;
 
-  //playerProfile
-  const factory MainState.playerProfileloading() = playerProfileLoading;
-  const factory MainState.playerProfilesuccess(
-      MyProfileModel playerProfileModel,
-      ) = playerProfileSuccess;
-  const factory MainState.playerProfileerror({required String error}) =
-  playerProfileError;
-
   //playerSkills
   const factory MainState.playerSkillsloading() = playerSkillsLoading;
   const factory MainState.playerSkillssuccess(List<Skill> skills) =
@@ -41,14 +33,4 @@ class MainState with _$MainState {
 
   const factory MainState.playVideoloading() = playVideoLoading;
   const factory MainState.playVideosuccess() = playVideoSuccess;
-
-  // ✅ Favorite Player States
-  const factory MainState.toggleFavoriteLoading() = toggleFavoriteLoading;
-  const factory MainState.toggleFavoriteSuccess({
-    required String playerId,
-    required bool isFavorited,
-    required String message,
-  }) = toggleFavoriteSuccess;
-  const factory MainState.toggleFavoriteError({required String error}) =
-  toggleFavoriteError;
 }

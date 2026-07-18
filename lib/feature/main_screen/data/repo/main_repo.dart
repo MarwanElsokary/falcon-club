@@ -57,18 +57,6 @@ class MainRepo {
     }
   }
 
-  // profileById
-  Future<ApiResult<MyProfileModel>> profileById({
-    required String userId,
-  }) async {
-    try {
-      final response = await _apiService.profileById(userId);
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
-  }
-
   Future<ApiResult<List<Skill>>> getSkills({required String userId}) async {
     try {
       log('📡 Calling getSkills API with userId: $userId');
@@ -85,18 +73,4 @@ class MainRepo {
     }
   }
 
-  // ✅ Toggle Favorite Player
-  Future<ApiResult<ToggleFavResponse>> toggleFavoritePlayer({
-    required String playerId,
-  }) async {
-    try {
-      log('⭐ Toggling favorite for player: $playerId');
-      final response = await _apiService.toggleFavPlayer(playerId);
-      log('✅ Toggle fav response: ${response.message}');
-      return ApiResult.success(response);
-    } catch (error) {
-      log('❌ Toggle fav error: $error');
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
-  }
 }

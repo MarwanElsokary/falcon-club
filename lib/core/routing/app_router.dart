@@ -18,7 +18,7 @@ import '../../feature/auth/presentation/cubit/scout_registration_cubit.dart';
 import '../../feature/auth/presentation/cubit/terms_cubit.dart';
 import '../../feature/auth/presentation/screens/otp_screen.dart';
 import '../../feature/auth/presentation/screens/registration_screen.dart';
-import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
+import '../../feature/player_profile/presentation/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
 import '../../feature/favorites/presentation/cubit/player_favorite_cubit.dart';
