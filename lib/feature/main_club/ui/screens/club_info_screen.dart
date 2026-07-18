@@ -10,7 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widget/padding_utils.dart';
+import '../../../../shared/domain/subscription_reader.dart';
 import '../../../club_team/cubit/club_team_cubit.dart';
 import '../../../club_team/cubit/club_team_state.dart';
 import '../../../main_screen/data/model/my_profile_model.dart';
@@ -73,6 +75,12 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
 
   Widget _buildProfile(MyProfileModel profile) {
     final data = profile.data;
+    // Entitlement from the single shared rule, not the raw `isSubscribed` flag:
+    // `isActive` also checks the remaining days, so an EXPIRED subscription no
+    // longer shows "مشترك". (`isSubscribed` alone reported expired as active —
+    // the same divergence the Scout drawer and rank/package screens were fixed
+    // away from.)
+    final bool isSubscribed = getIt<SubscriptionReader>().current().isActive;
 
     return SingleChildScrollView(
       child: Column(
@@ -124,18 +132,17 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: (data.isSubscribed == true ? Colors.green : Colors.red)
-                  .withOpacity(0.2),
+              color: (isSubscribed ? Colors.green : Colors.red).withOpacity(0.2),
               borderRadius: BorderRadius.circular(20.r),
               border: Border.all(
-                color: data.isSubscribed == true ? Colors.green : Colors.red,
+                color: isSubscribed ? Colors.green : Colors.red,
               ),
             ),
             child: TextUtils(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: data.isSubscribed == true ? Colors.green : Colors.red,
-              text: data.isSubscribed == true ? 'مشترك'.tr() : 'غير مشترك'.tr(),
+              color: isSubscribed ? Colors.green : Colors.red,
+              text: isSubscribed ? 'مشترك'.tr() : 'غير مشترك'.tr(),
             ),
           ),
 

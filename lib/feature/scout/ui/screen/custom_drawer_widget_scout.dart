@@ -123,7 +123,7 @@ class CustomDrawerScout extends StatelessWidget {
         'ontap': () {
           urlCall(
             context: context,
-            url: 'https://falconclubappai.net/api/Website/GetPrivacy',
+            url: 'https://falconai.net/api/Website/GetPrivacy',
           );
         },
       },
