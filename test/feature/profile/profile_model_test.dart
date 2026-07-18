@@ -35,6 +35,8 @@ void main() {
     expect(p.accountNumber, '1833');
     expect(p.photoUrl, isNull);
     expect(p.gender, Gender.male);
+    // clubName is absent from the lean Scout-token capture → null (tolerant).
+    expect(p.clubName, isNull);
     // Role is not in the payload — it comes from the session.
     expect(p.role, UserRole.scout);
   });

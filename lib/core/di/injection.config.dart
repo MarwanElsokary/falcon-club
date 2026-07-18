@@ -128,6 +128,7 @@ import '../../feature/profile/domain/repositories/profile_repository.dart'
     as _i173;
 import '../../feature/profile/domain/usecases/get_my_profile.dart' as _i352;
 import '../../feature/profile/domain/usecases/get_player_profile.dart' as _i513;
+import '../../feature/profile/presentation/cubit/profile_cubit.dart' as _i499;
 import '../../feature/trial_details/cubit/trial_details_cubit.dart' as _i896;
 import '../../shared/data/cached_subscription_reader.dart' as _i287;
 import '../../shared/domain/subscription_reader.dart' as _i876;
@@ -323,6 +324,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i136.DescribeSession>(
       () => _i136.DescribeSession(gh<_i700.SessionRepository>()),
+    );
+    gh.factory<_i499.ProfileCubit>(
+      () => _i499.ProfileCubit(gh<_i352.GetMyProfile>()),
     );
     gh.factory<_i702.ReadPendingRegistration>(
       () => _i702.ReadPendingRegistration(

@@ -21,7 +21,9 @@ import '../../feature/auth/presentation/screens/registration_screen.dart';
 import '../../feature/player_profile/ui/screen/player_profile_screen.dart';
 import '../../feature/all_experiment/ui/screen/all_experiment_screen.dart';
 import '../../feature/club_team/ui/screen/club_my_team_screen.dart';
-import '../../feature/club_team/ui/screen/club_profile_screen.dart';
+import '../../feature/profile/presentation/cubit/profile_cubit.dart';
+import '../../feature/profile/presentation/screens/coach_profile_screen.dart';
+import '../../feature/profile/presentation/screens/main_club_profile_screen.dart';
 import '../../feature/exercise/presentation/cubit/exercise_details_cubit.dart';
 import '../../feature/trial_details/cubit/trial_details_cubit.dart';
 import '../../feature/trial_details/ui/screen/trial_details_screen.dart';
@@ -29,7 +31,6 @@ import '../../feature/experiments/cubit/experiments_cubit.dart';
 import '../../feature/auth/presentation/cubit/sign_in_cubit.dart';
 import '../../feature/auth/presentation/screens/sign_in_screen.dart';
 import '../../feature/main_club/cubit/requests_cubit.dart';
-import '../../feature/main_club/ui/screens/club_info_screen.dart';
 import '../../feature/main_club/ui/screens/mainClubScreen.dart';
 import '../../feature/main_club/ui/screens/requests_screen.dart';
 import '../../feature/main_screen/cubit/main_cubit.dart';
@@ -139,9 +140,16 @@ class AppRouter {
 
       case AppRoute.clubProfileScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
-            child: const ClubProfileScreen(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              // Display via the domain ProfileCubit. ClubTeamCubit stays for the
+              // edit sheet only (migrated in Phase 3); its emitMyProfile is not
+              // called here — the shell already refreshed the cache the edit form
+              // reads, so there is no duplicate Club/GetProfile fetch.
+              BlocProvider(create: (_) => getIt<ProfileCubit>()..load()),
+              BlocProvider(create: (_) => getIt<ClubTeamCubit>()),
+            ],
+            child: const CoachProfileScreen(),
           ),
         );
       case AppRoute.clubMyTeamScreen:
@@ -163,8 +171,8 @@ class AppRouter {
       case AppRoute.clubInfoScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => getIt<ClubTeamCubit>()..emitMyProfile(),
-            child: const ClubInfoScreen(),
+            create: (_) => getIt<ProfileCubit>()..load(),
+            child: const MainClubProfileScreen(),
           ),
         );
 

@@ -27,6 +27,7 @@ final class Profile extends Equatable {
     this.photoUrl,
     this.gender,
     this.accountNumber,
+    this.clubName,
     this.subscription = Subscription.none,
     this.isProfileCompleted = true,
   });
@@ -44,6 +45,12 @@ final class Profile extends Equatable {
   final Gender? gender;
 
   final String? accountNumber;
+
+  /// The club this account is associated with, when the backend returns one.
+  /// Absent from the lean Scout-token `Club/GetProfile` capture, so read
+  /// tolerantly — null when not present.
+  final String? clubName;
+
   final Subscription subscription;
   final bool isProfileCompleted;
 
@@ -67,6 +74,7 @@ final class Profile extends Equatable {
     photoUrl,
     gender,
     accountNumber,
+    clubName,
     subscription,
     isProfileCompleted,
   ];

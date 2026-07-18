@@ -39,6 +39,7 @@ abstract final class ProfileModel {
       photoUrl: Json.asString(data['photo']),
       gender: Gender.fromArabic(Json.asString(data['gender'])),
       accountNumber: Json.asString(data['accountNumber']),
+      clubName: Json.asString(data['clubName']),
       subscription: Subscription(
         isPurchased: Json.asBool(data['isSubscribed']) ?? false,
         remainingDays: Json.asInt(data['remainingSubscriptionDays']),

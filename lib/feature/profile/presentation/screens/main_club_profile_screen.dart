@@ -1,86 +1,50 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/padding_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/di/dependency_injection.dart';
-import '../../../../core/widget/padding_utils.dart';
-import '../../../../shared/domain/subscription_reader.dart';
-import '../../../club_team/cubit/club_team_cubit.dart';
-import '../../../club_team/cubit/club_team_state.dart';
-import '../../../main_screen/data/model/my_profile_model.dart';
+import '../../../../shared/domain/entities/profile.dart';
+import '../cubit/profile_cubit.dart';
+import '../cubit/profile_state.dart';
+import '../widgets/profile_error_view.dart';
+import '../widgets/profile_info_card.dart';
+import '../widgets/profile_loading_view.dart';
+import '../widgets/profile_scaffold.dart';
 
-class ClubInfoScreen extends StatefulWidget {
-  const ClubInfoScreen({super.key});
-
-  @override
-  State<ClubInfoScreen> createState() => _ClubInfoScreenState();
-}
-
-class _ClubInfoScreenState extends State<ClubInfoScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<ClubTeamCubit>().emitMyProfile();
-  }
+/// The MainClub's own profile/info — read-only.
+///
+/// Replaces `ClubInfoScreen`. Display is driven by [ProfileCubit] over the
+/// domain [Profile]; the subscription badge now reads `profile.subscription
+/// .isActive` (the fresh fetch) rather than the raw `isSubscribed` flag — the
+/// permanent form of the Phase 0 hotfix.
+class MainClubProfileScreen extends StatelessWidget {
+  const MainClubProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: context.displayWidth,
-        height: context.displayHeight,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/Frame 1011 1.png'),
-            fit: BoxFit.cover,
+    return ProfileScaffold(
+      child: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) => switch (state) {
+          ProfileLoaded(:final Profile profile) => _content(context, profile),
+          ProfileFailure(:final String message) => ProfileErrorView(
+            message: message,
+            icon: Icons.error_outline,
+            onRetry: () => context.read<ProfileCubit>().load(),
           ),
-        ),
-        child: SafeArea(
-          child: BlocBuilder<ClubTeamCubit, ClubTeamState>(
-            buildWhen: (previous, current) =>
-                current is clubProfileLoading ||
-                current is clubProfileSuccess ||
-                current is clubProfileError,
-            builder: (context, state) {
-              return state.maybeWhen(
-                myProfileloading: () => Center(
-                  child: CupertinoActivityIndicator(
-                    color: Colors.white,
-                    radius: 15.w,
-                  ),
-                ),
-                myProfileerror: (error) => _buildError(error),
-                myProfilesuccess: (profile) => _buildProfile(profile),
-                orElse: () => Center(
-                  child: CupertinoActivityIndicator(
-                    color: Colors.white,
-                    radius: 15.w,
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+          _ => const ProfileLoadingView(),
+        },
       ),
     );
   }
 
-  Widget _buildProfile(MyProfileModel profile) {
-    final data = profile.data;
-    // Entitlement from the single shared rule, not the raw `isSubscribed` flag:
-    // `isActive` also checks the remaining days, so an EXPIRED subscription no
-    // longer shows "مشترك". (`isSubscribed` alone reported expired as active —
-    // the same divergence the Scout drawer and rank/package screens were fixed
-    // away from.)
-    final bool isSubscribed = getIt<SubscriptionReader>().current().isActive;
+  Widget _content(BuildContext context, Profile profile) {
+    final bool isSubscribed = profile.subscription.isActive;
 
     return SingleChildScrollView(
       child: Column(
@@ -101,7 +65,7 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
               ),
               child: ClipOval(
                 child: CachedNetworkImage(
-                  imageUrl: data.photo ?? '',
+                  imageUrl: profile.photoUrl ?? '',
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Skeletonizer(
                     enabled: true,
@@ -124,7 +88,7 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
             fontSize: 20,
             fontWeight: FontWeight.w700,
             color: Colors.white,
-            text: data.firstName ?? '',
+            text: profile.firstName,
           ),
 
           // ── حالة الاشتراك ─────────────────────────────────────────────
@@ -148,36 +112,21 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
 
           verticalSpace(20),
 
-          // ── بطاقة المعلومات الأساسية ──────────────────────────────────
-          Container(
-            width: context.displayWidth,
-            padding: paddingUtils(),
-            decoration: BoxDecoration(
-              color: secondMainColor,
-              borderRadius: BorderRadiusDirectional.only(
-                bottomEnd: Radius.circular(30.r),
-                bottomStart: Radius.circular(30.r),
+          // ── بطاقة المعلومات الأساسية: هاتف | بريد ─────────────────────
+          ProfileInfoCard(
+            dividerColor: Colors.white24,
+            items: [
+              _infoItem(
+                icon: Icons.phone,
+                title: 'الهاتف'.tr(),
+                value: profile.phone ?? '—',
               ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: _infoItem(
-                    icon: Icons.phone,
-                    title: 'الهاتف'.tr(),
-                    value: data.phoneNumber ?? '—',
-                  ),
-                ),
-                Container(height: 40.h, width: 1, color: Colors.white24),
-                Expanded(
-                  child: _infoItem(
-                    icon: Icons.email_outlined,
-                    title: 'البريد'.tr(),
-                    value: data.email ?? '—',
-                  ),
-                ),
-              ],
-            ),
+              _infoItem(
+                icon: Icons.email_outlined,
+                title: 'البريد'.tr(),
+                value: profile.email ?? '—',
+              ),
+            ],
           ),
 
           verticalSpace(24),
@@ -197,20 +146,15 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
                   _detailRow(
                     icon: Icons.badge_outlined,
                     label: 'رقم الحساب'.tr(),
-                    value: data.accountNumber ?? '—',
+                    value: profile.accountNumber ?? '—',
                   ),
                   _divider(),
                   _detailRow(
                     icon: Icons.sports_soccer,
                     label: 'النادي'.tr(),
-                    value: data.clubName ?? '—',
+                    value: profile.clubName ?? '—',
                   ),
                   _divider(),
-                  // _detailRow(
-                  //   icon: Icons.person_outline,
-                  //   label: 'الجنس'.tr(),
-                  //   value: _genderText(data.gender),
-                  // ),
                 ],
               ),
             ),
@@ -281,48 +225,4 @@ class _ClubInfoScreenState extends State<ClubInfoScreen> {
   }
 
   Widget _divider() => Divider(color: Colors.white.withOpacity(0.1), height: 1);
-
-  String _genderText(dynamic gender) {
-    if (gender == null) return '—';
-    if (gender == 0 || gender == 'ذكر') return 'ذكر';
-    if (gender == 1 || gender == 'أنثى') return 'أنثى';
-    return '$gender';
-  }
-
-  Widget _buildError(String error) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(20.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, color: Colors.red, size: 60.w),
-            verticalSpace(20),
-            TextUtils(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              text: 'حدث خطأ'.tr(),
-            ),
-            verticalSpace(10),
-            TextUtils(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.white70,
-              text: error,
-            ),
-            verticalSpace(20),
-            ElevatedButton(
-              onPressed: () => context.read<ClubTeamCubit>().emitMyProfile(),
-              style: ElevatedButton.styleFrom(backgroundColor: mainColor),
-              child: Text(
-                'إعادة المحاولة'.tr(),
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
