@@ -79,7 +79,7 @@ class ApiConstants {
   static const String rank = "Player/GetRankingExercise";
 
   static const String getClubRequests = 'Club/GetClubRequests';
-  static const String getPlayerRequests = 'Player/GetPlayerRequests';
+  static const String getPlayerRequests = 'Club/GetPlayerRequests';
 
   // Club Requests
   static const String acceptClub = '/Club/AcceptClub';
