@@ -30,9 +30,29 @@ class ClubTeamRepo {
     }
   }
 
-  Future<ApiResult> deleteTrainee(String playerId) async {
+  /// Removes a **player** from the club roster — `Club/DeletePlayer?PlayerId=`.
+  ///
+  /// (`ApiService.deleteTrainee` is a misleading name for that endpoint; it has
+  /// only ever deleted players. Renaming it would regenerate the retrofit
+  /// client, so it is left alone and wrapped accurately here.)
+  Future<ApiResult> deletePlayer(String playerId) async {
     try {
       final response = await _apiService.deleteTrainee(playerId);
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
+
+  /// Removes a **coach** from the club — `Club/DeleteClub?ClubId=`.
+  ///
+  /// Coaches are Club accounts, so they are addressed by `ClubId`, not
+  /// `PlayerId`. Both removals previously went through `Club/DeletePlayer`,
+  /// which rejected a coach id outright with 400 "اللاعب غير موجود" — the
+  /// Coaches tab's delete could never succeed.
+  Future<ApiResult> deleteCoach(String coachId) async {
+    try {
+      final response = await _apiService.deleteClub(coachId);
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));

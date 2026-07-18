@@ -124,7 +124,9 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
 
   Future<void> deleteTrainee(String traineeId) async {
     emit(const ClubTeamState.deleteTraineeLoading());
-    final response = await _repo.deleteTrainee(traineeId);
+    // Coaches are Club accounts → Club/DeleteClub?ClubId=. Routing them through
+    // the player endpoint returned 400 "اللاعب غير موجود" every time.
+    final response = await _repo.deleteCoach(traineeId);
     response.when(
       success: (data) {
         cachedTrainees.removeWhere((t) => t.id == traineeId);
@@ -163,7 +165,7 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
 
   Future<void> deletePlayerFromTeam(String playerId) async {
     emit(const ClubTeamState.deleteTraineeLoading());
-    final response = await _repo.deleteTrainee(playerId);
+    final response = await _repo.deletePlayer(playerId);
     response.when(
       success: (data) {
         groupedPlayers.forEach((_, list) {
