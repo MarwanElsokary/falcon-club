@@ -34,14 +34,12 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   /// just un-favourited → drop the card live; otherwise they were favourited →
   /// re-read to pick the new card up (we only have the id here, not the record).
   void _onExternalChange(String playerId) {
-    final FavoritesState current = state;
-    if (current is FavoritesLoaded &&
-        current.players.any((FavoritePlayer p) => p.id == playerId)) {
+    final List<FavoritePlayer>? displayed = state.displayedPlayers;
+    if (displayed != null &&
+        displayed.any((FavoritePlayer p) => p.id == playerId)) {
       emit(
         FavoritesLoaded(
-          current.players
-              .where((FavoritePlayer p) => p.id != playerId)
-              .toList(),
+          displayed.where((FavoritePlayer p) => p.id != playerId).toList(),
         ),
       );
     } else {
@@ -67,10 +65,12 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   /// Un-favourites [playerId] (everything in this tab is favourited, so a tap is
   /// always a removal). Optimistic: the card disappears immediately.
   Future<void> unfavorite(String playerId) async {
-    final FavoritesState current = state;
-    if (current is! FavoritesLoaded) return;
-
-    final List<FavoritePlayer> original = current.players;
+    // Accepts FavoritesActionError too, not just FavoritesLoaded: a failed
+    // toggle leaves the grid on screen in the error state, so requiring
+    // Loaded here meant every later tap returned silently — one dropped
+    // request permanently disabled un-favouriting until a manual refresh.
+    final List<FavoritePlayer>? original = state.displayedPlayers;
+    if (original == null) return;
     emit(
       FavoritesLoaded(
         original.where((FavoritePlayer p) => p.id != playerId).toList(),
@@ -104,9 +104,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     if (isClosed) return;
     result.match(
       (failure) {
-        final FavoritesState current = state;
-        if (current is FavoritesLoaded) {
-          emit(FavoritesActionError(current.players, failure.message));
+        // Same reasoning: a refresh that fails while the grid is already in the
+        // error state must keep the grid, not collapse to a full-screen error.
+        final List<FavoritePlayer>? displayed = state.displayedPlayers;
+        if (displayed != null) {
+          emit(FavoritesActionError(displayed, failure.message));
         } else {
           emit(FavoritesFailure(failure.message));
         }

@@ -11,6 +11,18 @@ import '../../domain/entities/favorite_player.dart';
 sealed class FavoritesState extends Equatable {
   const FavoritesState();
 
+  /// The list currently on screen, or `null` for the states that show no grid.
+  ///
+  /// Both [FavoritesLoaded] and [FavoritesActionError] render the grid, so any
+  /// logic that acts on "the list the user is looking at" must accept either.
+  /// Matching on [FavoritesLoaded] alone silently dead-ended every action once
+  /// a single toggle had failed.
+  List<FavoritePlayer>? get displayedPlayers => switch (this) {
+    FavoritesLoaded(:final List<FavoritePlayer> players) => players,
+    FavoritesActionError(:final List<FavoritePlayer> players) => players,
+    _ => null,
+  };
+
   @override
   List<Object?> get props => <Object?>[];
 }
