@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// 🔄 Refresh Indicator Overlay
 /// مؤشر التحديث المخصص
 class RefreshIndicatorOverlay extends StatelessWidget {
-  const RefreshIndicatorOverlay({super.key});
+  const RefreshIndicatorOverlay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,10 @@ class RefreshIndicatorOverlay extends StatelessWidget {
       right: 0,
       child: Center(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 12.h,
+          ),
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.8),
             borderRadius: BorderRadius.circular(30.r),

@@ -14,11 +14,9 @@ class RealsCubit extends Cubit<RealsState> {
   List<Comment> videoComment = [];
   ValueNotifier<bool> show = ValueNotifier(false);
 
-  // Notifiers للـ like
   final Map<int, ValueNotifier<bool>> likeNotifiers = {};
   final Map<int, ValueNotifier<int>> likeCountNotifiers = {};
-
-  // Notifiers للـ comments
+  ValueNotifier<int> refreshTrigger = ValueNotifier(0);
   final Map<int, ValueNotifier<int>> commentCountNotifiers = {};
 
   int reelId = 0;
@@ -27,22 +25,30 @@ class RealsCubit extends Cubit<RealsState> {
   int currentIndex = 0;
   TextEditingController commetnController = TextEditingController();
 
-  // للـ Pagination
   int currentPage = 1;
   bool isLoadingMore = false;
   bool hasMoreData = true;
-  final int pageSize = 10; // تحميل 10 فيديوهات في كل مرة بدلاً من كلهم
+  final int pageSize = 10;
 
-  // MARK: - Initial Load
+  /// Whose feed is loaded: '' for the global feed, or a player id when opened
+  /// from a player profile.
+  ///
+  /// The screen used to hardcode `playerId: ''` when paginating and refreshing,
+  /// so scrolling past page 1 on a player's reels appended the *global* feed and
+  /// pull-to-refresh replaced their reels with it entirely. Recording it here
+  /// keeps every later request on the same feed the first one asked for.
+  String activePlayerId = '';
+
   Future<void> emitreals({
     required String playerId,
     bool refresh = false,
   }) async {
+    activePlayerId = playerId;
     if (refresh) {
       currentPage = 1;
       hasMoreData = true;
       realsVide.clear();
-      disposeAllNotifiers(); // تنضيف الـ notifiers القديمة
+      disposeAllNotifiers();
     }
 
     emit(const RealsState.realsloading());
@@ -60,10 +66,8 @@ class RealsCubit extends Cubit<RealsState> {
 
         realsVide.addAll(realsResponse.data);
 
-        // تحديث hasMoreData
         hasMoreData = realsResponse.data.length >= pageSize;
 
-        // تهيئة الـ Notifiers للبيانات الجديدة فقط
         initializeNotifiers(
           startIndex: realsVide.length - realsResponse.data.length,
         );
@@ -76,8 +80,162 @@ class RealsCubit extends Cubit<RealsState> {
     );
   }
 
-  // MARK: - Load More (Pagination)
-  Future<void> loadMoreReals({required String playerId}) async {
+  // MARK: - Update Reel (Description only)
+  Future<void> updateReel({
+    required int reelId,
+    required String description,
+  }) async {
+    emit(const RealsState.updateReelloading());
+
+    final response = await _repo.updateReel(
+      reelId: reelId,
+      description: description,
+    );
+
+    response.when(
+      success: (_) {
+        final index = realsVide.indexWhere((reel) => reel.id == reelId);
+        if (index != -1) {
+          realsVide[index].description = description;
+        }
+        emit(const RealsState.updateReelsuccess());
+      },
+      failure: (error) {
+        emit(
+          RealsState.updateReelerror(error: error.apiErrorModel.message ?? ''),
+        );
+      },
+    );
+  }
+
+  // MARK: - Add Comment (محليًا) - بترتبط بالـ reel.comments الأصلية كمان
+  // عشان لما نرجع نفتح الكومنتات تاني، الكومنت الجديد يفضل موجود
+  void addCommentLocally(Comment comment) {
+    videoComment.insert(0, comment);
+
+    final index = realsVide.indexWhere((reel) => reel.id == reelId);
+    if (index != -1) {
+      realsVide[index].comments.insert(0, comment);
+    }
+  }
+
+  // MARK: - Update Comment
+  Future<void> updateComment({
+    required int commentId,
+    required String comment,
+  }) async {
+    emit(const RealsState.updateCommentloading());
+
+    final response = await _repo.updateComment(
+      commentId: commentId,
+      comment: comment,
+    );
+
+    response.when(
+      success: (_) {
+        // تحديث في videoComment (المعروضة دلوقتي في الشاشة)
+        final commentIndex = videoComment.indexWhere((c) => c.id == commentId);
+        if (commentIndex != -1) {
+          videoComment[commentIndex].description = comment;
+        }
+
+        // تحديث في reel.comments الأصلية (عشان تفضل متزامنة بعد الرجوع)
+        final reelIndex = realsVide.indexWhere((reel) => reel.id == reelId);
+        if (reelIndex != -1) {
+          final reelCommentIndex = realsVide[reelIndex].comments.indexWhere(
+            (c) => c.id == commentId,
+          );
+          if (reelCommentIndex != -1) {
+            realsVide[reelIndex].comments[reelCommentIndex].description =
+                comment;
+          }
+        }
+
+        emit(const RealsState.updateCommentsuccess());
+
+        // تحديث الواجهة فورًا - بنستخدم نفس الـ notifier المستخدم
+        // أصلاً في AddCommentWidget، بدل أي rebuild أثقل
+        show.value = !show.value;
+      },
+      failure: (error) {
+        emit(
+          RealsState.updateCommenterror(
+            error: error.apiErrorModel.message ?? '',
+          ),
+        );
+      },
+    );
+  }
+
+  // MARK: - Delete Comment
+  Future<void> deleteComment({required int commentId}) async {
+    emit(const RealsState.deleteCommentloading());
+
+    final response = await _repo.deleteComment(commentId: commentId);
+
+    response.when(
+      success: (_) {
+        // حذف من videoComment (المعروضة دلوقتي في الشاشة)
+        videoComment.removeWhere((c) => c.id == commentId);
+
+        // حذف من reel.comments الأصلية + تحديث العداد
+        final reelIndex = realsVide.indexWhere((reel) => reel.id == reelId);
+        if (reelIndex != -1) {
+          realsVide[reelIndex].comments.removeWhere((c) => c.id == commentId);
+
+          final commentCountNotifier = commentCountNotifiers[reelId];
+          if (commentCountNotifier != null && commentCountNotifier.value > 0) {
+            commentCountNotifier.value--;
+            realsVide[reelIndex].commentsCount = commentCountNotifier.value;
+          }
+        }
+
+        emit(const RealsState.deleteCommentsuccess());
+
+        // تحديث الواجهة فورًا
+        show.value = !show.value;
+      },
+      failure: (error) {
+        emit(
+          RealsState.deleteCommenterror(
+            error: error.apiErrorModel.message ?? '',
+          ),
+        );
+      },
+    );
+  }
+
+  // MARK: - Delete Reel
+  Future<void> deleteReel({required int reelId}) async {
+    emit(const RealsState.deleteReelloading());
+
+    final response = await _repo.deleteReel(reelId: reelId);
+
+    response.when(
+      success: (_) {
+        realsVide.removeWhere((reel) => reel.id == reelId);
+
+        likeNotifiers[reelId]?.dispose();
+        likeCountNotifiers[reelId]?.dispose();
+        commentCountNotifiers[reelId]?.dispose();
+
+        likeNotifiers.remove(reelId);
+        likeCountNotifiers.remove(reelId);
+        commentCountNotifiers.remove(reelId);
+
+        emit(const RealsState.deleteReelsuccess());
+      },
+      failure: (error) {
+        emit(
+          RealsState.deleteReelerror(error: error.apiErrorModel.message ?? ''),
+        );
+      },
+    );
+  }
+
+  /// Defaults to [activePlayerId] so pagination stays on the feed that was
+  /// originally loaded.
+  Future<void> loadMoreReals({String? playerId}) async {
     if (isLoadingMore || !hasMoreData) return;
 
     isLoadingMore = true;
@@ -86,7 +244,7 @@ class RealsCubit extends Cubit<RealsState> {
     final response = await _repo.reals(
       pageNumber: currentPage.toString(),
       pageSize: pageSize.toString(),
-      playerId: playerId,
+      playerId: playerId ?? activePlayerId,
     );
 
     response.when(
@@ -94,17 +252,15 @@ class RealsCubit extends Cubit<RealsState> {
         final oldLength = realsVide.length;
         realsVide.addAll(realsResponse.data);
 
-        // تحديث hasMoreData
         hasMoreData = realsResponse.data.length >= pageSize;
 
-        // تهيئة الـ Notifiers للبيانات الجديدة فقط
         initializeNotifiers(startIndex: oldLength);
 
         isLoadingMore = false;
         emit(RealsState.realssuccess(realsResponse));
       },
       failure: (error) {
-        currentPage--; // إرجاع الصفحة في حالة الفشل
+        currentPage--;
         isLoadingMore = false;
         emit(RealsState.realserror(error: error.apiErrorModel.message ?? ''));
       },
@@ -112,8 +268,10 @@ class RealsCubit extends Cubit<RealsState> {
   }
 
   // MARK: - Refresh
-  Future<void> refreshReals({required String playerId}) async {
-    await emitreals(playerId: playerId, refresh: true);
+  /// Defaults to [activePlayerId] — refreshing a player's reels must not
+  /// replace them with the global feed.
+  Future<void> refreshReals({String? playerId}) async {
+    await emitreals(playerId: playerId ?? activePlayerId, refresh: true);
   }
 
   // MARK: - ToggleLikeReel
@@ -135,7 +293,8 @@ class RealsCubit extends Cubit<RealsState> {
   }
 
   // MARK: - Add Comment
-  void addCommentReel({required int reelId}) async {
+  // MARK: - Add Comment
+  Future<void> addCommentReel({required int reelId}) async {
     if (commetnController.text.trim().isEmpty) return;
 
     emit(const RealsState.addCommentloading());
@@ -145,6 +304,37 @@ class RealsCubit extends Cubit<RealsState> {
     );
     response.when(
       success: (realsResponse) async {
+        // 🔥 لو الباك إند ضاف commentId في الرد، بنمسكه هنا
+        // ونستخدمه عشان نستبدل الـ id المؤقت (0) بتاع الكومنت المحلي
+        // اللي ضفناه فورًا في addCommentLocally
+        try {
+          final dynamic data = realsResponse;
+          final dynamic realCommentId = data is Map
+              ? data['commentId']
+              : (data?.commentId);
+
+          if (realCommentId != null) {
+            // أول كومنت بـ id == 0 في القايمة (المؤقت اللي لسه منتظر التأكيد)
+            final placeholderIndex = videoComment.indexWhere((c) => c.id == 0);
+            if (placeholderIndex != -1) {
+              videoComment[placeholderIndex].id = realCommentId;
+            }
+
+            final reelIndex = realsVide.indexWhere((r) => r.id == reelId);
+            if (reelIndex != -1) {
+              final reelPlaceholderIndex = realsVide[reelIndex].comments
+                  .indexWhere((c) => c.id == 0);
+              if (reelPlaceholderIndex != -1) {
+                realsVide[reelIndex].comments[reelPlaceholderIndex].id =
+                    realCommentId;
+              }
+            }
+          }
+        } catch (_) {
+          // لو الرد لسه من غير commentId (الباك إند لسه ماضافهوش)
+          // بنسيب الكومنت بـ id=0 وممكن تتظبط لاحقًا برفريش
+        }
+
         commetnController.clear();
         emit(const RealsState.addCommentsuccess());
       },
@@ -156,12 +346,10 @@ class RealsCubit extends Cubit<RealsState> {
     );
   }
 
-  // تهيئة الـ Notifiers (محسّنة)
   void initializeNotifiers({int startIndex = 0}) {
     for (int i = startIndex; i < realsVide.length; i++) {
       final reel = realsVide[i];
 
-      // تجنب إعادة إنشاء notifiers موجودة
       if (!likeNotifiers.containsKey(reel.id)) {
         likeNotifiers[reel.id] = ValueNotifier(reel.isLiked);
         likeCountNotifiers[reel.id] = ValueNotifier(reel.likesCount ?? 0);
@@ -170,23 +358,19 @@ class RealsCubit extends Cubit<RealsState> {
     }
   }
 
-  // إضافة Comment مع تحديث الـ UI
   void addCommentWithNotifier() {
     final commentCountNotifier = commentCountNotifiers[reelId];
 
     if (commentCountNotifier == null) return;
 
-    // زيادة الـ count فوراً في الـ UI
     commentCountNotifier.value++;
 
-    // تحديث الـ comments في الموديل
     final index = realsVide.indexWhere((reel) => reel.id == reelId);
     if (index != -1) {
       realsVide[index].commentsCount = commentCountNotifier.value;
     }
   }
 
-  // Toggle Like مع تحديث فوري
   Future<void> toggleLikeWithNotifier({required int reelId}) async {
     final index = realsVide.indexWhere((reel) => reel.id == reelId);
     if (index == -1) return;
@@ -197,16 +381,15 @@ class RealsCubit extends Cubit<RealsState> {
 
     if (isLikedNotifier == null || likeCountNotifier == null) return;
 
-    // حفظ القيم القديمة للـ rollback
     final oldIsLiked = reel.isLiked == true;
     final oldLikesCount = (reel.likesCount ?? 0) as int;
 
-    // Optimistic update فوراً
     final newIsLiked = !oldIsLiked;
     final newLikesCount = newIsLiked ? oldLikesCount + 1 : oldLikesCount - 1;
 
     reel.isLiked = newIsLiked;
     reel.likesCount = newLikesCount;
+
     isLikedNotifier.value = newIsLiked;
     likeCountNotifier.value = newLikesCount;
 
@@ -219,9 +402,10 @@ class RealsCubit extends Cubit<RealsState> {
         emit(const RealsState.toggleLikeReelsuccess());
       },
       failure: (error) {
-        // Rollback لو فشل
+        // rollback
         reel.isLiked = oldIsLiked;
         reel.likesCount = oldLikesCount;
+
         isLikedNotifier.value = oldIsLiked;
         likeCountNotifier.value = oldLikesCount;
 
@@ -234,7 +418,6 @@ class RealsCubit extends Cubit<RealsState> {
     );
   }
 
-  // تنظيف كل الـ notifiers
   void disposeAllNotifiers() {
     for (var notifier in likeNotifiers.values) {
       notifier.dispose();

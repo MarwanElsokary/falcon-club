@@ -11,11 +11,11 @@ class RealsUserInfoOverlay extends StatelessWidget {
   final VoidCallback onUserTap;
 
   const RealsUserInfoOverlay({
-    super.key,
+    Key? key,
     required this.index,
     required this.playerProfile,
     required this.onUserTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

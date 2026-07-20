@@ -12,9 +12,12 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/thems/thems.dart';
 import '../../../../core/widget/center_text_utils.dart';
+import '../../../../core/widget/showSuccesSnackBar.dart';
+import '../../../../core/widget/show_error_snack_bar.dart';
 
 class ShareIconButton extends StatefulWidget {
   const ShareIconButton({super.key, required this.index});
+
   final int index;
 
   @override
@@ -26,34 +29,31 @@ class _ShareIconButtonState extends State<ShareIconButton> {
   late final GlobalKey _shareButtonKey = GlobalKey();
 
   Future<bool> _requestPermissions() async {
-    if (Platform.isIOS) {
-      return true;
-    } else if (Platform.isAndroid) {
-      if (await Permission.videos.isDenied) {
-        final status = await Permission.videos.request();
-        return status.isGranted;
-      }
+    if (Platform.isIOS) return true;
+
+    if (Platform.isAndroid) {
+      // Android 13+ (API 33+)
+      if (await Permission.videos.isGranted) return true;
+
+      // جرب videos الأول (Android 13+)
+      final videosStatus = await Permission.videos.request();
+      if (videosStatus.isGranted) return true;
+
+      // لو فشل جرب storage (Android 12 وأقل)
+      final storageStatus = await Permission.storage.request();
+      if (storageStatus.isGranted) return true;
+
+      // لو الاتنين رفضوا، بس الـ share من cache مش محتاج permission أصلاً
+      // فرجع true عشان نكمل
       return true;
     }
+
     return true;
   }
 
   Future<String?> _downloadVideo(String videoUrl, BuildContext context) async {
     try {
-      // A dedicated, interceptor-free Dio for downloading the (public) reel
-      // video — deliberately NOT the injected `getIt<Dio>()`. That instance
-      // attaches the session `Authorization: Bearer` header to every request via
-      // its interceptor, and this download hits a public media host that must
-      // never receive the app's session token. Same family as the Auth
-      // token-leak fixes: never send the Bearer to a third-party/CDN URL. Its
-      // own timeouts, since it inherits none.
-      final dio = Dio(
-        BaseOptions(
-          connectTimeout: const Duration(seconds: 30),
-          receiveTimeout: const Duration(minutes: 2),
-          sendTimeout: const Duration(minutes: 2),
-        ),
-      );
+      final dio = Dio();
       final directory = await getTemporaryDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final fileName = 'falcon_video_$timestamp.mp4';
@@ -65,7 +65,8 @@ class _ShareIconButtonState extends State<ShareIconButton> {
         videoUrl,
         filePath,
         options: Options(
-          // Timeouts live on the dedicated Dio's BaseOptions above.
+          receiveTimeout: const Duration(minutes: 2),
+          sendTimeout: const Duration(minutes: 2),
           followRedirects: true,
           validateStatus: (status) => status! < 500,
         ),
@@ -117,7 +118,9 @@ class _ShareIconButtonState extends State<ShareIconButton> {
     debugPrint('🎬 Video URL: ${reel.video}');
     debugPrint('🎬 Share Video Path: ${reel.shareVideo}');
     debugPrint('🎬 Share Video Path is null?: ${reel.shareVideo == null}');
-    debugPrint('🎬 Share Video Path is empty?: ${reel.shareVideo?.isEmpty ?? true}');
+    debugPrint(
+      '🎬 Share Video Path is empty?: ${reel.shareVideo?.isEmpty ?? true}',
+    );
 
     if (!context.mounted) return;
 
@@ -128,7 +131,9 @@ class _ShareIconButtonState extends State<ShareIconButton> {
         onWillPop: () async => false,
         child: Dialog(
           backgroundColor: Colors.black87,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.r),
+          ),
           child: Padding(
             padding: EdgeInsets.all(24.w),
             child: Column(
@@ -221,7 +226,7 @@ class _ShareIconButtonState extends State<ShareIconButton> {
   Rect? _getShareButtonRect() {
     try {
       final RenderBox? renderBox =
-      _shareButtonKey.currentContext?.findRenderObject() as RenderBox?;
+          _shareButtonKey.currentContext?.findRenderObject() as RenderBox?;
 
       if (renderBox != null) {
         final position = renderBox.localToGlobal(Offset.zero);
@@ -229,12 +234,7 @@ class _ShareIconButtonState extends State<ShareIconButton> {
 
         debugPrint('📍 مكان الزر: $position, الحجم: $size');
 
-        return Rect.fromLTWH(
-          position.dx,
-          position.dy,
-          size.width,
-          size.height,
-        );
+        return Rect.fromLTWH(position.dx, position.dy, size.width, size.height);
       }
     } catch (e) {
       debugPrint('⚠️ خطأ في الحصول على مكان الزر: $e');
@@ -242,7 +242,11 @@ class _ShareIconButtonState extends State<ShareIconButton> {
     return null;
   }
 
-  Future<void> _performShare(BuildContext context, dynamic reel, String videoPath) async {
+  Future<void> _performShare(
+    BuildContext context,
+    dynamic reel,
+    String videoPath,
+  ) async {
     try {
       final xFile = XFile(
         videoPath,
@@ -296,6 +300,7 @@ class _ShareIconButtonState extends State<ShareIconButton> {
       _showInfoSnackbar(context);
     }
   }
+
   void _scheduleCleanup(String filePath) {
     Future.delayed(const Duration(seconds: 30), () {
       try {
@@ -311,33 +316,18 @@ class _ShareIconButtonState extends State<ShareIconButton> {
   }
 
   void _showSizeWarning(BuildContext context, double sizeMB) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('الفيديو كبير (${sizeMB.toStringAsFixed(1)} MB)'),
-        duration: const Duration(seconds: 3),
-        backgroundColor: Colors.orange,
-      ),
+    showErrorSnackBar(
+      title: 'الفيديو كبير (${sizeMB.toStringAsFixed(1)} MB)',
+      context: context,
     );
   }
 
   void _showSuccessSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('تمت المشاركة بنجاح'),
-        duration: const Duration(seconds: 2),
-        backgroundColor: Colors.green,
-      ),
-    );
+    showSuccesSnackBar(title: 'تمت المشاركة بنجاح', context: context);
   }
 
   void _showInfoSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('تمت مشاركة الرابط'),
-        duration: const Duration(seconds: 2),
-        backgroundColor: Colors.blue,
-      ),
-    );
+    showSuccesSnackBar(title: 'تمت مشاركة الرابط', context: context);
   }
 
   void _showPermissionDialog(BuildContext context) {
@@ -412,7 +402,8 @@ class _ShareIconButtonState extends State<ShareIconButton> {
                 end: 0,
                 top: 0,
                 child: Container(
-                  padding: EdgeInsets.all(10.w), // 🔥 توسيع منطقة الضغط الداخلية
+                  padding: EdgeInsets.all(10.w),
+                  // 🔥 توسيع منطقة الضغط الداخلية
                   child: SvgPicture.asset('assets/svgs/share_reals.svg'),
                 ),
               ),

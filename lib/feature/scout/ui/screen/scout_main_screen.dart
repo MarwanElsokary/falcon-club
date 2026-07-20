@@ -85,8 +85,9 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                         ? MultiBlocProvider(
                             providers: [
                               BlocProvider(
-                                create: (_) => getIt<ExperimentsCubit>()
-                                  ..emitbestTrials(categoryId: ''),
+                                create: (_) =>
+                                    getIt<ExperimentsCubit>()
+                                      ..emitbestTrials(categoryId: ''),
                               ),
                               BlocProvider(
                                 create: (_) => getIt<MainCubit>()
@@ -137,12 +138,18 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
                             providers: [
                               BlocProvider(
                                 create: (_) =>
-                                    getIt<RealsCubit>()..emitreals(playerId: ''),
+                                    getIt<RealsCubit>()
+                                      ..emitreals(playerId: ''),
                               ),
                             ],
                             child: MainRealsScreen(
                               playerProfile: false,
                               playnowOrNot: index == 2,
+                              // Scout's notifier is a private field on this
+                              // State — reachable only through a callback like
+                              // this, never from another feature's cubit.
+                              onChromeVisibilityChanged: (bool visible) =>
+                                  _show.value = visible,
                             ),
                           )
                         : const SizedBox.shrink(),

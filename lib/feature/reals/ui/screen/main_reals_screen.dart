@@ -1,5 +1,4 @@
 import 'package:falconclubapp/core/helpers/extensions.dart';
-import 'package:falconclubapp/feature/main_screen/cubit/main_cubit.dart';
 import 'package:falconclubapp/feature/reals/cubit/reals_cubit.dart';
 import 'package:falconclubapp/feature/reals/ui/screen/reals_screen.dart';
 import 'package:falconclubapp/feature/reals/ui/widget/comment_view_widget.dart';
@@ -16,9 +15,22 @@ class MainRealsScreen extends StatefulWidget {
     super.key,
     required this.playnowOrNot,
     required this.playerProfile,
+    this.onChromeVisibilityChanged,
   });
+
   final bool playnowOrNot;
   final bool playerProfile;
+
+  /// Asks the host to show (`true`) or hide (`false`) its own chrome — the
+  /// shells use it to collapse the bottom nav while the comment sheet is open.
+  ///
+  /// An outbound callback rather than a cubit lookup: this screen must not know
+  /// what its host's chrome *is*. The previous approach reached sideways into
+  /// `MainCubit.show`, which no shell listens to (each shell drives its own
+  /// notifier), so the behaviour never worked — and Scout's notifier is a
+  /// private field no cubit could reach anyway. Null when there is no chrome to
+  /// manage, e.g. reels opened from a player profile.
+  final ValueChanged<bool>? onChromeVisibilityChanged;
 
   @override
   State<MainRealsScreen> createState() => _MainRealsScreenState();
@@ -44,10 +56,8 @@ class _MainRealsScreenState extends State<MainRealsScreen>
   toggleContainer() {
     setState(() {
       _showBottom = !_showBottom;
-      context.read<MainCubit>().show.value = !context
-          .read<MainCubit>()
-          .show
-          .value;
+      // Sheet open → chrome hidden, and vice versa.
+      widget.onChromeVisibilityChanged?.call(!_showBottom);
       if (_showBottom) {
         _controller.forward();
       } else {
@@ -121,7 +131,14 @@ class _MainRealsScreenState extends State<MainRealsScreen>
                               ),
                             ),
                             PositionedDirectional(
-                              bottom: 0,
+                              // Lift the sheet above the keyboard. The Scaffold's
+                              // resizeToAvoidBottomInset cannot help here: this
+                              // Stack sits inside a fixed displayHeight SizedBox
+                              // in a non-scrollable SingleChildScrollView, so the
+                              // body never shrinks and a bottom:0 sheet stays
+                              // pinned behind the keyboard — you could not see
+                              // what you were typing.
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
                               child: SizeTransition(
                                 sizeFactor: _animation,
                                 axisAlignment: -1.0,
@@ -139,14 +156,24 @@ class _MainRealsScreenState extends State<MainRealsScreen>
               ],
             ),
           ),
+          // 🔥 ConstrainedBox بحد أقصى واضح يمنع Infinity/NaN
+          // في حساب SizeTransition وقت إغلاق الـ animation
           PositionedDirectional(
             start: 0,
             end: 0,
-            bottom: 0,
-            child: SizeTransition(
-              sizeFactor: _animation,
-              axisAlignment: -1.0,
-              child: AddCommentWidget(),
+            // This is the actual text input. It needs lifting for the same
+            // reason as the sheet above it: this Stack sizes itself to the
+            // full-height scroll child, so bottom:0 resolves to the original
+            // screen bottom even though the Scaffold body has shrunk — leaving
+            // the field you are typing into underneath the keyboard.
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 110.w),
+              child: SizeTransition(
+                sizeFactor: _animation,
+                axisAlignment: -1.0,
+                child: AddCommentWidget(),
+              ),
             ),
           ),
         ],

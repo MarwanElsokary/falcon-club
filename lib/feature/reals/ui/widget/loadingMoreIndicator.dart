@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// ⏳ Loading More Indicator
 /// مؤشر تحميل المزيد من الفيديوهات
 class LoadingMoreIndicator extends StatelessWidget {
-  const LoadingMoreIndicator({super.key});
+  const LoadingMoreIndicator({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,7 @@ class LoadingMoreIndicator extends StatelessWidget {
               TextUtils(
                 text: 'جاري التحميل...',
                 fontSize: 12,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+                color: Colors.white, fontWeight: FontWeight.bold,
               ),
             ],
           ),

@@ -75,8 +75,13 @@ class _VideoUserDataWidgetState extends State<VideoUserDataWidget> {
                     },
                   );
                   // هنا بيتنفذ أول ما نرجع
-                  print("First Screen");
-                  context.read<MainCubit>().openProfile = false;
+                  // Guarded: MainCubit is not in scope when reels renders
+                  // inside a shell tab (it lives in tab 0's subtree).
+                  try {
+                    context.read<MainCubit>().openProfile = false;
+                  } catch (_) {
+                    // Not available in this context; nothing to sync.
+                  }
                 }
               },
               child: Row(

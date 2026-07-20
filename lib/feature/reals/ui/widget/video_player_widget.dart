@@ -1,10 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
 
-/// 🎥 Video Player Widget
-/// Widget منفصل لعرض الفيديو
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
   final int index;
@@ -12,37 +9,57 @@ class VideoPlayerWidget extends StatefulWidget {
   final VoidCallback onTap;
 
   const VideoPlayerWidget({
-    super.key,
+    Key? key,
     required this.videoUrl,
     required this.index,
     required this.onPlatformViewCreated,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
 }
 
-class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
-    with AutomaticKeepAliveClientMixin {
+class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
+  // ✅ شيلنا AutomaticKeepAliveClientMixin خالص
+  // ده كان السبب الجذري — بيمنع الـ widget من الـ dispose
+
+  int? _viewId;
+
   @override
-  bool get wantKeepAlive => true;
+  void dispose() {
+    // ✅ لما الـ widget يتدمر، وقف الفيديو فوراً
+    if (_viewId != null) {
+      try {
+        final channel = MethodChannel('native-video-view-$_viewId');
+        // Fire-and-forget, so the try/catch above cannot see a rejection: if the
+        // native view is torn down first this rejects with MissingPluginException
+        // and would surface as an unhandled async error on every disposal.
+        channel.invokeMethod('pause').catchError((Object _) => null);
+      } catch (_) {}
+    }
+    super.dispose();
+  }
+
+  void _onPlatformViewCreated(int viewId) {
+    _viewId = viewId;
+    widget.onPlatformViewCreated(viewId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // 🔥 مهم للـ AutomaticKeepAlive
-
     return Stack(
       fit: StackFit.expand,
       children: [
         // Loading indicator
-        Center(
-          child: Lottie.asset(
-            'assets/lottie/load.json',
+        const Center(
+          child: SizedBox(
             width: 100,
             height: 100,
-            repeat: true,
-            animate: true,
+            child: CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 2,
+            ),
           ),
         ),
 
@@ -61,7 +78,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
                       'index': widget.index,
                     },
                     creationParamsCodec: const StandardMessageCodec(),
-                    onPlatformViewCreated: widget.onPlatformViewCreated,
+                    onPlatformViewCreated: _onPlatformViewCreated,
                   )
                 : UiKitView(
                     viewType: 'native-video-view',
@@ -70,7 +87,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
                       'index': widget.index,
                     },
                     creationParamsCodec: const StandardMessageCodec(),
-                    onPlatformViewCreated: widget.onPlatformViewCreated,
+                    onPlatformViewCreated: _onPlatformViewCreated,
                   ),
           ),
         ),

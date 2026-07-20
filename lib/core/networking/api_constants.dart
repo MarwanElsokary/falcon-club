@@ -109,6 +109,13 @@ class ApiConstants {
   //addComment
   static const String addComment = "Player/AddComment";
 
+  // Reel + comment editing. Paths follow the established Player/<Verb><Noun>
+  // convention used by AddComment / ToggleLikeReel / AddReel above.
+  static const String updateReel = "Player/UpdateReel";
+  static const String deleteReel = "Player/DeleteReel";
+  static const String updateComment = "Player/UpdateComment";
+  static const String deleteComment = "Player/DeleteComment";
+
   //categories
   static const String categories = "Player/GetCaregories";
 

@@ -71,41 +71,45 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
               InkWell(
                 borderRadius: BorderRadius.circular(100),
                 onTap: () async {
-                  context.read<RealsCubit>().addCommentReel(
-                    reelId: context
-                        .read<RealsCubit>()
-                        .realsVide[context.read<RealsCubit>().currentIndex]
-                        .id,
+                  final RealsCubit cubit = context.read<RealsCubit>();
+
+                  // The cubit already refuses to send blank text, but the widget
+                  // used to run the whole optimistic path regardless: it
+                  // inserted an empty comment into reel.comments, bumped the
+                  // counter and reported success, so a stray tap left a phantom
+                  // blank comment that survived reopening the sheet.
+                  final String text = cubit.commetnController.text.trim();
+                  if (text.isEmpty) return;
+
+                  // May be null when the profile cache is empty/expired — the
+                  // `!` here used to crash the whole sheet.
+                  final profile = CacheHelper.getmyProfile();
+
+                  // Reads the controller itself, so it must run before clear().
+                  cubit.addCommentReel(
+                    reelId: cubit.realsVide[cubit.currentIndex].id,
                   );
-                  context.read<RealsCubit>().videoComment.insert(
-                    0,
+                  cubit.addCommentLocally(
                     Comment(
                       playerId: '......',
                       id: 0,
-                      description: context
-                          .read<RealsCubit>()
-                          .commetnController
-                          .text,
+                      description: text,
                       creationTime: 'الان',
                       isMyComment: true,
-                      playerName:
-                          CacheHelper.getmyProfile()!.data.firstName ?? "",
-                      playerPhoto: CacheHelper.getmyProfile()!.data.photo ?? "",
+                      playerName: profile?.data.firstName ?? '',
+                      playerPhoto: profile?.data.photo ?? '',
                     ),
                   );
-                  // استدعاء الفانكشن الجديدة
-                  context.read<RealsCubit>().addCommentWithNotifier();
-                  context.read<RealsCubit>().commetnController.clear();
+                  cubit.addCommentWithNotifier();
+                  cubit.commetnController.clear();
                   showSuccesSnackBar(
                     context: context,
                     title: 'تم اضافه تعليقك'.tr(),
                   );
-                  context.read<RealsCubit>().addComment = true;
-                  context.read<RealsCubit>().show.value = !context
-                      .read<RealsCubit>()
-                      .show
-                      .value;
+                  cubit.addComment = true;
+                  cubit.show.value = !cubit.show.value;
                   await Future.delayed(Duration(milliseconds: 150));
+                  if (!mounted) return;
                   setState(() {
                     showSendButton = false;
                   });

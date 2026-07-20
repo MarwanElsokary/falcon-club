@@ -11,6 +11,7 @@ import '../../../../core/thems/thems.dart';
 
 class FavRealsWidget extends StatefulWidget {
   const FavRealsWidget({super.key, required this.index});
+
   final int index;
 
   @override

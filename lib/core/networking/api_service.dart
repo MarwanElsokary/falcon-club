@@ -205,6 +205,28 @@ abstract class ApiService {
     @Query('Comment') String comment,
   );
 
+  //updateReel — description only
+  @PUT(ApiConstants.updateReel)
+  Future updateReel(
+    @Query('ReelId') int reelId,
+    @Query('Description') String description,
+  );
+
+  //deleteReel
+  @DELETE(ApiConstants.deleteReel)
+  Future deleteReel(@Query('ReelId') int reelId);
+
+  //updateComment
+  @PUT(ApiConstants.updateComment)
+  Future updateComment(
+    @Query('CommentId') int commentId,
+    @Query('Comment') String comment,
+  );
+
+  //deleteComment
+  @DELETE(ApiConstants.deleteComment)
+  Future deleteComment(@Query('CommentId') int commentId);
+
   //categories
   @GET(ApiConstants.categories)
   Future<CategoriesModel> categories();

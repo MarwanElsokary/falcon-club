@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
@@ -8,18 +9,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../cubit/reals_cubit.dart';
+import '../../cubit/reals_state.dart';
 import '../../data/model/real_model.dart';
 import '../widget/loadingMoreIndicator.dart';
 import '../widget/realsUserInfoOverlay.dart';
 import '../widget/reals_actions_overlay ·.dart';
+import '../widget/reel_options_menu.dart';
 import '../widget/refreshIndicatorOverlay.dart';
 import '../widget/stop_and_mute_widget.dart';
 import '../widget/video_player_manager.dart';
 import '../widget/video_player_widget.dart';
 import '../widget/video_preloader.dart';
 
-/// 🎬 Reals Screen
-/// الشاشة الرئيسية لعرض الفيديوهات
 class RealsScreen extends StatefulWidget {
   const RealsScreen({
     super.key,
@@ -36,25 +37,40 @@ class RealsScreen extends StatefulWidget {
   State<RealsScreen> createState() => _RealsScreenState();
 }
 
-class _RealsScreenState extends State<RealsScreen> {
-  // Controllers
+class _RealsScreenState extends State<RealsScreen> with WidgetsBindingObserver {
+  // ── Controllers ──────────────────────────────────────────────────────────
   late PageController _pageController;
   late VideoPlayerManager _videoManager;
 
-  // State
+  // ── Saved references (آمنة في dispose) ───────────────────────────────────
+  RealsCubit? _realsCubit;
+
+  // ── State ─────────────────────────────────────────────────────────────────
   int _currentIndex = 0;
   int _lastIndex = 0;
   bool _isPlayNow = true;
   bool _isRefreshing = false;
   bool _iOpenItNow = false;
 
-  // Data
-  List<RealsVide> get reals => context.read<RealsCubit>().realsVide;
+  // ✅ Key للـ PageView عشان يتبني من أول بعد الـ refresh
+  Key _pageViewKey = UniqueKey();
+
+  // ── Data ──────────────────────────────────────────────────────────────────
+  List<RealsVide> get reals => _realsCubit?.realsVide ?? [];
+
+  // =========================================================================
+  // Lifecycle
+  // =========================================================================
 
   @override
   void initState() {
     super.initState();
     log('initState - RealsScreen');
+
+    WidgetsBinding.instance.addObserver(this);
+
+    _realsCubit = context.read<RealsCubit>();
+    _realsCubit!.refreshTrigger.addListener(_onRefreshTriggered);
 
     _pageController = PageController(initialPage: 0, keepPage: true);
     _videoManager = VideoPlayerManager();
@@ -62,33 +78,68 @@ class _RealsScreenState extends State<RealsScreen> {
   }
 
   @override
+  void didUpdateWidget(RealsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.playnowOrNot != widget.playnowOrNot) {
+      _handlePlaybackState();
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      _videoManager.pauseAllExcept(-1);
+      if (mounted) setState(() => _isPlayNow = false);
+    } else if (state == AppLifecycleState.resumed) {
+      if (widget.playnowOrNot && mounted) {
+        _videoManager.playVideo(_currentIndex);
+        setState(() => _isPlayNow = true);
+      }
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+
+    _realsCubit?.refreshTrigger.removeListener(_onRefreshTriggered);
+
+    VideoPreloader.dispose();
     _videoManager.dispose();
     _pageController.dispose();
     super.dispose();
   }
 
-  // ========================================================================
-  // LIFECYCLE METHODS
-  // ========================================================================
+  // =========================================================================
+  // Refresh trigger من MainScreen
+  // =========================================================================
+
+  void _onRefreshTriggered() {
+    _handleRefresh();
+  }
+
+  // =========================================================================
+  // Playback
+  // =========================================================================
 
   void _handlePlaybackState() {
     if (widget.playnowOrNot) {
       if (_videoManager.viewIds.containsKey(_lastIndex) && !_iOpenItNow) {
         _videoManager.playVideo(_lastIndex);
+        _isPlayNow = true;
       }
       _iOpenItNow = true;
     } else {
       _iOpenItNow = false;
-      if (_videoManager.viewIds.containsKey(_lastIndex)) {
-        _videoManager.pauseVideo(_lastIndex);
-      }
+      // Pause *everything*, not just _lastIndex. The shells keep this tab
+      // mounted inside an IndexedStack, so leaving the tab never disposes the
+      // screen — if any other view were still playing (e.g. after a fast
+      // swipe), its audio kept going over whatever screen the user opened next.
+      _videoManager.pauseAllExcept(-1);
+      _isPlayNow = false;
     }
   }
-
-  // ========================================================================
-  // VIDEO CALLBACKS
-  // ========================================================================
 
   void _onViewCreated(int index, int viewId) {
     _videoManager.registerView(index, viewId);
@@ -104,49 +155,56 @@ class _RealsScreenState extends State<RealsScreen> {
   }
 
   void _onPageChanged(int index) {
-    if (index != _currentIndex) {
-      _currentIndex = index;
-      _lastIndex = index;
-      _videoManager.playVideo(_currentIndex);
+    if (index == _currentIndex) return;
 
-      VideoPreloader.smartPreload(
-        allVideoUrls: reals.map((e) => e.video.toString()).toList(),
-        currentIndex: index,
-      );
+    _currentIndex = index;
+    _lastIndex = index;
+    _videoManager.playVideo(_currentIndex);
 
-      _videoManager.cleanupOldViews(index);
-      _loadMoreIfNeeded(index);
-    }
+    VideoPreloader.smartPreload(
+      allVideoUrls: reals.map((e) => e.video.toString()).toList(),
+      currentIndex: index,
+    );
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) _videoManager.cleanupOldViews(index);
+    });
+
+    _loadMoreIfNeeded(index);
   }
 
   void _onVideoTap(int index) {
     _lastIndex = index;
     _videoManager.togglePlay(index);
-    setState(() {
-      _isPlayNow = _videoManager.isPlaying[index] ?? false;
-    });
+    if (mounted) {
+      setState(() {
+        _isPlayNow = _videoManager.isPlaying[index] ?? false;
+      });
+    }
   }
 
   void _onMuteTap(int index) {
     _lastIndex = index;
     _videoManager.toggleMute(index);
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
-  // ========================================================================
-  // REFRESH & PAGINATION
-  // ========================================================================
+  // =========================================================================
+  // Refresh
+  // =========================================================================
 
   Future<void> _handleRefresh() async {
     if (_isRefreshing) return;
+    if (!mounted) return;
 
     setState(() => _isRefreshing = true);
 
     try {
       await _videoManager.pauseAllExcept(-1);
 
-      final playerId = ''; // TODO: احصل على playerId الصحيح
-      await context.read<RealsCubit>().refreshReals(playerId: playerId);
+      // No playerId: the cubit refreshes whichever feed is loaded (global or a
+      // specific player's), instead of forcing the global one.
+      await _realsCubit?.refreshReals();
 
       _videoManager.dispose();
       _videoManager = VideoPlayerManager();
@@ -154,14 +212,20 @@ class _RealsScreenState extends State<RealsScreen> {
 
       _currentIndex = 0;
       _lastIndex = 0;
+      _iOpenItNow = false;
 
       if (_pageController.hasClients) {
-        await _pageController.animateToPage(
-          0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+        _pageController.jumpToPage(0);
       }
+
+      // ✅ جبر الـ PageView يتبني من أول عشان الفيديو الجديد يتسجل صح
+      if (mounted) {
+        setState(() {
+          _pageViewKey = UniqueKey();
+        });
+      }
+
+      await Future.delayed(const Duration(milliseconds: 300));
     } catch (e) {
       log('⚠️ Refresh error: $e');
     } finally {
@@ -171,76 +235,121 @@ class _RealsScreenState extends State<RealsScreen> {
     }
   }
 
+  // =========================================================================
+  // Load more
+  // =========================================================================
+
   void _loadMoreIfNeeded(int index) {
-    final cubit = context.read<RealsCubit>();
+    final cubit = _realsCubit;
+    if (cubit == null) return;
 
     if (index >= reals.length - 2 &&
         !cubit.isLoadingMore &&
         cubit.hasMoreData) {
-      final playerId = ''; // TODO: احصل على playerId الصحيح
-      cubit.loadMoreReals(playerId: playerId);
+      // Paginate the feed that is actually loaded — see RealsCubit.activePlayerId.
+      cubit.loadMoreReals();
     }
   }
 
-  // ========================================================================
-  // USER INTERACTION CALLBACKS
-  // ========================================================================
+  // =========================================================================
+  // User profile tap
+  // =========================================================================
 
   Future<void> _onUserProfileTap() async {
     if (_videoManager.viewIds.containsKey(_lastIndex)) {
       await _videoManager.pauseVideo(_lastIndex);
     }
-
-    context.read<MainCubit>().openProfile = true;
+    if (!mounted) return;
+    // MainCubit is only in scope when reels is opened from a screen that
+    // provides it (e.g. the player profile). In the three shells it lives in
+    // tab 0's subtree, which is a sibling of the reels tab — reading it there
+    // threw ProviderNotFoundException and killed the avatar tap.
+    try {
+      context.read<MainCubit>().openProfile = true;
+    } catch (_) {
+      // Not available in this context; nothing to sync.
+    }
     await Future.delayed(const Duration(milliseconds: 500));
     _iOpenItNow = false;
   }
 
-  // ========================================================================
-  // BUILD
-  // ========================================================================
+  // =========================================================================
+  // Reel deleted
+  // =========================================================================
+
+  void _handleReelDeleted() {
+    _videoManager.pauseAllExcept(-1);
+
+    _videoManager.dispose();
+    _videoManager = VideoPlayerManager();
+    _videoManager.initializeFirstVideos(reals.length);
+
+    if (_currentIndex >= reals.length) {
+      _currentIndex = reals.isEmpty ? 0 : reals.length - 1;
+    }
+    _lastIndex = _currentIndex;
+
+    if (mounted) {
+      setState(() {
+        _pageViewKey = UniqueKey();
+      });
+    }
+    if (_pageController.hasClients && reals.isNotEmpty) {
+      _pageController.jumpToPage(_currentIndex);
+    }
+
+    if (mounted) setState(() {});
+  }
+
+  // =========================================================================
+  // Build
+  // =========================================================================
 
   @override
   Widget build(BuildContext context) {
-    _handlePlaybackState();
-
-    return PopScope(
-      onPopInvoked: (didPop) {
-        if (_videoManager.viewIds.containsKey(_lastIndex)) {
-          _videoManager.pauseVideo(_lastIndex);
+    return BlocListener<RealsCubit, RealsState>(
+      listener: (context, state) {
+        if (state is deleteReelSuccess) {
+          _handleReelDeleted();
         }
       },
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: Stack(
-          children: [
-            // Main Content
-            RefreshIndicator(
-              onRefresh: _handleRefresh,
-              color: Colors.white,
-              backgroundColor: Colors.grey[900],
-              strokeWidth: 3,
-              displacement: 80,
-              child: _buildPageView(),
-            ),
+      child: PopScope(
+        onPopInvoked: (didPop) {
+          if (_videoManager.viewIds.containsKey(_lastIndex)) {
+            _videoManager.pauseVideo(_lastIndex);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              RefreshIndicator(
+                onRefresh: _handleRefresh,
+                color: Colors.white,
+                backgroundColor: Colors.grey[900],
+                strokeWidth: 3,
+                displacement: 80,
+                child: _buildPageView(),
+              ),
 
-            // Back Button (للـ Profile)
-            if (widget.playerProfile) _buildBackButton(),
+              if (widget.playerProfile) _buildBackButton(),
 
-            // Refresh Indicator Overlay
-            if (_isRefreshing) const RefreshIndicatorOverlay(),
-          ],
+              if (_isRefreshing) const RefreshIndicatorOverlay(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // ========================================================================
-  // BUILD HELPERS
-  // ========================================================================
+  // =========================================================================
+  // PageView
+  // =========================================================================
 
   Widget _buildPageView() {
     return PageView.builder(
+      key: _pageViewKey,
+      // ✅ هيجبر الـ PageView يتبني من أول بعد الـ refresh
       controller: _pageController,
       scrollDirection: Axis.vertical,
       physics: const ClampingScrollPhysics(),
@@ -262,7 +371,6 @@ class _RealsScreenState extends State<RealsScreen> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // Video Player
           VideoPlayerWidget(
             videoUrl: reel.video.toString(),
             index: index,
@@ -270,7 +378,8 @@ class _RealsScreenState extends State<RealsScreen> {
             onTap: () => _onVideoTap(index),
           ),
 
-          // Actions Overlay
+          _buildGradientOverlay(),
+
           RealsActionsOverlay(
             index: index,
             reelId: reel.id,
@@ -278,21 +387,51 @@ class _RealsScreenState extends State<RealsScreen> {
             onCommentTap: widget.ontap,
           ),
 
-          // User Info Overlay
           RealsUserInfoOverlay(
             index: index,
             playerProfile: widget.playerProfile,
             onUserTap: _onUserProfileTap,
           ),
 
-          // Play/Pause Overlay
           _buildPlayPauseOverlay(index),
 
-          // Loading More Indicator
+          if (reel.isMyReel == true)
+            Positioned(
+              top: 40.h,
+              right: 16.w,
+              child: ReelOptionsMenu(
+                reelId: reel.id,
+                currentDescription: reel.description?.toString() ?? '',
+              ),
+            ),
+
           if (index == reals.length - 1 &&
-              context.watch<RealsCubit>().isLoadingMore)
+              (_realsCubit?.isLoadingMore ?? false))
             const LoadingMoreIndicator(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildGradientOverlay() {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: 280.h,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Colors.black.withOpacity(0.75),
+              Colors.black.withOpacity(0.3),
+              Colors.transparent,
+            ],
+            stops: const [0.0, 0.5, 1.0],
+          ),
+        ),
       ),
     );
   }

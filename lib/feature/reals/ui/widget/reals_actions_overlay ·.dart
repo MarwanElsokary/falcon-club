@@ -15,12 +15,12 @@ class RealsActionsOverlay extends StatelessWidget {
   final VoidCallback onCommentTap;
 
   const RealsActionsOverlay({
-    super.key,
+    Key? key,
     required this.index,
     required this.reelId,
     required this.playerProfile,
     required this.onCommentTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,10 @@ class RealsActionsOverlay extends StatelessWidget {
             // 🔥 كل widget يكون absorbing للـ pointer بس في منطقته
             AbsorbPointer(
               absorbing: false,
-              child: FavRealsWidget(key: ValueKey('fav_$reelId'), index: index),
+              child: FavRealsWidget(
+                key: ValueKey('fav_$reelId'),
+                index: index,
+              ),
             ),
 
             verticalSpace(10),
@@ -47,7 +50,10 @@ class RealsActionsOverlay extends StatelessWidget {
             // Comment Button
             AbsorbPointer(
               absorbing: false,
-              child: CommentButtonWidget(index: index, onTap: onCommentTap),
+              child: CommentButtonWidget(
+                index: index,
+                onTap: onCommentTap,
+              ),
             ),
 
             verticalSpace(10),
@@ -55,7 +61,9 @@ class RealsActionsOverlay extends StatelessWidget {
             // Share Button - 🔥 الأهم!
             AbsorbPointer(
               absorbing: false,
-              child: ShareIconButton(index: index),
+              child: ShareIconButton(
+                index: index,
+              ),
             ),
           ],
         ),

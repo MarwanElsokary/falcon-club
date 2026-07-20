@@ -23,6 +23,48 @@ class RealsRepo {
     }
   }
 
+  Future<ApiResult> updateReel({
+    required int reelId,
+    required String description,
+  }) async {
+    try {
+      final response = await _apiService.updateReel(reelId, description);
+      return ApiResult.success(response);
+    } catch (errro) {
+      return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
+
+  Future<ApiResult> deleteReel({required int reelId}) async {
+    try {
+      final response = await _apiService.deleteReel(reelId);
+      return ApiResult.success(response);
+    } catch (errro) {
+      return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
+
+  Future<ApiResult> updateComment({
+    required int commentId,
+    required String comment,
+  }) async {
+    try {
+      final response = await _apiService.updateComment(commentId, comment);
+      return ApiResult.success(response);
+    } catch (errro) {
+      return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
+
+  Future<ApiResult> deleteComment({required int commentId}) async {
+    try {
+      final response = await _apiService.deleteComment(commentId);
+      return ApiResult.success(response);
+    } catch (errro) {
+      return ApiResult.failure(ErrorHandler.handle(errro));
+    }
+  }
+
   Future<ApiResult> toggleLikeReel({required int reelId}) async {
     try {
       final response = await _apiService.toggleLikeReel(reelId);

@@ -18,8 +18,17 @@ class CommentViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<RealsCubit>();
 
+    // The sheet is lifted by the keyboard inset (see MainRealsScreen), so its
+    // usual 1/1.4 height would push its top off-screen and clip the comments.
+    // Cap it at what is actually left above the keyboard.
+    final double keyboard = MediaQuery.of(context).viewInsets.bottom;
+    final double available = context.displayHeight - keyboard - 40.h;
+    final double sheetHeight = available < context.displayHeight / 1.4
+        ? available
+        : context.displayHeight / 1.4;
+
     return Container(
-      height: context.displayHeight / 1.4, // بيظهر تدريجيًا
+      height: sheetHeight, // بيظهر تدريجيًا
       width: context.displayWidth / 1,
       decoration: BoxDecoration(
         color: whiteclr,

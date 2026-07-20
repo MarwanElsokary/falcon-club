@@ -29,6 +29,18 @@ mixin _$RealsState {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -42,6 +54,18 @@ mixin _$RealsState {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -55,6 +79,18 @@ mixin _$RealsState {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,6 +107,18 @@ mixin _$RealsState {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -84,6 +132,18 @@ mixin _$RealsState {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -97,6 +157,18 @@ mixin _$RealsState {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -176,6 +248,18 @@ class _$InitialImpl implements _Initial {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return initial();
   }
@@ -193,6 +277,18 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return initial?.call();
   }
@@ -210,6 +306,18 @@ class _$InitialImpl implements _Initial {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -233,6 +341,18 @@ class _$InitialImpl implements _Initial {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return initial(this);
   }
@@ -250,6 +370,18 @@ class _$InitialImpl implements _Initial {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return initial?.call(this);
   }
@@ -267,6 +399,18 @@ class _$InitialImpl implements _Initial {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -333,6 +477,18 @@ class _$realsLoadingImpl implements realsLoading {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return realsloading();
   }
@@ -350,6 +506,18 @@ class _$realsLoadingImpl implements realsLoading {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return realsloading?.call();
   }
@@ -367,6 +535,18 @@ class _$realsLoadingImpl implements realsLoading {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (realsloading != null) {
@@ -390,6 +570,18 @@ class _$realsLoadingImpl implements realsLoading {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return realsloading(this);
   }
@@ -407,6 +599,18 @@ class _$realsLoadingImpl implements realsLoading {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return realsloading?.call(this);
   }
@@ -424,6 +628,18 @@ class _$realsLoadingImpl implements realsLoading {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (realsloading != null) {
@@ -518,6 +734,18 @@ class _$realsSuccessImpl implements realsSuccess {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return realssuccess(realsModel);
   }
@@ -535,6 +763,18 @@ class _$realsSuccessImpl implements realsSuccess {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return realssuccess?.call(realsModel);
   }
@@ -552,6 +792,18 @@ class _$realsSuccessImpl implements realsSuccess {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (realssuccess != null) {
@@ -575,6 +827,18 @@ class _$realsSuccessImpl implements realsSuccess {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return realssuccess(this);
   }
@@ -592,6 +856,18 @@ class _$realsSuccessImpl implements realsSuccess {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return realssuccess?.call(this);
   }
@@ -609,6 +885,18 @@ class _$realsSuccessImpl implements realsSuccess {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (realssuccess != null) {
@@ -710,6 +998,18 @@ class _$realsErrorImpl implements realsError {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return realserror(error);
   }
@@ -727,6 +1027,18 @@ class _$realsErrorImpl implements realsError {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return realserror?.call(error);
   }
@@ -744,6 +1056,18 @@ class _$realsErrorImpl implements realsError {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (realserror != null) {
@@ -767,6 +1091,18 @@ class _$realsErrorImpl implements realsError {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return realserror(this);
   }
@@ -784,6 +1120,18 @@ class _$realsErrorImpl implements realsError {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return realserror?.call(this);
   }
@@ -801,6 +1149,18 @@ class _$realsErrorImpl implements realsError {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (realserror != null) {
@@ -876,6 +1236,18 @@ class _$toggleLikeReelLoadingImpl implements toggleLikeReelLoading {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return toggleLikeReelloading();
   }
@@ -893,6 +1265,18 @@ class _$toggleLikeReelLoadingImpl implements toggleLikeReelLoading {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return toggleLikeReelloading?.call();
   }
@@ -910,6 +1294,18 @@ class _$toggleLikeReelLoadingImpl implements toggleLikeReelLoading {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (toggleLikeReelloading != null) {
@@ -933,6 +1329,18 @@ class _$toggleLikeReelLoadingImpl implements toggleLikeReelLoading {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return toggleLikeReelloading(this);
   }
@@ -950,6 +1358,18 @@ class _$toggleLikeReelLoadingImpl implements toggleLikeReelLoading {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return toggleLikeReelloading?.call(this);
   }
@@ -967,6 +1387,18 @@ class _$toggleLikeReelLoadingImpl implements toggleLikeReelLoading {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (toggleLikeReelloading != null) {
@@ -1034,6 +1466,18 @@ class _$toggleLikeReelSuccessImpl implements toggleLikeReelSuccess {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return toggleLikeReelsuccess();
   }
@@ -1051,6 +1495,18 @@ class _$toggleLikeReelSuccessImpl implements toggleLikeReelSuccess {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return toggleLikeReelsuccess?.call();
   }
@@ -1068,6 +1524,18 @@ class _$toggleLikeReelSuccessImpl implements toggleLikeReelSuccess {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (toggleLikeReelsuccess != null) {
@@ -1091,6 +1559,18 @@ class _$toggleLikeReelSuccessImpl implements toggleLikeReelSuccess {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return toggleLikeReelsuccess(this);
   }
@@ -1108,6 +1588,18 @@ class _$toggleLikeReelSuccessImpl implements toggleLikeReelSuccess {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return toggleLikeReelsuccess?.call(this);
   }
@@ -1125,6 +1617,18 @@ class _$toggleLikeReelSuccessImpl implements toggleLikeReelSuccess {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (toggleLikeReelsuccess != null) {
@@ -1221,6 +1725,18 @@ class _$toggleLikeReelErrorImpl implements toggleLikeReelError {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return toggleLikeReelerror(error);
   }
@@ -1238,6 +1754,18 @@ class _$toggleLikeReelErrorImpl implements toggleLikeReelError {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return toggleLikeReelerror?.call(error);
   }
@@ -1255,6 +1783,18 @@ class _$toggleLikeReelErrorImpl implements toggleLikeReelError {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (toggleLikeReelerror != null) {
@@ -1278,6 +1818,18 @@ class _$toggleLikeReelErrorImpl implements toggleLikeReelError {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return toggleLikeReelerror(this);
   }
@@ -1295,6 +1847,18 @@ class _$toggleLikeReelErrorImpl implements toggleLikeReelError {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return toggleLikeReelerror?.call(this);
   }
@@ -1312,6 +1876,18 @@ class _$toggleLikeReelErrorImpl implements toggleLikeReelError {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (toggleLikeReelerror != null) {
@@ -1387,6 +1963,18 @@ class _$addCommentLoadingImpl implements addCommentLoading {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return addCommentloading();
   }
@@ -1404,6 +1992,18 @@ class _$addCommentLoadingImpl implements addCommentLoading {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return addCommentloading?.call();
   }
@@ -1421,6 +2021,18 @@ class _$addCommentLoadingImpl implements addCommentLoading {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (addCommentloading != null) {
@@ -1444,6 +2056,18 @@ class _$addCommentLoadingImpl implements addCommentLoading {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return addCommentloading(this);
   }
@@ -1461,6 +2085,18 @@ class _$addCommentLoadingImpl implements addCommentLoading {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return addCommentloading?.call(this);
   }
@@ -1478,6 +2114,18 @@ class _$addCommentLoadingImpl implements addCommentLoading {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (addCommentloading != null) {
@@ -1544,6 +2192,18 @@ class _$addCommentSuccessImpl implements addCommentSuccess {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return addCommentsuccess();
   }
@@ -1561,6 +2221,18 @@ class _$addCommentSuccessImpl implements addCommentSuccess {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return addCommentsuccess?.call();
   }
@@ -1578,6 +2250,18 @@ class _$addCommentSuccessImpl implements addCommentSuccess {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (addCommentsuccess != null) {
@@ -1601,6 +2285,18 @@ class _$addCommentSuccessImpl implements addCommentSuccess {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return addCommentsuccess(this);
   }
@@ -1618,6 +2314,18 @@ class _$addCommentSuccessImpl implements addCommentSuccess {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return addCommentsuccess?.call(this);
   }
@@ -1635,6 +2343,18 @@ class _$addCommentSuccessImpl implements addCommentSuccess {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (addCommentsuccess != null) {
@@ -1731,6 +2451,18 @@ class _$addCommentErrorImpl implements addCommentError {
     required TResult Function() addCommentloading,
     required TResult Function() addCommentsuccess,
     required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
   }) {
     return addCommenterror(error);
   }
@@ -1748,6 +2480,18 @@ class _$addCommentErrorImpl implements addCommentError {
     TResult? Function()? addCommentloading,
     TResult? Function()? addCommentsuccess,
     TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
   }) {
     return addCommenterror?.call(error);
   }
@@ -1765,6 +2509,18 @@ class _$addCommentErrorImpl implements addCommentError {
     TResult Function()? addCommentloading,
     TResult Function()? addCommentsuccess,
     TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (addCommenterror != null) {
@@ -1788,6 +2544,18 @@ class _$addCommentErrorImpl implements addCommentError {
     required TResult Function(addCommentLoading value) addCommentloading,
     required TResult Function(addCommentSuccess value) addCommentsuccess,
     required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
   }) {
     return addCommenterror(this);
   }
@@ -1805,6 +2573,18 @@ class _$addCommentErrorImpl implements addCommentError {
     TResult? Function(addCommentLoading value)? addCommentloading,
     TResult? Function(addCommentSuccess value)? addCommentsuccess,
     TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
   }) {
     return addCommenterror?.call(this);
   }
@@ -1822,6 +2602,18 @@ class _$addCommentErrorImpl implements addCommentError {
     TResult Function(addCommentLoading value)? addCommentloading,
     TResult Function(addCommentSuccess value)? addCommentsuccess,
     TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
     required TResult orElse(),
   }) {
     if (addCommenterror != null) {
@@ -1841,5 +2633,2913 @@ abstract class addCommentError implements RealsState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$addCommentErrorImplCopyWith<_$addCommentErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$updateReelLoadingImplCopyWith<$Res> {
+  factory _$$updateReelLoadingImplCopyWith(
+    _$updateReelLoadingImpl value,
+    $Res Function(_$updateReelLoadingImpl) then,
+  ) = __$$updateReelLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$updateReelLoadingImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$updateReelLoadingImpl>
+    implements _$$updateReelLoadingImplCopyWith<$Res> {
+  __$$updateReelLoadingImplCopyWithImpl(
+    _$updateReelLoadingImpl _value,
+    $Res Function(_$updateReelLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$updateReelLoadingImpl implements updateReelLoading {
+  const _$updateReelLoadingImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.updateReelloading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$updateReelLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return updateReelloading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return updateReelloading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateReelloading != null) {
+      return updateReelloading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return updateReelloading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return updateReelloading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateReelloading != null) {
+      return updateReelloading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class updateReelLoading implements RealsState {
+  const factory updateReelLoading() = _$updateReelLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$updateReelSuccessImplCopyWith<$Res> {
+  factory _$$updateReelSuccessImplCopyWith(
+    _$updateReelSuccessImpl value,
+    $Res Function(_$updateReelSuccessImpl) then,
+  ) = __$$updateReelSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$updateReelSuccessImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$updateReelSuccessImpl>
+    implements _$$updateReelSuccessImplCopyWith<$Res> {
+  __$$updateReelSuccessImplCopyWithImpl(
+    _$updateReelSuccessImpl _value,
+    $Res Function(_$updateReelSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$updateReelSuccessImpl implements updateReelSuccess {
+  const _$updateReelSuccessImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.updateReelsuccess()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$updateReelSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return updateReelsuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return updateReelsuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateReelsuccess != null) {
+      return updateReelsuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return updateReelsuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return updateReelsuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateReelsuccess != null) {
+      return updateReelsuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class updateReelSuccess implements RealsState {
+  const factory updateReelSuccess() = _$updateReelSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$updateReelErrorImplCopyWith<$Res> {
+  factory _$$updateReelErrorImplCopyWith(
+    _$updateReelErrorImpl value,
+    $Res Function(_$updateReelErrorImpl) then,
+  ) = __$$updateReelErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$updateReelErrorImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$updateReelErrorImpl>
+    implements _$$updateReelErrorImplCopyWith<$Res> {
+  __$$updateReelErrorImplCopyWithImpl(
+    _$updateReelErrorImpl _value,
+    $Res Function(_$updateReelErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? error = null}) {
+    return _then(
+      _$updateReelErrorImpl(
+        error: null == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$updateReelErrorImpl implements updateReelError {
+  const _$updateReelErrorImpl({required this.error});
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'RealsState.updateReelerror(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$updateReelErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$updateReelErrorImplCopyWith<_$updateReelErrorImpl> get copyWith =>
+      __$$updateReelErrorImplCopyWithImpl<_$updateReelErrorImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return updateReelerror(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return updateReelerror?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateReelerror != null) {
+      return updateReelerror(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return updateReelerror(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return updateReelerror?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateReelerror != null) {
+      return updateReelerror(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class updateReelError implements RealsState {
+  const factory updateReelError({required final String error}) =
+      _$updateReelErrorImpl;
+
+  String get error;
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$updateReelErrorImplCopyWith<_$updateReelErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$deleteReelLoadingImplCopyWith<$Res> {
+  factory _$$deleteReelLoadingImplCopyWith(
+    _$deleteReelLoadingImpl value,
+    $Res Function(_$deleteReelLoadingImpl) then,
+  ) = __$$deleteReelLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$deleteReelLoadingImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$deleteReelLoadingImpl>
+    implements _$$deleteReelLoadingImplCopyWith<$Res> {
+  __$$deleteReelLoadingImplCopyWithImpl(
+    _$deleteReelLoadingImpl _value,
+    $Res Function(_$deleteReelLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$deleteReelLoadingImpl implements deleteReelLoading {
+  const _$deleteReelLoadingImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.deleteReelloading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$deleteReelLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return deleteReelloading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return deleteReelloading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteReelloading != null) {
+      return deleteReelloading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return deleteReelloading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return deleteReelloading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteReelloading != null) {
+      return deleteReelloading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class deleteReelLoading implements RealsState {
+  const factory deleteReelLoading() = _$deleteReelLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$deleteReelSuccessImplCopyWith<$Res> {
+  factory _$$deleteReelSuccessImplCopyWith(
+    _$deleteReelSuccessImpl value,
+    $Res Function(_$deleteReelSuccessImpl) then,
+  ) = __$$deleteReelSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$deleteReelSuccessImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$deleteReelSuccessImpl>
+    implements _$$deleteReelSuccessImplCopyWith<$Res> {
+  __$$deleteReelSuccessImplCopyWithImpl(
+    _$deleteReelSuccessImpl _value,
+    $Res Function(_$deleteReelSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$deleteReelSuccessImpl implements deleteReelSuccess {
+  const _$deleteReelSuccessImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.deleteReelsuccess()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$deleteReelSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return deleteReelsuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return deleteReelsuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteReelsuccess != null) {
+      return deleteReelsuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return deleteReelsuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return deleteReelsuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteReelsuccess != null) {
+      return deleteReelsuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class deleteReelSuccess implements RealsState {
+  const factory deleteReelSuccess() = _$deleteReelSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$deleteReelErrorImplCopyWith<$Res> {
+  factory _$$deleteReelErrorImplCopyWith(
+    _$deleteReelErrorImpl value,
+    $Res Function(_$deleteReelErrorImpl) then,
+  ) = __$$deleteReelErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$deleteReelErrorImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$deleteReelErrorImpl>
+    implements _$$deleteReelErrorImplCopyWith<$Res> {
+  __$$deleteReelErrorImplCopyWithImpl(
+    _$deleteReelErrorImpl _value,
+    $Res Function(_$deleteReelErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? error = null}) {
+    return _then(
+      _$deleteReelErrorImpl(
+        error: null == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$deleteReelErrorImpl implements deleteReelError {
+  const _$deleteReelErrorImpl({required this.error});
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'RealsState.deleteReelerror(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$deleteReelErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$deleteReelErrorImplCopyWith<_$deleteReelErrorImpl> get copyWith =>
+      __$$deleteReelErrorImplCopyWithImpl<_$deleteReelErrorImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return deleteReelerror(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return deleteReelerror?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteReelerror != null) {
+      return deleteReelerror(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return deleteReelerror(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return deleteReelerror?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteReelerror != null) {
+      return deleteReelerror(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class deleteReelError implements RealsState {
+  const factory deleteReelError({required final String error}) =
+      _$deleteReelErrorImpl;
+
+  String get error;
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$deleteReelErrorImplCopyWith<_$deleteReelErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$updateCommentLoadingImplCopyWith<$Res> {
+  factory _$$updateCommentLoadingImplCopyWith(
+    _$updateCommentLoadingImpl value,
+    $Res Function(_$updateCommentLoadingImpl) then,
+  ) = __$$updateCommentLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$updateCommentLoadingImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$updateCommentLoadingImpl>
+    implements _$$updateCommentLoadingImplCopyWith<$Res> {
+  __$$updateCommentLoadingImplCopyWithImpl(
+    _$updateCommentLoadingImpl _value,
+    $Res Function(_$updateCommentLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$updateCommentLoadingImpl implements updateCommentLoading {
+  const _$updateCommentLoadingImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.updateCommentloading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$updateCommentLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return updateCommentloading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return updateCommentloading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateCommentloading != null) {
+      return updateCommentloading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return updateCommentloading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return updateCommentloading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateCommentloading != null) {
+      return updateCommentloading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class updateCommentLoading implements RealsState {
+  const factory updateCommentLoading() = _$updateCommentLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$updateCommentSuccessImplCopyWith<$Res> {
+  factory _$$updateCommentSuccessImplCopyWith(
+    _$updateCommentSuccessImpl value,
+    $Res Function(_$updateCommentSuccessImpl) then,
+  ) = __$$updateCommentSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$updateCommentSuccessImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$updateCommentSuccessImpl>
+    implements _$$updateCommentSuccessImplCopyWith<$Res> {
+  __$$updateCommentSuccessImplCopyWithImpl(
+    _$updateCommentSuccessImpl _value,
+    $Res Function(_$updateCommentSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$updateCommentSuccessImpl implements updateCommentSuccess {
+  const _$updateCommentSuccessImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.updateCommentsuccess()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$updateCommentSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return updateCommentsuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return updateCommentsuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateCommentsuccess != null) {
+      return updateCommentsuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return updateCommentsuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return updateCommentsuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateCommentsuccess != null) {
+      return updateCommentsuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class updateCommentSuccess implements RealsState {
+  const factory updateCommentSuccess() = _$updateCommentSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$updateCommentErrorImplCopyWith<$Res> {
+  factory _$$updateCommentErrorImplCopyWith(
+    _$updateCommentErrorImpl value,
+    $Res Function(_$updateCommentErrorImpl) then,
+  ) = __$$updateCommentErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$updateCommentErrorImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$updateCommentErrorImpl>
+    implements _$$updateCommentErrorImplCopyWith<$Res> {
+  __$$updateCommentErrorImplCopyWithImpl(
+    _$updateCommentErrorImpl _value,
+    $Res Function(_$updateCommentErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? error = null}) {
+    return _then(
+      _$updateCommentErrorImpl(
+        error: null == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$updateCommentErrorImpl implements updateCommentError {
+  const _$updateCommentErrorImpl({required this.error});
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'RealsState.updateCommenterror(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$updateCommentErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$updateCommentErrorImplCopyWith<_$updateCommentErrorImpl> get copyWith =>
+      __$$updateCommentErrorImplCopyWithImpl<_$updateCommentErrorImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return updateCommenterror(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return updateCommenterror?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateCommenterror != null) {
+      return updateCommenterror(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return updateCommenterror(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return updateCommenterror?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (updateCommenterror != null) {
+      return updateCommenterror(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class updateCommentError implements RealsState {
+  const factory updateCommentError({required final String error}) =
+      _$updateCommentErrorImpl;
+
+  String get error;
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$updateCommentErrorImplCopyWith<_$updateCommentErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$deleteCommentLoadingImplCopyWith<$Res> {
+  factory _$$deleteCommentLoadingImplCopyWith(
+    _$deleteCommentLoadingImpl value,
+    $Res Function(_$deleteCommentLoadingImpl) then,
+  ) = __$$deleteCommentLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$deleteCommentLoadingImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$deleteCommentLoadingImpl>
+    implements _$$deleteCommentLoadingImplCopyWith<$Res> {
+  __$$deleteCommentLoadingImplCopyWithImpl(
+    _$deleteCommentLoadingImpl _value,
+    $Res Function(_$deleteCommentLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$deleteCommentLoadingImpl implements deleteCommentLoading {
+  const _$deleteCommentLoadingImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.deleteCommentloading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$deleteCommentLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return deleteCommentloading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return deleteCommentloading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteCommentloading != null) {
+      return deleteCommentloading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return deleteCommentloading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return deleteCommentloading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteCommentloading != null) {
+      return deleteCommentloading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class deleteCommentLoading implements RealsState {
+  const factory deleteCommentLoading() = _$deleteCommentLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$deleteCommentSuccessImplCopyWith<$Res> {
+  factory _$$deleteCommentSuccessImplCopyWith(
+    _$deleteCommentSuccessImpl value,
+    $Res Function(_$deleteCommentSuccessImpl) then,
+  ) = __$$deleteCommentSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$deleteCommentSuccessImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$deleteCommentSuccessImpl>
+    implements _$$deleteCommentSuccessImplCopyWith<$Res> {
+  __$$deleteCommentSuccessImplCopyWithImpl(
+    _$deleteCommentSuccessImpl _value,
+    $Res Function(_$deleteCommentSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$deleteCommentSuccessImpl implements deleteCommentSuccess {
+  const _$deleteCommentSuccessImpl();
+
+  @override
+  String toString() {
+    return 'RealsState.deleteCommentsuccess()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$deleteCommentSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return deleteCommentsuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return deleteCommentsuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteCommentsuccess != null) {
+      return deleteCommentsuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return deleteCommentsuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return deleteCommentsuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteCommentsuccess != null) {
+      return deleteCommentsuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class deleteCommentSuccess implements RealsState {
+  const factory deleteCommentSuccess() = _$deleteCommentSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$deleteCommentErrorImplCopyWith<$Res> {
+  factory _$$deleteCommentErrorImplCopyWith(
+    _$deleteCommentErrorImpl value,
+    $Res Function(_$deleteCommentErrorImpl) then,
+  ) = __$$deleteCommentErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$deleteCommentErrorImplCopyWithImpl<$Res>
+    extends _$RealsStateCopyWithImpl<$Res, _$deleteCommentErrorImpl>
+    implements _$$deleteCommentErrorImplCopyWith<$Res> {
+  __$$deleteCommentErrorImplCopyWithImpl(
+    _$deleteCommentErrorImpl _value,
+    $Res Function(_$deleteCommentErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? error = null}) {
+    return _then(
+      _$deleteCommentErrorImpl(
+        error: null == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$deleteCommentErrorImpl implements deleteCommentError {
+  const _$deleteCommentErrorImpl({required this.error});
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'RealsState.deleteCommenterror(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$deleteCommentErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$deleteCommentErrorImplCopyWith<_$deleteCommentErrorImpl> get copyWith =>
+      __$$deleteCommentErrorImplCopyWithImpl<_$deleteCommentErrorImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() realsloading,
+    required TResult Function(RealModel realsModel) realssuccess,
+    required TResult Function(String error) realserror,
+    required TResult Function() toggleLikeReelloading,
+    required TResult Function() toggleLikeReelsuccess,
+    required TResult Function(String error) toggleLikeReelerror,
+    required TResult Function() addCommentloading,
+    required TResult Function() addCommentsuccess,
+    required TResult Function(String error) addCommenterror,
+    required TResult Function() updateReelloading,
+    required TResult Function() updateReelsuccess,
+    required TResult Function(String error) updateReelerror,
+    required TResult Function() deleteReelloading,
+    required TResult Function() deleteReelsuccess,
+    required TResult Function(String error) deleteReelerror,
+    required TResult Function() updateCommentloading,
+    required TResult Function() updateCommentsuccess,
+    required TResult Function(String error) updateCommenterror,
+    required TResult Function() deleteCommentloading,
+    required TResult Function() deleteCommentsuccess,
+    required TResult Function(String error) deleteCommenterror,
+  }) {
+    return deleteCommenterror(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? realsloading,
+    TResult? Function(RealModel realsModel)? realssuccess,
+    TResult? Function(String error)? realserror,
+    TResult? Function()? toggleLikeReelloading,
+    TResult? Function()? toggleLikeReelsuccess,
+    TResult? Function(String error)? toggleLikeReelerror,
+    TResult? Function()? addCommentloading,
+    TResult? Function()? addCommentsuccess,
+    TResult? Function(String error)? addCommenterror,
+    TResult? Function()? updateReelloading,
+    TResult? Function()? updateReelsuccess,
+    TResult? Function(String error)? updateReelerror,
+    TResult? Function()? deleteReelloading,
+    TResult? Function()? deleteReelsuccess,
+    TResult? Function(String error)? deleteReelerror,
+    TResult? Function()? updateCommentloading,
+    TResult? Function()? updateCommentsuccess,
+    TResult? Function(String error)? updateCommenterror,
+    TResult? Function()? deleteCommentloading,
+    TResult? Function()? deleteCommentsuccess,
+    TResult? Function(String error)? deleteCommenterror,
+  }) {
+    return deleteCommenterror?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? realsloading,
+    TResult Function(RealModel realsModel)? realssuccess,
+    TResult Function(String error)? realserror,
+    TResult Function()? toggleLikeReelloading,
+    TResult Function()? toggleLikeReelsuccess,
+    TResult Function(String error)? toggleLikeReelerror,
+    TResult Function()? addCommentloading,
+    TResult Function()? addCommentsuccess,
+    TResult Function(String error)? addCommenterror,
+    TResult Function()? updateReelloading,
+    TResult Function()? updateReelsuccess,
+    TResult Function(String error)? updateReelerror,
+    TResult Function()? deleteReelloading,
+    TResult Function()? deleteReelsuccess,
+    TResult Function(String error)? deleteReelerror,
+    TResult Function()? updateCommentloading,
+    TResult Function()? updateCommentsuccess,
+    TResult Function(String error)? updateCommenterror,
+    TResult Function()? deleteCommentloading,
+    TResult Function()? deleteCommentsuccess,
+    TResult Function(String error)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteCommenterror != null) {
+      return deleteCommenterror(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(realsLoading value) realsloading,
+    required TResult Function(realsSuccess value) realssuccess,
+    required TResult Function(realsError value) realserror,
+    required TResult Function(toggleLikeReelLoading value)
+    toggleLikeReelloading,
+    required TResult Function(toggleLikeReelSuccess value)
+    toggleLikeReelsuccess,
+    required TResult Function(toggleLikeReelError value) toggleLikeReelerror,
+    required TResult Function(addCommentLoading value) addCommentloading,
+    required TResult Function(addCommentSuccess value) addCommentsuccess,
+    required TResult Function(addCommentError value) addCommenterror,
+    required TResult Function(updateReelLoading value) updateReelloading,
+    required TResult Function(updateReelSuccess value) updateReelsuccess,
+    required TResult Function(updateReelError value) updateReelerror,
+    required TResult Function(deleteReelLoading value) deleteReelloading,
+    required TResult Function(deleteReelSuccess value) deleteReelsuccess,
+    required TResult Function(deleteReelError value) deleteReelerror,
+    required TResult Function(updateCommentLoading value) updateCommentloading,
+    required TResult Function(updateCommentSuccess value) updateCommentsuccess,
+    required TResult Function(updateCommentError value) updateCommenterror,
+    required TResult Function(deleteCommentLoading value) deleteCommentloading,
+    required TResult Function(deleteCommentSuccess value) deleteCommentsuccess,
+    required TResult Function(deleteCommentError value) deleteCommenterror,
+  }) {
+    return deleteCommenterror(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(realsLoading value)? realsloading,
+    TResult? Function(realsSuccess value)? realssuccess,
+    TResult? Function(realsError value)? realserror,
+    TResult? Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult? Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult? Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult? Function(addCommentLoading value)? addCommentloading,
+    TResult? Function(addCommentSuccess value)? addCommentsuccess,
+    TResult? Function(addCommentError value)? addCommenterror,
+    TResult? Function(updateReelLoading value)? updateReelloading,
+    TResult? Function(updateReelSuccess value)? updateReelsuccess,
+    TResult? Function(updateReelError value)? updateReelerror,
+    TResult? Function(deleteReelLoading value)? deleteReelloading,
+    TResult? Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult? Function(deleteReelError value)? deleteReelerror,
+    TResult? Function(updateCommentLoading value)? updateCommentloading,
+    TResult? Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult? Function(updateCommentError value)? updateCommenterror,
+    TResult? Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult? Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult? Function(deleteCommentError value)? deleteCommenterror,
+  }) {
+    return deleteCommenterror?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(realsLoading value)? realsloading,
+    TResult Function(realsSuccess value)? realssuccess,
+    TResult Function(realsError value)? realserror,
+    TResult Function(toggleLikeReelLoading value)? toggleLikeReelloading,
+    TResult Function(toggleLikeReelSuccess value)? toggleLikeReelsuccess,
+    TResult Function(toggleLikeReelError value)? toggleLikeReelerror,
+    TResult Function(addCommentLoading value)? addCommentloading,
+    TResult Function(addCommentSuccess value)? addCommentsuccess,
+    TResult Function(addCommentError value)? addCommenterror,
+    TResult Function(updateReelLoading value)? updateReelloading,
+    TResult Function(updateReelSuccess value)? updateReelsuccess,
+    TResult Function(updateReelError value)? updateReelerror,
+    TResult Function(deleteReelLoading value)? deleteReelloading,
+    TResult Function(deleteReelSuccess value)? deleteReelsuccess,
+    TResult Function(deleteReelError value)? deleteReelerror,
+    TResult Function(updateCommentLoading value)? updateCommentloading,
+    TResult Function(updateCommentSuccess value)? updateCommentsuccess,
+    TResult Function(updateCommentError value)? updateCommenterror,
+    TResult Function(deleteCommentLoading value)? deleteCommentloading,
+    TResult Function(deleteCommentSuccess value)? deleteCommentsuccess,
+    TResult Function(deleteCommentError value)? deleteCommenterror,
+    required TResult orElse(),
+  }) {
+    if (deleteCommenterror != null) {
+      return deleteCommenterror(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class deleteCommentError implements RealsState {
+  const factory deleteCommentError({required final String error}) =
+      _$deleteCommentErrorImpl;
+
+  String get error;
+
+  /// Create a copy of RealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$deleteCommentErrorImplCopyWith<_$deleteCommentErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

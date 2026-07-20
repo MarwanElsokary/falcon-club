@@ -12,16 +12,25 @@ class VideoPlayerManager {
 
   // Getters
   Map<int, int> get viewIds => Map.unmodifiable(_viewIds);
+
   Map<int, bool> get muted => Map.unmodifiable(_muted);
+
   Map<int, bool> get isPlaying => Map.unmodifiable(_isPlaying);
+
   bool isViewInitialized(int index) => _initializedViews.contains(index);
 
   /// تسجيل View جديد
   void registerView(int index, int viewId) {
-    if (_initializedViews.contains(index)) return;
+    // ✅ امسح الـ guard ده — خليه يسمح بـ re-registration
+    // if (_initializedViews.contains(index)) return;  ← احذف السطر ده
+
+    // بدلاً منه:
+    if (_viewIds[index] == viewId) return; // نفس الـ view بالظبط = ignore
 
     _viewIds[index] = viewId;
     _initializedViews.add(index);
+    _muted[index] = false;
+    _isPlaying[index] = false;
 
     log('✅ View registered: index=$index, viewId=$viewId');
   }
@@ -38,10 +47,15 @@ class VideoPlayerManager {
       final channel = MethodChannel('native-video-view-$viewId');
 
       await pauseAllExcept(index);
-      await channel.invokeMethod('play');
 
+      // ✅ أعد تطبيق الـ mute state قبل التشغيل
+      final isMuted = _muted[index] ?? false;
+      await channel.invokeMethod('setVolume', {'muted': isMuted});
+
+      await channel.invokeMethod('play');
       _isPlaying[index] = true;
-      log('▶️ Playing video at index $index');
+
+      log('▶️ Playing video at index $index (muted: $isMuted)');
     } catch (e) {
       log('❌ Error playing video $index: $e');
     }
@@ -75,29 +89,33 @@ class VideoPlayerManager {
 
   /// إيقاف كل الفيديوهات ماعدا واحد
   Future<void> pauseAllExcept(int currentIndex) async {
-    // 🔥 حل المشكلة: نسخ المفاتيح قبل التعديل
     final playingIndices = Map<int, bool>.from(_isPlaying);
 
     for (final entry in playingIndices.entries) {
       final index = entry.key;
-      final isPlaying = entry.value;
+      if (index == currentIndex) continue;
 
-      if (index != currentIndex && isPlaying) {
-        if (_viewIds.containsKey(index)) {
-          try {
-            final viewId = _viewIds[index]!;
-            final channel = MethodChannel('native-video-view-$viewId');
-            await channel.invokeMethod('pause');
-            _isPlaying[index] = false;
-          } catch (e) {
-            log('⚠️ Error pausing video $index: $e');
-          }
+      // ✅ سواء كان isPlaying أو لأ، لو الـ view موجودة — وقّفها
+      // ده بيضمن مفيش حاجة شغالة في الخفاء
+      if (_viewIds.containsKey(index)) {
+        try {
+          final viewId = _viewIds[index]!;
+          final channel = MethodChannel('native-video-view-$viewId');
+          await channel.invokeMethod('pause');
+          _isPlaying[index] = false;
+        } catch (e) {
+          log('⚠️ Error pausing video $index: $e');
+          // ✅ لو فشل الـ channel، اعتبر الـ view stale وامسحها
+          _viewIds.remove(index);
+          _isPlaying.remove(index);
+          _initializedViews.remove(index);
         }
       }
     }
   }
 
   /// Toggle صوت
+  // ✅ الصح
   Future<void> toggleMute(int index) async {
     if (!_viewIds.containsKey(index)) return;
 
@@ -105,7 +123,7 @@ class VideoPlayerManager {
       final viewId = _viewIds[index]!;
       final channel = MethodChannel('native-video-view-$viewId');
 
-      _muted[index] = !(_muted[index] ?? false);
+      _muted[index] = !(_muted[index] ?? false); // ✅ toggle صح
       await channel.invokeMethod('setVolume', {'muted': _muted[index]});
 
       log('🔇 Mute toggled for index $index: ${_muted[index]}');
@@ -116,19 +134,16 @@ class VideoPlayerManager {
 
   /// تنظيف الـ Views القديمة
   void cleanupOldViews(int currentIndex) {
-    // 🔥 حل المشكلة: نسخ المفاتيح قبل الحذف
     final indicesToRemove = <int>[];
-
     for (final index in _viewIds.keys) {
-      // الاحتفاظ بالفيديو الحالي و ±2 فيديو
       if ((index - currentIndex).abs() > 2) {
         indicesToRemove.add(index);
       }
     }
-
-    // حذف المفاتيح المحددة
     for (final index in indicesToRemove) {
-      _disposeView(index);
+      _disposeView(
+        index,
+      ); // مش لازم await هنا، بس دلوقتي جوها بتستنى pause فعليًا قبل ما تعتبر العملية خلصت
     }
   }
 
@@ -144,24 +159,24 @@ class VideoPlayerManager {
   }
 
   /// Dispose view واحد
-  void _disposeView(int index) {
+  // في VideoPlayerManager، غيّر _disposeView:
+  Future<void> _disposeView(int index) async {
     if (!_viewIds.containsKey(index)) return;
 
+    final viewId = _viewIds[index]!;
+
+    _viewIds.remove(index);
+    _isPlaying.remove(index);
+    _muted.remove(index);
+    _initializedViews.remove(
+      index,
+    ); // ✅ مهم — اتحذف الـ index عشان يقدر يتسجل تاني
+
     try {
-      final viewId = _viewIds[index]!;
       final channel = MethodChannel('native-video-view-$viewId');
-
-      // 🔥 فقط pause بدلاً من dispose
-      channel.invokeMethod('pause').catchError((e) {
-        log('⚠️ Error pausing view $index: $e');
-      });
-
-      _viewIds.remove(index);
-      _isPlaying.remove(index);
-      _muted.remove(index);
-      _initializedViews.remove(index);
-
-      log('🗑️ Cleaned up view at index $index');
+      await channel
+          .invokeMethod('pause')
+          .timeout(const Duration(seconds: 2), onTimeout: () => null);
     } catch (e) {
       log('⚠️ Error cleaning view $index: $e');
     }
@@ -190,7 +205,7 @@ class VideoPlayerManager {
     final entries = List<MapEntry<int, int>>.from(_viewIds.entries);
 
     for (var entry in entries) {
-      final index = entry.key;
+      // (index intentionally unused — only the viewId is needed to pause)
       final viewId = entry.value;
 
       try {

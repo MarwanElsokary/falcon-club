@@ -137,6 +137,12 @@ class _ClubMainScreenState extends State<MainClubScreen> {
                             child: MainRealsScreen(
                               playerProfile: false,
                               playnowOrNot: currentIndex == 2,
+                              // The shell owns its own chrome: reels asks, this
+                              // drives the same notifier the bottom bar below
+                              // already listens to.
+                              onChromeVisibilityChanged: (bool visible) =>
+                                  context.read<ClubTeamCubit>().show.value =
+                                      visible,
                             ),
                           )
                         : const SizedBox.shrink(),
