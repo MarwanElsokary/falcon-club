@@ -6,6 +6,7 @@ import 'package:falconclubapp/core/helpers/extensions.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/widget/exit_confirmation_scope.dart';
 import 'package:falconclubapp/core/widget/slide_enimation_widget.dart';
 import 'package:falconclubapp/feature/experiments/cubit/experiments_cubit.dart';
 import 'package:falconclubapp/feature/main_screen/cubit/main_cubit.dart';
@@ -62,209 +63,218 @@ class _ScoutMainScreenState extends State<ScoutMainScreen> {
   Widget build(BuildContext context) {
     // ✅ RankCubit واحد على مستوى الـ ScoutMainScreen كله
     // بيشارك بين ScoutHomeScreen (index 0) و RankScreen (index 4)
-    return BlocProvider(
-      create: (_) => getIt<RankCubit>()..emitRank(),
-      child: Scaffold(
-        key: _scaffoldKey,
-        drawer: BlocProvider(
-          create: (_) => getIt<ProfileCubit>()..load(),
-          child: const CustomDrawerScout(),
-        ),
-        body: Stack(
-          children: [
-            ValueListenableBuilder<int>(
-              valueListenable: _currentIndex,
-              builder: (context, index, _) {
-                // Mark the visited tab so its subtree is built (and stays built).
-                _visited.add(index);
-                return IndexedStack(
-                  index: index,
-                  children: [
-                    // 0 — الرئيسية
-                    _visited.contains(0)
-                        ? MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (_) =>
-                                    getIt<ExperimentsCubit>()
-                                      ..emitbestTrials(categoryId: ''),
-                              ),
-                              BlocProvider(
-                                create: (_) => getIt<MainCubit>()
-                                  ..emitMyProfile()
-                                  ..emitCategories(),
-                              ),
-                              // ❌ مفيش RankCubit هنا — بيجيه من فوق
-                              //
-                              // The ScoutTrainingCubit that used to sit here as
-                              // well was dead weight: it fetched the same
-                              // endpoint a second time, and
-                              // `talent_slider_scout_widget` renders from
-                              // TrainingCubit, so nothing ever read the result.
-                              BlocProvider(
-                                create: (_) => getIt<TrainingCubit>()
-                                  ..emitallExercises(
-                                    categoryId: '',
-                                    popular: true,
-                                  ),
-                              ),
-                            ],
-                            child: ScoutHomeScreen(onDrawerTap: _toggleDrawer),
-                          )
-                        : const SizedBox.shrink(),
-
-                    // 1 — التمارين
-                    // The shared exercise list. As a tab nothing can be popped,
-                    // so it renders without a back row, exactly as before.
-                    _visited.contains(1)
-                        ? MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (_) =>
-                                    getIt<ExerciseListCubit>()..loadAll(),
-                              ),
-                              BlocProvider(
-                                create: (_) =>
-                                    getIt<MainCubit>()..emitCategories(),
-                              ),
-                            ],
-                            child: const ExerciseListScreen(),
-                          )
-                        : const SizedBox.shrink(),
-
-                    // 2 — الريلز
-                    _visited.contains(2)
-                        ? MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (_) =>
-                                    getIt<RealsCubit>()
-                                      ..emitreals(playerId: ''),
-                              ),
-                            ],
-                            child: MainRealsScreen(
-                              playerProfile: false,
-                              playnowOrNot: index == 2,
-                              // Scout's notifier is a private field on this
-                              // State — reachable only through a callback like
-                              // this, never from another feature's cubit.
-                              onChromeVisibilityChanged: (bool visible) =>
-                                  _show.value = visible,
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-
-                    // 3 — المفضلة (نفس تبويب الكوتش، Scout token يدعمه)
-                    _visited.contains(3)
-                        ? BlocProvider(
-                            create: (_) => getIt<FavoritesCubit>()..load(),
-                            child: const FavoritesScreen(),
-                          )
-                        : const SizedBox.shrink(),
-
-                    // 4 — الرتب
-                    // ❌ مفيش BlocProvider هنا — بيجيه من فوق
-                    _visited.contains(4)
-                        ? const RankScreen()
-                        : const SizedBox.shrink(),
-                  ],
-                );
-              },
-            ),
-
-            // ── Bottom Nav ──────────────────────────────────────────────────
-            PositionedDirectional(
-              bottom: 0,
-              start: 0,
-              end: 0,
-              child: ValueListenableBuilder<int>(
+    return ExitConfirmationScope(
+      scaffoldKey: _scaffoldKey,
+      child: BlocProvider(
+        create: (_) => getIt<RankCubit>()..emitRank(),
+        child: Scaffold(
+          key: _scaffoldKey,
+          drawer: BlocProvider(
+            create: (_) => getIt<ProfileCubit>()..load(),
+            child: const CustomDrawerScout(),
+          ),
+          body: Stack(
+            children: [
+              ValueListenableBuilder<int>(
                 valueListenable: _currentIndex,
                 builder: (context, index, _) {
-                  return ValueListenableBuilder<bool>(
-                    valueListenable: _show,
-                    builder: (context, show, _) {
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        width: context.displayWidth,
-                        height: show ? 80.h : 0,
-                        child: SingleChildScrollView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          child: SlideEnimationWidget(
-                            index: 0,
-                            child: Container(
-                              height: 80.h,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.08),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, -2),
-                                  ),
-                                ],
+                  // Mark the visited tab so its subtree is built (and stays built).
+                  _visited.add(index);
+                  return IndexedStack(
+                    index: index,
+                    children: [
+                      // 0 — الرئيسية
+                      _visited.contains(0)
+                          ? MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) =>
+                                      getIt<ExperimentsCubit>()
+                                        ..emitbestTrials(categoryId: ''),
+                                ),
+                                BlocProvider(
+                                  create: (_) => getIt<MainCubit>()
+                                    ..emitMyProfile()
+                                    ..emitCategories(),
+                                ),
+                                // ❌ مفيش RankCubit هنا — بيجيه من فوق
+                                //
+                                // The ScoutTrainingCubit that used to sit here as
+                                // well was dead weight: it fetched the same
+                                // endpoint a second time, and
+                                // `talent_slider_scout_widget` renders from
+                                // TrainingCubit, so nothing ever read the result.
+                                BlocProvider(
+                                  create: (_) => getIt<TrainingCubit>()
+                                    ..emitallExercises(
+                                      categoryId: '',
+                                      popular: true,
+                                    ),
+                                ),
+                              ],
+                              child: ScoutHomeScreen(
+                                onDrawerTap: _toggleDrawer,
                               ),
-                              child: SafeArea(
-                                top: false,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: List.generate(5, (i) {
-                                    final isSelected = index == i;
-                                    return Expanded(
-                                      child: InkWell(
-                                        onTap: () => _currentIndex.value = i,
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: isSelected ? 26.h : 24.h,
-                                              width: isSelected ? 26.h : 24.h,
-                                              child: isSelected
-                                                  ? _activeIcons[i]
-                                                  : _inactiveIcons[i],
-                                            ),
-                                            CenterTextUtils(
-                                              fontSize: 9,
-                                              fontWeight: isSelected
-                                                  ? FontWeight.w700
-                                                  : FontWeight.w500,
-                                              color: isSelected
-                                                  ? mainColor
-                                                  : mainColor.withOpacity(0.5),
-                                              text: _titles[i],
-                                            ),
-                                            verticalSpace(4),
-                                            AnimatedContainer(
-                                              duration: const Duration(
-                                                milliseconds: 300,
+                            )
+                          : const SizedBox.shrink(),
+
+                      // 1 — التمارين
+                      // The shared exercise list. As a tab nothing can be popped,
+                      // so it renders without a back row, exactly as before.
+                      _visited.contains(1)
+                          ? MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) =>
+                                      getIt<ExerciseListCubit>()..loadAll(),
+                                ),
+                                BlocProvider(
+                                  create: (_) =>
+                                      getIt<MainCubit>()..emitCategories(),
+                                ),
+                              ],
+                              child: const ExerciseListScreen(),
+                            )
+                          : const SizedBox.shrink(),
+
+                      // 2 — الريلز
+                      _visited.contains(2)
+                          ? MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) =>
+                                      getIt<RealsCubit>()
+                                        ..emitreals(playerId: ''),
+                                ),
+                              ],
+                              child: MainRealsScreen(
+                                playerProfile: false,
+                                playnowOrNot: index == 2,
+                                // Scout's notifier is a private field on this
+                                // State — reachable only through a callback like
+                                // this, never from another feature's cubit.
+                                onChromeVisibilityChanged: (bool visible) =>
+                                    _show.value = visible,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+
+                      // 3 — المفضلة (نفس تبويب الكوتش، Scout token يدعمه)
+                      _visited.contains(3)
+                          ? BlocProvider(
+                              create: (_) => getIt<FavoritesCubit>()..load(),
+                              child: const FavoritesScreen(),
+                            )
+                          : const SizedBox.shrink(),
+
+                      // 4 — الرتب
+                      // ❌ مفيش BlocProvider هنا — بيجيه من فوق
+                      _visited.contains(4)
+                          ? const RankScreen()
+                          : const SizedBox.shrink(),
+                    ],
+                  );
+                },
+              ),
+
+              // ── Bottom Nav ──────────────────────────────────────────────────
+              PositionedDirectional(
+                bottom: 0,
+                start: 0,
+                end: 0,
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _currentIndex,
+                  builder: (context, index, _) {
+                    return ValueListenableBuilder<bool>(
+                      valueListenable: _show,
+                      builder: (context, show, _) {
+                        return AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          width: context.displayWidth,
+                          height: show ? 80.h : 0,
+                          child: SingleChildScrollView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            child: SlideEnimationWidget(
+                              index: 0,
+                              child: Container(
+                                height: 80.h,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.08),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, -2),
+                                    ),
+                                  ],
+                                ),
+                                child: SafeArea(
+                                  top: false,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: List.generate(5, (i) {
+                                      final isSelected = index == i;
+                                      return Expanded(
+                                        child: InkWell(
+                                          onTap: () => _currentIndex.value = i,
+                                          splashColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: isSelected
+                                                    ? 26.h
+                                                    : 24.h,
+                                                width: isSelected ? 26.h : 24.h,
+                                                child: isSelected
+                                                    ? _activeIcons[i]
+                                                    : _inactiveIcons[i],
                                               ),
-                                              height: isSelected ? 6.h : 0,
-                                              width: 6.w,
-                                              decoration: BoxDecoration(
-                                                color: mainColor,
-                                                shape: BoxShape.circle,
+                                              CenterTextUtils(
+                                                fontSize: 9,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.w700
+                                                    : FontWeight.w500,
+                                                color: isSelected
+                                                    ? mainColor
+                                                    : mainColor.withOpacity(
+                                                        0.5,
+                                                      ),
+                                                text: _titles[i],
                                               ),
-                                            ),
-                                          ],
+                                              verticalSpace(4),
+                                              AnimatedContainer(
+                                                duration: const Duration(
+                                                  milliseconds: 300,
+                                                ),
+                                                height: isSelected ? 6.h : 0,
+                                                width: 6.w,
+                                                decoration: BoxDecoration(
+                                                  color: mainColor,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }),
+                                      );
+                                    }),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

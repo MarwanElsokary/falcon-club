@@ -15,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/thems/thems.dart';
+import '../../../../core/widget/exit_confirmation_scope.dart';
 import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../home/ui/screen/home_screen.dart';
 import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
@@ -75,193 +76,203 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      // ✅ مفيش isUserSubscribed — الـ cubit بيجيب isSubscribed من الـ cache بعد الـ API
-      create: (_) => getIt<RankCubit>()..emitRank(),
-      child: Scaffold(
-        key: _scaffoldKey,
+    return ExitConfirmationScope(
+      scaffoldKey: _scaffoldKey,
+      child: BlocProvider(
+        // ✅ مفيش isUserSubscribed — الـ cubit بيجيب isSubscribed من الـ cache بعد الـ API
+        create: (_) => getIt<RankCubit>()..emitRank(),
+        child: Scaffold(
+          key: _scaffoldKey,
 
-        drawer: BlocProvider(
-          create: (_) => getIt<ProfileCubit>()..load(),
-          child: const CustomDrawer(),
-        ),
+          drawer: BlocProvider(
+            create: (_) => getIt<ProfileCubit>()..load(),
+            child: const CustomDrawer(),
+          ),
 
-        body: Stack(
-          children: [
-            ValueListenableBuilder<int>(
-              valueListenable: context.read<ClubTeamCubit>().currentIndex,
-              builder: (context, currentIndex, _) {
-                // Mark the visited tab so its subtree is built (and stays built).
-                _visited.add(currentIndex);
-                return IndexedStack(
-                  index: currentIndex,
-                  children: [
-                    // 0 — الرئيسية
-                    _visited.contains(0)
-                        ? MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (_) => getIt<ExperimentsCubit>()
-                                  ..emitbestTrials(categoryId: ''),
-                              ),
-                              BlocProvider(
-                                create: (_) => getIt<TrainingCubit>()
-                                  ..emitallExercises(
-                                    categoryId: '',
-                                    popular: true,
-                                  ),
-                              ),
-                              BlocProvider(
-                                create: (_) =>
-                                    getIt<MainCubit>()..emitMyProfile(),
-                              ),
-                            ],
-                            child: HomeScreen(onDrawerTap: _toggleDrawer),
-                          )
-                        : const SizedBox.shrink(),
-
-                    // 1 — فريقي
-                    _visited.contains(1)
-                        ? const ClubMyTeamScreen()
-                        : const SizedBox.shrink(),
-
-                    // 2 — اللاعيبين (Reels)
-                    _visited.contains(2)
-                        ? MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (_) =>
-                                    getIt<RealsCubit>()..emitreals(playerId: ''),
-                              ),
-                            ],
-                            child: MainRealsScreen(
-                              playerProfile: false,
-                              playnowOrNot: currentIndex == 2,
-                              // The shell owns its own chrome: reels asks, this
-                              // drives the same notifier the bottom bar below
-                              // already listens to.
-                              onChromeVisibilityChanged: (bool visible) =>
-                                  context.read<ClubTeamCubit>().show.value =
-                                      visible,
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-
-                    // 3 — قائمة الاهتمامات
-                    _visited.contains(3)
-                        ? BlocProvider(
-                            create: (_) => getIt<FavoritesCubit>()..load(),
-                            child: const FavoritesScreen(),
-                          )
-                        : const SizedBox.shrink(),
-
-                    // 4 — الرتب
-                    _visited.contains(4)
-                        ? const RankScreen()
-                        : const SizedBox.shrink(),
-                  ],
-                );
-              },
-            ),
-
-            // ── Bottom navigation bar ──────────────────────────────────────
-            PositionedDirectional(
-              bottom: 0,
-              start: 0,
-              end: 0,
-              child: ValueListenableBuilder<int>(
+          body: Stack(
+            children: [
+              ValueListenableBuilder<int>(
                 valueListenable: context.read<ClubTeamCubit>().currentIndex,
                 builder: (context, currentIndex, _) {
-                  return ValueListenableBuilder<bool>(
-                    valueListenable: context.read<ClubTeamCubit>().show,
-                    builder: (context, show, _) {
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        width: context.displayWidth,
-                        height: show ? 80.h : 0,
-                        child: SingleChildScrollView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          child: SlideEnimationWidget(
-                            index: 0,
-                            child: Container(
-                              height: 80.h,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.08),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, -2),
-                                  ),
-                                ],
+                  // Mark the visited tab so its subtree is built (and stays built).
+                  _visited.add(currentIndex);
+                  return IndexedStack(
+                    index: currentIndex,
+                    children: [
+                      // 0 — الرئيسية
+                      _visited.contains(0)
+                          ? MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) =>
+                                      getIt<ExperimentsCubit>()
+                                        ..emitbestTrials(categoryId: ''),
+                                ),
+                                BlocProvider(
+                                  create: (_) => getIt<TrainingCubit>()
+                                    ..emitallExercises(
+                                      categoryId: '',
+                                      popular: true,
+                                    ),
+                                ),
+                                BlocProvider(
+                                  create: (_) =>
+                                      getIt<MainCubit>()..emitMyProfile(),
+                                ),
+                              ],
+                              child: HomeScreen(onDrawerTap: _toggleDrawer),
+                            )
+                          : const SizedBox.shrink(),
+
+                      // 1 — فريقي
+                      _visited.contains(1)
+                          ? const ClubMyTeamScreen()
+                          : const SizedBox.shrink(),
+
+                      // 2 — اللاعيبين (Reels)
+                      _visited.contains(2)
+                          ? MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) =>
+                                      getIt<RealsCubit>()
+                                        ..emitreals(playerId: ''),
+                                ),
+                              ],
+                              child: MainRealsScreen(
+                                playerProfile: false,
+                                playnowOrNot: currentIndex == 2,
+                                // The shell owns its own chrome: reels asks, this
+                                // drives the same notifier the bottom bar below
+                                // already listens to.
+                                onChromeVisibilityChanged: (bool visible) =>
+                                    context.read<ClubTeamCubit>().show.value =
+                                        visible,
                               ),
-                              child: SafeArea(
-                                top: false,
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: List.generate(5, (index) {
-                                    final isSelected = currentIndex == index;
-                                    return Expanded(
-                                      child: InkWell(
-                                        onTap: () {
-                                          context
-                                              .read<ClubTeamCubit>()
-                                              .currentIndex
-                                              .value = index;
-                                        },
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: isSelected ? 26.h : 24.h,
-                                              width: isSelected ? 26.h : 24.h,
-                                              child: isSelected
-                                                  ? _activeIcons[index]
-                                                  : _inactiveIcons[index],
-                                            ),
-                                            CenterTextUtils(
-                                              fontSize: 9,
-                                              fontWeight: isSelected
-                                                  ? FontWeight.w700
-                                                  : FontWeight.w500,
-                                              color: isSelected
-                                                  ? mainColor
-                                                  : mainColor.withOpacity(0.5),
-                                              text: _titles[index],
-                                            ),
-                                            verticalSpace(4),
-                                            AnimatedContainer(
-                                              duration: const Duration(
-                                                milliseconds: 300,
+                            )
+                          : const SizedBox.shrink(),
+
+                      // 3 — قائمة الاهتمامات
+                      _visited.contains(3)
+                          ? BlocProvider(
+                              create: (_) => getIt<FavoritesCubit>()..load(),
+                              child: const FavoritesScreen(),
+                            )
+                          : const SizedBox.shrink(),
+
+                      // 4 — الرتب
+                      _visited.contains(4)
+                          ? const RankScreen()
+                          : const SizedBox.shrink(),
+                    ],
+                  );
+                },
+              ),
+
+              // ── Bottom navigation bar ──────────────────────────────────────
+              PositionedDirectional(
+                bottom: 0,
+                start: 0,
+                end: 0,
+                child: ValueListenableBuilder<int>(
+                  valueListenable: context.read<ClubTeamCubit>().currentIndex,
+                  builder: (context, currentIndex, _) {
+                    return ValueListenableBuilder<bool>(
+                      valueListenable: context.read<ClubTeamCubit>().show,
+                      builder: (context, show, _) {
+                        return AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          width: context.displayWidth,
+                          height: show ? 80.h : 0,
+                          child: SingleChildScrollView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            child: SlideEnimationWidget(
+                              index: 0,
+                              child: Container(
+                                height: 80.h,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.08),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, -2),
+                                    ),
+                                  ],
+                                ),
+                                child: SafeArea(
+                                  top: false,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: List.generate(5, (index) {
+                                      final isSelected = currentIndex == index;
+                                      return Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                            context
+                                                    .read<ClubTeamCubit>()
+                                                    .currentIndex
+                                                    .value =
+                                                index;
+                                          },
+                                          splashColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: isSelected
+                                                    ? 26.h
+                                                    : 24.h,
+                                                width: isSelected ? 26.h : 24.h,
+                                                child: isSelected
+                                                    ? _activeIcons[index]
+                                                    : _inactiveIcons[index],
                                               ),
-                                              height: isSelected ? 6.h : 0,
-                                              width: 6.w,
-                                              decoration: BoxDecoration(
-                                                color: mainColor,
-                                                shape: BoxShape.circle,
+                                              CenterTextUtils(
+                                                fontSize: 9,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.w700
+                                                    : FontWeight.w500,
+                                                color: isSelected
+                                                    ? mainColor
+                                                    : mainColor.withOpacity(
+                                                        0.5,
+                                                      ),
+                                                text: _titles[index],
                                               ),
-                                            ),
-                                          ],
+                                              verticalSpace(4),
+                                              AnimatedContainer(
+                                                duration: const Duration(
+                                                  milliseconds: 300,
+                                                ),
+                                                height: isSelected ? 6.h : 0,
+                                                width: 6.w,
+                                                decoration: BoxDecoration(
+                                                  color: mainColor,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }),
+                                      );
+                                    }),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
