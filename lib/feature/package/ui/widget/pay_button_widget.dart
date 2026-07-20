@@ -305,6 +305,9 @@ class _PayButtonWidgetState extends State<PayButtonWidget> {
 
         await Future.delayed(const Duration(seconds: 1));
 
+        // The user has just been sent to an external browser, so this widget
+        // can easily be gone by the time the delay elapses.
+        if (!context.mounted) return;
         context.pushNamedAndRemoveUntil(
           AppRoute.clubMainScreen,
           predicate: (route) => false,

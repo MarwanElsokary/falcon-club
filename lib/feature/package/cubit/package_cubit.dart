@@ -62,13 +62,19 @@ class PackageCubit extends Cubit<PackageState> {
   Future<void> emitpayPackageStates({required int packageId}) async {
     emit(const PackageState.payPackageloading());
 
+    // `MM/YY` — indexing [1] blind threw RangeError on any expiry without a
+    // slash, which only the form's validator was preventing.
+    final List<String> expiry = controller.expireData.text.split('/');
+    final String expiryMonth = expiry.isNotEmpty ? expiry[0].trim() : '';
+    final String expiryYear = expiry.length > 1 ? expiry[1].trim() : '';
+
     final result = await _repo.payPackage(
       payPackageBody: {
         'packageId': packageId,
         'cardName': controller.cardName.text,
         'cardNumber': controller.cardNumber.text,
-        'expiryMonth': controller.expireData.text.split('/')[0],
-        'expiryYear': controller.expireData.text.split('/')[1],
+        'expiryMonth': expiryMonth,
+        'expiryYear': expiryYear,
         'cvv': controller.cvv.text,
       },
     );

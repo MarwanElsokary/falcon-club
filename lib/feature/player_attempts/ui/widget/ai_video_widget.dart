@@ -24,6 +24,9 @@ class _AiVideoWidgetState extends State<AiVideoWidget> {
     _videoPlayerController =
         VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
           ..initialize().then((_) {
+            // Buffering can outlast the screen — without this, leaving during
+            // load threw "setState() called after dispose()".
+            if (!mounted) return;
             setState(() {});
           });
 

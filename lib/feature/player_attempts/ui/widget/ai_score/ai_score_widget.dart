@@ -19,6 +19,14 @@ class AiScoreWidget extends StatefulWidget {
 
 class _AiScoreWidgetState extends State<AiScoreWidget> {
   PageController controller = PageController();
+
+  @override
+  void dispose() {
+    // Was never disposed — the controller outlived the widget every time this
+    // screen closed.
+    controller.dispose();
+    super.dispose();
+  }
   int currentIndex = 0;
 
   @override

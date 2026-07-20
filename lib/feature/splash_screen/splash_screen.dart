@@ -27,6 +27,23 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
+  /// Every delayed callback on this screen, so they can be cancelled.
+  ///
+  /// These were bare `Timer(...)` calls that ran `setState` / `forward()` with
+  /// no ownership and no `mounted` check. Splash routes onward part-way through
+  /// its own animation, so a pending timer could easily fire after the State was
+  /// gone.
+  final List<Timer> _timers = <Timer>[];
+
+  void _after(Duration delay, VoidCallback action) {
+    _timers.add(
+      Timer(delay, () {
+        if (!mounted) return;
+        action();
+      }),
+    );
+  }
+
   late AnimationController scaleController;
   late Animation<double> scaleAnimation;
 
@@ -110,7 +127,7 @@ class _SplashScreenState extends State<SplashScreen>
             // نشغل أنيميشن النص هنا
             textController.forward();
 
-            Timer(const Duration(milliseconds: 300), () {
+            _after(const Duration(milliseconds: 300), () {
               scaleController.reset();
             });
           }
@@ -150,7 +167,7 @@ class _SplashScreenState extends State<SplashScreen>
       end: 0.0, // واضح تماماً في النهاية
     ).animate(CurvedAnimation(parent: blurController, curve: Curves.easeInOut));
 
-    Timer(const Duration(milliseconds: 600), () {
+    _after(const Duration(milliseconds: 600), () {
       setState(() {
         _opacity = 1.0;
         // هنخليه يفضل كبير ومشوش لمدة دقيقة
@@ -158,7 +175,7 @@ class _SplashScreenState extends State<SplashScreen>
       });
 
       // نستنى دقيقة كاملة قبل ما نبدأ الأنيميشن
-      Timer(const Duration(milliseconds: 0), () {
+      _after(const Duration(milliseconds: 0), () {
         setState(() {
           _value = false; // دلوقتي يبدأ يصغر
         });
@@ -167,7 +184,7 @@ class _SplashScreenState extends State<SplashScreen>
       });
     });
 
-    Timer(const Duration(milliseconds: 1400), () {
+    _after(const Duration(milliseconds: 1400), () {
       setState(() {
         scaleController.forward();
       });
@@ -195,6 +212,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
+    for (final Timer timer in _timers) {
+      timer.cancel();
+    }
+    _timers.clear();
     scaleController.dispose();
     textController.dispose();
     rotationController.dispose();

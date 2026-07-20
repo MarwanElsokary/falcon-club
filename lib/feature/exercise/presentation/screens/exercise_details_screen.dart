@@ -61,9 +61,9 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
         builder: (context, state) => switch (state) {
           ExerciseDetailsLoaded(:final ExerciseDetails details) =>
             _buildContent(context, details),
-          // Loading, initial and failure all show the spinner — the same
-          // behaviour the old TrainingDetailsCubit `orElse` gave. (A failure
-          // rendering a spinner is pre-existing and deliberately unchanged here.)
+          // A failure used to fall through to the spinner, so a failed details
+          // fetch span forever with no way to tell it had failed.
+          ExerciseDetailsFailure(:final String message) => _buildError(message),
           _ => _buildLoading(),
         },
       ),
@@ -74,6 +74,30 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
     return Stack(
       children: [
         const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+        PositionedDirectional(
+          child: SafeArea(child: BackButton(color: Colors.white)),
+        ),
+      ],
+    );
+  }
+
+  /// Keeps the back button reachable — the failure state previously rendered
+  /// the spinner, leaving the screen stuck with no way to know what happened.
+  Widget _buildError(String message) {
+    return Stack(
+      children: [
+        Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 32.w),
+            child: CenterTextUtils(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              maxlines: 4,
+              text: message,
+            ),
+          ),
+        ),
         PositionedDirectional(
           child: SafeArea(child: BackButton(color: Colors.white)),
         ),

@@ -5,6 +5,7 @@ import 'package:falconclubapp/core/routing/routes.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/app_bar_utils.dart';
 import 'package:falconclubapp/core/widget/button_utils.dart';
+import 'package:falconclubapp/core/widget/center_text_utils.dart';
 import 'package:falconclubapp/core/widget/padding_utils.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:falconclubapp/feature/package/cubit/package_cubit.dart';
@@ -32,6 +33,24 @@ class PackageScreen extends StatelessWidget {
               child: CupertinoActivityIndicator(
                 radius: 20.w,
                 color: Colors.black,
+              ),
+            );
+          }
+          // A failed fetch used to fall straight through to the list, which
+          // reads an empty packageList — so the user got a blank screen with no
+          // indication anything had gone wrong.
+          if (state is packageError &&
+              context.read<PackageCubit>().packageList.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.w),
+                child: CenterTextUtils(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                  maxlines: 3,
+                  text: state.error,
+                ),
               ),
             );
           }
@@ -137,7 +156,7 @@ class PackageScreen extends StatelessWidget {
                           },
                         ),
                         verticalSpace(30),
-// في package_screen.dart - داخل ListView.builder
+                        // في package_screen.dart - داخل ListView.builder
                         ButtonUtils(
                           border: 30.r,
                           text: 'اشتراك',
@@ -166,7 +185,8 @@ class PackageScreen extends StatelessWidget {
                           },
                           colorstext: mainColor,
                           background: Colors.white,
-                        ),                      ],
+                        ),
+                      ],
                     ),
                   ),
                   verticalSpace(15),
