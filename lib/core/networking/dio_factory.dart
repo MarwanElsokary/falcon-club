@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -10,7 +9,6 @@ class DioFactory {
   DioFactory._();
 
   static Dio? dio;
-  static bool isRefreshing = false;
 
   static Dio getDio() {
     if (dio == null) {
@@ -25,7 +23,6 @@ class DioFactory {
 
       _addTokenInterceptor(); // ← بيجيب الـ token قبل كل request
       addDioInterceptor();
-      addTokenRefreshInterceptor();
     }
     return dio!;
   }
@@ -49,12 +46,6 @@ class DioFactory {
     );
   }
 
-  // ─── بعد اللوجين مباشرةً — بنحدث الـ header فوراً بدون ما ننتظر request ──
-  static void setTokenIntoHeaderAfterLogin(String token) {
-    dio?.options.headers['Authorization'] = 'Bearer $token';
-    log('✅ Token set in Dio headers after login');
-  }
-
   // ─── Logger ─────────────────────────────────────────────────────────────────
   static void addDioInterceptor() {
     if (kDebugMode) {
@@ -64,73 +55,31 @@ class DioFactory {
     }
   }
 
-  // ─── Token Refresh (401) ────────────────────────────────────────────────────
-  static void addTokenRefreshInterceptor() {
-    dio?.interceptors.add(
-      InterceptorsWrapper(
-        onError: (error, handler) async {
-          if (error.response?.statusCode == 401 && !isRefreshing) {
-            isRefreshing = true;
-            try {
-              final newToken = await refreshToken();
-              isRefreshing = false;
-              if (newToken != null) {
-                setTokenIntoHeaderAfterLogin(newToken);
-
-                final options = error.response!.requestOptions;
-                options.headers['Authorization'] = 'Bearer $newToken';
-                final response = await dio!.request(
-                  options.path,
-                  data: options.data,
-                  queryParameters: options.queryParameters,
-                  options: Options(
-                    method: options.method,
-                    headers: options.headers,
-                  ),
-                );
-                return handler.resolve(response);
-              }
-            } catch (e) {
-              isRefreshing = false;
-              return handler.reject(error);
-            }
-          }
-          return handler.next(error);
-        },
-      ),
-    );
-  }
-
-  static Future<String?> refreshToken() async {
-    try {
-      final storedRefreshToken = await SharedPrefHelper.getSecuredString(
-        SharedPrefKeys.refreshToken,
-      );
-      final response = await dio!.post(
-        'http://ec2-3-91-38-73.compute-1.amazonaws.com/api/driver/refresh',
-        options: Options(
-          headers: {'Authorization': 'Bearer $storedRefreshToken'},
-        ),
-      );
-      if (response.statusCode == 200) {
-        final newAccessToken = response.data['data']['access_token'];
-        final newRefreshToken = response.data['data']['refresh_token'];
-        log('newToken: $newAccessToken');
-        await SharedPrefHelper.setSecuredString(
-          SharedPrefKeys.userToken,
-          newAccessToken,
-        );
-        await SharedPrefHelper.setSecuredString(
-          SharedPrefKeys.refreshToken,
-          newRefreshToken,
-        );
-        return newAccessToken;
-      }
-    } catch (e) {
-      log('Failed to refresh token: $e');
-    }
-    return null;
-  }
+  // ─── No token refresh ───────────────────────────────────────────────────────
+  //
+  // There was a 401 interceptor here that tried to refresh the token. It could
+  // never work, and was not merely pointed at the wrong URL:
+  //
+  //   * This backend exposes no refresh endpoint. The Account controller has
+  //     login, registration, OTP and password-reset — nothing else.
+  //   * Login never issues a refresh token. LoginResponseModel carries a single
+  //     `token` (the JWT); there is no refresh field to store.
+  //   * Nothing ever wrote one, so the stored value was always empty.
+  //
+  // It POSTed that empty value as `Bearer null`, over cleartext http, to
+  // `ec2-3-91-38-73.compute-1.amazonaws.com/api/driver/refresh` — a third-party
+  // host belonging to an unrelated *driver* app, along with its snake_case
+  // `data.access_token` response shape. So every 401 in the app produced an
+  // outbound plaintext request to a machine we do not control, then failed
+  // anyway.
+  //
+  // A 401 now surfaces immediately as an ordinary error: `ErrorHandler` maps it
+  // through `_serverMessageOr`, so the caller receives the backend's own message
+  // when it sends one and a generic auth failure otherwise, and the screen that
+  // made the request shows it. Note this is *not* a session-expiry flow — the
+  // stored session is left untouched and the user is not redirected. Adding that
+  // needs a global navigator (none exists) and a policy for which 401s mean
+  // "session dead" rather than "not permitted"; see the accompanying report.
 
   // ─── deprecated — متبقاش تستخدمها ──────────────────────────────────────────
   @Deprecated('Use _addTokenInterceptor instead — token is now set per-request')
