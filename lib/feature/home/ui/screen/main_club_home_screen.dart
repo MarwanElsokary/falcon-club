@@ -7,29 +7,53 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../club_team/cubit/club_team_cubit.dart';
 import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../main_screen/cubit/main_cubit.dart';
 import '../../../training/cubit/training_cubit.dart';
+import '../widget/club_org_summary_section.dart';
 import '../widget/find_your_direction_widget.dart';
 import '../widget/home_app_bar_widget.dart';
 import '../widget/join_talent_widget/join_talent_widget.dart';
 import '../widget/top_rate_widget/top_player_widget.dart';
-import '../widget/upload_training_wdget/upload_training_widget.dart';
 
-class HomeScreen extends StatefulWidget {
+/// The main club's home.
+///
+/// Identical to the shared home screen in chrome, order and styling — the only
+/// difference is the club-at-a-glance summary, sitting between the exercises
+/// and the trials.
+class MainClubHomeScreen extends StatefulWidget {
   final VoidCallback? onDrawerTap;
 
-  const HomeScreen({super.key, this.onDrawerTap});
+  const MainClubHomeScreen({super.key, this.onDrawerTap});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainClubHomeScreen> createState() => _MainClubHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  Future<void> _onRefresh() async {
-    // امسح الـ cache عشان يجيب البيانات من جديد
+class _MainClubHomeScreenState extends State<MainClubHomeScreen> {
+  /// Tab indices on the shell that hosts this screen.
+  static const int _teamTab = 1;
+  static const int _requestsTab = 3;
 
-    // أعد الـ fetch
+  /// Tabs inside فريقي.
+  static const int _playersTab = 0;
+  static const int _coachesTab = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    // Only when empty — entering فريقي refetches, so an unconditional call here
+    // would duplicate every roster fetch.
+    final ClubTeamCubit cubit = context.read<ClubTeamCubit>();
+    if (cubit.groupedPlayers.isEmpty) cubit.fetchClubPlayers();
+    if (cubit.cachedTrainees.isEmpty) cubit.fetchClubTrainees();
+  }
+
+  Future<void> _onRefresh() async {
+    final ClubTeamCubit cubit = context.read<ClubTeamCubit>();
+    cubit.fetchClubPlayers();
+    cubit.fetchClubTrainees();
     context.read<ExperimentsCubit>().emitbestTrials(categoryId: '');
     context.read<TrainingCubit>().emitallExercises(
       categoryId: '',
@@ -39,6 +63,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     await Future.delayed(const Duration(milliseconds: 800));
   }
+
+  /// Opens فريقي on [tab], whichever tab it was last left on.
+  void _openTeamOn(int tab) {
+    final ClubTeamCubit cubit = context.read<ClubTeamCubit>();
+    // Ask for the tab before switching, so a first mount reads it in initState.
+    cubit.requestedTeamTab.value = tab;
+    cubit.currentIndex.value = _teamTab;
+  }
+
+  void _openRequests() =>
+      context.read<ClubTeamCubit>().currentIndex.value = _requestsTab;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
             color: mainColor,
             child: ClipRect(
               child: CustomScrollView(
-                // ← ده اللي بيخلي الريفريش يشتغل
                 physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics(),
                 ),
@@ -87,10 +121,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         JoinTalentWidget(),
                         verticalSpace(10),
+                        ClubOrgSummarySection(
+                          onOpenPlayers: () => _openTeamOn(_playersTab),
+                          onOpenCoaches: () => _openTeamOn(_coachesTab),
+                          onOpenRequests: _openRequests,
+                          // PENDING: wired to RequestsCubit once the startup
+                          // fetch tradeoff is confirmed. Until then the tile is
+                          // an entry point rather than a wrong number.
+                          pendingRequests: null,
+                        ),
+                        verticalSpace(10),
                         FindYourDirectionWidget(),
                         verticalSpace(10),
                         TopPlayerWidget(),
-                        // UploadTrainingWidget(),
                         verticalSpace(80),
                       ],
                     ),
@@ -118,16 +161,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
-  }
-}
-
-class NoGlowScrollBehavior extends ScrollBehavior {
-  @override
-  Widget buildOverscrollIndicator(
-    BuildContext context,
-    Widget child,
-    ScrollableDetails details,
-  ) {
-    return child;
   }
 }

@@ -100,6 +100,12 @@ class ApiConstants {
   //getFav
   static const String getFav = "Club/GetFavPlayers";
 
+  // Digital reports. The list and the delete live on different controllers —
+  // that is the backend's shape, not a typo.
+  static const String playerDigitalReports = "Club/PlayerDigitalReports";
+  static const String digitalReportPdf = "Pdf/GetDigitalReportPlayerPdf";
+  static const String deleteDigitalReport = "Dashboard/DeleteDigitalReport";
+
   //ProfileFeature
   static const String profileFeature = "Player/ProfileFeature";
 

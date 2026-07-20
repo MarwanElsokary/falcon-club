@@ -72,6 +72,14 @@ abstract class ApiService {
   @GET(ApiConstants.getFav)
   Future<dynamic> getFav();
 
+  //digital reports — the list returns a bare array
+  @GET(ApiConstants.playerDigitalReports)
+  Future<dynamic> getPlayerDigitalReports(@Query('playerId') String playerId);
+
+  // Capital `Id` is the server's spelling.
+  @DELETE(ApiConstants.deleteDigitalReport)
+  Future<dynamic> deleteDigitalReport(@Query('Id') int id);
+
   //register step 2
   @POST(ApiConstants.registerStep2)
   Future completeRegistration(@Body() FormData body);

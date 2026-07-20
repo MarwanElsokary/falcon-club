@@ -7,29 +7,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../club_team/cubit/club_team_cubit.dart';
 import '../../../experiments/cubit/experiments_cubit.dart';
 import '../../../main_screen/cubit/main_cubit.dart';
 import '../../../training/cubit/training_cubit.dart';
+import '../widget/coach_roster_section.dart';
 import '../widget/find_your_direction_widget.dart';
 import '../widget/home_app_bar_widget.dart';
 import '../widget/join_talent_widget/join_talent_widget.dart';
 import '../widget/top_rate_widget/top_player_widget.dart';
-import '../widget/upload_training_wdget/upload_training_widget.dart';
 
-class HomeScreen extends StatefulWidget {
+/// The coach's home.
+///
+/// Identical to the shared home screen in chrome, order and styling — the only
+/// difference is his squad, sitting between the exercises and the trials.
+class CoachHomeScreen extends StatefulWidget {
   final VoidCallback? onDrawerTap;
 
-  const HomeScreen({super.key, this.onDrawerTap});
+  const CoachHomeScreen({super.key, this.onDrawerTap});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<CoachHomeScreen> createState() => _CoachHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  Future<void> _onRefresh() async {
-    // امسح الـ cache عشان يجيب البيانات من جديد
+class _CoachHomeScreenState extends State<CoachHomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Only when empty: entering فريقي refetches anyway, so an unconditional
+    // call here would duplicate every roster fetch.
+    final ClubTeamCubit cubit = context.read<ClubTeamCubit>();
+    if (cubit.groupedPlayers.isEmpty) {
+      cubit.fetchClubPlayers();
+    }
+  }
 
-    // أعد الـ fetch
+  Future<void> _onRefresh() async {
+    context.read<ClubTeamCubit>().fetchClubPlayers();
     context.read<ExperimentsCubit>().emitbestTrials(categoryId: '');
     context.read<TrainingCubit>().emitallExercises(
       categoryId: '',
@@ -54,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
             color: mainColor,
             child: ClipRect(
               child: CustomScrollView(
-                // ← ده اللي بيخلي الريفريش يشتغل
                 physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics(),
                 ),
@@ -87,10 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         JoinTalentWidget(),
                         verticalSpace(10),
+                        const CoachRosterSection(),
+                        verticalSpace(10),
                         FindYourDirectionWidget(),
                         verticalSpace(10),
                         TopPlayerWidget(),
-                        // UploadTrainingWidget(),
                         verticalSpace(80),
                       ],
                     ),
@@ -118,16 +132,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
-  }
-}
-
-class NoGlowScrollBehavior extends ScrollBehavior {
-  @override
-  Widget buildOverscrollIndicator(
-    BuildContext context,
-    Widget child,
-    ScrollableDetails details,
-  ) {
-    return child;
   }
 }

@@ -19,7 +19,7 @@ import '../../../../../core/thems/thems.dart';
 import '../../../../core/widget/exit_confirmation_scope.dart';
 import '../../../club_team/cubit/club_team_cubit.dart';
 import '../../../experiments/cubit/experiments_cubit.dart';
-import '../../../home/ui/screen/home_screen.dart';
+import '../../../home/ui/screen/main_club_home_screen.dart';
 import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
 import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../../training/cubit/training_cubit.dart';
@@ -120,7 +120,9 @@ class _ClubMainScreenState extends State<MainClubScreen> {
                                       getIt<MainCubit>()..emitMyProfile(),
                                 ),
                               ],
-                              child: HomeScreen(onDrawerTap: _toggleDrawer),
+                              child: MainClubHomeScreen(
+                                onDrawerTap: _toggleDrawer,
+                              ),
                             )
                           : const SizedBox.shrink(),
 

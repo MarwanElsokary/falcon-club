@@ -17,7 +17,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/thems/thems.dart';
 import '../../../../core/widget/exit_confirmation_scope.dart';
 import '../../../experiments/cubit/experiments_cubit.dart';
-import '../../../home/ui/screen/home_screen.dart';
+import '../../../home/ui/screen/coach_home_screen.dart';
 import '../../../main_screen/ui/widget/custom_drawer_widget.dart';
 import '../../../training/cubit/training_cubit.dart';
 import '../../../favorites/presentation/cubit/favorites_cubit.dart';
@@ -120,7 +120,9 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
                                       getIt<MainCubit>()..emitMyProfile(),
                                 ),
                               ],
-                              child: HomeScreen(onDrawerTap: _toggleDrawer),
+                              child: CoachHomeScreen(
+                                onDrawerTap: _toggleDrawer,
+                              ),
                             )
                           : const SizedBox.shrink(),
 

@@ -87,6 +87,20 @@ import '../../feature/auth/presentation/cubit/scout_registration_cubit.dart'
     as _i731;
 import '../../feature/auth/presentation/cubit/sign_in_cubit.dart' as _i770;
 import '../../feature/auth/presentation/cubit/terms_cubit.dart' as _i608;
+import '../../feature/digital_report/data/datasources/digital_reports_remote_data_source.dart'
+    as _i1069;
+import '../../feature/digital_report/data/repositories/digital_reports_repository_impl.dart'
+    as _i531;
+import '../../feature/digital_report/domain/repositories/digital_reports_repository.dart'
+    as _i463;
+import '../../feature/digital_report/domain/usecases/delete_digital_report.dart'
+    as _i277;
+import '../../feature/digital_report/domain/usecases/download_report_pdf.dart'
+    as _i768;
+import '../../feature/digital_report/domain/usecases/get_player_reports.dart'
+    as _i938;
+import '../../feature/digital_report/presentation/cubit/player_reports_cubit.dart'
+    as _i591;
 import '../../feature/exercise/data/datasources/cached_viewer_capability.dart'
     as _i37;
 import '../../feature/exercise/data/datasources/exercise_remote_data_source.dart'
@@ -269,6 +283,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i990.ClubDirectoryRemoteDataSource>(
       () => _i990.RetrofitClubDirectoryRemoteDataSource(gh<_i700.ApiService>()),
     );
+    gh.lazySingleton<_i1069.DigitalReportsRemoteDataSource>(
+      () => _i1069.RetrofitDigitalReportsRemoteDataSource(
+        gh<_i700.ApiService>(),
+        gh<_i361.Dio>(),
+      ),
+    );
     gh.lazySingleton<_i317.OtpRepository>(
       () => _i462.OtpRepositoryImpl(
         gh<_i36.OtpRemoteDataSource>(),
@@ -313,6 +333,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i876.SubscriptionReader>(
       () => _i287.CachedSubscriptionReader(gh<_i892.KeyValueStore>()),
     );
+    gh.lazySingleton<_i463.DigitalReportsRepository>(
+      () => _i531.DigitalReportsRepositoryImpl(
+        gh<_i1069.DigitalReportsRemoteDataSource>(),
+        gh<_i449.ErrorMapper>(),
+      ),
+    );
     gh.lazySingleton<_i858.PendingRegistrationRepository>(
       () => _i168.PendingRegistrationRepositoryImpl(
         gh<_i343.PendingRegistrationLocalDataSource>(),
@@ -352,6 +378,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i484.TimedCache>(),
         gh<_i449.ErrorMapper>(),
       ),
+    );
+    gh.factory<_i277.DeleteDigitalReport>(
+      () => _i277.DeleteDigitalReport(gh<_i463.DigitalReportsRepository>()),
+    );
+    gh.factory<_i768.DownloadReportPdf>(
+      () => _i768.DownloadReportPdf(gh<_i463.DigitalReportsRepository>()),
+    );
+    gh.factory<_i938.GetPlayerReports>(
+      () => _i938.GetPlayerReports(gh<_i463.DigitalReportsRepository>()),
     );
     gh.lazySingleton<_i787.TrialRepository>(
       () => _i533.TrialRepositoryImpl(
@@ -451,6 +486,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i27.PlayerProfileCubit>(
       () => _i27.PlayerProfileCubit(gh<_i513.GetPlayerProfile>()),
+    );
+    gh.factory<_i591.PlayerReportsCubit>(
+      () => _i591.PlayerReportsCubit(
+        gh<_i938.GetPlayerReports>(),
+        gh<_i768.DownloadReportPdf>(),
+        gh<_i277.DeleteDigitalReport>(),
+      ),
     );
     gh.factory<_i852.RegisterClub>(
       () => _i852.RegisterClub(

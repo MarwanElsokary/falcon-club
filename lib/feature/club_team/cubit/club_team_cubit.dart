@@ -18,6 +18,15 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
 
   ValueNotifier<int> currentIndex = ValueNotifier(0);
   ValueNotifier<bool> show = ValueNotifier(true);
+
+  /// Which tab فريقي should show when it is next opened — 0 = لاعبين, 1 = مدربين.
+  ///
+  /// A visited tab stays mounted, so its `State` (and the tab it was left on)
+  /// survives. Callers that mean "open the players list" need to say so rather
+  /// than inherit whatever the user last looked at; they bump this first, and
+  /// the screen honours it. A [ValueNotifier] rather than cubit state because
+  /// it is a one-shot navigation instruction, not something to rebuild on.
+  ValueNotifier<int> requestedTeamTab = ValueNotifier(0);
   final GlobalKey<ScaffoldState> sliderDrawerKey = GlobalKey<ScaffoldState>();
 
   // The self-profile edit form moved to ProfileEditCubit in the profile feature
@@ -311,6 +320,7 @@ class ClubTeamCubit extends Cubit<ClubTeamState> {
   Future<void> close() {
     currentIndex.dispose();
     show.dispose();
+    requestedTeamTab.dispose();
     return super.close();
   }
 }

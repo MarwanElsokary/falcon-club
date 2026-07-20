@@ -49,7 +49,7 @@ class DigitalReportRepo {
       CreateDigitalReportRequest request) async {
     try {
       await _dio.post(
-        '${ApiConstants.apiBaseUrl}Club/AddDigitalReport',
+        '${ApiConstants.apiBaseUrl}Pdf/AddDigitalReport',
         data: request.toJson(),
         options: Options(headers: await _authHeaders()),
       );

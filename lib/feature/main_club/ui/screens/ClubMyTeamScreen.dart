@@ -44,11 +44,38 @@ class _ClubMyTeamScreenState extends State<ClubMainMyTeamScreen> {
 
   static final _fakeSections = [('الدفاع', '🛡️', 3), ('خط الوسط', '⚙️', 2)];
 
+  late final ClubTeamCubit _clubTeamCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _clubTeamCubit = context.read<ClubTeamCubit>();
+    // This screen stays mounted once visited, so it must be told which tab to
+    // show rather than keep whichever one the user last left behind.
+    _activeTab = _clubTeamCubit.requestedTeamTab.value;
+    _clubTeamCubit.requestedTeamTab.addListener(_onTeamTabRequested);
+  }
+
+  @override
+  void dispose() {
+    _clubTeamCubit.requestedTeamTab.removeListener(_onTeamTabRequested);
+    super.dispose();
+  }
+
+  void _onTeamTabRequested() =>
+      _onTabChanged(_clubTeamCubit.requestedTeamTab.value);
+
   void _onTabChanged(int index) {
+    // Mirror every tab change back onto the notifier so it always describes the
+    // visible tab. Without that, a later "open the players tab" request would
+    // write a value the notifier already held, publish nothing, and leave the
+    // user on the coaches list. Re-setting the same value here is a no-op, so
+    // this cannot loop.
+    _clubTeamCubit.requestedTeamTab.value = index;
     if (_activeTab == index) return;
     setState(() => _activeTab = index);
     if (index == 1) {
-      context.read<ClubTeamCubit>().fetchClubTrainees();
+      _clubTeamCubit.fetchClubTrainees();
     }
   }
 
