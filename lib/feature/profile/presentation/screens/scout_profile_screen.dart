@@ -1,12 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
+import 'package:falconclubapp/core/widget/profile_avatar.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../shared/domain/entities/profile.dart';
 import '../cubit/profile_cubit.dart';
@@ -75,37 +74,7 @@ class ScoutProfileScreen extends StatelessWidget {
           // ── صورة البروفايل (نفس معالجة بروفايل اللاعب) ────────────────
           Align(
             alignment: Alignment.center,
-            child: Container(
-              width: 98.w,
-              height: 139.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100.r),
-                border: Border.all(color: secondMainColor, width: 5.w),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100.r),
-                child: CachedNetworkImage(
-                  width: 98.w,
-                  height: 139.w,
-                  imageUrl: profile.photoUrl ?? '',
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Skeletonizer(
-                    enabled: true,
-                    child: Container(
-                      width: 98.w,
-                      height: 139.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                      ),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => Padding(
-                    padding: EdgeInsets.all(20.w),
-                    child: Icon(Icons.person, color: Colors.white, size: 40.w),
-                  ),
-                ),
-              ),
-            ),
+            child: ProfileAvatar(imageUrl: profile.photoUrl),
           ),
           verticalSpace(10),
 

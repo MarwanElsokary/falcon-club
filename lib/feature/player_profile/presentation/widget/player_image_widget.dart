@@ -1,12 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/center_text_utils.dart';
+import 'package:falconclubapp/core/widget/profile_avatar.dart';
 import 'package:falconclubapp/feature/profile/domain/entities/player_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PlayerImageWidget extends StatelessWidget {
   const PlayerImageWidget({
@@ -32,42 +31,9 @@ class PlayerImageWidget extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              Container(
-                width: 98.w,
-                height: 139.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.r),
-                  border: Border.all(color: secondMainColor, width: 5.w),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    100.r,
-                  ), // Using .r for responsive border radius
-                  child: CachedNetworkImage(
-                    width: 98.w,
-                    height: 139.w,
-                    imageUrl: playerProfile.photoUrl ?? '',
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Skeletonizer(
-                      enabled: true,
-                      child: Container(
-                        width: 98.w,
-                        height: 139.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            20.r,
-                          ), // Match the border radius
-                        ),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Padding(
-                      padding: EdgeInsets.all(20.w),
-                      child: SvgPicture.asset(
-                        'assets/svgs/unavailabeImage.svg',
-                      ),
-                    ),
-                  ),
-                ),
+              ProfileAvatar(
+                imageUrl: playerProfile.photoUrl,
+                fallback: SvgPicture.asset('assets/svgs/unavailabeImage.svg'),
               ),
               if (favoriteButton != null)
                 PositionedDirectional(
