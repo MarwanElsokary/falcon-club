@@ -68,15 +68,36 @@ void main() {
     // Removing only the role key would strand `myProfile`, `categories` and
     // `home_trials` in shared prefs — `CacheHelper` reads them straight back
     // with no ownership check, so the next person to sign in on this handset
-    // would briefly see someone else's profile. Wiping the whole plain store is
-    // what the two logout dialogs did (`clearAllData` + `clearShared`); this
-    // pins that behaviour so a future "tidy-up" cannot narrow it back down to a
-    // single remove().
-    test('wipes the ENTIRE plain store, not just the role key', () async {
+    // would briefly see someone else's profile.
+    //
+    // This used to call `clear()` on the whole plain store, which achieved that
+    // but also destroyed keys that have nothing to do with the session: the
+    // store is the same `SharedPreferences` singleton `easy_localization` keeps
+    // the chosen locale in, so logging out reset the app's language. Each
+    // user-scoped key is now removed by name; the assertions below pin BOTH
+    // halves — everything of the user's goes, and the store is not wiped.
+    test('removes every user-scoped key from the plain store', () async {
       await dataSource.clear();
 
-      verify(() => keyValueStore.clear()).called(1);
-      verifyNever(() => keyValueStore.remove(any()));
+      for (final String key in <String>[
+        'userType',
+        'isCompleted',
+        'userToken',
+        'secured_userToken',
+        'refreshToken',
+        'userId',
+        'myProfile',
+        'categories',
+        'home_trials',
+      ]) {
+        verify(() => keyValueStore.remove(key)).called(1);
+      }
+    });
+
+    test('does NOT wipe the whole plain store (the locale must survive)', () async {
+      await dataSource.clear();
+
+      verifyNever(() => keyValueStore.clear());
     });
   });
 }

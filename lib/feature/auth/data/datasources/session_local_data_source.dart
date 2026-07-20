@@ -69,23 +69,48 @@ class StoredSessionLocalDataSource implements SessionLocalDataSource {
     await _keyValueStore.writeString(StorageKeys.userRole, role);
   }
 
-  /// Signing out wipes the secure keys **and the whole plain store**.
+  /// Signing out wipes the secure keys and **every plain key that belongs to a
+  /// user** — but not the whole store.
   ///
-  /// Removing only [StorageKeys.userRole] from the plain store would leave the
-  /// previous user's cached profile (`myProfile`), categories and trials behind
-  /// for whoever signs in next — `CacheHelper` reads them straight back with no
-  /// ownership check. The two logout dialogs this replaces avoided that by
-  /// calling `SharedPrefHelper.clearAllData()` *and* `CacheHelper.clearShared()`,
-  /// both of which bottom out in `SharedPreferences.clear()`. The same
-  /// `SharedPreferences` singleton backs [KeyValueStore], so one `clear()` here
-  /// is equivalent — including the side effect of resetting the onboarding flag,
-  /// which is pre-existing behaviour, not a regression.
+  /// It used to call `_keyValueStore.clear()`. That did remove the previous
+  /// user's data, but `KeyValueStore` is backed by the same `SharedPreferences`
+  /// singleton that everything else uses, so it also destroyed things that have
+  /// nothing to do with the session — most visibly the locale
+  /// `easy_localization` persists, so logging out reset the app's language back
+  /// to the `startLocale`.
+  ///
+  /// The keys below are removed by name instead. Leaving any of them behind
+  /// would hand the next user the previous one's data: `CacheHelper` reads
+  /// `myProfile` back with no ownership check, and `CachedSubscriptionReader`
+  /// derives entitlement from that same blob.
+  ///
+  /// Deliberately *not* removed: the locale and the FCM device token, neither
+  /// of which belongs to a user account.
   @override
   Future<void> clear() async {
     await _secureStore.delete(StorageKeys.authToken);
     await _secureStore.delete(StorageKeys.refreshToken);
     await _secureStore.delete(StorageKeys.userId);
     await _secureStore.delete(StorageKeys.userRole);
-    await _keyValueStore.clear();
+
+    for (final String key in _userScopedPlainKeys) {
+      await _keyValueStore.remove(key);
+    }
   }
+
+  /// Plain-store keys written per user, by the session layer or by the legacy
+  /// `CacheHelper`/`SharedPrefHelper` paths that still shadow it.
+  static const List<String> _userScopedPlainKeys = <String>[
+    StorageKeys.userRole, // dual-written by [write]
+    StorageKeys.isProfileCompleted,
+    StorageKeys.authToken, // legacy plain copies of the secure values
+    StorageKeys.refreshToken,
+    StorageKeys.userId,
+    'secured_userToken', // CacheHelper's shadow copy of the token
+    // Cached content fetched while signed in. Not secret, but it is the
+    // previous account's view of the app, so it goes with them.
+    'myProfile',
+    'categories',
+    'home_trials',
+  ];
 }
