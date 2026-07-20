@@ -2,8 +2,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import '../di/dependency_injection.dart';
 import '../helpers/constants.dart';
 import '../helpers/shared_pref_helper.dart';
+import '../security/auth_events.dart';
+import '../security/jwt_token.dart';
 
 class DioFactory {
   DioFactory._();
@@ -22,9 +25,37 @@ class DioFactory {
         };
 
       _addTokenInterceptor(); // ← بيجيب الـ token قبل كل request
+      _addSessionExpiryInterceptor();
       addDioInterceptor();
     }
     return dio!;
+  }
+
+  /// Announces a dead session; never navigates, never clears storage.
+  ///
+  /// A 401 alone is not enough. It can equally mean "this account may not do
+  /// that" — one endpoint refusing a role would otherwise sign everybody out.
+  /// The session is only treated as fatal when the token we actually sent is
+  /// expired, decided by [JwtToken.isExpired] — the same check the splash
+  /// screen already uses, so expiry has one definition rather than two.
+  ///
+  /// The error still propagates either way: this is an observer, not a handler.
+  static void _addSessionExpiryInterceptor() {
+    dio?.interceptors.add(
+      InterceptorsWrapper(
+        onError: (DioException error, ErrorInterceptorHandler handler) async {
+          if (error.response?.statusCode == 401) {
+            final String token = await SharedPrefHelper.getSecuredString(
+              SharedPrefKeys.userToken,
+            );
+            if (JwtToken.isExpired(token)) {
+              getIt<AuthEvents>().notifySessionExpired();
+            }
+          }
+          return handler.next(error);
+        },
+      ),
+    );
   }
 
   // ─── Token Interceptor (الحل الجديد) ────────────────────────────────────────
@@ -76,10 +107,8 @@ class DioFactory {
   // A 401 now surfaces immediately as an ordinary error: `ErrorHandler` maps it
   // through `_serverMessageOr`, so the caller receives the backend's own message
   // when it sends one and a generic auth failure otherwise, and the screen that
-  // made the request shows it. Note this is *not* a session-expiry flow — the
-  // stored session is left untouched and the user is not redirected. Adding that
-  // needs a global navigator (none exists) and a policy for which 401s mean
-  // "session dead" rather than "not permitted"; see the accompanying report.
+  // made the request shows it. Separately, `_addSessionExpiryInterceptor` above
+  // announces the subset of those 401s that mean the session itself is dead.
 
   // ─── deprecated — متبقاش تستخدمها ──────────────────────────────────────────
   @Deprecated('Use _addTokenInterceptor instead — token is now set per-request')

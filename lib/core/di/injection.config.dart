@@ -164,6 +164,7 @@ import '../../shared/domain/subscription_reader.dart' as _i876;
 import '../error/error_mapper.dart' as _i449;
 import '../media/image_compressor.dart' as _i525;
 import '../networking/api_service.dart' as _i700;
+import '../security/auth_events.dart' as _i705;
 import '../storage/key_value_store.dart' as _i892;
 import '../storage/secure_storage_store.dart' as _i314;
 import '../storage/secure_store.dart' as _i271;
@@ -190,6 +191,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i449.ErrorMapper>(() => const _i449.ErrorMapper());
     gh.lazySingleton<_i485.FavoritesSync>(() => _i485.FavoritesSync());
     gh.lazySingleton<_i331.ProfileCache>(() => _i331.ProfileCache());
+    gh.lazySingleton<_i705.AuthEvents>(() => _i705.AuthEvents());
     gh.lazySingleton<_i525.ImageCompressor>(
       () => const _i525.FlutterImageCompressor(),
     );
