@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
 import '../../../../core/utils/colors.dart';
+import '../../../../core/widget/profile_avatar.dart';
 import '../../domain/entities/favorite_player.dart';
 import 'animated_favorite_heart.dart';
 
@@ -122,27 +121,17 @@ class FavoritePlayerCard extends StatelessWidget {
   }
 
   Widget _buildAvatar() {
-    return Container(
-      width: 50.w,
-      height: 50.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2.5.w),
-        color: mainColor,
-      ),
-      child: ClipOval(
-        child: player.hasPhoto
-            ? CachedNetworkImage(
-                imageUrl: player.photoUrl!,
-                fit: BoxFit.cover,
-                placeholder: (_, __) => Skeletonizer(
-                  enabled: true,
-                  child: Container(color: mainColor),
-                ),
-                errorWidget: (_, __, ___) => _avatarFallback(),
-              )
-            : _avatarFallback(),
-      ),
+    // Same shared portrait frame, and the same dimensions/styling as the roster
+    // card — this card copied that card's chrome rather than reusing it, so the
+    // two have to be kept deliberately in step.
+    return ProfileAvatar(
+      imageUrl: player.photoUrl,
+      width: 64.w,
+      height: 90.w,
+      borderWidth: 2.5.w,
+      borderColor: Colors.white,
+      backgroundColor: mainColor,
+      fallback: _avatarFallback(),
     );
   }
 

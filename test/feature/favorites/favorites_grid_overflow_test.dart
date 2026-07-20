@@ -14,8 +14,16 @@ import 'package:flutter_test/flutter_test.dart';
 /// the cell height with margin, and (b) proves the harness actually detects a
 /// vertical overflow (a deliberately short cell is flagged) so the check isn't
 /// vacuous. Both run the real card at 1:1 ScreenUtil scaling.
+///
+/// The cell is taller than the 204.3 this guard was originally written against:
+/// the avatar moved to the shared [ProfileAvatar] portrait frame (50×50 → 64×90),
+/// which made the card ~40px taller, so `childAspectRatio` went 0.80 → 0.70.
+/// This guard caught that change — the height below tracks the grid delegate and
+/// must be updated with it.
 const double _cellWidth = 167.1;
-const double _cellHeight = 204.3;
+
+/// `_cellWidth / childAspectRatio`, i.e. 167.1 / 0.70.
+const double _cellHeight = 238.7;
 
 const FavoritePlayer _player = FavoritePlayer(
   id: 'p1',

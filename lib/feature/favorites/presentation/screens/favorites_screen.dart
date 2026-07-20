@@ -148,7 +148,10 @@ class FavoritesScreen extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 12.w,
         mainAxisSpacing: 20.h,
-        childAspectRatio: 0.80,
+        // Taller tiles since the avatar moved to the shared portrait frame
+        // (50×50 → 64×90). At 0.80 the card overflowed its tile by 20px; 0.72
+        // is the tightest that fits, and this leaves a little headroom.
+        childAspectRatio: 0.70,
       ),
       itemCount: players.length,
       itemBuilder: (context, index) {
