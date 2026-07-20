@@ -25,6 +25,8 @@ class ProfileAvatar extends StatelessWidget {
     this.height,
     this.fallback,
     this.borderWidth,
+    this.borderColor,
+    this.backgroundColor,
   });
 
   final String? imageUrl;
@@ -43,6 +45,15 @@ class ProfileAvatar extends StatelessWidget {
   /// Defaults to 5.w.
   final double? borderWidth;
 
+  /// Frame colour. Defaults to [secondMainColor] — the profile screens' look.
+  /// The roster card frames its photo in white against a purple header instead.
+  final Color? borderColor;
+
+  /// Painted behind the photo, so it shows through while the image loads and
+  /// under a transparent fallback. Null (transparent) unless a call site needs
+  /// it — the card fills [mainColor], the club crest a tint of the frame.
+  final Color? backgroundColor;
+
   @override
   Widget build(BuildContext context) {
     final double w = width ?? 98.w;
@@ -54,7 +65,11 @@ class ProfileAvatar extends StatelessWidget {
       height: h,
       decoration: BoxDecoration(
         borderRadius: radius,
-        border: Border.all(color: secondMainColor, width: borderWidth ?? 5.w),
+        color: backgroundColor,
+        border: Border.all(
+          color: borderColor ?? secondMainColor,
+          width: borderWidth ?? 5.w,
+        ),
       ),
       child: ClipRRect(
         borderRadius: radius,

@@ -1,6 +1,5 @@
 import 'package:falconclubapp/core/di/dependency_injection.dart';
 import 'package:falconclubapp/feature/exercise/domain/repositories/viewer_capability_port.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/feature/club_team/cubit/club_team_cubit.dart';
 import 'package:falconclubapp/feature/club_team/cubit/club_team_state.dart';
@@ -9,11 +8,11 @@ import 'package:falconclubapp/feature/club_team/ui/widget/player_reports_sheet.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/routing/routes.dart';
 import '../../../../core/thems/thems.dart';
 import '../../../../core/utils/colors.dart';
+import '../../../../core/widget/profile_avatar.dart';
 import '../../../../core/widget/show_confirm_dialog.dart';
 import 'assign_exercise_sheet.dart';
 
@@ -129,29 +128,17 @@ class _PlayerAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasPhoto = player.photoPath != null && player.photoPath!.isNotEmpty;
-
-    return Container(
-      width: 48.w,
-      height: 48.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2.5.w),
-        color: mainColor,
-      ),
-      child: ClipOval(
-        child: hasPhoto
-            ? CachedNetworkImage(
-                imageUrl: player.photoPath!,
-                fit: BoxFit.cover,
-                placeholder: (_, __) => Skeletonizer(
-                  enabled: true,
-                  child: Container(color: mainColor),
-                ),
-                errorWidget: (_, __, ___) => _AvatarFallback(name: player.name),
-              )
-            : _AvatarFallback(name: player.name),
-      ),
+    // The shared profile frame at card scale — same tall rounded portrait as
+    // the profile screens, keeping this card's own white-on-purple styling and
+    // its initial-letter fallback.
+    return ProfileAvatar(
+      imageUrl: player.photoPath,
+      width: 64.w,
+      height: 90.w,
+      borderWidth: 2.5.w,
+      borderColor: Colors.white,
+      backgroundColor: mainColor,
+      fallback: _AvatarFallback(name: player.name),
     );
   }
 }

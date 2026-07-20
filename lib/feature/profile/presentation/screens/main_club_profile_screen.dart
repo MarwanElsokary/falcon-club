@@ -1,13 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:falconclubapp/core/helpers/spacing.dart';
 import 'package:falconclubapp/core/thems/thems.dart';
 import 'package:falconclubapp/core/widget/padding_utils.dart';
+import 'package:falconclubapp/core/widget/profile_avatar.dart';
 import 'package:falconclubapp/core/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../shared/domain/entities/profile.dart';
 import '../cubit/profile_cubit.dart';
@@ -55,30 +54,13 @@ class MainClubProfileScreen extends StatelessWidget {
           // ── صورة النادي ───────────────────────────────────────────────
           Align(
             alignment: Alignment.center,
-            child: Container(
-              width: 110.w,
-              height: 110.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: secondMainColor, width: 4.w),
-                color: secondMainColor.withOpacity(0.2),
-              ),
-              child: ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: profile.photoUrl ?? '',
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Skeletonizer(
-                    enabled: true,
-                    child: Container(
-                      width: 110.w,
-                      height: 110.w,
-                      color: Colors.white24,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) =>
-                      Icon(Icons.shield, color: Colors.white, size: 50.w),
-                ),
-              ),
+            // Unified with the coach and scout profiles — same 98×139 frame,
+            // rather than this screen's own 110 circle. The crest keeps its
+            // tinted backdrop and shield fallback.
+            child: ProfileAvatar(
+              imageUrl: profile.photoUrl,
+              backgroundColor: secondMainColor.withOpacity(0.2),
+              fallback: Icon(Icons.shield, color: Colors.white, size: 50.w),
             ),
           ),
           verticalSpace(12),

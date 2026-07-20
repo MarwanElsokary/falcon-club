@@ -97,7 +97,10 @@ class _PlayersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300.h,
+      // The card grew when its avatar moved to the shared portrait frame
+      // (48×48 → 64×90). At 300 it overflowed by 47px — 42 from the avatar,
+      // plus 5 the card was already over by before that change.
+      height: 350.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
