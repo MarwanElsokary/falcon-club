@@ -1,2 +1,2 @@
-#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include? "Pods/Target Support Files/Pods-Fteet AI Club/Pods-Fteet AI Club.release.xcconfig"
 #include "Generated.xcconfig"
